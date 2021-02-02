@@ -1,6 +1,7 @@
 Ce dépôt Gitlab est dédié au développement du projet de programmation du semestre 4 (PI4).
 
 Le sujet définitif sera attribué le 03/02/2021 à partir de minuit.
+Une fois le sujet attribué, NE PAS OUBLIER D'AJOUTER LE PROF RESPONSABLE DUDIT SUJET SUR CE GITLAB !
 
 La liste de voeux de l'équipe est la suivante: 
 
