@@ -29,7 +29,7 @@
  - Lorsque tous les trésors ont été récupérés, la partie est terminée ;
    le joueur ayant le plus de point gagne.
 
-# Modes de jeu
+## Modes de jeu
 
 <u>On considéra plusieurs modes de jeu :</u>
 
@@ -43,7 +43,7 @@
 
 Le prix des deux commandes pourra être modifié à la génération de la    carte.
 
-# Concidérations techniques
+## Concidérations techniques
 
 **Méthodologie** :  
     On commencera par l’élaboration des modes de jeu speeding contest et tour par tour.
