@@ -31,7 +31,7 @@
 
 ## Modes de jeu
 
-<u>On considéra plusieurs modes de jeu :</u>
+**On considéra plusieurs modes de jeu :**
 
  -   **Le speeding contest :** Dans ce mode de jeu, tout le monde a la vision complète du plateau avec les trous, murs et trésors. Il faut juste être le plus rapide pour gagner. On interdira le mix entre joueurs "Humain" et "Ordinateur" pour ce mode.
  -   **Le tour par tour :** A nouveau, tout le monde a la vision complète du plateau mais on doit attendre son tour pour jouer.
