@@ -1,9 +1,12 @@
+# PI4 - Chasse au trésor
 
 **Ce dépôt Gitlab est dédié au développement du projet de programmation du semestre 4 (PI4).**
 
 "<a href="https://moodle.u-paris.fr/mod/resource/view.php?id=243541" title="Vidéo de présentation">Chasse au trésor en réseau</a>" by Vincent Cheval:
     Jeu de chasse au trésor sur une carte 2D, en réseau.
-    
+
+## Présentation
+
 **Objectif :** 
     L’objectif de ce projet est de créer un logiciel permettant de jouer à une chasse au trésor en réseau. 
     Le logiciel inclura:
@@ -26,10 +29,13 @@
  - Lorsque tous les trésors ont été récupérés, la partie est terminée ;
    le joueur ayant le plus de point gagne.
 
-On considéra plusieurs modes de jeu:
- -   Le speeding contest : Dans ce mode de jeu, tout le monde a la vision complète du plateau avec les trous, murs et trésors. Il faut juste être le plus rapide pour gagner. On interdira le mix entre joueurs "Humain" et "Ordinateur" pour ce mode.
- -   Le tour par tour : A nouveau, tout le monde a la vision complète du plateau mais on doit attendre son tour pour jouer.
- -   Le brouillard de guerre : Dans ce mode de jeu, les joueurs connaissent uniquement la position et la valeur des trésors. Chaque joueur peut voir les murs et joueurs dans un rayon de deux cases autour de lui. En revanche, il ne connait que le nombre de trous autour de lui (dans un rayon d’une case). Pour aider, les joueurs peuvent dépensés des points de trésors pour révéler :     
+# Modes de jeu
+
+<u>On considéra plusieurs modes de jeu :</u>
+
+ -   **Le speeding contest :** Dans ce mode de jeu, tout le monde a la vision complète du plateau avec les trous, murs et trésors. Il faut juste être le plus rapide pour gagner. On interdira le mix entre joueurs "Humain" et "Ordinateur" pour ce mode.
+ -   **Le tour par tour :** A nouveau, tout le monde a la vision complète du plateau mais on doit attendre son tour pour jouer.
+ -  **Le brouillard de guerre :** Dans ce mode de jeu, les joueurs connaissent uniquement la position et la valeur des trésors. Chaque joueur peut voir les murs et joueurs dans un rayon de deux cases autour de lui. En revanche, il ne connait que le nombre de trous autour de lui (dans un rayon d’une case). Pour aider, les joueurs peuvent dépensés des points de trésors pour révéler :     
 	 - les pièges autour de lui pendant 5 tours
 	 - une partie de la carte pendant 3 tours. Pendant ces trois 3 tours, le
    joueur peut voir la position des joueurs, les tours et les trésors
@@ -37,16 +43,18 @@ On considéra plusieurs modes de jeu:
 
 Le prix des deux commandes pourra être modifié à la génération de la    carte.
 
+# Concidérations techniques
+
 **Méthodologie** :  
     On commencera par l’élaboration des modes de jeu speeding contest et tour par tour.
     On donnera une spécification pour les communications entre clients et serveurs qu’il faudra suivre scrupuleusement. Cela permettra en l’occurrence de pouvoir utiliser des clients et serveurs implémentés par différentes personnes de participer au même jeu. Par example, la spécification inclue les points suivants :
- - la communication entre clients et serveurs se fera via socket ;
- - il n’y aura pas de communication directement entre clients,
+ - la communication entre clients et serveurs se fera **via socket** ;
+ - il n’y aura pas de communication directement **entre clients**,
    uniquement client-serveur ;
- - un serveur devra être capable d’accepter un nombre arbitraire de
-   client avant de démarrer la partie ;
- - les clients et serveurs ne communiqueront que via une liste
-   prédéfinie de commandes qui sera donnée au début du projet.
+ - un serveur devra être capable d’accepter **un nombre arbitraire** de
+   client avant de **démarrer la partie** ;
+ - les clients et serveurs ne communiqueront que **via une liste
+   prédéfinie de commandes** qui sera donnée au **début du projet**.
  - ...
 
     Vous serez libre de programmer comme vous le souhaitez la structure interne du client et du serveur, DU MOMENT QUE le client et le serveur satisfont la spécification. Néanmoins, certaines librairies, structures de données et algorithmes seront proposés/conseillés pour vous faciliter la tâche.
