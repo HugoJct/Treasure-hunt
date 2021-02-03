@@ -1,73 +1,55 @@
 Ce dépôt Gitlab est dédié au développement du projet de programmation du semestre 4 (PI4).
 
-Le sujet définitif sera attribué le 03/02/2021 à partir de minuit.
-Une fois le sujet attribué, NE PAS OUBLIER D'AJOUTER LE PROF RESPONSABLE DUDIT SUJET SUR CE GITLAB !
+"Chasse au trésor en réseau" by Vincent Cheval:
+    Jeu de chasse au trésor sur une carte 2D, en réseau.
+    
+Objectif : 
+    L’objectif de ce projet est de créer un logiciel permettant de jouer à une chasse au trésor en réseau. 
+    Le logiciel inclura:
+        — une partie serveur qui génère les parties, accepte les connexions de client "humain" et peut aussi générer des joueurs "Ordinateurs".
+        — une partie client permettant de se connecter à un serveur et de participer à la chasse au trésor.
 
-La liste de voeux de l'équipe est la suivante: 
+Réalisation technique : 
+    Le projet doit normalement être réalisé en Java.
+    Cela peut être discuté.
 
-    - 1/. Jeu de Gestion
-    - 2/. Jeu de Stratégie
-    - 3/. Corona Bounce
-    - 4/. Chasse aux trésors
-    - 5/. Monopoly
-    - 6/. Circuit
-    - 7/. Agenda
-    - 8/. Discoodle
-    - 9/. Air Hockey
-    - 10/. Jeu de Pions
-    - 11/. Taquin
-    - 12/. Percolation & épidémie
-    - 13/. Pool
-    - 14/. Kwyk
-    - 15/. Alchimie
-    - 16/. Calculatrice
+Principe : 
+    La chasse au trésor est modélisé par un plateau de jeu rectangulaire avec un nombre prédéfini de cases. Une case peut soit être vide, soit contenir un trésor, soit correspondre à un mur ou enfin correspondre à un
+    trou. Les trésors ont plusieurs valeurs possibles (5, 10, 15 et 20).
+    Au lancement de la partie, le serveur place aléatoirement sur des cases vides les joueurs. Les joueurs doivent alors se déplacer sur le plateau de jeu pour aller récupérer le plus de trésors avec les conditions suivantes :
+        — Les déplacements ne peuvent être que verticals ou horizontals
+        — Les joueurs ne peuvent traverser un mur
+        — Deux joueurs ne peuvent se trouver sur la même case
+        — Si un joueur tombe dans un trou, il est éliminé
+        — Lorsque tous les trésors ont été récupérés, la partie est terminée ; le joueur ayant le plus de point gagne.
 
-La liste des 16 sujets est la suivante:
+On considéra plusieurs modes de jeu:
 
-    - monopoly by Edwin Hamel-De la Court: Jeu de plateau avec achat et vente de propriétés
-        Programmer un jeu où l'on se déplace à l'aide de dés sur un plateau, en achetant des propriétés et en payant des loyers pour pouvoir rester sur une case. On pourra s'inspirer du célèbre jeu de Monopoly.
+    1. Le speeding contest : Dans ce mode de jeu, tout le monde a la vision complète du plateau avec les trous, murs et trésors. Il faut juste être le plus rapide pour gagner. On interdira le mix entre joueurs "Humain" et "Ordinateur" pour ce mode.
+    
+    2. Le tour par tour : A nouveau, tout le monde a la vision complète du plateau mais on doit attendre son tour pour jouer.
+    
+    3. Le brouillard de guerre : Dans ce mode de jeu, les joueurs connaissent uniquement la position et la valeur des trésors. Chaque joueur peut voir les murs et joueurs dans un rayon de deux cases autour de lui. En revanche, il ne connait que le nombre de trous autour de lui (dans un rayon d’une case). Pour aider, les joueurs peuvent dépensés des points de trésors pour révéler :
+            — les pièges autour de lui pendant 5 tours
+            — une partie de la carte pendant 3 tours. Pendant ces trois 3 tours, le joueur peut voir la position des joueurs, les tours et les trésors encore présents.
+        Le prix des deux commandes pourra être modifié à la génération de la carte.
 
-    - agenda by Léonard Guetta: Agenda Électronique
-        Programmer un agenda électronique pour gérer ses évènements, tâches et rendez-vous.
+Méthodologie : 
+    On commencera par l’élaboration des modes de jeu speeding contest et tour par tour.
+    On donnera une spécification pour les communications entre clients et serveurs qu’il faudra suivre scrupuleusement. Cela permettra en l’occurrence de pouvoir utiliser des clients et serveurs implémentés par différentes personnes de participer au même jeu. Par example, la spécification inclue les points suivants :
+        — la communication entre clients et serveurs se fera via socket ;
+        — il n’y aura pas de communication directement entre clients, uniquement client-serveur ;
+        — un serveur devra être capable d’accepter un nombre arbitraire de client avant de démarrer la partie ;
+        — les clients et serveurs ne communiqueront que via une liste prédéfinie de commandes qui sera donnée au début du projet.
+        — ...
 
-    - gestion by Edwin Hamel-De la Court: Jeu de gestion
-        Concevoir et programmer un jeu de gestion de ressources au tour par tour (comme les jeux de simulation de ferme, par exemple).
+    Vous serez libre de programmer comme vous le souhaitez la structure interne du client et du serveur, DU MOMENT QUE le client et le serveur satisfont la spécification. Néanmoins, certaines librairies, structures de données et algorithmes seront proposés/conseillés pour vous faciliter la tâche.
+    Une représentation graphique du jeu ne sera pas obligatoire (visualisation en texte conviendra) mais elle sera la bienvenue.
 
-    - pions by François Laroussinie: Jeux de pions
-        Du morpion au gomoku...
+Objectifs minimaux : 
+    - Il sera donc demandé au minium d’implémenter un serveur et un client (pour humain) qui suivront la spécification qui auquel on pourra jouer. 
+    - Il faudra implémenter le speeding contest et le tour par tour.
 
-    - tresor by Vincent Cheval: Chasse au trésor
-        Jeu de chasse au trésor sur une carte 2D, en réseau.
-
-    - percolation by Vlady Ravelomanana: Percolation et épidémie
-        Simulation épidémique utilisant des modèles de percolation : c'est-à-dire de l'écoulement d'un fluide au travers d'un solide perméable. Il faudra jouer sur les différents paramètres de ce solide.
-
-    - calculatrice by Léonard Guetta: Calculatrice graphique
-        Une calculatrice en mode graphique permettant d'entrer des fonction réelles et de tracer leurs graphes.
-
-    - alchimie by Ada Vienot: Alchimie
-        Découvrir les combinaisons d'éléments simples permettant d'obtenir des éléments plus complexes.
-
-    - kwyk by Yan Jurski: Kwyk
-        Système de programmation visuelle destiné à l'apprentissage de la programmation par les enfants.
-
-    - discoodle by Aldric Degorre: Discoodle
-        Conception de l'outil idéal pour l'enseignement à distance.
-
-    - pool by Vlady Ravelomanana: Pool
-        Simulation du jeu de pool (billard).
-
-    - taquin by François Laroussinie: Taquin
-        Résolution de jeux de taquin avec l'algorithme A*.
-
-    - strategie by Edwin Hamel-De la Court: Jeu de stratégie
-        Concevoir et programmer un jeu de stratégie (militaire) au tour par tour.
-
-    - circuits by François Laroussinie: Circuits
-        Calculs de trajectoire
-
-    - airhockey by Aldric Degorre: Air Hockey
-        Simulation physique 2D du jeu de hockey pneumatique sur table.
-
-    - coronabounce by Yan Jurski: Corona Bounce
-        Simulation épidémique basée sur le déplacement des personnes.
+Objectifs supplémentaires : 
+    Vous pourrez ensuite implémenter le mode de jeu brouillard de guerre, une représentation graphique et les joueurs "Ordinateur". Pour ces derniers, vous êtes libre de choisir comment implémenter l’intelligence artificielle des joueurs "Ordinateur". Si vous avez plusieurs idées,
+vous pouvez alors faire des compétitions entre joueurs "Ordinateur" et évaluer vos performances. Dans ce cas, il ne sera pas nécessaire d’implémenter tous les modes de jeu.
