@@ -26,7 +26,7 @@ public class Board {
     public String toString() {
     	for(int i=0;i<elements.length;i++)
     		for(int j=0; j<elements[i].length;j++)
-    			return elementss[i][j].toString();
+    			return elements[i][j].toString();
     }
 
 }
