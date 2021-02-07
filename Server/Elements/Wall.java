@@ -4,7 +4,6 @@ public class Wall extends Element {
 
 	public Wall() {
 		super();
-		
 	}
     
 	public String toString() {
