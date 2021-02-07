@@ -6,14 +6,12 @@ public class Board {
     private Element[][] elements;
 
     //Constructor
-    public Board() {
-    	fillEmpty();
-    }
+    private final int sizeX;
+    private final int sizeY;
 
-    private void fillEmpty() {
-    	for(int i=0;i<elements.length;i++)
-    		for(int j=0; j<elements[i].length;j++)
-    			elements[i][j] = null; //new Element();
+    public Board(int x, int y) {
+    	this.sizeX = x;
+    	this.sizeY = y;
     }
 
     protected void setElementAt(Element elem, int x, int y) {
@@ -35,5 +33,6 @@ public class Board {
     			return elements[i][j].toString();
 		return null;
     }
+    
 
 }
