@@ -5,7 +5,6 @@ public class Treasure extends Element {
 	private final int value;
 
 	public Treasure(int value) {
-		super();
 		this.value = value;
 	}
 
