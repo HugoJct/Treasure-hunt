@@ -4,15 +4,12 @@ import Server.Elements.Element;
 
 public class Board {
     private Element[][] elements;
+    private final int sizeX;
+    private final int sizeY;
 
-    public Board() {
-    	fillEmpty();
-    }
-
-    private void fillEmpty() {
-    	for(int i=0;i<elements.length;i++)
-    		for(int j=0; j<elements[i].length;j++)
-    			elements[i][j] = new Element();
+    public Board(int x, int y) {
+    	this.sizeX = x;
+    	this.sizeY = y;
     }
 
     protected void setElementAt(Element elem, int x, int y) {
