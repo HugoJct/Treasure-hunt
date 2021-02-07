@@ -2,8 +2,9 @@
 
 **Ce dépôt Gitlab est dédié au développement du projet de programmation du semestre 4 (PI4).**
 
-"<a href="https://moodle.u-paris.fr/mod/resource/view.php?id=243541" title="Vidéo de présentation">Chasse au trésor en réseau</a>" by Vincent Cheval:
+"[Chasse au trésor en réseau](https://moodle.u-paris.fr/mod/resource/view.php?id=243541)" by Vincent Cheval:
     Jeu de chasse au trésor sur une carte 2D, en réseau.
+    ![alt text](dev_resources/template.png "Video screenshot")
 
 ## Présentation
 
@@ -31,11 +32,11 @@
 
 ## Modes de jeu
 
-**On considéra plusieurs modes de jeu :**
+**On considérera plusieurs modes de jeu :**
 
  -   **Le speeding contest :** Dans ce mode de jeu, tout le monde a la vision complète du plateau avec les trous, murs et trésors. Il faut juste être le plus rapide pour gagner. On interdira le mix entre joueurs "Humain" et "Ordinateur" pour ce mode.
  -   **Le tour par tour :** A nouveau, tout le monde a la vision complète du plateau mais on doit attendre son tour pour jouer.
- -  **Le brouillard de guerre :** Dans ce mode de jeu, les joueurs connaissent uniquement la position et la valeur des trésors. Chaque joueur peut voir les murs et joueurs dans un rayon de deux cases autour de lui. En revanche, il ne connait que le nombre de trous autour de lui (dans un rayon d’une case). Pour aider, les joueurs peuvent dépensés des points de trésors pour révéler :     
+ -  **Le brouillard de guerre :** Dans ce mode de jeu, les joueurs connaissent uniquement la position et la valeur des trésors. Chaque joueur peut voir les murs et joueurs dans un rayon de deux cases autour de lui. En revanche, il ne connait que le nombre de trous autour de lui (dans un rayon d’une case). Pour aider, les joueurs peuvent dépenser des points de trésors pour révéler :     
 	 - les pièges autour de lui pendant 5 tours
 	 - une partie de la carte pendant 3 tours. Pendant ces trois 3 tours, le
    joueur peut voir la position des joueurs, les tours et les trésors
@@ -43,7 +44,7 @@
 
 Le prix des deux commandes pourra être modifié à la génération de la    carte.
 
-## Concidérations techniques
+## Considérations techniques
 
 **Méthodologie** :  
     On commencera par l’élaboration des modes de jeu speeding contest et tour par tour.
@@ -57,7 +58,7 @@ Le prix des deux commandes pourra être modifié à la génération de la    car
    prédéfinie de commandes** qui sera donnée au **début du projet**.
  - ...
 
-    Vous serez libre de programmer comme vous le souhaitez la structure interne du client et du serveur, DU MOMENT QUE le client et le serveur satisfont la spécification. Néanmoins, certaines librairies, structures de données et algorithmes seront proposés/conseillés pour vous faciliter la tâche.
+Vous serez libre de programmer comme vous le souhaitez la structure interne du client et du serveur, DU MOMENT QUE le client et le serveur satisfont la spécification. Néanmoins, certaines librairies, structures de données et algorithmes seront proposés/conseillés pour vous faciliter la tâche.
     Une représentation graphique du jeu ne sera pas obligatoire (visualisation en texte conviendra) mais elle sera la bienvenue.
 
 **Objectifs minimaux** : 
