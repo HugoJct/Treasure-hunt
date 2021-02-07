@@ -6,7 +6,7 @@ public class Wall extends Element {
 	}
     
 	public String toString() {
-		return "Wall";
+		return "W";
 	}
 
 }

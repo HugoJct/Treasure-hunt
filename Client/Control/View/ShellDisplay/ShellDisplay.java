@@ -19,14 +19,8 @@ public class ShellDisplay {
     			if(b.getElementAt(x, y) == null) {
     				System.out.print(".");
     			}
-    			if(b.getElementAt(x, y) instanceof Wall) {
-    				System.out.print("W");
-    			}
-    			if(b.getElementAt(x, y) instanceof Treasure) {
-    				System.out.print("T");
-    			}
-    			if(b.getElementAt(x, y) instanceof Hole) {
-    				System.out.print("H");
+    			else {
+    				System.out.println(b.getElementAt(x, y).toString());
     			}
     		}
     		System.out.println("");
