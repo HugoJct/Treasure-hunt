@@ -9,6 +9,8 @@ public class ServerMain {
 	public static void main(String[] args) {
 		Board b = new Board(15,15);
 		
+		//The following is the board featured on the screenshot from the project's video presentation
+		
 		//Walls
 		b.setElementAt(new Wall(), 5, 1);
 		b.setElementAt(new Wall(), 6, 3);
