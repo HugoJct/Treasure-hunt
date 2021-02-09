@@ -10,6 +10,7 @@ public class Board {
     public Board(int x, int y) {
     	this.sizeX = x;
     	this.sizeY = y;
+		elements = new Element[y][x];
     }
 
     protected void setElementAt(Element elem, int x, int y) {
@@ -24,7 +25,10 @@ public class Board {
     	String retour = "";
     	for(int i=0;i<elements.length;i++) {
     		for(int j=0; j<elements[i].length;j++) {
-    			retour += elements[i][j].toString();
+				if(elements[i][j] != null)
+    				retour += elements[i][j].toString()+" ";
+				else
+					retour += ". ";
     		}
     		retour +="\n";
     	}
