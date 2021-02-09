@@ -13,7 +13,7 @@ public class Treasure extends Element {
 	}
  
 	public String toString() {
-		return "Treasure";
+		return "T";
 	}
 
 }
