@@ -4,6 +4,8 @@ import Server.Elements.Element;
 
 public class Board {
     private Element[][] elements;
+
+    //Constructor
     private final int sizeX;
     private final int sizeY;
 
@@ -20,6 +22,11 @@ public class Board {
     public Element getElementAt(int x, int y) {
     	return elements[y][x];
     }
+    
+    //Getter of the two dimensional array
+    public Element[][] getElement(){
+    	return this.elements;
+    }
 
     public String toString() {
     	String s = "";
@@ -34,5 +41,6 @@ public class Board {
     	}
     	return s;
     }
+    
 
 }
