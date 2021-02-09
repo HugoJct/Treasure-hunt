@@ -10,9 +10,9 @@ public class Board {
     private final int sizeY;
 
     public Board(int x, int y) {
-    	this.sizeX = y;
-    	this.sizeY = x;
-    	elements = new Element[y][x];
+    	this.sizeX = x;
+    	this.sizeY = y;
+		elements = new Element[y][x];
     }
 
     protected void setElementAt(Element elem, int x, int y) {
@@ -29,17 +29,17 @@ public class Board {
     }
 
     public String toString() {
-    	String s = "";
+    	String retour = "";
     	for(int i=0;i<elements.length;i++) {
     		for(int j=0; j<elements[i].length;j++) {
-    			if(elements[i][j] != null)
-    				s += elements[i][j].toString()+" ";
-    			else
-    				s += ". ";
+				if(elements[i][j] != null)
+    				retour += elements[i][j].toString()+" ";
+				else
+					retour += ". ";
     		}
-    		s+= "\n";
+    		retour +="\n";
     	}
-    	return s;
+    	return retour+="\n";
     }
     
 
