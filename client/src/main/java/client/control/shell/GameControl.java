@@ -1,4 +1,4 @@
-package Client.Control.Shell;
+package client.control.shell;
 
 public class GameControl {
     

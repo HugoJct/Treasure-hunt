@@ -1,6 +1,6 @@
-package Server;
+package server;
 
-import Server.Elements.Wall;
+import server.elements.Wall;
 
 public class Player {
     private int posX;

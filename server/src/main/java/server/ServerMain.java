@@ -1,8 +1,8 @@
-package Server;
+package server;
 
-import Server.Elements.Hole;
-import Server.Elements.Treasure;
-import Server.Elements.Wall;
+import server.elements.Hole;
+import server.elements.Treasure;
+import server.elements.Wall;
 
 public class ServerMain {
 
