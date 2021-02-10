@@ -1,6 +1,7 @@
 package Server;
 
 import Server.Elements.Element;
+import Server.Elements.Wall;
 
 public class Board {
     private Element[][] elements;
@@ -10,10 +11,22 @@ public class Board {
     private final int sizeY;
 
     public Board(int x, int y) {
-    	this.sizeX = x;
-    	this.sizeY = y;
-		elements = new Element[y][x];
+    	this.sizeX = x+2;
+    	this.sizeY = y+2;
+		elements = new Element[this.sizeY][this.sizeX];
+		setBorder();
     }
+
+	public void setBorder() {
+		for (int i = 0 ; i < sizeY ; i++) {
+			this.elements[i][0] = new Wall();
+			this.elements[i][sizeX-1] = new Wall();
+		}
+		for (int i = 0 ; i < sizeX ; i++) {
+			this.elements[sizeY-1][i] = new Wall();
+			this.elements[0][i] = new Wall();
+		}
+	}
 
     protected void setElementAt(Element elem, int x, int y) {
     	elements[y][x] = elem;
