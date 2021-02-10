@@ -1,4 +1,4 @@
-package Server.Elements;
+package server.elements;
 
 public class Wall extends Element {
 

@@ -1,7 +1,6 @@
-package Server;
+package server;
 
-import Server.Elements.Element;
-import Server.Elements.Wall;
+import server.elements.*;
 
 public class Board {
     private Element[][] elements;

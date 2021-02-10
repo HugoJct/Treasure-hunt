@@ -1,7 +1,7 @@
-package Client.Control.View.ShellDisplay;
+package client.control.view.shelldisplay;
 
-import Server.Board;
-import Server.Elements.*;
+import server.Board;
+import server.elements.*;
 
 public class ShellDisplay {
     Board b;
