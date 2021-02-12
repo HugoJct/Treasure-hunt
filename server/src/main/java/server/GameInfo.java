@@ -1,4 +1,4 @@
-package server.src.main.java.server;
+package server;
 
 public class GameInfo {
     

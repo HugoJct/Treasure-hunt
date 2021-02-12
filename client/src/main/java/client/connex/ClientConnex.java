@@ -1,7 +1,7 @@
-package client.src.main.java.client.connex;
+package client.connex;
 
-import client.src.main.java.client.connex.Writer;
-import client.src.main.java.client.connex.Reader;
+import client.connex.Writer;
+import client.connex.Reader;
 
 import java.io.IOException;
 import java.net.Socket;

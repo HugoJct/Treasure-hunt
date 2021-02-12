@@ -1,4 +1,4 @@
-package client.src.main.java.client.connex;
+package client.connex;
 
 import java.io.IOException;
 import java.io.PrintStream;

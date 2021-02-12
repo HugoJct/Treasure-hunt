@@ -1,6 +1,6 @@
-package client.src.main.java.client;
+package client;
 
-import client.src.main.java.client.connex.ClientConnex;
+import client.connex.ClientConnex;
 
 
 public class Player {

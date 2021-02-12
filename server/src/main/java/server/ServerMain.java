@@ -1,11 +1,11 @@
-package server.src.main.java.server;
+package server;
 
-import server.src.main.java.server.elements.Element;
-import server.src.main.java.server.elements.Hole;
-import server.src.main.java.server.elements.Treasure;
-import server.src.main.java.server.elements.Wall;
-import server.src.main.java.server.connex.ServConnex;
-import server.src.main.java.server.Board;
+import server.elements.Element;
+import server.elements.Hole;
+import server.elements.Treasure;
+import server.elements.Wall;
+import server.connex.ServConnex;
+import server.Board;
 
 import java.io.IOException;
 import java.net.ServerSocket;

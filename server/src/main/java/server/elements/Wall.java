@@ -1,4 +1,4 @@
-package server.src.main.java.server.elements;
+package server.elements;
 
 public class Wall extends Element {
 

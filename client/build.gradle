@@ -7,5 +7,5 @@ dependencies {
 }
 
 application {
-    mainClass = 'client.src.main.java.client.Player' 
+    mainClass = 'client.Player' 
 }
