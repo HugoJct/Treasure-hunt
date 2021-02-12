@@ -1,6 +1,6 @@
-package server;
+package server.src.main.java.server;
 
-import server.elements.Wall;
+import server.src.main.java.server.elements.Wall;
 
 public class Player {
     private int posX;

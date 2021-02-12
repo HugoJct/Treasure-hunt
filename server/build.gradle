@@ -3,5 +3,5 @@ plugins {
 }
 
 application {
-    mainClass = 'server.ServerMain' 
+    mainClass = 'server.src.main.java.server.ServerMain' 
 }

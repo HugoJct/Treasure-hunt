@@ -1,7 +1,7 @@
-package client.control.view.shelldisplay;
+package client.src.main.java.client.view.shelldisplay;
 
-import server.Board;
-import server.elements.*;
+import server.src.main.java.server.Board;
+import server.src.main.java.server.elements.*;
 
 public class ShellDisplay {
     Board b;

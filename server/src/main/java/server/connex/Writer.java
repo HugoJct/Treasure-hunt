@@ -1,4 +1,4 @@
-package server;
+package server.src.main.java.server.connex;
 
 import java.io.IOException;
 import java.io.PrintStream;

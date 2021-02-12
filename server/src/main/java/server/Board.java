@@ -1,6 +1,7 @@
-package server;
+package server.src.main.java.server;
 
-import server.elements.*;
+import server.src.main.java.server.elements.Element;
+import server.src.main.java.server.elements.Wall;
 
 public class Board {
     private Element[][] elements;
