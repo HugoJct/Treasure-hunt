@@ -9,3 +9,7 @@ dependencies {
 application {
     mainClass = 'client.Player' 
 }
+
+run{
+    standardInput = System.in
+}

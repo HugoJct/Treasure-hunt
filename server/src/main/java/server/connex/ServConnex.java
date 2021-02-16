@@ -1,36 +1,45 @@
 package server.connex;
 
+import server.ServerMain;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.io.PrintStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 
-public class ServConnex {
-    
-    public void connex() {
-        ServerSocket sSocket;
-		int port = 12345;
-		try {
-			sSocket = new ServerSocket(port);
-			System.out.println("Server lauched on port "+port+" !!");
-			Socket cSocket = sSocket.accept();
-			
-			Thread write = new Thread(new Writer(cSocket));
-			Thread read = new Thread(new Reader(cSocket));
-			
-			write.start();
-			read.start();
+public class ServConnex implements Runnable{
 
-			write.join();
-			read.join();
+	private final String name;
+	private final BufferedReader in;
+	private final PrintStream out;	
+	public boolean isConnected;
+	Socket s;
 
-			sSocket.close();
-			cSocket.close();
+	public ServConnex(Socket s, String name, BufferedReader in, PrintStream out) {
+		this.s = s;
+		this.in = in;
+		this.out = out;
+		this.name = name;
+		this.isConnected = true;
+	}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch(InterruptedException e) {
-			e.printStackTrace();
+	@Override
+	public void run() {
+		String msg = "";
+		while(msg != null) {
+			try {
+				msg = in.readLine();
+				if(msg == null) {
+					break;
+				}
+				System.out.println(this.name+" wrote: "+msg);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
-    }
+		this.isConnected = false;
+	}
 }

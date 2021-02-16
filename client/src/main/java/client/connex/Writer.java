@@ -14,7 +14,6 @@ public class Writer implements Runnable{
 		this.soc = soc;
 		try {
 			out = new PrintStream(soc.getOutputStream());
-			out.println("Connected !");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

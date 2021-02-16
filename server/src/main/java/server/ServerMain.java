@@ -10,15 +10,21 @@ import server.Board;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Vector;
 
 public class ServerMain {
 
+	public static Vector<ServConnex> list = new Vector<>();
+	static int i = 0;
+
 	public static void main(String[] args) {
-		ServConnex connection = new ServConnex();
-		connection.connex();
 		Board b = new Board(15,15);
-		
+		System.out.println(b);
+
 		//The following is the board featured on the screenshot from the project's video presentation
 		
 		//Walls
@@ -48,7 +54,7 @@ public class ServerMain {
 		b.setElementAt(new Treasure(0), 8, 11);
 		b.setElementAt(new Treasure(5), 5, 8);
 		b.setElementAt(new Treasure(0), 12, 9);
-		
+
 		//Holes
 		b.setElementAt(new Hole(), 2, 8);
 		b.setElementAt(new Hole(), 5, 6);
@@ -61,6 +67,29 @@ public class ServerMain {
 		
 		Player p1 = new Player("Hugo");
 		System.out.println(p1);
+
+		try {
+			ServerSocket serverSoc = new ServerSocket(12345);
+			Socket client;
+			while(true) {
+					client = serverSoc.accept();
+					System.out.println("Client "+i+" is now connected");
+					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+					PrintStream out = new PrintStream(client.getOutputStream());
+					ServConnex sc = new ServConnex(client,"client " +i,in,out);	
+					Thread t = new Thread(sc);
+					list.add(sc);
+					for(ServConnex sc2 : list) {
+						if(!sc2.isConnected)
+							list.remove(sc2);
+					}
+
+					t.start();
+					i++;
+			}
+		} catch (IOException e) {
+				e.printStackTrace();
+			} 
 	}
 
 }
