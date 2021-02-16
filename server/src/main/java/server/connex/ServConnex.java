@@ -33,6 +33,7 @@ public class ServConnex implements Runnable{
 			try {
 				msg = in.readLine();
 				if(msg == null) {
+					System.out.println(this.name+" disconnected !");
 					break;
 				}
 				System.out.println(this.name+" wrote: "+msg);

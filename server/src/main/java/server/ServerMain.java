@@ -23,8 +23,6 @@ public class ServerMain {
 
 	public static void main(String[] args) {
 		Board b = new Board(15,15);
-		System.out.println(b);
-
 		//The following is the board featured on the screenshot from the project's video presentation
 		
 		//Walls
@@ -44,7 +42,7 @@ public class ServerMain {
 		b.setElementAt(new Wall(), 4, 12);
 		b.setElementAt(new Wall(), 5, 12);
 		b.setElementAt(new Wall(), 5, 13);
-		
+
 		//Treasures
 		b.setElementAt(new Treasure(15), 8, 1);
 		b.setElementAt(new Treasure(5), 4, 4);
