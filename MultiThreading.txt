@@ -29,7 +29,7 @@ We have two ways to do it :
 	}
 	
 
-According to my research, it is better to use an "implementation" class : if we extend Thread class, we can't extend another class.
+According to my research, it is better to use an "implementation" class : if we extend Thread class, we can't extend another class. (a class can only extend one)
 Else, it will be exactly the same principle :
 We have to define the method run() which corresponds to actions this thread has to execute.
 For each thread we need, we have to create a new instance of our class ThreadClass.
@@ -45,7 +45,7 @@ For an implementing class :
 
 
 
-Let's see how to call them in the main function :
+Here is an example of how to call these thread in main function :
 
 public static void main(String[] args){
 	ThreadClass Thread1 = new ThreadClass(); //Creation of a firts thread
@@ -57,7 +57,15 @@ public static void main(String[] args){
 	
 }
 
-Once all theards instances have been created, we need to use start() function to "activate" them. (it runs the thread)
+Once all theard instances have been created, we need to use start() function to "activate" them. (it runs the thread)
+
+
+There is a last method to do multi-threading; using anonymous class:
+	new Thread(new Runnable(){
+		public void run(){
+			//Actions to execute
+		}
+	}).start()
 
 
 III) Warning about uses : 
