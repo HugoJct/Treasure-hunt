@@ -67,25 +67,25 @@ public class ServerMain {
 		System.out.println(p1);
 
 		try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
-			ServerSocket serverSoc = new ServerSocket(12345);
-			Socket client;
+			ServerSocket serverSoc = new ServerSocket(12345);	//opening the server
+			Socket client;					
 			while(true) {
-					client = serverSoc.accept();
-					System.out.println("Client "+i+" is now connected");
-					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-					PrintStream out = new PrintStream(client.getOutputStream());
-					ServConnex sc = new ServConnex(client,"client " +i,in,out);	
-					Thread t = new Thread(sc);
-					list.add(sc);
-					for(ServConnex sc2 : list) {
-						if(!sc2.isConnected)
-							list.remove(sc2);
+					client = serverSoc.accept();		//waiting for connection
+					System.out.println("Client "+i+" is now connected");	//inform the user
+					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));	//build the inputstream
+					PrintStream out = new PrintStream(client.getOutputStream());	//build the output stream
+					ServConnex sc = new ServConnex(client,"client " +i,in,out);		//build the client manager 
+					Thread t = new Thread(sc);									//build the thread with the client manager created above
+					list.add(sc);		//add the client to the list
+					for(ServConnex sc2 : list) {	//list update 
+						if(!sc2.isConnected)	//if the client is disconnected
+							list.remove(sc2);	//it is removed from the list
 						else if(sc2.getName().equals("client 0") && list.size() > 1) 	// This how to send a message
 							sc2.sendMessage("message au client 0");						// To a specific user
 					}
 
-					t.start();
-					i++;
+					t.start();	//thread start
+					i++;	//name variable incrementation
 			}
 		} catch (IOException e) {
 				e.printStackTrace();

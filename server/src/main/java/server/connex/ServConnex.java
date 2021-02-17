@@ -27,11 +27,11 @@ public class ServConnex implements Runnable{
 		sendMessage("Connected !");
 	}
 
-	public String getName() {
+	public String getName() {		//returns the name of the class instance
 		return name;
 	}
 
-	public boolean sendMessage(String message) {
+	public boolean sendMessage(String message) {		//This method sends a message to the client handled by the instance of the class
 		out.println(message);
 		out.flush();
 		return true;
@@ -39,19 +39,20 @@ public class ServConnex implements Runnable{
 
 	@Override
 	public void run() {
-		String msg = "";
-		while(msg != null) {
+
+		String msg = "";		// This loop handles the printing of the incoming messages
+		while(msg != null) {	//As long as the remote socket is connected
 			try {
-				msg = in.readLine();
-				if(msg == null) {
-					System.out.println(this.name+" disconnected !");
-					break;
+				msg = in.readLine();	//read the input
+				if(msg == null) {		// if the socket is disconnected
+					System.out.println(this.name+" disconnected !");	//inform the user
+					break;												//break out of the loop
 				}
-				System.out.println(this.name+" wrote: "+msg);
+				System.out.println(this.name+" wrote: "+msg);	//print the message
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
-		this.isConnected = false;
+		this.isConnected = false;	//update status
 	}
 }
