@@ -8,14 +8,14 @@ run: build
 	./gradlew run
 
 #the build and run recipes for the client side of the project only
-client: buildClient
-	./gradlew :client:run
+client: clearT buildClient
+	./gradlew :client:run --console=plain
 buildClient:
 	./gradlew :client:build
 
 #the build and run recipes for the server side of the project only
-server: buildServer
-	./gradlew :server:run
+server: clearT buildServer
+	./gradlew :server:run --console=plain
 buildServer:
 	./gradlew :server:build
 

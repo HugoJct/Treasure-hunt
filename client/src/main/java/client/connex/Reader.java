@@ -24,7 +24,7 @@ public class Reader implements Runnable {
 		try {
 			msg = in.readLine();
 			while (msg != null) {
-				System.out.println(msg);
+				System.out.println("Server wrote: "+msg);
 				msg = in.readLine();
 			}
 		} catch (IOException e) {
