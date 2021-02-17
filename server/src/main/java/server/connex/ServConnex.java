@@ -24,6 +24,17 @@ public class ServConnex implements Runnable{
 		this.out = out;
 		this.name = name;
 		this.isConnected = true;
+		sendMessage("Connected !");
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public boolean sendMessage(String message) {
+		out.println(message);
+		out.flush();
+		return true;
 	}
 
 	@Override

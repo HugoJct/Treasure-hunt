@@ -66,7 +66,7 @@ public class ServerMain {
 		Player p1 = new Player("Hugo");
 		System.out.println(p1);
 
-		try {
+		try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
 			ServerSocket serverSoc = new ServerSocket(12345);
 			Socket client;
 			while(true) {
@@ -80,6 +80,8 @@ public class ServerMain {
 					for(ServConnex sc2 : list) {
 						if(!sc2.isConnected)
 							list.remove(sc2);
+						else if(sc2.getName().equals("client 0") && list.size() > 1) 	// This how to send a message
+							sc2.sendMessage("message au client 0");						// To a specific user
 					}
 
 					t.start();
