@@ -4,8 +4,9 @@ import server.elements.Element;
 import server.elements.Hole;
 import server.elements.Treasure;
 import server.elements.Wall;
-import server.connex.ServConnex;
+
 import server.Board;
+import server.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,7 +19,7 @@ import java.util.Vector;
 
 public class ServerMain {
 
-	public static Vector<ServConnex> list = new Vector<>();
+	public static Vector<Player> list = new Vector<>();
 	static int i = 0;
 
 	public static void main(String[] args) {
@@ -62,25 +63,24 @@ public class ServerMain {
 		b.setElementAt(new Hole(), 15, 14);
 		
 		System.out.println(b);
-		
+		/*
 		Player p1 = new Player("Hugo");
-		System.out.println(p1);
+		System.out.println(p1);*/
 
 		try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
 			ServerSocket serverSoc = new ServerSocket(12345);	//opening the server
 			Socket client;					
 			while(true) {
 					client = serverSoc.accept();		//waiting for connection
-					System.out.println("Client "+i+" is now connected");	//inform the user
-					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));	//build the inputstream
-					PrintStream out = new PrintStream(client.getOutputStream());	//build the output stream
-					ServConnex sc = new ServConnex(client,"client " +i,in,out);		//build the client manager 
+					Player player = new Player(client,"Hugo");
+					System.out.println(player.getName()+" is now connected");	//inform the user
+					Player sc = new Player(client,player.getName());		//build the client manager 
 					Thread t = new Thread(sc);									//build the thread with the client manager created above
 					list.add(sc);		//add the client to the list
-					for(ServConnex sc2 : list) {	//list update 
+					for(Player sc2 : list) {	//list update 
 						if(!sc2.isConnected)	//if the client is disconnected
 							list.remove(sc2);	//it is removed from the list
-						else if(sc2.getName().equals("client 0") && list.size() > 1) 	// This how to send a message
+						else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
 							sc2.sendMessage("message au client 0");						// To a specific user
 					}
 
