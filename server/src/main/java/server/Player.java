@@ -29,10 +29,11 @@ public class Player implements Runnable{
         this.s = s;
         try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintStream(s.getOutputStream()); 
+            out = new PrintStream(s.getOutputStream());
         } catch( IOException e) {
             e.printStackTrace();
         }
+        sendMessage("Connected !");
     }
     
     //Network methods

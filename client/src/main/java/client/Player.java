@@ -9,6 +9,7 @@ import java.lang.InterruptedException;
 import java.lang.Thread;
 
 public class Player {
+
     public static void main(String[] args) {
     	try {
     		Socket s = new Socket("127.0.0.1",12345);
