@@ -41,6 +41,10 @@ public class Player implements Runnable{
         return username;
     }
 
+    public boolean isConnected() {
+        return isConnected;
+    }
+
     public boolean sendMessage(String message) {        //This method sends a message to the client handled by the instance of the class
         out.println(message);
         out.flush();

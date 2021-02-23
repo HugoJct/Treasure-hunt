@@ -79,7 +79,7 @@ public class ServerMain {
 					Thread t = new Thread(sc);									//build the thread with the client manager created above
 					list.add(sc);		//add the client to the list
 					for(Player sc2 : list) {	//list update 
-						if(!sc2.isConnected)	//if the client is disconnected
+						if(!sc2.isConnected())	//if the client is disconnected
 							list.remove(sc2);	//it is removed from the list
 						/*else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
 							sc2.sendMessage("message à Hugo");						// To a specific user
