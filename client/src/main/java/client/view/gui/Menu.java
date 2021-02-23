@@ -18,11 +18,10 @@ public class Menu extends JFrame {
 
         this._menuPanel = new JPanel();
         this.setVisible(true); 
+        this.setContentPane(this._menuPanel);
 
-        this._create = new JButton("Créer une partie");
+        this._create = new JButton("Creer une partie");
         this._join = new JButton("Rejoindre une partie");
-        this._info = new JLabel();
-        this._info.setText("TEST");
 
         this._menuPanel.add(this._create);
         this._menuPanel.add(this._join);
