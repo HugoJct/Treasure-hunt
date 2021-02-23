@@ -10,6 +10,7 @@ import java.lang.InterruptedException;
 import java.lang.Thread;
 
 public class Player {
+
     public static void main(String[] args) {
     	
 		new Menu();

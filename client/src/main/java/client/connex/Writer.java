@@ -14,6 +14,7 @@ public class Writer implements Runnable{
 		this.soc = soc;
 		try {
 			out = new PrintStream(soc.getOutputStream());
+			out.println("Hugo");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
