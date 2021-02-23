@@ -81,9 +81,9 @@ public class ServerMain {
 					for(Player sc2 : list) {	//list update 
 						if(!sc2.isConnected)	//if the client is disconnected
 							list.remove(sc2);	//it is removed from the list
-						else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
+						/*else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
 							sc2.sendMessage("message à Hugo");						// To a specific user
-					}
+					*/}
 
 					t.start();	//thread start
 					i++;	//name variable incrementation
