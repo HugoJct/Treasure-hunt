@@ -1,5 +1,8 @@
 package client.view.gui;
 
+import client.System.CreateNewGame;
+import client.System.JoinNewGame;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,8 +32,8 @@ public class Menu extends JFrame {
         this._menuPanel.add(this._join);
         this._menuPanel.add(this._info);
         
-        this._create.addActionListener((ActionEvent e) -> { new CreateGame();});
-        this._join.addActionListener((ActionEvent e) -> { new JoinGame();});
+        this._create.addActionListener((ActionEvent e) -> { CreateNewGame.newGame();});
+        this._join.addActionListener((ActionEvent e) -> { JoinNewGame.joinGame();});
         
     
     }
