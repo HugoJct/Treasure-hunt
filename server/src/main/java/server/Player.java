@@ -33,7 +33,6 @@ public class Player implements Runnable{
         } catch( IOException e) {
             e.printStackTrace();
         }
-        sendMessage("Connected !");
     }
     
     //Network methods
