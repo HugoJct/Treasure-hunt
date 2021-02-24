@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+import java.awt.event.ActionEvent;
+
 public class Menu extends JFrame {
    private JPanel _menuPanel;
    private JButton _create;
@@ -26,6 +28,9 @@ public class Menu extends JFrame {
         this._menuPanel.add(this._create);
         this._menuPanel.add(this._join);
         this._menuPanel.add(this._info);
+        
+        this._create.addActionListener((ActionEvent e) -> { new CreateGame();});
+        this._join.addActionListener((ActionEvent e) -> { new JoinGame();});
         
     
     }

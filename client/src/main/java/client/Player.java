@@ -2,7 +2,7 @@ package client;
 
 import client.connex.Writer;
 import client.connex.Reader;
-import client.view.gui.Menu;
+import client.view.gui.*;
 
 import java.net.Socket;
 import java.io.IOException;
@@ -14,7 +14,6 @@ public class Player {
     public static void main(String[] args) {
     	
 		new Menu();
-		
 		/* try {
     		Socket s = new Socket("127.0.0.1",12345);
     		Thread read = new Thread(new Reader(s));
