@@ -14,36 +14,45 @@ import java.util.Vector;
 
 public class ConnectionHandler implements Runnable{
 
-		Vector<Player> users = ServerMain.connectedUsers;
-		private int port;
+	Vector<Player> users = ServerMain.connectedUsers;
+	private int port;
+	ServerSocket serverSoc;
 
-		public ConnectionHandler(int port) {
-			this.port = port;
-		}
+	public ConnectionHandler(int port) {
+		this.port = port;
+	}
 
-		public void run() {
-			try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
-				ServerSocket serverSoc = new ServerSocket(this.port);	//opening the server
-				Socket client;					
-				while(ServerMain.isRunning()) {			//as long as the server is running
-						client = serverSoc.accept();		//waiting for connection
-						BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-						Player sc = new Player(client,"TestUser");		//build the client manager 
-						System.out.println(sc.getName()+" is now connected");	//print in the server console
-						Thread t = new Thread(sc);	//build the thread with the client manager created above
-						users.add(sc);		//add the client to the list
-						sc.sendMessage("Connected !");		//Notify the client that the connection succeeded 
-						for(Player sc2 : users) {	//list update 
-							if(!sc2.isConnected())	//if the client is disconnected
-								users.remove(sc2);	//it is removed from the list
-							/*else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
-								sc2.sendMessage("message à Hugo");						// To a specific user
-						*/}
+	public void run() {
+		try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
+			serverSoc = new ServerSocket(this.port);	//opening the server
+			Socket client;					
+			while(ServerMain.isRunning()) {			//as long as the server is running
+					client = serverSoc.accept();		//waiting for connection
+					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+					Player sc = new Player(client,"TestUser");		//build the client manager 
+					System.out.println(sc.getName()+" is now connected");	//print in the server console
+					Thread t = new Thread(sc);	//build the thread with the client manager created above
+					users.add(sc);		//add the client to the list
+					sc.sendMessage("Connected !");		//Notify the client that the connection succeeded 
+					for(Player sc2 : users) {	//list update 
+						if(!sc2.isConnected())	//if the client is disconnected
+							users.remove(sc2);	//it is removed from the list
+						/*else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
+							sc2.sendMessage("message à Hugo");						// To a specific user
+					*/}
 
-						t.start();	//thread start
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+					t.start();	//thread start
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
+
+	public void stop() {
+		try {
+			serverSoc.close();		//this line closes the ServerSocket cutting the execution of the accept() method
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+}

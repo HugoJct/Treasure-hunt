@@ -16,6 +16,7 @@ public class ServerMain {
 
 	public static Vector<Player> connectedUsers = new Vector<>();
 	private static boolean isRunning = true;
+	private static ConnectionHandler ch;
 
 	public static void main(String[] args) {
 		Board b = new Board(15,15);
@@ -59,15 +60,17 @@ public class ServerMain {
 		
 		System.out.println(b);
 
-		Thread waitForConnection = new Thread(new ConnectionHandler(12345));
+		ch = new ConnectionHandler(12345);
+		Thread waitForConnection = new Thread(ch);
 		waitForConnection.start(); 
 	}
 
 	public static boolean isRunning() {
-		return isRunning;
+		return isRunning;	
 	}
 
-	public void stop() {
-		this.isRunning = false;
+	public void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads 
+		this.isRunning = false;	
+		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
 	}
 }
