@@ -15,7 +15,7 @@ import java.util.Vector;
 public class ServerMain {
 
 	public static Vector<Player> connectedUsers = new Vector<>();
-	private boolean isRunning = true;
+	private static boolean isRunning = true;
 
 	public static void main(String[] args) {
 		Board b = new Board(15,15);
@@ -60,7 +60,14 @@ public class ServerMain {
 		System.out.println(b);
 
 		Thread waitForConnection = new Thread(new ConnectionHandler(12345));
-		waitForConnection.start();
-		 
+		waitForConnection.start(); 
+	}
+
+	public static boolean isRunning() {
+		return isRunning;
+	}
+
+	public void stop() {
+		this.isRunning = false;
 	}
 }

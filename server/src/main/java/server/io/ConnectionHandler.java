@@ -25,7 +25,7 @@ public class ConnectionHandler implements Runnable{
 			try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
 				ServerSocket serverSoc = new ServerSocket(this.port);	//opening the server
 				Socket client;					
-				while(true) {
+				while(ServerMain.isRunning()) {
 						client = serverSoc.accept();		//waiting for connection
 						BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 						Player player = new Player(client,in.readLine());
