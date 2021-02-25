@@ -57,7 +57,10 @@ public class Player implements Runnable{
         while(ServerMain.isRunning() && msg != null) {    //As long as the remote socket is connected
             try {
                 msg = in.readLine();    //read the input
-                if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
+
+                //The line above is the line that prevents the server to stop when the "stop" command is received because it is blocking the execution of the program, just like the accept() method of ServerSocket
+                
+               if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
                     System.out.println(this.username+" disconnected !");    //inform the user
                     break;                                              //break out of the loop
                 }
