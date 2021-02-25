@@ -24,6 +24,6 @@ public class Player {
     		read.start();
     	} catch(IOException e) {
     		e.printStackTrace();
-    	}
+    	}*/
 	}
 }
