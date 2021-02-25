@@ -1,20 +1,14 @@
 package client.view.gui;
 
-import client.System.CreateNewGame;
-import client.System.JoinNewGame;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-import java.awt.event.ActionEvent;
-
 public class Menu extends JFrame {
    private JPanel _menuPanel;
    private JButton _create;
    private JButton _join;
-   private JLabel _info;
    
     public Menu() {
         this.setTitle("Menu");
@@ -30,11 +24,13 @@ public class Menu extends JFrame {
 
         this._menuPanel.add(this._create);
         this._menuPanel.add(this._join);
-        this._menuPanel.add(this._info);
         
-        this._create.addActionListener((ActionEvent e) -> { CreateNewGame.newGame();});
-        this._join.addActionListener((ActionEvent e) -> { JoinNewGame.joinGame();});
-        
-    
+    }
+
+    public JButton getCreate() {
+        return this._create;
+    }
+    public JButton getJoin() {
+        return this._join;
     }
 }
