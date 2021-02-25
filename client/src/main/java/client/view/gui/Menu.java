@@ -9,7 +9,6 @@ public class Menu extends JFrame {
    private JPanel _menuPanel;
    private JButton _create;
    private JButton _join;
-   private JLabel _info;
    
     public Menu() {
         this.setTitle("Menu");
@@ -25,8 +24,13 @@ public class Menu extends JFrame {
 
         this._menuPanel.add(this._create);
         this._menuPanel.add(this._join);
-        this._menuPanel.add(this._info);
         
-    
+    }
+
+    public JButton getCreate() {
+        return this._create;
+    }
+    public JButton getJoin() {
+        return this._join;
     }
 }
