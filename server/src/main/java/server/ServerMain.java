@@ -8,19 +8,15 @@ import server.elements.Wall;
 import server.Board;
 import server.Player;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import server.io.ConnectionHandler;
+
 import java.util.Vector;
 
 public class ServerMain {
 
-	public static Vector<Player> list = new Vector<>();
-	static int i = 0;
+	public static Vector<Player> connectedUsers = new Vector<>();
+	private static boolean isRunning = true;
+	private static ConnectionHandler ch;
 
 	public static void main(String[] args) {
 		Board b = new Board(15,15);
@@ -63,34 +59,18 @@ public class ServerMain {
 		b.setElementAt(new Hole(), 15, 14);
 		
 		System.out.println(b);
-		/*
-		Player p1 = new Player("Hugo");
-		System.out.println(p1);*/
 
-		try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
-			ServerSocket serverSoc = new ServerSocket(12345);	//opening the server
-			Socket client;					
-			while(true) {
-					client = serverSoc.accept();		//waiting for connection
-					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-					Player player = new Player(client,in.readLine());
-					System.out.println(player.getName()+" is now connected");	//inform the user
-					Player sc = new Player(client,player.getName());		//build the client manager 
-					Thread t = new Thread(sc);									//build the thread with the client manager created above
-					list.add(sc);		//add the client to the list
-					for(Player sc2 : list) {	//list update 
-						if(!sc2.isConnected())	//if the client is disconnected
-							list.remove(sc2);	//it is removed from the list
-						/*else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
-							sc2.sendMessage("message à Hugo");						// To a specific user
-					*/}
-
-					t.start();	//thread start
-					i++;	//name variable incrementation
-			}
-		} catch (IOException e) {
-				e.printStackTrace();
-			} 
+		ch = new ConnectionHandler(12345);
+		Thread waitForConnection = new Thread(ch);
+		waitForConnection.start(); 
 	}
 
+	public static boolean isRunning() {
+		return isRunning;	
+	}
+
+	public void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads 
+		this.isRunning = false;	
+		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
+	}
 }

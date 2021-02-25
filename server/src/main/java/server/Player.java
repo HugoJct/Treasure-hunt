@@ -33,7 +33,6 @@ public class Player implements Runnable{
         } catch( IOException e) {
             e.printStackTrace();
         }
-        sendMessage("Connected !");
     }
     
     //Network methods
@@ -55,10 +54,10 @@ public class Player implements Runnable{
     public void run() {
 
         String msg = "";        // This loop handles the printing of the incoming messages
-        while(msg != null) {    //As long as the remote socket is connected
+        while(ServerMain.isRunning() && msg != null) {    //As long as the remote socket is connected
             try {
                 msg = in.readLine();    //read the input
-                if(msg == null) {       // if the socket is disconnected
+                if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
                     System.out.println(this.username+" disconnected !");    //inform the user
                     break;                                              //break out of the loop
                 }
