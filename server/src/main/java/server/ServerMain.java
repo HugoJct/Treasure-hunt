@@ -61,22 +61,22 @@ public class ServerMain {
 		
 		System.out.println(b);
 
-		ch = new ConnectionHandler(12345);
-		console = new Console();
+		ch = new ConnectionHandler(12345);		//Launch the server
+		console = new Console();				
 
-		Thread waitForConnection = new Thread(ch);
+		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
 
-		Thread checkInput = new Thread(console);;
+		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
 		checkInput.start();
 	}
 
-	public static void broadcastMessage(String message) {
+	public static void broadcastMessage(String message) {		//method charged of executing the behaviour of the "broadcast" command
 		for(Player p : connectedUsers)
 			p.sendMessage(message);
 	}
 
-	public static void broadcastMessage(String[] message) {
+	public static void broadcastMessage(String[] message) {		//method charged of executing the behaviour of the "broadcast" command but from a string array (making it easier to use with the command breaker)
 		String wholeMessage = "";
 		for(int i=1;i<message.length;i++)
 			wholeMessage += message[i] + " ";
@@ -84,7 +84,7 @@ public class ServerMain {
 			p.sendMessage(wholeMessage);
 	}
 
-	public static void printConnectedUsers() {
+	public static void printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
 		for(Player p : connectedUsers)
 			System.out.println(p);
 	}
@@ -93,7 +93,7 @@ public class ServerMain {
 		return isRunning;	
 	}
 
-	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads 
+	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;	
 		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
 	}
