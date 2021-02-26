@@ -85,12 +85,11 @@ public class ServerMain {
 	}
 
 	public static void printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
-		for(Player p : connectedUsers)
-			System.out.println(p);
-	}
-
-	public static boolean isRunning() {
-		return isRunning;	
+		if(connectedUsers.size() > 0)
+			for(Player p : connectedUsers)
+				System.out.println(p);
+		else
+			System.out.println("There is currently no user connected.");
 	}
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
@@ -98,5 +97,9 @@ public class ServerMain {
 		for(Player p : connectedUsers)
 			p.stop();
 		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
+	}
+
+	public static boolean isRunning() {
+		return isRunning;	
 	}
 }
