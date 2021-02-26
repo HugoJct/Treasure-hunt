@@ -58,18 +58,25 @@ public class Player implements Runnable{
             try {
                 msg = in.readLine();    //read the input
 
-                //The line above is the line that prevents the server to stop when the "stop" command is received because it is blocking the execution of the program, just like the accept() method of ServerSocket
-                
                if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
                     System.out.println(this.username+" disconnected !");    //inform the user
                     break;                                              //break out of the loop
                 }
                 System.out.println(this.username+" wrote: "+msg);   //print the message
             } catch(IOException e) {
-                e.printStackTrace();
+                System.out.println(this.username + (": socket closed by the server."));
             }
         }
         this.isConnected = false;   //update status
+    }
+
+    public void stop() {
+        try {
+            this.sendMessage("Server Closed.");
+            this.s.close();                                                                 //This line closes the socket s which unblocks the execution of run()
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

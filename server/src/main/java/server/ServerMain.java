@@ -94,7 +94,9 @@ public class ServerMain {
 	}
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
-		isRunning = false;	
+		isRunning = false;
+		for(Player p : connectedUsers)
+			p.stop();
 		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
 	}
 }
