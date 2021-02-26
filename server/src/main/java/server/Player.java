@@ -57,16 +57,26 @@ public class Player implements Runnable{
         while(ServerMain.isRunning() && msg != null) {    //As long as the remote socket is connected
             try {
                 msg = in.readLine();    //read the input
-                if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
+
+               if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
                     System.out.println(this.username+" disconnected !");    //inform the user
                     break;                                              //break out of the loop
                 }
                 System.out.println(this.username+" wrote: "+msg);   //print the message
             } catch(IOException e) {
-                e.printStackTrace();
+                System.out.println(this.username + (": socket closed by the server."));
             }
         }
         this.isConnected = false;   //update status
+    }
+
+    public void stop() {
+        try {
+            this.sendMessage("Server Closed.");
+            this.s.close();                                                                 //This line closes the socket s which unblocks the execution of run()
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

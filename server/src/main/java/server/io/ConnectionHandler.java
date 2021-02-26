@@ -44,7 +44,7 @@ public class ConnectionHandler implements Runnable{
 					t.start();	//thread start
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("ServerSocket closed by server");
 		}
 	}
 
