@@ -9,11 +9,58 @@ public class Board {
     private final int sizeX;
     private final int sizeY;
 
+    public Board() {        //default constructor generates the default board
+
+        this.sizeX = 15+2;
+        this.sizeY = 15+2;
+        elements = new Element[this.sizeY][this.sizeX];
+
+        //The following is the board featured on the screenshot from the project's video presentation
+        
+        //Walls
+       this.setElementAt(new Wall(), 6, 2);
+       this.setElementAt(new Wall(), 5, 4);
+       this.setElementAt(new Wall(), 5, 5);
+       this.setElementAt(new Wall(), 8, 6);
+        
+       this.setElementAt(new Wall(), 12, 7);
+       this.setElementAt(new Wall(), 12, 8);
+       this.setElementAt(new Wall(), 12, 9);
+       this.setElementAt(new Wall(), 12, 10);
+       this.setElementAt(new Wall(), 11, 10);
+        
+       this.setElementAt(new Wall(), 5, 11);
+       this.setElementAt(new Wall(), 5, 12);
+       this.setElementAt(new Wall(), 5, 13);
+       this.setElementAt(new Wall(), 6, 13);
+       this.setElementAt(new Wall(), 6, 14);
+
+        //Treasures
+       this.setElementAt(new Treasure(15), 9, 2);
+       this.setElementAt(new Treasure(5), 5, 5);
+       this.setElementAt(new Treasure(10), 14, 5);
+       this.setElementAt(new Treasure(0), 10, 6);
+       this.setElementAt(new Treasure(20), 3, 12);
+       this.setElementAt(new Treasure(0), 9, 12);
+       this.setElementAt(new Treasure(5), 6, 9);
+       this.setElementAt(new Treasure(0), 13, 10);
+
+        //Holes
+       this.setElementAt(new Hole(), 3, 9);
+       this.setElementAt(new Hole(), 6, 7);
+       this.setElementAt(new Hole(), 9, 5);
+       this.setElementAt(new Hole(), 8, 10);
+       this.setElementAt(new Hole(), 10, 14);
+       this.setElementAt(new Hole(), 15, 14);
+
+       this.setBorder();
+    }
+
     public Board(int x, int y) {
     	this.sizeX = x+2;
     	this.sizeY = y+2;
-		elements = new Element[this.sizeY][this.sizeX];
-		setBorder();
+		this.elements = new Element[this.sizeY][this.sizeX];
+		this.setBorder();
     }
 
 	public void setBorder() {

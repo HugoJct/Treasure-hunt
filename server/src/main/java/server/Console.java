@@ -26,6 +26,15 @@ public class Console implements Runnable {
 					//System.out.println("listusers triggered");
 					ServerMain.printConnectedUsers();
 					break;
+				case "creategame":
+					ServerMain.createGame(brokenCommand[1]);	//this creates a game with the args[1] as name
+					break;
+				case "stopgame":
+					ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game 
+					break;
+				case "listgames":		//this lists the existing games
+					ServerMain.listGames();
+					break;
 				default:
 					System.out.println("No command was recognized. Please try again.");
 			}
