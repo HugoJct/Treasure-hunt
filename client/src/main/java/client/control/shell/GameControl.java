@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GameControl {
     private Scanner _input;
 
-    public ControlShell() {
+    public GameControl() {
         this._input = new Scanner(System.in);
     }
 
