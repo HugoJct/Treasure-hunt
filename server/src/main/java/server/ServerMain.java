@@ -7,6 +7,7 @@ import server.elements.Wall;
 
 import server.Board;
 import server.Player;
+import server.Game;
 
 import server.io.ConnectionHandler;
 
@@ -15,51 +16,16 @@ import java.util.Vector;
 public class ServerMain {
 
 	public static Vector<Player> connectedUsers = new Vector<>();
+
+	public static Vector<Game> launchedGames = new Vector<>();
+
 	private static boolean isRunning = true;
 	private static ConnectionHandler ch;
 	private static Console console;
 
 	public static void main(String[] args) {
-		Board b = new Board(15,15);
-		//The following is the board featured on the screenshot from the project's video presentation
-		
-		//Walls
-		b.setElementAt(new Wall(), 6, 2);
-		b.setElementAt(new Wall(), 5, 4);
-		b.setElementAt(new Wall(), 5, 5);
-		b.setElementAt(new Wall(), 8, 6);
-		
-		b.setElementAt(new Wall(), 12, 7);
-		b.setElementAt(new Wall(), 12, 8);
-		b.setElementAt(new Wall(), 12, 9);
-		b.setElementAt(new Wall(), 12, 10);
-		b.setElementAt(new Wall(), 11, 10);
-		
-		b.setElementAt(new Wall(), 5, 11);
-		b.setElementAt(new Wall(), 5, 12);
-		b.setElementAt(new Wall(), 5, 13);
-		b.setElementAt(new Wall(), 6, 13);
-		b.setElementAt(new Wall(), 6, 14);
-
-		//Treasures
-		b.setElementAt(new Treasure(15), 9, 2);
-		b.setElementAt(new Treasure(5), 5, 5);
-		b.setElementAt(new Treasure(10), 14, 5);
-		b.setElementAt(new Treasure(0), 10, 6);
-		b.setElementAt(new Treasure(20), 3, 12);
-		b.setElementAt(new Treasure(0), 9, 12);
-		b.setElementAt(new Treasure(5), 6, 9);
-		b.setElementAt(new Treasure(0), 13, 10);
-
-		//Holes
-		b.setElementAt(new Hole(), 3, 9);
-		b.setElementAt(new Hole(), 6, 7);
-		b.setElementAt(new Hole(), 9, 5);
-		b.setElementAt(new Hole(), 8, 10);
-		b.setElementAt(new Hole(), 10, 14);
-		b.setElementAt(new Hole(), 15, 14);
-		
-		System.out.println(b);
+		//Board b = new Board();
+		//System.out.println(b);
 
 		ch = new ConnectionHandler(12345);		//Launch the server
 		console = new Console();				
@@ -92,10 +58,38 @@ public class ServerMain {
 			System.out.println("There is currently no user connected.");
 	}
 
+	public static void createGame(String name) {		//this creates the game with the specified name 
+		Game g = new Game(name);
+		launchedGames.add(g);
+
+		Thread game = new Thread(g);
+		game.start();
+	}
+
+	public static void stopGame(int id) {		//stops the specified game
+		for(Game g : launchedGames) {
+			if(g.getID() == id) {
+				g.stop();
+				launchedGames.remove(g);
+				break;
+			}
+		}
+	}
+
+	public static void listGames() {		//lists the existing games
+		if(launchedGames.size() > 0)
+			for(Game g : launchedGames)
+				System.out.println(g);
+		else
+			System.out.println("There is currently no game in progress.");
+	}
+
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;
 		for(Player p : connectedUsers)
 			p.stop();
+		for(Game g : launchedGames)
+			g.stop();
 		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
 	}
 
