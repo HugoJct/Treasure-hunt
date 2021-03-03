@@ -16,6 +16,8 @@ public class Player implements Runnable{
     private int money;
     private boolean isDead;
 
+    private String _msg;
+
     //Network attributes
     boolean isConnected;
     Socket s;
@@ -27,6 +29,7 @@ public class Player implements Runnable{
     	this.isDead = false;
         this.isConnected = true;
         this.s = s;
+        this._msg = "";
         try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintStream(s.getOutputStream());
@@ -53,16 +56,16 @@ public class Player implements Runnable{
     @Override
     public void run() {
 
-        String msg = "";        // This loop handles the printing of the incoming messages
-        while(ServerMain.isRunning() && msg != null) {    //As long as the remote socket is connected
+        //String msg = "";        // This loop handles the printing of the incoming messages
+        while(ServerMain.isRunning() && this._msg != null) {    //As long as the remote socket is connected
             try {
-                msg = in.readLine();    //read the input
+                this._msg = in.readLine();    //read the input
 
-               if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
+               if(!ServerMain.isRunning() || this._msg == null) {       // if the socket is disconnected
                     System.out.println(this.username+" disconnected !");    //inform the user
                     break;                                              //break out of the loop
                 }
-                System.out.println(this.username+" wrote: "+msg);   //print the message
+                System.out.println(this.username+" wrote: "+ this._msg);   //print the message
             } catch(IOException e) {
                 System.out.println(this.username + (": socket closed by the server."));
             }
@@ -106,8 +109,13 @@ public class Player implements Runnable{
     	int[] tab = {posX,posY};
     	return tab;
     }
+
+    public String getMsg() {
+        return this._msg;
+    }
     
     public String toString() {
     	return this.username + " ["+this.posX+","+this.posY+"] "+money+"$ "+isDead;
     }
+
 }

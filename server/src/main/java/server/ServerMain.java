@@ -27,9 +27,9 @@ public class ServerMain {
 		//Board b = new Board();
 		//System.out.println(b);
 
-		ch = new ConnectionHandler(12345);		//Launch the server
-		console = new Console();				
-
+		ch = new ConnectionHandler(12345);		//Launch the server			
+		console = new Console();
+		
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
 
