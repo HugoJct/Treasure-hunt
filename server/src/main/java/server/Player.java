@@ -53,6 +53,7 @@ public class Player implements Runnable{
         return true;
     }
 
+    
     @Override
     public void run() {
 
@@ -108,6 +109,10 @@ public class Player implements Runnable{
     public int[] getPos() {
     	int[] tab = {posX,posY};
     	return tab;
+    }
+
+    public Socket getSocket() {
+        return this.s;
     }
 
     public String getMsg() {

@@ -20,6 +20,7 @@ public class Communication implements Runnable {
 
     public Communication(Player p) {
         this._player = p;
+        this.s = p.getSocket();
         this._msg = "";
         this.username = p.getName();
         
