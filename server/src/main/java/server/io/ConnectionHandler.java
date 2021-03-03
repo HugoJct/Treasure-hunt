@@ -2,6 +2,7 @@ package server.io;
 
 import server.ServerMain;
 import server.Player;
+import server.io.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -30,7 +31,7 @@ public class ConnectionHandler implements Runnable{
 					client = serverSoc.accept();		//waiting for connection
 					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 					Player sc = new Player(client,"TestUser");		//build the client manager 
-					Communication com = new Communication();
+					//Communication com = new Communication(sc);
 					System.out.println(sc.getName()+" is now connected");	//print in the server console
 					Thread t = new Thread(sc);	//build the thread with the client manager created above
 					users.add(sc);		//add the client to the list
