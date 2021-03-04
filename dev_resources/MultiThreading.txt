@@ -1,0 +1,82 @@
+-------------------- How to manage several threads --------------------
+
+I) What we usualy do :
+
+We are used to run only one process in our programs throught the main function. 
+It allows us to execute a succession of actions in a precise order.
+Most of the time, using only one process in our program was sufficient to make it work.
+
+
+II) How we can execute several tasks :
+
+In our project, we will have to manage several tasks in the same time (players requests, display of the screen, server requests...).
+We have two ways to do it : 
+
+- Create a class extending Thread class :
+
+	class ThreadClass extends Thread{
+		public void run(){
+			//Define actions 
+		}
+	}
+
+- Create a class implementing Runnable interface:
+	
+	class ThreadClass implements Runnable{
+		public void run(){
+			//Define actions
+		}
+	}
+	
+
+According to my research, it is better to use an "implementation" class : if we extend Thread class, we can't extend another class. (a class can only extend one)
+Else, it will be exactly the same principle :
+We have to define the method run() which corresponds to actions this thread has to execute.
+For each thread we need, we have to create a new instance of our class ThreadClass.
+
+
+In function of the way we choose to implement our class, the creation of instances is quite different :
+
+For an extending class :
+	ThreadClass Thread1 = new ThreadClass();
+
+For an implementing class :
+	ThreadClass Thread1 = new Thread(new ThreadClass()); 
+
+
+
+Here is an example of how to call these thread in main function :
+
+public static void main(String[] args){
+	ThreadClass Thread1 = new ThreadClass(); //Creation of a firts thread
+	ThreadClass Thread2 = new ThreadClass(); //Creation of a second thread
+
+	/* Execution of threads (both executing in the same time) */
+	Thread1.start();
+	Thread2.start();
+	
+}
+
+Once all theard instances have been created, we need to use start() function to "activate" them. (it runs the thread)
+
+
+There is a last method to do multi-threading; using anonymous class:
+	new Thread(new Runnable(){
+		public void run(){
+			//Actions to execute
+		}
+	}).start()
+
+
+III) Warning about uses : 
+
+WARNING : When we use multi-threading, it is important to manage synchronization between them.
+Indeed, if two threads use same resources but have different speed, it can create conflicts (ex : if one is writting while another is reading)
+
+
+IV) Sources :
+****************************************************************************************************************************************************************************
+https://www.guru99.com/multithreading-java.html#:~:text=Multithreading%20in%20java%20is%20a%20process%20of%20executing,it%20is%20also%20known%20as%20Concurrency%20in%20Java.
+https://www.youtube.com/watch?v=4tfHhNItiXU
+*****************************************************************************************************************************************************************************
+

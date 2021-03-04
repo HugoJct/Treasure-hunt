@@ -1,0 +1,11 @@
+plugins {
+    id 'application' 
+}
+
+application {
+    mainClass = 'server.ServerMain' 
+}
+
+run{
+    standardInput = System.in
+}
