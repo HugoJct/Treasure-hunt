@@ -22,19 +22,25 @@ public class ServerMain {
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
+	public static Vector<Console> launchedCons = new Vector<>();
+
 	private static boolean isRunning = true;
 	private static ConnectionHandler ch;
 	private static Console console;
 
-	public static void main(String[] args) {
-		//Board b = new Board();
-		//System.out.println(b);
+	public ServerMain() {}
 
-		ch = new ConnectionHandler(12345);		//Launch the server			
-		console = new Console();
-		
+	public static void main(String[] args) {
+
+		ch = new ConnectionHandler(12345);		//Launch the server	
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
+		while (true) {
+			if (ch.getCom() != null) {
+				console = new Console(ch.getCom());
+				break;
+			}
+		}		
 
 		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
 		checkInput.start();

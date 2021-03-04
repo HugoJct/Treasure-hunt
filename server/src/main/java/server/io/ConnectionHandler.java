@@ -17,10 +17,12 @@ public class ConnectionHandler implements Runnable{
 
 	Vector<Player> users = ServerMain.connectedUsers;
 	private int port;
+	private Communication _com;
 	ServerSocket serverSoc;
 
 	public ConnectionHandler(int port) {
 		this.port = port;
+		this._com = null;
 	}
 
 	public void run() {
@@ -31,12 +33,12 @@ public class ConnectionHandler implements Runnable{
 					client = serverSoc.accept();		//waiting for connection
 					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 					Player sc = new Player(client,"TestUser");		//build the client manager 
-					Communication com = new Communication(sc);
-					System.out.println(com.getName()+" is now connected");	//print in the server console
+					_com = new Communication(sc);
+					System.out.println(_com.getName()+" is now connected");	//print in the server console
 					//Thread t = new Thread(sc);	//build the thread with the client manager created above
-					Thread c = new Thread(com);
+					Thread c = new Thread(_com);
 					users.add(sc);		//add the client to the list
-					com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
+					_com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
 					for(Player sc2 : users) {	//list update 
 						if(!sc2.isConnected())	//if the client is disconnected
 							users.remove(sc2);	//it is removed from the list
@@ -58,5 +60,9 @@ public class ConnectionHandler implements Runnable{
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+	}
+
+	public Communication getCom() {
+		return this._com;
 	}
 }

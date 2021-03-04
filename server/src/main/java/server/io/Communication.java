@@ -38,6 +38,10 @@ public class Communication implements Runnable {
         return true;
     }
 
+    public String getMessage() {
+        return this._msg;
+    }
+
     @Override
     public void run() {
 
@@ -45,12 +49,12 @@ public class Communication implements Runnable {
         while(ServerMain.isRunning() && this._msg != null) {    //As long as the remote socket is connected
             try {
                 this._msg = in.readLine();    //read the input
-
                if(!ServerMain.isRunning() || this._msg == null) {       // if the socket is disconnected
                     System.out.println(this.username+" disconnected !");    //inform the user
                     break;                                              //break out of the loop
                 }
                 System.out.println(this.username+" wrote: "+ this._msg);   //print the message
+                
             } catch(IOException e) {
                 System.out.println(this.username + (": socket closed by the server."));
             }
