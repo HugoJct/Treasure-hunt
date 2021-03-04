@@ -66,4 +66,8 @@ public class Communication implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public String getName() {
+        return this._player.getName();
+    }
 }

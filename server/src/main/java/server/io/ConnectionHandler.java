@@ -32,10 +32,11 @@ public class ConnectionHandler implements Runnable{
 					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 					Player sc = new Player(client,"TestUser");		//build the client manager 
 					Communication com = new Communication(sc);
-					System.out.println(sc.getName()+" is now connected");	//print in the server console
-					Thread t = new Thread(sc);	//build the thread with the client manager created above
+					System.out.println(com.getName()+" is now connected");	//print in the server console
+					//Thread t = new Thread(sc);	//build the thread with the client manager created above
+					Thread c = new Thread(com);
 					users.add(sc);		//add the client to the list
-					sc.sendMessage("Connected !");		//Notify the client that the connection succeeded 
+					com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
 					for(Player sc2 : users) {	//list update 
 						if(!sc2.isConnected())	//if the client is disconnected
 							users.remove(sc2);	//it is removed from the list
@@ -43,7 +44,8 @@ public class ConnectionHandler implements Runnable{
 							sc2.sendMessage("message à Hugo");						// To a specific user
 					*/}
 
-					t.start();	//thread start
+					//t.start();	//thread start
+					c.start();
 			}
 		} catch (IOException e) {
 			System.out.println("ServerSocket closed by server");

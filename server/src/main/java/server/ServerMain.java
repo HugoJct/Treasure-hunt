@@ -8,6 +8,7 @@ import server.elements.Wall;
 import server.Board;
 import server.Player;
 import server.Game;
+import server.io.Communication;
 
 import server.io.ConnectionHandler;
 
@@ -18,6 +19,8 @@ public class ServerMain {
 	public static Vector<Player> connectedUsers = new Vector<>();
 
 	public static Vector<Game> launchedGames = new Vector<>();
+
+	public static Vector<Communication> launchedCom = new Vector<>();
 
 	private static boolean isRunning = true;
 	private static ConnectionHandler ch;
@@ -38,16 +41,16 @@ public class ServerMain {
 	}
 
 	public static void broadcastMessage(String message) {		//method charged of executing the behaviour of the "broadcast" command
-		for(Player p : connectedUsers)
-			p.sendMessage(message);
+		for(Communication c : launchedCom)
+			c.sendMessage(message);
 	}
 
 	public static void broadcastMessage(String[] message) {		//method charged of executing the behaviour of the "broadcast" command but from a string array (making it easier to use with the command breaker)
 		String wholeMessage = "";
 		for(int i=1;i<message.length;i++)
 			wholeMessage += message[i] + " ";
-		for(Player p : connectedUsers)
-			p.sendMessage(wholeMessage);
+		for(Communication c : launchedCom)
+			c.sendMessage(wholeMessage);
 	}
 
 	public static void printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
@@ -86,10 +89,10 @@ public class ServerMain {
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;
-		for(Player p : connectedUsers)
-			p.stop();
 		for(Game g : launchedGames)
 			g.stop();
+		for(Communication c : launchedCom)
+			c.stop();
 		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
 	}
 
