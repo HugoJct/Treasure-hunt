@@ -3,12 +3,17 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
-import java.awt.event.*;  
+import java.awt.event.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;  
 
 public class GameControl2{
-	JFrame f = new JFrame();
-
+	JFrame f;
 	
+	public GameControl2() {
+		f = new JFrame();
+	}
     
 	//Function which asks player a question and returns the answer
 	public static String GetInput(String question) {
@@ -20,6 +25,7 @@ public class GameControl2{
 	
 	//Function which asks player a direction to move and give the information to the server
 	public static void moveTo(String direction) {
+		
 		//Reacts according to the given direction
 		switch(direction) {
 			case "UP":
