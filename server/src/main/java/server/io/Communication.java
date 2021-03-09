@@ -46,7 +46,7 @@ public class Communication implements Runnable {
     public void run() {
 
         //String msg = "";        // This loop handles the printing of the incoming messages
-        while(ServerMain.isRunning() && this._msg != null) {    //As long as the remote socket is connected
+        while(ServerMain.isRunning()) {    //As long as the remote socket is connected
             try {
                 this._msg = in.readLine();    //read the input
                if(!ServerMain.isRunning() || this._msg == null) {       // if the socket is disconnected
