@@ -35,11 +35,11 @@ public class Game implements Runnable{
 	    }
 	    while(ServerMain.isRunning()) {
 		for(int i=0; i<players.length ; i++){
-		    if(!players[i].isDead && players[i].isConnected){
+		    if(!players[i].isPlayerDead() && players[i].isConnected){
 			players[i].setPosFromInput(this.b, players[i].getPos()); 
 			
 		    }
-		    if(this.b.sumAllTreasures == 0){
+		    if(this.b.sumAllTreasures() == 0){
 			this.stop();
 		    }
 		    if(!this.isRunning){
@@ -52,3 +52,4 @@ public class Game implements Runnable{
 		}
 	    }
 	}
+}

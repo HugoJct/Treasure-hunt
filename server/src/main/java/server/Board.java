@@ -99,7 +99,9 @@ public class Board {
 	for(int i=0;i<elements.length;i++){
 	    for(int j=0;j<elements[i].length;j++){
 		if(elements[i][j] instanceof Treasure){
-		    sum += elements[i][j].getTreasureValue();
+		    
+		    Treasure tmp = (Treasure) this.elements[i][j];
+		    sum += tmp.getTreasureValue();
 		}
 	    }
 	}
