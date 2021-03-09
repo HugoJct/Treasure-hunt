@@ -36,7 +36,6 @@ public class Console implements Runnable {
 
 		switch(brokenCommand[0]) {
 			case "stop":
-				_com.stop();
 				ServerMain.stop();
 				break;
 			case "broadcast":

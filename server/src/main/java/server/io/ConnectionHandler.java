@@ -16,6 +16,7 @@ import java.util.Vector;
 public class ConnectionHandler implements Runnable{
 
 	Vector<Player> users = ServerMain.connectedUsers;
+	Vector<Communication> coms = ServerMain.launchedCom;
 	private int port;
 	private Communication _com;
 	ServerSocket serverSoc;
@@ -37,7 +38,10 @@ public class ConnectionHandler implements Runnable{
 					System.out.println(_com.getName()+" is now connected");	//print in the server console
 					//Thread t = new Thread(sc);	//build the thread with the client manager created above
 					Thread c = new Thread(_com);
+
 					users.add(sc);		//add the client to the list
+					coms.add(_com);		//add the communication to the list
+
 					_com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
 					for(Player sc2 : users) {	//list update 
 						if(!sc2.isConnected())	//if the client is disconnected
