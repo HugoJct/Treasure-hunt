@@ -28,10 +28,27 @@ public class Game implements Runnable{
 
 	@Override
 	public void run() {
-		while(ServerMain.isRunning()) {
-			if(!this.isRunning)
-				break;
-			// Put game instructions here
+	    //By taking the assumption that they will only be 3 players in the game(will change later so that it adapts to more players)
+	    Player players[] = new Player[3];
+	    for(int i =0;i<players.length;i++){
+		players[i].setStartingPos(this.b); //Initializing a starting position for each player
+	    }
+	    while(ServerMain.isRunning()) {
+		for(int i=0; i<players.length ; i++){
+		    if(!players[i].isDead && players[i].isConnected){
+			players[i].setPosFromInput(this.b, players[i].getPos()); 
+			
+		    }
+		    if(this.b.sumAllTreasures == 0){
+			this.stop();
+		    }
+		    if(!this.isRunning){
+			break;
+		    }
+		    // Should add a printing of all the ranks for each player along with the money collected by each one
 		}
+		if(!this.isRunning){
+		    break;
+		}
+	    }
 	}
-}

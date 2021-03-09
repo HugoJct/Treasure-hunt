@@ -56,11 +56,18 @@ public class Board {
        this.setBorder();
     }
 
+    public int getSizeX(){
+	return this.sizeX;
+    }
+
+    public int getSizeY(){
+	return this.sizeY;
+    }
     public Board(int x, int y) {
     	this.sizeX = x+2;
     	this.sizeY = y+2;
-		this.elements = new Element[this.sizeY][this.sizeX];
-		this.setBorder();
+	this.elements = new Element[this.sizeY][this.sizeX];
+	this.setBorder();
     }
 
 	public void setBorder() {
@@ -87,6 +94,17 @@ public class Board {
     	return this.elements;
     }
 
+    public int sumAllTreasures(){
+	int sum = 0;
+	for(int i=0;i<elements.length;i++){
+	    for(int j=0;j<elements[i].length;j++){
+		if(elements[i][j] instanceof Treasure){
+		    sum += elements[i][j].getTreasureValue();
+		}
+	    }
+	}
+	return sum;
+    }
     public String toString() {
     	String retour = "";
     	for(int i=0;i<elements.length;i++) {
