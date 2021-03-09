@@ -8,6 +8,7 @@ import server.elements.Wall;
 import server.Board;
 import server.Player;
 import server.Game;
+import server.io.Communication;
 
 import server.io.ConnectionHandler;
 
@@ -19,35 +20,43 @@ public class ServerMain {
 
 	public static Vector<Game> launchedGames = new Vector<>();
 
+	public static Vector<Communication> launchedCom = new Vector<>();
+
+	public static Vector<Console> launchedCons = new Vector<>();
+
 	private static boolean isRunning = true;
 	private static ConnectionHandler ch;
 	private static Console console;
 
+	public ServerMain() {}
+
 	public static void main(String[] args) {
-		//Board b = new Board();
-		//System.out.println(b);
 
-		ch = new ConnectionHandler(12345);		//Launch the server
-		console = new Console();				
-
+		ch = new ConnectionHandler(12345);		//Launch the server	
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
+		while (true) {
+			if (ch.getCom() != null) {
+				console = new Console(ch.getCom());
+				break;
+			}
+		}		
 
 		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
 		checkInput.start();
 	}
 
 	public static void broadcastMessage(String message) {		//method charged of executing the behaviour of the "broadcast" command
-		for(Player p : connectedUsers)
-			p.sendMessage(message);
+		for(Communication c : launchedCom)
+			c.sendMessage(message);
 	}
 
 	public static void broadcastMessage(String[] message) {		//method charged of executing the behaviour of the "broadcast" command but from a string array (making it easier to use with the command breaker)
 		String wholeMessage = "";
 		for(int i=1;i<message.length;i++)
 			wholeMessage += message[i] + " ";
-		for(Player p : connectedUsers)
-			p.sendMessage(wholeMessage);
+		for(Communication c : launchedCom)
+			c.sendMessage(wholeMessage);
 	}
 
 	public static void printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
@@ -86,10 +95,10 @@ public class ServerMain {
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;
-		for(Player p : connectedUsers)
-			p.stop();
 		for(Game g : launchedGames)
 			g.stop();
+		for(Communication c : launchedCom)
+			c.stop();
 		ch.stop();				//this line closes the ServerSocket of the ConnectionHandler class
 	}
 

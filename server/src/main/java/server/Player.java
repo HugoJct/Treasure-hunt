@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.Random;
 
-public class Player implements Runnable{
+public class Player {
     //player attributes
     private int posX;
     private int posY;
@@ -18,23 +18,18 @@ public class Player implements Runnable{
     private int money;
     private boolean isDead;
 
+    private String _msg;
+
     //Network attributes
     boolean isConnected;
     Socket s;
-    BufferedReader in;
-    PrintStream out;
     
     public Player(Socket s, String name) {
     	this.username = name;
     	this.isDead = false;
         this.isConnected = true;
         this.s = s;
-        try {
-            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintStream(s.getOutputStream());
-        } catch( IOException e) {
-            e.printStackTrace();
-        }
+        this._msg = "";
     }
     
     //Network methods
@@ -44,41 +39,6 @@ public class Player implements Runnable{
 
     public boolean isConnected() {
         return isConnected;
-    }
-
-    public boolean sendMessage(String message) {        //This method sends a message to the client handled by the instance of the class
-        out.println(message);
-        out.flush();
-        return true;
-    }
-
-    @Override
-    public void run() {
-
-        String msg = "";        // This loop handles the printing of the incoming messages
-        while(ServerMain.isRunning() && msg != null) {    //As long as the remote socket is connected
-            try {
-                msg = in.readLine();    //read the input
-
-               if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
-                    System.out.println(this.username+" disconnected !");    //inform the user
-                    break;                                              //break out of the loop
-                }
-                System.out.println(this.username+" wrote: "+msg);   //print the message
-            } catch(IOException e) {
-                System.out.println(this.username + (": socket closed by the server."));
-            }
-        }
-        this.isConnected = false;   //update status
-    }
-
-    public void stop() {
-        try {
-            this.sendMessage("Server Closed.");
-            this.s.close();                                                                 //This line closes the socket s which unblocks the execution of run()
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -147,8 +107,17 @@ public class Player implements Runnable{
     	int[] tab = {posX,posY};
     	return tab;
     }
+
+    public Socket getSocket() {
+        return this.s;
+    }
+
+    public String getMsg() {
+        return this._msg;
+    }
     
     public String toString() {
     	return this.username + " ["+this.posX+","+this.posY+"] "+money+"$ "+isDead;
     }
+
 }

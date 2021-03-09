@@ -2,6 +2,7 @@ package server.io;
 
 import server.ServerMain;
 import server.Player;
+import server.io.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,11 +16,14 @@ import java.util.Vector;
 public class ConnectionHandler implements Runnable{
 
 	Vector<Player> users = ServerMain.connectedUsers;
+	Vector<Communication> coms = ServerMain.launchedCom;
 	private int port;
+	private Communication _com;
 	ServerSocket serverSoc;
 
 	public ConnectionHandler(int port) {
 		this.port = port;
+		this._com = null;
 	}
 
 	public void run() {
@@ -30,10 +34,15 @@ public class ConnectionHandler implements Runnable{
 					client = serverSoc.accept();		//waiting for connection
 					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 					Player sc = new Player(client,"TestUser");		//build the client manager 
-					System.out.println(sc.getName()+" is now connected");	//print in the server console
-					Thread t = new Thread(sc);	//build the thread with the client manager created above
+					_com = new Communication(sc);
+					System.out.println(_com.getName()+" is now connected");	//print in the server console
+					//Thread t = new Thread(sc);	//build the thread with the client manager created above
+					Thread c = new Thread(_com);
+
 					users.add(sc);		//add the client to the list
-					sc.sendMessage("Connected !");		//Notify the client that the connection succeeded 
+					coms.add(_com);		//add the communication to the list
+
+					_com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
 					for(Player sc2 : users) {	//list update 
 						if(!sc2.isConnected())	//if the client is disconnected
 							users.remove(sc2);	//it is removed from the list
@@ -41,7 +50,8 @@ public class ConnectionHandler implements Runnable{
 							sc2.sendMessage("message à Hugo");						// To a specific user
 					*/}
 
-					t.start();	//thread start
+					//t.start();	//thread start
+					c.start();
 			}
 		} catch (IOException e) {
 			System.out.println("ServerSocket closed by server");
@@ -54,5 +64,9 @@ public class ConnectionHandler implements Runnable{
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+	}
+
+	public Communication getCom() {
+		return this._com;
 	}
 }

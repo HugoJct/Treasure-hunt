@@ -1,43 +1,62 @@
 package server;
 
+import server.io.*;
+
 import java.util.Scanner;
 import java.util.Arrays;
 
 public class Console implements Runnable {
+	private Communication _com;
+	private String _message;
+
+	public Console(Communication com) {
+		this._com = com;
+		this._message = "";
+	}
 
 	@Override
 	public void run() {
-		Scanner sc = new Scanner(System.in);
-		String command = "";
+		
 		while(ServerMain.isRunning()) {
-
-			command = sc.nextLine();
-			String[] brokenCommand = breakCommand(command);
-
-			switch(brokenCommand[0]) {
-				case "stop":
-					ServerMain.stop();
-					break;
-				case "broadcast":
-					//System.out.println("broadcast triggered");
-					ServerMain.broadcastMessage(brokenCommand);
-					break;
-				case "listusers":
-					//System.out.println("listusers triggered");
-					ServerMain.printConnectedUsers();
-					break;
-				case "creategame":
-					ServerMain.createGame(brokenCommand[1]);	//this creates a game with the args[1] as name
-					break;
-				case "stopgame":
-					ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game 
-					break;
-				case "listgames":		//this lists the existing games
-					ServerMain.listGames();
-					break;
-				default:
-					System.out.println("No command was recognized. Please try again.");
+			try {
+				Thread.sleep(1);
+				if (_message != _com.getMessage()) {
+					_message = _com.getMessage();
+					useMessage(_message);
+				}	
 			}
+			catch(InterruptedException e) {
+				
+			}		
+		}
+	}
+
+	public void useMessage(String command) {
+		String[] brokenCommand = breakCommand(command);
+
+		switch(brokenCommand[0]) {
+			case "stop":
+				ServerMain.stop();
+				break;
+			case "broadcast":
+				//System.out.println("broadcast triggered");
+				ServerMain.broadcastMessage(brokenCommand);
+				break;
+			case "listusers":
+				//System.out.println("listusers triggered");
+				ServerMain.printConnectedUsers();
+				break;
+			case "creategame":
+				ServerMain.createGame(brokenCommand[1]);	//this creates a game with the args[1] as name
+				break;
+			case "stopgame":
+				ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game 
+				break;
+			case "listgames":		//this lists the existing games
+				ServerMain.listGames();
+				break;
+			default:
+				System.out.println("No command was recognized. Please try again.");
 		}
 	}
 
