@@ -1,6 +1,6 @@
 package server;
 
-import server.elements.Wall;
+import server.elements.*;
 
 import java.net.Socket;
 import java.io.IOException;
@@ -54,10 +54,10 @@ public class Player {
 	do{
 	    pos[0] = ry.nextInt(b.getSizeY()-1)+ 1; 
 	    pos[1] = rx.nextInt(b.getSizeX()-1)+ 1;
-	}while(!b.getElementAt(pos[1],pos[0]) instanceof (? extends Element));//keep going until the starting location isn't a special item(!!!not sure that '? extends Element' can be used here as expected to point a treasure or hole or wall. Need a confirmation!!!) 
+     	}while(b.getElementAt(pos[1],pos[0]) != null);/*keep going until the starting location isn't a special item */
 	this.setPos(b, pos);
     }
-    
+
     protected boolean setPos(Board b, int[] tab) {
     	if(b.getElementAt(tab[1], tab[0]) instanceof Wall) {
     		return false;
@@ -67,9 +67,10 @@ public class Player {
 	if(b.getElementAt(tab[1], tab[0]) instanceof Hole){ //Added this directly in this function to avoid overencumber the run method in 'Game'
 	    this.killPlayer();
 	}
-	if(b.getElementAt(tab[1], tab[0]) instanceof Treasure){//The player steps on a treasure, the content is added to his money and the treasure is emptied
-	    this.addMoney(b.getElementAt(tab[1], tab[0]).getTreasureValue());
-	    b.getElementAt(tab[1], tab[0]).setTreasureValue(0);
+	if((b.getElementAt(tab[1], tab[0]) instanceof Treasure)){//The player steps on a treasure, the content is added to his money and the treasure is emptied
+	    Treasure tmp = (Treasure)b.getElementAt(tab[1], tab[0]);
+	    this.addMoney(tmp.getTreasureValue());
+	    tmp.setTreasureValue(0);
 	}
     	return true;
     }
@@ -91,11 +92,11 @@ public class Player {
 	}
 	if(sc.nextLine().equals("d")){
 	    currentPos[0] += 1;
-	    this.setPos(b, currentpos);
+	    this.setPos(b, currentPos);
 	}
     }
     
-    protected void killPlayer() {
+    public void killPlayer() {
     	isDead = true;
     }
     
