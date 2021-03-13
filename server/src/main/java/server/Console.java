@@ -39,18 +39,17 @@ public class Console implements Runnable {
 				ServerMain.stop();
 				break;
 			case "broadcast":
-				//System.out.println("broadcast triggered");
 				ServerMain.broadcastMessage(brokenCommand);
 				break;
 			case "listusers":
-				//System.out.println("listusers triggered");
-				ServerMain.printConnectedUsers();
+				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
 			case "creategame":
 				ServerMain.createGame(brokenCommand[1]);	//this creates a game with the args[1] as name
+				_com.sendMessage(ServerMain.listGames());
 				break;
 			case "stopgame":
-				ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game 
+				ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game (doesn't work)
 				break;
 			case "listgames":		//this lists the existing games
 				_com.sendMessage(ServerMain.listGames());

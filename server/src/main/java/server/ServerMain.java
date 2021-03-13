@@ -59,12 +59,17 @@ public class ServerMain {
 			c.sendMessage(wholeMessage);
 	}
 
-	public static void printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
-		if(connectedUsers.size() > 0)
-			for(Player p : connectedUsers)
-				System.out.println(p);
-		else
-			System.out.println("There is currently no user connected.");
+	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
+		String list = "";
+		if(connectedUsers.size() > 0) {
+			for(Player p : connectedUsers) {
+				list += (p + ", ");
+			}
+			return list;
+		}
+		else {
+			return "There is currently no user connected.";
+		}		
 	}
 
 	public static void createGame(String name) {		//this creates the game with the specified name 
@@ -89,7 +94,7 @@ public class ServerMain {
 		String list = "";
 		if(launchedGames.size() > 0) {
 			for(Game g : launchedGames) {
-				list += g;
+				list += (g + ", ");
 			}
 			return list;
 		}	
