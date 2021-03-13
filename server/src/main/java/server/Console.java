@@ -53,7 +53,7 @@ public class Console implements Runnable {
 				ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game 
 				break;
 			case "listgames":		//this lists the existing games
-				ServerMain.listGames();
+				_com.sendMessage(ServerMain.listGames());
 				break;
 			default:
 				System.out.println("No command was recognized. Please try again.");

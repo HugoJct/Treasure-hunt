@@ -85,12 +85,17 @@ public class ServerMain {
 		}
 	}
 
-	public static void listGames() {		//lists the existing games
-		if(launchedGames.size() > 0)
-			for(Game g : launchedGames)
-				System.out.println(g);
-		else
-			System.out.println("There is currently no game in progress.");
+	public static String listGames() {		//lists the existing games
+		String list = "";
+		if(launchedGames.size() > 0) {
+			for(Game g : launchedGames) {
+				list += g;
+			}
+			return list;
+		}	
+		else {
+			return "There is currently no game in progress.";
+		}
 	}
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
