@@ -60,7 +60,8 @@ public class Console implements Runnable {
 	}
 
 	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces
-		String delims = "[ ]+";
+		String delims = "[ ]+";		//This line sets the delimiter between words. Here we use "space" as delimiter, brackets indicate 
+									//the start and end of the group. "+" indicate that conscutive delimitor should be treated as a single one
 		String[] args = command.split(delims);
 		return args;
 	}
