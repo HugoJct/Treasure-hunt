@@ -25,7 +25,7 @@ public class Player {
     private static int serverPort;
     private static Player p;
 
-    public Player(String pathToConfigFile) {
+    public Player(String pathToConfigFile) {        
         try {
             reader = new FileReader(pathToConfigFile);
 
@@ -43,7 +43,7 @@ public class Player {
 
     }
 
-    public Player() {
+    public Player() {               //If the user did not specify any configuration file, we load the default one
         try {
             reader = new FileReader("src/main/java/client/config.json");
 
@@ -59,6 +59,10 @@ public class Player {
             e.printStackTrace();
         } 
 
+    }
+
+    public static String getName() {
+        return username;
     }
 
     public static void main(String[] args) {

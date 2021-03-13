@@ -33,7 +33,14 @@ public class ConnectionHandler implements Runnable{
 			while(ServerMain.isRunning()) {			//as long as the server is running
 					client = serverSoc.accept();		//waiting for connection
 					BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-					Player sc = new Player(client,"TestUser");		//build the client manager 
+
+
+					String[] received = breakCommand(in.readLine());		//we receive an input from the client
+					if(received[0].equals("100"));							//if the received command is "100" (which means the client sends its name)
+						Player sc = new Player(client,received[3]);		//build the client manager 
+
+
+
 					_com = new Communication(sc);
 					System.out.println(_com.getName()+" is now connected");	//print in the server console
 					//Thread t = new Thread(sc);	//build the thread with the client manager created above
@@ -68,5 +75,12 @@ public class ConnectionHandler implements Runnable{
 
 	public Communication getCom() {
 		return this._com;
+	}
+
+	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces
+		String delims = "[ ]+";		//This line sets the delimiter between words. Here we use "space" as delimiter, brackets indicate 
+									//the start and end of the group. "+" indicate that conscutive delimitor should be treated as a single one
+		String[] args = command.split(delims);
+		return args;
 	}
 }
