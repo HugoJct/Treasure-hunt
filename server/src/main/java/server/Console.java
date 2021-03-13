@@ -35,7 +35,7 @@ public class Console implements Runnable {
 		String[] brokenCommand = breakCommand(command);
 
 		switch(brokenCommand[0]) {
-			case "stop":
+			case "0":
 				ServerMain.stop();
 				break;
 			case "broadcast":
@@ -44,14 +44,14 @@ public class Console implements Runnable {
 			case "listusers":
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
-			case "creategame":
-				ServerMain.createGame(brokenCommand[1]);	//this creates a game with the args[1] as name
+			case "110":	// create a new game (args[1] as name)
+				ServerMain.createGame(brokenCommand[1]);
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			case "stopgame":
 				ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game (doesn't work)
 				break;
-			case "listgames":		//this lists the existing games
+			case "120":	// list of existing games
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			default:
