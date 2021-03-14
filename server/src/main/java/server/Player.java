@@ -1,38 +1,36 @@
 package server;
 
-import server.elements.Wall;
+import server.elements.*;
 
 import java.net.Socket;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.Random;
 
-public class Player implements Runnable{
+public class Player {
     //player attributes
     private int posX;
     private int posY;
     private final String username;
     private int money;
     private boolean isDead;
+    private int gameID = -1;
+
+    private String _msg;
 
     //Network attributes
     boolean isConnected;
     Socket s;
-    BufferedReader in;
-    PrintStream out;
     
     public Player(Socket s, String name) {
     	this.username = name;
     	this.isDead = false;
         this.isConnected = true;
         this.s = s;
-        try {
-            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintStream(s.getOutputStream());
-        } catch( IOException e) {
-            e.printStackTrace();
-        }
+        this._msg = "";
     }
     
     //Network methods
@@ -44,39 +42,20 @@ public class Player implements Runnable{
         return isConnected;
     }
 
-    public boolean sendMessage(String message) {        //This method sends a message to the client handled by the instance of the class
-        out.println(message);
-        out.flush();
-        return true;
+    public void setGame(Game g) {
+        if(this.gameID == -1)
+            this.gameID = g.getID();
+        else if(this.gameID == g.getID())
+            System.out.println("The player is already connected to this game");
+        else
+            System.out.println("The player is already connected to another game");
     }
 
-    @Override
-    public void run() {
-
-        String msg = "";        // This loop handles the printing of the incoming messages
-        while(ServerMain.isRunning() && msg != null) {    //As long as the remote socket is connected
-            try {
-                msg = in.readLine();    //read the input
-
-               if(!ServerMain.isRunning() || msg == null) {       // if the socket is disconnected
-                    System.out.println(this.username+" disconnected !");    //inform the user
-                    break;                                              //break out of the loop
-                }
-                System.out.println(this.username+" wrote: "+msg);   //print the message
-            } catch(IOException e) {
-                System.out.println(this.username + (": socket closed by the server."));
-            }
-        }
-        this.isConnected = false;   //update status
-    }
-
-    public void stop() {
-        try {
-            this.sendMessage("Server Closed.");
-            this.s.close();                                                                 //This line closes the socket s which unblocks the execution of run()
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void leaveGame() {
+        if(this.gameID != -1)
+            this.gameID = -1;
+        else
+            System.out.println("This player isn't currently in any game");
     }
 
 
@@ -84,17 +63,57 @@ public class Player implements Runnable{
     protected void addMoney(int amount) {
     	this.money += amount;
     }
-    
+
+    protected void setStartingPos(Board b){ //initiate beginning positions randomly for players
+    	Random rx = new Random();
+    	Random ry = new Random();
+    	int[] pos = {-1,-1};
+    	do{
+    	    pos[0] = ry.nextInt(b.getSizeY()-1)+ 1; 
+    	    pos[1] = rx.nextInt(b.getSizeX()-1)+ 1;
+         } while(b.getElementAt(pos[1],pos[0]) != null);/*keep going until the starting location isn't a special item */
+    	this.setPos(b, pos);
+    }
+
     protected boolean setPos(Board b, int[] tab) {
     	if(b.getElementAt(tab[1], tab[0]) instanceof Wall) {
     		return false;
     	}
     	this.posX = tab[1];
     	this.posY = tab[0];
+    	if(b.getElementAt(tab[1], tab[0]) instanceof Hole){ //Added this directly in this function to avoid overencumber the run method in 'Game'
+    	    this.killPlayer();
+    	}
+    	if((b.getElementAt(tab[1], tab[0]) instanceof Treasure)){//The player steps on a treasure, the content is added to his money and the treasure is emptied
+    	    Treasure tmp = (Treasure)b.getElementAt(tab[1], tab[0]);
+    	    this.addMoney(tmp.getTreasureValue());
+    	    tmp.setTreasureValue(0);
+    	}
     	return true;
     }
+
+    protected void setPosFromInput(Board b, int[] currentPos){
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("Move: Up(u),Right(r),Left(l),Down(d)");
+    	if(sc.nextLine().equals("u")){
+    	    currentPos[0] -= 1;
+    	    this.setPos(b, currentPos);
+    	}
+    	if(sc.nextLine().equals("r")){
+    	    currentPos[1] += 1;
+    	    this.setPos(b, currentPos);
+    	}
+    	if(sc.nextLine().equals("l")){
+    	    currentPos[1] -= 1;
+    	    this.setPos(b, currentPos);
+    	}
+    	if(sc.nextLine().equals("d")){
+    	    currentPos[0] += 1;
+    	    this.setPos(b, currentPos);
+    	}
+    }
     
-    protected void killPlayer() {
+    public void killPlayer() {
     	isDead = true;
     }
     
@@ -106,8 +125,17 @@ public class Player implements Runnable{
     	int[] tab = {posX,posY};
     	return tab;
     }
+
+    public Socket getSocket() {
+        return this.s;
+    }
+
+    public String getMsg() {
+        return this._msg;
+    }
     
     public String toString() {
     	return this.username + " ["+this.posX+","+this.posY+"] "+money+"$ "+isDead;
     }
+
 }
