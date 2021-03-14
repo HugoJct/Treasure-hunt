@@ -60,28 +60,9 @@ public class Console implements Runnable {
 	}
 
 	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces
-		int spaceCount = 0;	
-		for(int i=0;i<command.length();i++) {				//Count space number to determine 
-			if(command.charAt(i) == ' ')
-				spaceCount++;
-		}
-
-		String args[] = new String[spaceCount + 1];			//Create the array to return
-
-		for(int i=0;i<args.length;i++)						//fill the array with voiod strings
-			args[i] = "";
-
-		int index = 0;
-		for(int i=0;i<args.length;i++) {						//fill each slot of the array with a whole word
-			for(int j=index;j<command.length();j++) {
-				if(command.charAt(j) == ' ') {
-					index++;
-					break;
-				}
-				args[i] += command.charAt(j);
-				index++;
-			}
-		}
+		String delims = "[ ]+";		//This line sets the delimiter between words. Here we use "space" as delimiter, brackets indicate 
+									//the start and end of the group. "+" indicate that conscutive delimitor should be treated as a single one
+		String[] args = command.split(delims);
 		return args;
 	}
 
