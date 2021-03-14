@@ -27,6 +27,8 @@ public class ConnectionHandler implements Runnable{
 	}
 
 	public void run() {
+		System.out.println("Config file loaded: "+ServerMain.getConfigFile());
+		System.out.println("Server launched on port "+this.port);
 		try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
 			serverSoc = new ServerSocket(this.port);	//opening the server
 			Socket client;					

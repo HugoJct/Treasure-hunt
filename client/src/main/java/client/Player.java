@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.lang.InterruptedException;
 import java.lang.Thread;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -20,14 +20,15 @@ import org.json.simple.parser.JSONParser;
 public class Player {
 
     private static String username;
-    private static FileReader reader;
+    private static File configFile;
     private static String serverIP;
     private static int serverPort;
     private static Player p;
 
     public Player(String pathToConfigFile) {        
         try {
-            reader = new FileReader(pathToConfigFile);
+            configFile = new File(pathToConfigFile);
+            FileReader reader = new FileReader(configFile);
 
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
@@ -45,7 +46,8 @@ public class Player {
 
     public Player() {               //If the user did not specify any configuration file, we load the default one
         try {
-            reader = new FileReader("src/main/java/client/config.json");
+            configFile = new File("src/main/java/client/config.json");
+            FileReader reader = new FileReader(configFile);
 
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
