@@ -45,7 +45,6 @@ public class Communication implements Runnable {
     @Override
     public void run() {
 
-        //String msg = "";        // This loop handles the printing of the incoming messages
         while(ServerMain.isRunning()) {    //As long as the remote socket is connected
             try {
                 this._msg = in.readLine();    //read the input
