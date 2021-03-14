@@ -13,6 +13,13 @@ import server.io.Communication;
 import server.io.ConnectionHandler;
 
 import java.util.Vector;
+import java.io.FileReader;
+import java.io.File;
+import java.io.IOException;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
 
 public class ServerMain {
 
@@ -27,12 +34,33 @@ public class ServerMain {
 	private static boolean isRunning = true;
 	private static ConnectionHandler ch;
 	private static Console console;
+	private static int port;
+	private static File configFile;
 
 	public ServerMain() {}
 
 	public static void main(String[] args) {
 
-		ch = new ConnectionHandler(12345);		//Launch the server	
+		try {
+			if(args.length >= 1)
+				configFile = new File(args[0]);
+			else
+				configFile = new File("src/main/java/server/config.json");
+
+			FileReader reader = new FileReader(configFile);
+
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+            port = ((Long) jsonObject.get("port")).intValue();
+
+        }  catch(IOException e) {
+            e.printStackTrace();
+        } catch(ParseException e) {
+            e.printStackTrace();
+        }
+
+		ch = new ConnectionHandler(port);		//Launch the server	
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
 		while (true) {
@@ -114,5 +142,13 @@ public class ServerMain {
 
 	public static boolean isRunning() {
 		return isRunning;	
+	}
+
+	public static int getPort() {
+		return port;
+	}
+
+	public static String getConfigFile() {
+		return configFile.getPath();
 	}
 }
