@@ -119,16 +119,23 @@ public class ServerMain {
 	}
 
 	public static String listGames() {		//lists the existing games
-		String list = "";
+		String list = "121 ID ";
 		if(launchedGames.size() > 0) {
 			for(Game g : launchedGames) {
-				list += (g + ", ");
+				list += (g + " ");
 			}
-			return list;
 		}	
-		else {
-			return "There is currently no game in progress.";
+		return list;
+	}
+
+	public static String listNbrOfGames() {
+		int x = 0;
+		if(launchedGames.size() > 0) {
+			for (Game g : launchedGames) {
+				x++;
+			}
 		}
+		return "121 NUMBER " + x;
 	}
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads

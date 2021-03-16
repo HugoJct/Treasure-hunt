@@ -57,7 +57,7 @@ public class Game implements Runnable{
 	}
 
 	public String toString() {
-		String s = this.id + ". " +this.name+" "+this.isRunning+"\n";
+		String s = this.name;
 		for(Player p : players)
 			s += players.toString() + "\n";
 		return s;
