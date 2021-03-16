@@ -55,7 +55,7 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			default:
-				System.out.println("No command was recognized. Please try again.");
+				_com.sendMessage("UNKNOW");
 		}
 	}
 
