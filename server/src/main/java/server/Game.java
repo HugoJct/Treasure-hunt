@@ -12,7 +12,7 @@ public class Game implements Runnable{
 	private static int id = 0;
 
 	public Game(String name) {
-		this.isRunning = true;
+		this.isRunning = false;
 		this.name = name;
 		b = new Board();
 		this.id++;
@@ -65,6 +65,18 @@ public class Game implements Runnable{
 
 	@Override
 	public void run() {
+
+		while(!isRunning) {
+			try {
+				Thread.sleep(1);
+				if(!ServerMain.isRunning()) {
+					System.out.println("Server stopped ! ");
+					return;
+				}
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	    //By taking the assumption that they will only be 3 players in the game(will change later so that it adapts to more players)
 	    Player players[] = new Player[3];
 
