@@ -25,7 +25,7 @@ public class ServerMain {
 
 	public static Vector<Player> connectedUsers = new Vector<>();
 
-	public static Vector<Game> launchedGames = new Vector<>();
+	public static Vector<Game> createGames = new Vector<>();
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
@@ -87,6 +87,22 @@ public class ServerMain {
 			c.sendMessage(wholeMessage);
 	}
 
+	public static void broadcastPerGame(String[] message) {
+		for (Communication c : launchedCom) {
+			if (c.getPlayer().getId() == message[1]) {
+				c.sendMessage(message[0]);
+			}
+		}
+	}
+
+	public static void checkForLaunch(String[] message) {
+		if (message[2] == "1") {
+			for (Game g : createGames) {
+			
+			}
+		}
+	}
+
 	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
 		String list = "";
 		if(connectedUsers.size() > 0) {
@@ -102,17 +118,17 @@ public class ServerMain {
 
 	public static void createGame(String name) {		//this creates the game with the specified name 
 		Game g = new Game(name);
-		launchedGames.add(g);
+		createGames.add(g);
 
 		Thread game = new Thread(g);
 		game.start();
 	}
 
 	public static String stopGame(int id) {		//stops the specified game
-		for(Game g : launchedGames) {
+		for(Game g : createGames) {
 			if(g.getID() == id) {
 				g.stop();
-				launchedGames.remove(g);
+				createGames.remove(g);
 				return "Game ID : " + g + " Stopped";
 			}
 		}
@@ -121,8 +137,8 @@ public class ServerMain {
 
 	public static String listGames() {		//lists the existing games
 		String list = "121 ID ";
-		if(launchedGames.size() > 0) {
-			for(Game g : launchedGames) {
+		if(createGames.size() > 0) {
+			for(Game g : createGames) {
 				list += (g + " ");
 			}
 		}	
@@ -131,8 +147,8 @@ public class ServerMain {
 
 	public static String listNbrOfGames() {
 		int x = 0;
-		if(launchedGames.size() > 0) {
-			for (Game g : launchedGames) {
+		if(createGames.size() > 0) {
+			for (Game g : createGames) {
 				x++;
 			}
 		}
@@ -141,7 +157,7 @@ public class ServerMain {
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;
-		for(Game g : launchedGames)
+		for(Game g : createGames)
 			g.stop();
 		for(Communication c : launchedCom)
 			c.stop();
