@@ -46,16 +46,16 @@ public class Console implements Runnable {
 				break;
 			case "110":	// create a new game (args[1] as name)
 				ServerMain.createGame(brokenCommand[1]);
-				_com.sendMessage(ServerMain.listGames());
 				break;
 			case "stopgame":
 				ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game (doesn't work)
 				break;
 			case "120":	// list of existing games
+				_com.sendMessage(ServerMain.listNbrOfGames());
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			default:
-				System.out.println("No command was recognized. Please try again.");
+				_com.sendMessage("UNKNOW");
 		}
 	}
 
