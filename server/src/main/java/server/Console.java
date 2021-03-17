@@ -55,10 +55,9 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			case "150":
-				//String id = ServerMain.checkId(brokenCommand[1]);
-				ServerMain.broadcastMessage("152");
+				ServerMain.broadcastPerGame(brokenCommand);
 			case "152":
-
+				ServerMain.checkForLaunch(brokenCommand);
 			default:
 				_com.sendMessage("UNKNOW");
 		}

@@ -70,6 +70,10 @@ public class Communication implements Runnable {
         }
     }
 
+    public Player getPlayer() {
+        return this._player;
+    }
+
     public String getName() {
         return this._player.getName();
     }

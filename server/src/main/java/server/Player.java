@@ -18,6 +18,7 @@ public class Player {
     private int money;
     private boolean isDead;
     private int gameID = -1;
+    private boolean ready;
 
     private String _msg;
 
@@ -31,6 +32,7 @@ public class Player {
         this.isConnected = true;
         this.s = s;
         this._msg = "";
+        this.ready = false;
     }
     
     //Network methods
@@ -133,7 +135,15 @@ public class Player {
     public String getMsg() {
         return this._msg;
     }
+
+    public int getId() {
+        return this.gameID;
+    }
     
+    public void setReady(boolean b) {
+        this.ready = b;
+    }
+
     public String toString() {
     	return this.username + " ["+this.posX+","+this.posY+"] "+money+"$ "+isDead;
     }
