@@ -47,13 +47,18 @@ public class Console implements Runnable {
 			case "110":	// create a new game (args[1] as name)
 				ServerMain.createGame(brokenCommand[1]);
 				break;
-			case "stopgame":
-				ServerMain.stopGame(Integer.parseInt(brokenCommand[1]));	//this stops the #args[1] game (doesn't work)
+			case "156":
+				_com.sendMessage(ServerMain.stopGame(Integer.parseInt(brokenCommand[1])));	//this stops the #args[1] game (doesn't work)
 				break;
 			case "120":	// list of existing games
 				_com.sendMessage(ServerMain.listNbrOfGames());
 				_com.sendMessage(ServerMain.listGames());
 				break;
+			case "150":
+				//String id = ServerMain.checkId(brokenCommand[1]);
+				ServerMain.broadcastMessage("152");
+			case "152":
+
 			default:
 				_com.sendMessage("UNKNOW");
 		}

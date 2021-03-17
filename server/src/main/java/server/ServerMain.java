@@ -108,14 +108,15 @@ public class ServerMain {
 		game.start();
 	}
 
-	public static void stopGame(int id) {		//stops the specified game
+	public static String stopGame(int id) {		//stops the specified game
 		for(Game g : launchedGames) {
 			if(g.getID() == id) {
 				g.stop();
 				launchedGames.remove(g);
-				break;
+				return "Game ID : " + g + " Stopped";
 			}
 		}
+		return "Game ID not found";
 	}
 
 	public static String listGames() {		//lists the existing games
