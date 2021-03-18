@@ -15,7 +15,7 @@ public class Player {
     private int posX;
     private int posY;
     private static int globalId = 0;
-    private final String username;
+    private String username;
     private final int playerID;
     private int money;
     private boolean isDead;
@@ -148,12 +148,20 @@ public class Player {
         return this.playerID;
     }
 
+    public String getUserName() {
+        return this.username;
+    }
+
     public boolean getReady() {
         return this.ready;
     }
     
     public void setReady(boolean b) {
         this.ready = b;
+    }
+
+    public void setUserName(String s) {
+        this.username = s;
     }
 
     public String toString() {

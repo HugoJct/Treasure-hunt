@@ -48,6 +48,7 @@ public class Console implements Runnable {
 				ServerMain.createGame(brokenCommand[1]);
 				break;
 			case "130":
+				ServerMain.joinGame(brokenCommand); // 130 gameId playerID
 			case "156":
 				_com.sendMessage(ServerMain.stopGame(Integer.parseInt(brokenCommand[1])));	//this stops the #args[1] game (doesn't work)
 				break;

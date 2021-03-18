@@ -140,8 +140,26 @@ public class ServerMain {
 		//game.start();
 	}
 
-	public static void joinGame(String[] info) {
-
+	public static void joinGame(String[] info) {	// 130 gameId playerID
+		Player player = null;
+		int i = 1;
+		boolean retVal = false;
+		for(Game g : createGames) {
+			if (String.valueOf(g.getID()) == info[1]) {
+				for (Player p : connectedUsers) {
+					if (String.valueOf(p.getPlayerId()) == info[2]) {
+						player = p;
+					}
+				}
+				do {
+					retVal = g.addPlayer(player);	
+					if (retVal == false) {
+						player.setUserName(player.getUserName() + i);
+						i++;
+					}
+				} while (!(retVal));
+			}
+		}
 	}
 
 	public static String stopGame(int id) {		//stops the specified game
