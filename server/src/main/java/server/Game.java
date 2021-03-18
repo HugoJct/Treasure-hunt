@@ -10,11 +10,13 @@ public class Game implements Runnable{
 	private boolean isRunning;
 	private final String name;
 	private static int id = 0;
+	private int gameId;
 
 	public Game(String name) {
 		this.isRunning = false;
 		this.name = name;
 		b = new Board();
+		this.gameId = id;
 		this.id++;
 	}
 
@@ -57,7 +59,7 @@ public class Game implements Runnable{
 	}
 
 	public String toString() {
-		String s = this.name;
+		String s = this.gameId + " " + this.name;
 		for(Player p : players)
 			s += players.toString() + "\n";
 		return s;
@@ -102,5 +104,9 @@ public class Game implements Runnable{
 		    	break;
 			}
 	    }
+	}
+
+	public int getGameId() {
+		return this.gameId;
 	}
 }

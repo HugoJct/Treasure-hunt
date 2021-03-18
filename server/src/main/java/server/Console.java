@@ -47,6 +47,7 @@ public class Console implements Runnable {
 			case "110":	// create a new game (args[1] as name)
 				ServerMain.createGame(brokenCommand[1]);
 				break;
+			case "130":
 			case "156":
 				_com.sendMessage(ServerMain.stopGame(Integer.parseInt(brokenCommand[1])));	//this stops the #args[1] game (doesn't work)
 				break;
@@ -55,9 +56,10 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			case "150":
-				ServerMain.broadcastPerGame(brokenCommand);
+				String[] broadcast = {brokenCommand[1], "152"};
+				ServerMain.broadcastPerGame(broadcast);
 			case "152":
-				ServerMain.checkForLaunch(brokenCommand);
+				ServerMain.checkForLaunch(brokenCommand); // 152 gameID playerID response
 			default:
 				_com.sendMessage("UNKNOW");
 		}

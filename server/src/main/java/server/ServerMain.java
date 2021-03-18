@@ -89,16 +89,32 @@ public class ServerMain {
 
 	public static void broadcastPerGame(String[] message) {
 		for (Communication c : launchedCom) {
-			if (c.getPlayer().getId() == message[1]) {
-				c.sendMessage(message[0]);
+			if (String.valueOf(c.getPlayer().getGameId()) == message[0]) {
+				c.sendMessage(message[1]);
 			}
 		}
 	}
 
 	public static void checkForLaunch(String[] message) {
 		if (message[2] == "1") {
-			for (Game g : createGames) {
-			
+			for (Communication c : launchedCom) {
+				if (String.valueOf(c.getPlayer().getGameId()) == message[1]) {
+					if (String.valueOf(c.getPlayer().getPlayerId()) == message[2]) {
+						c.getPlayer().setReady(true);
+						for (Player p : connectedUsers) {
+							if (p.getReady() == false) {
+								System.out.println("Not Ready");
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+		System.out.println("READY");
+		for (Game g : createGames) {
+			if (String.valueOf(g.getGameId()) == message[1]) {
+				g.start();
 			}
 		}
 	}
@@ -121,7 +137,11 @@ public class ServerMain {
 		createGames.add(g);
 
 		Thread game = new Thread(g);
-		game.start();
+		//game.start();
+	}
+
+	public static void joinGame(String[] info) {
+
 	}
 
 	public static String stopGame(int id) {		//stops the specified game

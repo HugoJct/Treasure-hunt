@@ -14,7 +14,9 @@ public class Player {
     //player attributes
     private int posX;
     private int posY;
+    private static int globalId = 0;
     private final String username;
+    private final int playerID;
     private int money;
     private boolean isDead;
     private int gameID = -1;
@@ -33,6 +35,8 @@ public class Player {
         this.s = s;
         this._msg = "";
         this.ready = false;
+        this.playerID = globalId;
+        globalId++;
     }
     
     //Network methods
@@ -136,8 +140,16 @@ public class Player {
         return this._msg;
     }
 
-    public int getId() {
+    public int getGameId() {
         return this.gameID;
+    }
+    
+    public int getPlayerId() {
+        return this.playerID;
+    }
+
+    public boolean getReady() {
+        return this.ready;
     }
     
     public void setReady(boolean b) {
