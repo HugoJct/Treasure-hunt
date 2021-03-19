@@ -67,7 +67,6 @@ public class Board {
     	this.sizeX = x+2;
     	this.sizeY = y+2;
 	this.elements = new Element[this.sizeY][this.sizeX];
-	this.setBorder();
     }
 
 	public void setBorder() {

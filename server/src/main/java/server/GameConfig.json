@@ -1,0 +1,10 @@
+{
+  "name": "DefaultName",
+  "dimensions": [3,3],
+  "elements": [
+    ["w","w","w"],
+    ["w","n","w"],
+    ["w","w","w"]
+  ],
+  "capacity": 1
+}

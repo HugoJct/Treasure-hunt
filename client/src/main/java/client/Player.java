@@ -69,7 +69,7 @@ public class Player {
 
     public static void main(String[] args) {
 
-		new ControlUI(new Menu());
+		//new ControlUI(new Menu());
         try {
 
             if(args.length >= 1)

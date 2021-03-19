@@ -1,6 +1,14 @@
 package server;
 
 import java.util.Vector;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONArray;
 
 public class Game implements Runnable{
 
@@ -9,7 +17,35 @@ public class Game implements Runnable{
 	private Board b;
 	private boolean isRunning;
 	private final String name;
+	private final int capacity;
+
 	private static int id = 0;
+
+	public Game() {
+		this.isRunning = false;
+		this.name = "default";
+		try{
+			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
+
+			JSONParser parser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+			JSONArray msg = (JSONArray) jsonObject.get("dimensions");
+			Iterator<Integer> iterator = msg.iterator();
+
+			int dimX = ((Integer) iterator.next()).intValue();
+			int dimY = ((Integer) iterator.next()).intValue();
+
+			b = new Board(dimX,dimY);
+
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch(ParseException e) {
+			e.printStackTrace();
+		}
+
+		b = new Board();
+	}
 
 	public Game(String name) {
 		this.isRunning = false;
