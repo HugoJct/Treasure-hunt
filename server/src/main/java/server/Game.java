@@ -10,20 +10,24 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 
+import server.elements.*;
+
 public class Game implements Runnable{
 
 	private Vector<Player> players = new Vector<>();
 
 	private Board b;
 	private boolean isRunning;
-	private final String name;
-	private final int capacity;
+	private String name;
+	private int capacity;
 
 	private static int id = 0;
 
 	public Game() {
 		this.isRunning = false;
 		this.name = "default";
+		this.capacity = 4;
+		this.b = new Board();
 		try{
 			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
 
@@ -31,25 +35,55 @@ public class Game implements Runnable{
 			JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
 			JSONArray msg = (JSONArray) jsonObject.get("dimensions");
-			Iterator<Integer> iterator = msg.iterator();
+			Iterator<String> iterator = msg.iterator();
 
-			int dimX = ((Integer) iterator.next()).intValue();
-			int dimY = ((Integer) iterator.next()).intValue();
+			int dimX = Integer.parseInt(((String) iterator.next()));
+			int dimY = Integer.parseInt(((String) iterator.next()));
 
 			b = new Board(dimX,dimY);
+
+			this.capacity = ((Long) jsonObject.get("capacity")).intValue();
+			this.name = (String) jsonObject.get("name");
+
+			JSONArray board = (JSONArray) jsonObject.get("elements");
+			for(int i = 0;i<dimY;i++) {
+				JSONArray obj = (JSONArray) board.get(i);
+				for(int j=0;j<dimX;j++) {
+					switch(((String) obj.get(j)).charAt(0)) {
+						case 'w':
+							this.b.setElementAt(new Wall(),j+1,i+1);
+							break;
+						case 'h':
+							this.b.setElementAt(new Hole(),j+1,i+1);
+							break;
+						case 't':
+							String amount = "";
+							for(int k=1;k<((String) obj.get(j)).length();k++)
+								amount += ((String) obj.get(j)).charAt(k);
+							System.out.println(amount);
+							this.b.setElementAt(new Treasure(Integer.parseInt(amount)),j+1,i+1);
+							break;
+						case ' ':
+							break;
+						default:
+							System.out.println("Unknown symbol encoutered while parsing board configuration layout");
+							break;
+					}
+				}
+			}
 
 		} catch(IOException e) {
 			e.printStackTrace();
 		} catch(ParseException e) {
 			e.printStackTrace();
 		}
-
-		b = new Board();
+		System.out.println(this.b);
 	}
 
 	public Game(String name) {
 		this.isRunning = false;
 		this.name = name;
+		this.capacity = 4;
 		b = new Board();
 		this.id++;
 	}
