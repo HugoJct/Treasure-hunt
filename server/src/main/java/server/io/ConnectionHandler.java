@@ -3,6 +3,7 @@ package server.io;
 import server.ServerMain;
 import server.Player;
 import server.io.*;
+import server.Console;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,12 +19,10 @@ public class ConnectionHandler implements Runnable{
 	Vector<Player> users = ServerMain.connectedUsers;
 	Vector<Communication> coms = ServerMain.launchedCom;
 	private int port;
-	private Communication _com;
 	ServerSocket serverSoc;
 
 	public ConnectionHandler(int port) {
 		this.port = port;
-		this._com = null;
 	}
 
 	public void run() {
@@ -38,20 +37,23 @@ public class ConnectionHandler implements Runnable{
 
 
 					String[] received = breakCommand(in.readLine());		//we receive an input from the client
-					if(received[0].equals("100"));							//if the received command is "100" (which means the client sends its name)
-						Player sc = new Player(client,received[3]);		//build the client manager 
+					Player sc = null;
+					Communication com = null;
+					if(received[0].equals("100")) {							//if the received command is "100" (which means the client sends its name)
+						sc = new Player(client,received[3]);		//build the client manager 
+						com = new Communication(sc);
+						Thread console = new Thread(new Console(com));
+						console.start();
+					}
 
-
-
-					_com = new Communication(sc);
-					System.out.println(_com.getName()+" is now connected");	//print in the server console
+					System.out.println(com.getName()+" is now connected");	//print in the server console
 					//Thread t = new Thread(sc);	//build the thread with the client manager created above
-					Thread c = new Thread(_com);
+					Thread c = new Thread(com);
 
 					users.add(sc);		//add the client to the list
-					coms.add(_com);		//add the communication to the list
+					coms.add(com);		//add the communication to the list
 
-					_com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
+					com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
 					for(Player sc2 : users) {	//list update 
 						if(!sc2.isConnected())	//if the client is disconnected
 							users.remove(sc2);	//it is removed from the list
@@ -73,10 +75,6 @@ public class ConnectionHandler implements Runnable{
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-	}
-
-	public Communication getCom() {
-		return this._com;
 	}
 
 	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces

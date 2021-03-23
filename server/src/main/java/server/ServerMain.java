@@ -63,12 +63,12 @@ public class ServerMain {
 		ch = new ConnectionHandler(port);		//Launch the server	
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-		while (true) {
+		/* while (true) {
 			if (ch.getCom() != null) {
 				console = new Console(ch.getCom());
 				break;
 			}
-		}		
+		}		*/
 
 		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
 		checkInput.start();
