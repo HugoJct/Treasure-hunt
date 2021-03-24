@@ -134,7 +134,7 @@ public class ServerMain {
 
 	public static void createGame(String name) {		//this creates the game with the specified name 
 		Game g = new Game();
-		launchedGames.add(g);
+		createGames.add(g);
 
 		Thread game = new Thread(g);
 		//game.start();
