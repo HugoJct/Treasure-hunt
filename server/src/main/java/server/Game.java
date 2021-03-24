@@ -22,6 +22,7 @@ public class Game implements Runnable{
 	private int capacity;
 
 	private static int id = 0;
+	private int gameId;
 
 	public Game() {
 		this.isRunning = false;
@@ -85,6 +86,7 @@ public class Game implements Runnable{
 		this.name = name;
 		this.capacity = 4;
 		b = new Board();
+		this.gameId = id;
 		this.id++;
 	}
 
@@ -127,7 +129,7 @@ public class Game implements Runnable{
 	}
 
 	public String toString() {
-		String s = this.name;
+		String s = this.gameId + " " + this.name;
 		for(Player p : players)
 			s += players.toString() + "\n";
 		return s;
@@ -172,5 +174,9 @@ public class Game implements Runnable{
 		    	break;
 			}
 	    }
+	}
+
+	public int getGameId() {
+		return this.gameId;
 	}
 }

@@ -13,11 +13,19 @@ client: clearT buildClient
 buildClient:
 	./gradlew :client:build
 
+#run the client only (without build)
+runclient: clearT 
+	./gradlew :client:run --console=plain
+
 #the build and run recipes for the server side of the project only
 server: clearT buildServer
 	./gradlew :server:run --console=plain
 buildServer:
 	./gradlew :server:build
+
+#run the server only (without build)
+runserver: clearT
+	./gradlew :server:run --console=plain
 
 #convenience recipes
 clearT:

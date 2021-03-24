@@ -25,7 +25,7 @@ public class ServerMain {
 
 	public static Vector<Player> connectedUsers = new Vector<>();
 
-	public static Vector<Game> launchedGames = new Vector<>();
+	public static Vector<Game> createGames = new Vector<>();
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
@@ -63,12 +63,12 @@ public class ServerMain {
 		ch = new ConnectionHandler(port);		//Launch the server	
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-		while (true) {
+		/* while (true) {
 			if (ch.getCom() != null) {
 				console = new Console(ch.getCom());
 				break;
 			}
-		}		
+		}		*/
 
 		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
 		checkInput.start();
@@ -85,6 +85,38 @@ public class ServerMain {
 			wholeMessage += message[i] + " ";
 		for(Communication c : launchedCom)
 			c.sendMessage(wholeMessage);
+	}
+
+	public static void broadcastPerGame(String[] message) {
+		for (Communication c : launchedCom) {
+			if (String.valueOf(c.getPlayer().getGameId()) == message[0]) {
+				c.sendMessage(message[1]);
+			}
+		}
+	}
+
+	public static void checkForLaunch(String[] message) {
+		if (message[2] == "1") {
+			for (Communication c : launchedCom) {
+				if (String.valueOf(c.getPlayer().getGameId()) == message[1]) {
+					if (String.valueOf(c.getPlayer().getPlayerId()) == message[2]) {
+						c.getPlayer().setReady(true);
+						for (Player p : connectedUsers) {
+							if (p.getReady() == false) {
+								System.out.println("Not Ready");
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+		System.out.println("READY");
+		for (Game g : createGames) {
+			if (String.valueOf(g.getGameId()) == message[1]) {
+				g.start();
+			}
+		}
 	}
 
 	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
@@ -105,23 +137,46 @@ public class ServerMain {
 		launchedGames.add(g);
 
 		Thread game = new Thread(g);
-		game.start();
+		//game.start();
 	}
 
-	public static void stopGame(int id) {		//stops the specified game
-		for(Game g : launchedGames) {
-			if(g.getID() == id) {
-				g.stop();
-				launchedGames.remove(g);
-				break;
+	public static void joinGame(String[] info) {	// 130 gameId playerID
+		Player player = null;
+		int i = 1;
+		boolean retVal = false;
+		for(Game g : createGames) {
+			if (String.valueOf(g.getID()) == info[1]) {
+				for (Player p : connectedUsers) {
+					if (String.valueOf(p.getPlayerId()) == info[2]) {
+						player = p;
+					}
+				}
+				do {
+					retVal = g.addPlayer(player);	
+					if (retVal == false) {
+						player.setUserName(player.getUserName() + i);
+						i++;
+					}
+				} while (!(retVal));
 			}
 		}
 	}
 
+	public static String stopGame(int id) {		//stops the specified game
+		for(Game g : createGames) {
+			if(g.getID() == id) {
+				g.stop();
+				createGames.remove(g);
+				return "Game ID : " + g + " Stopped";
+			}
+		}
+		return "Game ID not found";
+	}
+
 	public static String listGames() {		//lists the existing games
 		String list = "121 ID ";
-		if(launchedGames.size() > 0) {
-			for(Game g : launchedGames) {
+		if(createGames.size() > 0) {
+			for(Game g : createGames) {
 				list += (g + " ");
 			}
 		}	
@@ -130,8 +185,8 @@ public class ServerMain {
 
 	public static String listNbrOfGames() {
 		int x = 0;
-		if(launchedGames.size() > 0) {
-			for (Game g : launchedGames) {
+		if(createGames.size() > 0) {
+			for (Game g : createGames) {
 				x++;
 			}
 		}
@@ -140,7 +195,7 @@ public class ServerMain {
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;
-		for(Game g : launchedGames)
+		for(Game g : createGames)
 			g.stop();
 		for(Communication c : launchedCom)
 			c.stop();
