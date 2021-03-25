@@ -2,6 +2,7 @@ package client;
 
 import client.connex.Writer;
 import client.connex.Reader;
+import client.control.shell.Console;
 import client.view.gui.*;
 import client.control.UI.ControlUI;
 
@@ -78,11 +79,15 @@ public class Player {
                 p = new Player();
 
             Socket s = new Socket(serverIP,serverPort);
-            Thread read = new Thread(new Reader(s));
-            Thread write = new Thread(new Writer(s));
+            Reader r = new Reader(s);
+            Writer w = new Writer(s);
+            Thread read = new Thread(r);
+            Thread write = new Thread(w);
+            Thread cons = new Thread(new Console(r, w));
 
             write.start();
             read.start();
+            cons.start();
 
         } catch(IOException e) {
             e.printStackTrace();

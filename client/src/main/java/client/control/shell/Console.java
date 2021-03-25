@@ -1,32 +1,37 @@
 package client.control.shell;
 
 import client.connex.Reader;
+import client.connex.Writer;
 
 import java.util.Scanner;
 import java.util.Arrays;
 
 public class Console implements Runnable {
-	private Reader _com;
+	private Reader _read;
+	private Writer _write;
+
 	private String _message;
 
-	public Console(Reader com) {
-		this._com = com;
+	public Console(Reader r, Writer w) {
+		this._read = r;
+		this._write = w;
 		this._message = "";
 	}
 
 	@Override
 	public void run() {
-		
+		while(!(_write.getSocket().isClosed())) {	
 			try {
 				Thread.sleep(1);
-				if (_message != _com.getMsg()) {
-					_message = _com.getMsg();
+				if (_message != _read.getMsg()) {
+					_message = _read.getMsg();
 					useMessage(_message);
 				}	
 			}
 			catch(InterruptedException e) {
 				
-			}		
+			}	
+		}	
 
 	}
 
@@ -36,7 +41,7 @@ public class Console implements Runnable {
 		switch(brokenCommand[0]) {
 			//case "0":
 			default:
-				_com.sendMessage("UNKNOW");
+				_write.sendMessage("UNKNOW");
 		}
 	}
 
