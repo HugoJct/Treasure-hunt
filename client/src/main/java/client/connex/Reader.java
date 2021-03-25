@@ -8,6 +8,7 @@ import java.net.Socket;
 public class Reader implements Runnable {
 	BufferedReader in;
 	Socket soc;
+	private String _msg;
 
 	public Reader(Socket soc) {
 		this.soc = soc;
@@ -20,16 +21,19 @@ public class Reader implements Runnable {
 
 	@Override
 	public void run() {
-		String msg;
 		try {
-			msg = in.readLine();
-			while (msg != null) {
-				System.out.println("Server wrote: "+msg);
-				msg = in.readLine();
+			_msg = in.readLine();
+			while (_msg != null) {
+				System.out.println("Server wrote: " + _msg);
+				_msg = in.readLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getMsg() {
+		return this._msg;
 	}
 
 }
