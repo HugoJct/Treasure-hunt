@@ -23,7 +23,7 @@ public class Console implements Runnable {
 		while(!(_write.getSocket().isClosed())) {	
 			try {
 				Thread.sleep(1);
-				if (_message != _read.getMsg()) {
+				if (_message != _read.getMsg() && _read.getMsg() != null) {
 					_message = _read.getMsg();
 					useMessage(_message);
 				}	
@@ -39,7 +39,8 @@ public class Console implements Runnable {
 		String[] brokenCommand = breakCommand(command);
 
 		switch(brokenCommand[0]) {
-			//case "0":
+			case "0":
+				_write.sendMessage("TEST");
 			default:
 				_write.sendMessage("UNKNOW");
 		}

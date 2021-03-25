@@ -24,6 +24,13 @@ public class Writer implements Runnable{
 	@Override
 	public void run() {
 		sendName();
+		String msg;
+		while(!soc.isClosed()) {
+			msg = sc.nextLine();
+			out.println(msg);
+			out.flush();
+		}
+
 	}
 
 	public void sendMessage(String msg) {

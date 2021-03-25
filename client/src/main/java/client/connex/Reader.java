@@ -21,11 +21,14 @@ public class Reader implements Runnable {
 
 	@Override
 	public void run() {
+		String tmp = "";
 		try {
-			_msg = in.readLine();
-			while (_msg != null) {
-				System.out.println("Server wrote: " + _msg);
+			while (true) {
 				_msg = in.readLine();
+				if (tmp != _msg) {
+					System.out.println("Server wrote: " + _msg);			
+				}
+				tmp = _msg;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
