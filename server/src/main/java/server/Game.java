@@ -102,6 +102,18 @@ public class Game implements Runnable{
 		return this.id;
 	}
 
+	public Board getB(){
+		return this.b;
+	}
+
+	public boolean isRunning(){
+		return this.isRunning;
+	}
+
+	public int getCapacity(){
+		return this.capacity;
+	}
+
 	public boolean addPlayer(Player p) {		//this method tests if a player doesn't have the same name as another one in the game
 		for(Player p2 : players) {
 			if(p.getName() == p2.getName()) {
@@ -123,6 +135,20 @@ public class Game implements Runnable{
 		}
 		return false;
 	}
+
+	public String leadingPlayer(){
+		if(players.size() > 0){
+			Player leading = players.get(0);
+			for(int i = 1 ; i<players.size() ; i++){
+				if(players.get(i).getMoney() > leading.getMoney()){
+					leading = players.get(i);
+				}
+			}
+			return leading.getUserName();
+		}
+		return "No players in game";
+	}
+
 
 	public Vector<Player> getPlayers() {
 		return players;
@@ -149,17 +175,15 @@ public class Game implements Runnable{
 				e.printStackTrace();
 			}
 		}
-	    //By taking the assumption that they will only be 3 players in the game(will change later so that it adapts to more players)
-	    Player players[] = new Player[3];
 
-	    for(int i =0;i<players.length;i++){
-			players[i].setStartingPos(this.b); //Initializing a starting position for each player
+	    for(int i =0;i<players.size();i++){
+			players.get(i).setStartingPos(this.b); //Initializing a starting position for each player
 	    }
 
 	    while(ServerMain.isRunning()) {
-			for(int i=0; i<players.length ; i++){
-			    if(!players[i].isPlayerDead() && players[i].isConnected){
-					players[i].setPosFromInput(this.b, players[i].getPos()); 
+			for(int i=0; i<players.size() ; i++){
+			    if(!(players.get(i).isPlayerDead()) && players.get(i).isConnected){
+					players.get(i).setPosFromInput(this.b, players.get(i).getPos()); 
 				
 			    }
 			    if(this.b.sumAllTreasures() == 0){

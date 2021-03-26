@@ -156,6 +156,11 @@ public class Player {
         return this.ready;
     }
     
+    public int getMoney(){
+        return this.money;
+    }
+
+
     public void setReady(boolean b) {
         this.ready = b;
     }
