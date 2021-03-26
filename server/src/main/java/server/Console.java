@@ -39,7 +39,7 @@ public class Console implements Runnable {
 				ServerMain.stop();
 				break;
 			case "broadcast":
-				ServerMain.broadcastMessage(brokenCommand);
+				ServerMain.broadcastMessage(brokenCommand[1]);
 				break;
 			case "listusers":
 				_com.sendMessage(ServerMain.printConnectedUsers()); 

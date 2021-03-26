@@ -25,7 +25,7 @@ public class Console implements Runnable {
 				Thread.sleep(1);
 				if (_message != _read.getMsg()) {
 					_message = _read.getMsg();
-					//useMessage(_message);
+					useMessage(_message);
 				}	
 			}
 			catch(InterruptedException e) {
@@ -39,10 +39,13 @@ public class Console implements Runnable {
 		String[] brokenCommand = breakCommand(command);
 
 		switch(brokenCommand[0]) {
-			case "0":
-				_write.sendMessage("TEST");
+			case "t":
+				System.out.println("OK");
+				_write.sendMessage("120");
+				break;
 			default:
-				_write.sendMessage("UNKNOW");
+				System.out.println("TEST");;
+				break; 
 		}
 	}
 
