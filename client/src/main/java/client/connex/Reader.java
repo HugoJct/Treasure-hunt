@@ -12,6 +12,7 @@ public class Reader implements Runnable {
 
 	public Reader(Socket soc) {
 		this.soc = soc;
+		this._msg = "";
 		try {
 			in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
 		} catch (IOException e) {
@@ -20,19 +21,15 @@ public class Reader implements Runnable {
 	}
 
 	@Override
-	public void run() {
-		String tmp = "";
-		try {
-			while (true) {
-				_msg = in.readLine();
-				if (tmp != _msg) {
-					System.out.println("Server wrote: " + _msg);			
-				}
-				tmp = _msg;
+	public void run() {		
+		while (!soc.isClosed()) {
+			try {
+				this._msg = in.readLine();
+				System.out.println("server wrote : " + this._msg);
+			} catch (IOException e) {
+				System.out.println("socket closed by the server.");
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	public String getMsg() {

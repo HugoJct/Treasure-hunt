@@ -15,7 +15,7 @@ public class Console implements Runnable {
 	public Console(Reader r, Writer w) {
 		this._read = r;
 		this._write = w;
-		this._message = "";
+		this._message = "D";
 	}
 
 	@Override
@@ -23,13 +23,13 @@ public class Console implements Runnable {
 		while(!(_write.getSocket().isClosed())) {	
 			try {
 				Thread.sleep(1);
-				if (_message != _read.getMsg() && _read.getMsg() != null) {
+				if (_message != _read.getMsg()) {
 					_message = _read.getMsg();
-					useMessage(_message);
+					//useMessage(_message);
 				}	
 			}
 			catch(InterruptedException e) {
-				
+
 			}	
 		}	
 
