@@ -63,12 +63,6 @@ public class ServerMain {
 		ch = new ConnectionHandler(port);		//Launch the server	
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-		/* while (true) {
-			if (ch.getCom() != null) {
-				console = new Console(ch.getCom());
-				break;
-			}
-		}		*/
 
 		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
 		checkInput.start();
@@ -133,6 +127,14 @@ public class ServerMain {
 
 		Thread game = new Thread(g);
 		//game.start();
+	}
+
+	public static void launchGame(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				g.start();
+			}
+		}
 	}
 
 	public static void joinGame(String[] info) {	// 130 gameId playerID

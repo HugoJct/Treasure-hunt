@@ -66,8 +66,8 @@ public class Console implements Runnable {
 					// Waiting for everyone
 				}
 				int[] broadcast2 = {153, _com.getPlayer().getGameId()};
-				ServerMain.broadcastPerGame(broadcast2);	
-				// Launch Game
+				ServerMain.broadcastPerGame(broadcast2);
+				ServerMain.launchGame(broadcast2[1]);	
 				break;
 			default:
 				_com.sendMessage("UNKNOW");
