@@ -30,11 +30,21 @@ public class Writer implements Runnable{
 			out.println(msg);
 			out.flush();
 		}
+
+	}
+
+	public void sendMessage(String msg) {
+		out.println(msg);
+		out.flush();		
 	}
 
 	public void sendName() {		//This method sends the player's name to the server when the connection occurs
-		out.println("100 HELLO PLAYER "+Player.getName());
+		out.println("100 HELLO PLAYER "+ Player.getName());
 		out.flush();
+	}
+
+	public Socket getSocket() {
+		return this.soc;
 	}
 
 }

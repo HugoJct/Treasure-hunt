@@ -8,9 +8,11 @@ import java.net.Socket;
 public class Reader implements Runnable {
 	BufferedReader in;
 	Socket soc;
+	private String _msg;
 
 	public Reader(Socket soc) {
 		this.soc = soc;
+		this._msg = "";
 		try {
 			in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
 		} catch (IOException e) {
@@ -19,17 +21,19 @@ public class Reader implements Runnable {
 	}
 
 	@Override
-	public void run() {
-		String msg;
-		try {
-			msg = in.readLine();
-			while (msg != null) {
-				System.out.println("Server wrote: "+msg);
-				msg = in.readLine();
+	public void run() {		
+		while (!soc.isClosed()) {
+			try {
+				this._msg = in.readLine();
+				System.out.println("server wrote : " + this._msg);
+			} catch (IOException e) {
+				System.out.println("socket closed by the server.");
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
+	}
+
+	public String getMsg() {
+		return this._msg;
 	}
 
 }
