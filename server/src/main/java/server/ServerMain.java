@@ -87,36 +87,31 @@ public class ServerMain {
 			c.sendMessage(wholeMessage);
 	}
 
-	public static void broadcastPerGame(String[] message) {
-		for (Communication c : launchedCom) {
-			if (String.valueOf(c.getPlayer().getGameId()) == message[0]) {
-				c.sendMessage(message[1]);
+	public static void broadcastPerGame(int[] message) {
+		if (message[0] == 152) {
+			for (Communication c : launchedCom) {
+				if (c.getPlayer().getGameId() == message[1]) {
+					c.sendMessage("152");
+				}
+			}
+		}
+		if (message[0] == 153) {
+			for (Communication c : launchedCom) {
+				if (c.getPlayer().getGameId() == message[1]) {
+					c.sendMessage("153");
+				}
 			}
 		}
 	}
 
-	public static void checkForLaunch(String[] message) {
-		if (message[2] == "1") {
-			for (Communication c : launchedCom) {
-				if (String.valueOf(c.getPlayer().getGameId()) == message[1]) {
-					if (String.valueOf(c.getPlayer().getPlayerId()) == message[2]) {
-						c.getPlayer().setReady(true);
-						for (Player p : connectedUsers) {
-							if (p.getReady() == false) {
-								System.out.println("Not Ready");
-								return;
-							}
-						}
-					}
-				}
+	public static boolean checkForLaunch(int gameID) {
+		for (Player p : connectedUsers) {
+			if (p.getGameId() == gameID && p.getReady() == false) {
+				//System.out.println("Everyone is not ready");
+				return false;
 			}
 		}
-		System.out.println("READY");
-		for (Game g : createGames) {
-			if (String.valueOf(g.getGameId()) == message[1]) {
-				g.start();
-			}
-		}
+		return true;
 	}
 
 	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command

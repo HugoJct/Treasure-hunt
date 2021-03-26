@@ -1,6 +1,7 @@
 package server;
 
 import server.io.*;
+import server.io.Communication;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -57,12 +58,20 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			case "150":
-				String[] broadcast = {brokenCommand[1], "152"};
+				int[] broadcast = {152, _com.getPlayer().getGameId()};
 				ServerMain.broadcastPerGame(broadcast);
+				break;
 			case "152":
-				ServerMain.checkForLaunch(brokenCommand); // 152 gameID playerID response
+				while (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) == false) {
+					// Waiting for everyone
+				}
+				int[] broadcast2 = {153, _com.getPlayer().getGameId()};
+				ServerMain.broadcastPerGame(broadcast2);	
+				// Launch Game
+				break;
 			default:
 				_com.sendMessage("UNKNOW");
+				break;
 		}
 	}
 

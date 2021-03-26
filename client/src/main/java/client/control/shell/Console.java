@@ -39,9 +39,8 @@ public class Console implements Runnable {
 		String[] brokenCommand = breakCommand(command);
 
 		switch(brokenCommand[0]) {
-			case "t":
-				System.out.println("OK");
-				_write.sendMessage("120");
+			case "152":
+				_write.sendMessage("152 1");
 				break;
 			default:
 				System.out.println("TEST");;
