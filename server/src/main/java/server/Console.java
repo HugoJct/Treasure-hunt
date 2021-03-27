@@ -23,6 +23,8 @@ public class Console implements Runnable {
 				Thread.sleep(1);
 				if (_message != _com.getMessage()) {
 					_message = _com.getMessage();
+					if(_message == null)
+						break;
 					useMessage(_message);
 				}	
 			}
@@ -70,7 +72,7 @@ public class Console implements Runnable {
 				ServerMain.launchGame(broadcast2[1]);	
 				break;
 			default:
-				_com.sendMessage("UNKNOW");
+				_com.sendMessage("UNKNOWN");
 				break;
 		}
 	}
