@@ -40,6 +40,9 @@ public class Console implements Runnable {
 			case "GETLIST":
 				listGames();
 				break;
+			case "CREATEGAME":
+				createGame(brokenCommand[1]);
+				break;
 			case "JOIN":
 				joinGame(Integer.parseInt(brokenCommand[1]));
 				break;
@@ -76,6 +79,10 @@ public class Console implements Runnable {
 
 	public void sendName() {		//This method sends the player's name to the server when the connection occurs
 		_com.sendMessage("100 HELLO PLAYER "+ Player.getName());
+	}
+
+	public void createGame(String name) {
+		_com.sendMessage("110 CREATE "+name);
 	}
 
 	public void listGames() {
@@ -122,4 +129,7 @@ public class Console implements Runnable {
 		_com.sendMessage("0");
 	}
 
+	public void help() {
+
+	}
 }

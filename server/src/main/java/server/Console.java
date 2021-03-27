@@ -41,10 +41,10 @@ public class Console implements Runnable {
 			case "0":
 				ServerMain.stop();
 				break;
-			case "broadcast":
+			case "BROADCAST":
 				ServerMain.broadcastMessage(brokenCommand[1]);
 				break;
-			case "listusers":
+			case "LISTUSERS":
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
 			case "110":	// create a new game (args[1] as name)
