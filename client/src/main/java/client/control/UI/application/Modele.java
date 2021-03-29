@@ -1,4 +1,4 @@
-package application;
+package Client.src.main.java.client.control.UI.application;
 
 import java.util.Random;
 
@@ -7,19 +7,21 @@ import java.util.Random;
 public class Modele {
 	int Lines;
 	int Columns;
-	char tab[][];
+	Element tab[][];
 	
 	
 	
-	public Modele(int Lines, int Columns) {
-		this.Lines = Lines;
-		this.Columns = Columns;
-		this.tab = new char[this.Columns][this.Lines];
-		//this.init();
-		this.GenerateRandomBoard();
+	//Constructor
+	public Modele(Game g) {
+		this.Lines = g.b.getSizeY();
+		this.Columns = g.b.getSizeX();
+		this.tab = g.b.getElement();
+		
+		//this.GenerateRandomBoard();
 	}
 	
 	
+	//Initializate a char tab (used for tests)
 	public void init() {
 		for(int i = 0; i<this.Lines; i++) {
 			tab[0][i] = 'w';
@@ -35,6 +37,7 @@ public class Modele {
 	}
 	
 	
+	//Display a tab of char (used for tests)
 	public void displayTab() {
 		for(int j = 0; j<Lines; j++) {
 			for(int i = 0; i<Columns; i++) {
@@ -44,7 +47,7 @@ public class Modele {
 		}
 	}
 	
-	
+	//Generate a random char tab (used for tests)
 	public void GenerateRandomBoard() { 
 		int x, y;
     	//Place Holes:
