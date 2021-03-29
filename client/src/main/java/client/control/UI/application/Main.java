@@ -1,4 +1,4 @@
-package application;
+package Client.src.main.java.client.control.UI.application;
 	
 import java.io.File;
 import java.net.MalformedURLException;
@@ -14,12 +14,12 @@ import javafx.scene.layout.HBox;
 
 
 public class Main extends Application {
-	Modele m = new Modele(20, 20);
+	Modele m = new Modele(null); //Put a game object in argument
 	
 	@Override
 	public void start(Stage primaryStage) throws MalformedURLException {
 		/* ----------  Creation of window  ---------- */
-		primaryStage.setTitle("Jeu de chasse au trésor"); //Title of window
+		primaryStage.setTitle("Chasse au trésor"); //Title of window
 		primaryStage.setWidth(31*m.Columns); //Width
 		primaryStage.setHeight(31*m.Lines); //Height
 		primaryStage.setResizable(false); //Not resizable
@@ -47,7 +47,7 @@ public class Main extends Application {
 		for(int y = 0; y<m.Lines; y++) {
 			for(int x = 0; x<m.Columns; x++) {
 				//Walls
-				if(m.tab[y][x] == 'w') {
+				if(m.tab[y][x].toString() == "w") {
 					File fw = new File("Images/wall2.png");
 					String pathWall = fw.toURI().toURL().toString();
 					Image WallImg = new Image(pathWall, false);
@@ -58,7 +58,7 @@ public class Main extends Application {
 				}
 				
 				//treasures
-				if(m.tab[y][x] == 't') {
+				if(m.tab[y][x].toString() == "t") {
 					File ft = new File("Images/treasure.png");
 					String pathTreasure = ft.toURI().toURL().toString();
 					Image TreasureImg = new Image(pathTreasure, false);
@@ -69,7 +69,7 @@ public class Main extends Application {
 				}
 				
 				//holes
-				if(m.tab[y][x] == 'h') {
+				if(m.tab[y][x].toString() == "h") {
 					File fh = new File("Images/hole.png");
 					String pathHole = fh.toURI().toURL().toString();
 					Image HoleImg = new Image(pathHole, false);
