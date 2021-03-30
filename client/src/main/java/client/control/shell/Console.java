@@ -72,21 +72,39 @@ public class Console implements Runnable {
 				_com.sendMessage("400 GETHOLES");
 				_com.sendMessage("410 GETTREASURES");
 				_com.sendMessage("420 GETWALLS");
-			case "401":
+			case "401":	// set holes data
 				if (brokenCommand[1].equals("NUMBER")) {
 					setHoles((int)brokenCommand[2]);
 				}
 				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
 
 				}
-				else {2
+				else {
 					_com.sendMessage("UNKNOW");
 				}
 				break;
-			case "421":
+			case "411":	// set treasures data
+				if (brokenCommand[1].equals("NUMER")) {
+					setTreasures((int)brokenCommand[2]);
+				}
+				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
+
+				}
+				else {
+					_com.sendMessage("UNKNOW");
+				}
+				break;
+			case "421":	// set walls data
 				if (brokenCommand[1].equals("NUMBER")) {
 					setWalls((int)brokenCommand[2]);
 				}
+				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
+
+				}
+				else {
+					_com.sendMessage("UNKNOW");
+				}
+				break;
 			default:
 				_com.sendMessage("UNKNOW");
 				break; 
@@ -102,6 +120,10 @@ public class Console implements Runnable {
 
 	public static void setHoles(int h) {
 		GameInfo.setHoles(h);	
+	}
+
+	public static void setTreasures(int t) {
+		GameInfo.setTreasures(t);
 	}
 
 	public static void setWalls(int w) {
