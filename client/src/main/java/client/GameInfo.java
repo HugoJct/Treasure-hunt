@@ -5,6 +5,7 @@ public class GameInfo {
     private static int nbrOfPlayers = 0;
 
     private static int[] map = new map[2];  
+    private static int[] mainPlayerPos = new mainPlayerPos[2];
     private static int[] playerPos;
 
     public static int getHoles() {
@@ -27,6 +28,9 @@ public class GameInfo {
             return playerPos;
         }
     }
+    public static int[] getMainPlayerPos() {
+        return mainPlayerPos;
+    }
 
 
     public static void setHoles(int h) {
@@ -47,5 +51,9 @@ public class GameInfo {
     }
     public static void setPlayerPos(int[] p) {
         playerPos = p;
+    }
+    public static void setMainPlayerPos(int x, int y) {
+        mainPlayerPos[0] = x;
+        mainPlayerPos[1] = y;
     }
 }
