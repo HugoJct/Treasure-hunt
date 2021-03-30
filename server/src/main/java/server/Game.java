@@ -61,7 +61,6 @@ public class Game implements Runnable{
 							String amount = "";
 							for(int k=1;k<((String) obj.get(j)).length();k++)
 								amount += ((String) obj.get(j)).charAt(k);
-							System.out.println(amount);
 							this.b.setElementAt(new Treasure(Integer.parseInt(amount)),j+1,i+1);
 							break;
 						case ' ':
@@ -72,7 +71,7 @@ public class Game implements Runnable{
 					}
 				}
 			}
-
+			b.setBorder();
 		} catch(IOException e) {
 			e.printStackTrace();
 		} catch(ParseException e) {

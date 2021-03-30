@@ -1,49 +1,71 @@
 package client.control.shell;
 
-import client.connex.Reader;
-import client.connex.Writer;
+import client.Player;
+import client.connex.Communication;
 
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Console implements Runnable {
-	private Reader _read;
-	private Writer _write;
 
+	private Communication _com;
 	private String _message;
 
-	public Console(Reader r, Writer w) {
-		this._read = r;
-		this._write = w;
-		this._message = "D";
+	public Console(Communication com) {
+		this._message = "";
+		this._com = com;
+		sendName();
 	}
 
 	@Override
 	public void run() {
-		while(!(_write.getSocket().isClosed())) {	
+		Scanner sc = new Scanner(System.in);
+		while(Player.isConnected()) {	
 			try {
 				Thread.sleep(1);
-				if (_message != _read.getMsg()) {
-					_message = _read.getMsg();
-					useMessage(_message);
-				}	
+				String input = sc.nextLine();
+				useMessage(input);
 			}
 			catch(InterruptedException e) {
 
 			}	
 		}	
-
 	}
 
 	public void useMessage(String command) {
 		String[] brokenCommand = breakCommand(command);
 
 		switch(brokenCommand[0]) {
+			case "GETLIST":
+				listGames();
+				break;
+			case "CREATEGAME":
+				createGame(brokenCommand[1]);
+				break;
+			case "JOIN":
+				joinGame(Integer.parseInt(brokenCommand[1]));
+				break;
+			case "GETHOLES":
+				getHoles();
+				break;
+			case "GETWALLS":
+				getWalls();
+				break;
+			case "GETTREASURES":
+				getTreasures();
+				break;
+			case "MOVE":
+				move(brokenCommand[1]);
+				break;
+			case "STOP":
+				stopServer();
+				break;
 			case "152":
-				_write.sendMessage("152 1");
+				_com.sendMessage("152 1");
 				break;
 			default:
-				System.out.println("TEST");;
+				System.out.println("No command was recognized");;
 				break; 
 		}
 	}
@@ -55,4 +77,59 @@ public class Console implements Runnable {
 		return args;
 	}
 
+	public void sendName() {		//This method sends the player's name to the server when the connection occurs
+		_com.sendMessage("100 HELLO PLAYER "+ Player.getName());
+	}
+
+	public void createGame(String name) {
+		_com.sendMessage("110 CREATE "+name);
+	}
+
+	public void listGames() {
+		_com.sendMessage("120 GETLIST");
+	}
+
+	public void joinGame(int id) {
+		_com.sendMessage("130 JOIN "+id);
+	}
+
+	public void getHoles() {
+		_com.sendMessage("400 GETHOLES");
+	}
+
+	public void getWalls() {
+		_com.sendMessage("420 GETWALLS");
+	}
+
+	public void getTreasures() {
+		_com.sendMessage("410 GETTREASURES");
+	}
+
+	public void move(String direction) {
+		switch(direction) {
+			case "UP":
+				_com.sendMessage("200 GOUP");
+				break;
+			case "DOWN":
+				_com.sendMessage("200 GODOWN");
+				break;
+			case "LEFT":
+				_com.sendMessage("200 GOLEFT");
+				break;
+			case "RIGHT":
+				_com.sendMessage("200 GORIGHT");
+				break;
+			default:
+				System.out.println("No valid direction was recognized");
+				break;
+		}
+	}
+
+	public void stopServer() {
+		_com.sendMessage("0");
+	}
+
+	public void help() {
+
+	}
 }
