@@ -1,39 +1,32 @@
 public class GameInfo {
-    private int nbrOfHoles;
-    private int nbrOfWalls;
-    private int nbrOfTreasures;
-    private int nbrOfPlayers;
+    private static int nbrOfHoles = 0;
+    private static int nbrOfWalls = 0;
+    private static int nbrOfTreasures = 0;
+    private static int nbrOfPlayers = 0;
 
-    public GameInfo() {
-        this.nbrOfHoles = 0;
-        this.nbrOfWalls = 0;
-        this.nbrOfTreasures = 0;
-        this.nbrOfPlayers = 0;
+    public static int getHoles() {
+        return nbrOfHoles;
     }
-
-    public int getHoles() {
-        return this.nbrOfHoles;
+    public static int getWalls() {
+        return nbrOfWalls;
     }
-    public int getWalls() {
-        return this.nbrOfWalls;
+    public static int getTreasures() {
+        return nbrOfTreasures;
     }
-    public int getTreasures() {
-        return this.nbrOfTreasures;
-    }
-    public int getPlayers() {
-        return this.nbrOfPlayers;
+    public static int getPlayers() {
+        return nbrOfPlayers;
     }
 
-    public void setHoles(int h) {
-        this.nbrOfHoles = h;
+    public static void setHoles(int h) {
+        nbrOfHoles = h;
     }
-    public void setWalls(int w) {
-        this.nbrOfWalls = w;
+    public static void setWalls(int w) {
+        nbrOfWalls = w;
     }
-    public void setTreasures(int t) {
-        this.nbrOfTreasures = t;
+    public static void setTreasures(int t) {
+        nbrOfTreasures = t;
     }
-    public void setPlayers(int p) {
-        this.nbrOfPlayers = p;
+    public static void setPlayers(int p) {
+        nbrOfPlayers = p;
     }
 }

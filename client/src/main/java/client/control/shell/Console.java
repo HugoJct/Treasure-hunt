@@ -2,6 +2,7 @@ package client.control.shell;
 
 import client.Player;
 import client.connex.Communication;
+import client.GameInfo;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -78,10 +79,14 @@ public class Console implements Runnable {
 				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
 
 				}
-				else {
+				else {2
 					_com.sendMessage("UNKNOW");
 				}
 				break;
+			case "421":
+				if (brokenCommand[1].equals("NUMBER")) {
+					setWalls((int)brokenCommand[2]);
+				}
 			default:
 				_com.sendMessage("UNKNOW");
 				break; 
@@ -95,8 +100,12 @@ public class Console implements Runnable {
 		return args;
 	}
 
-	public void setHoles(int h) {
+	public static void setHoles(int h) {
+		GameInfo.setHoles(h);	
+	}
 
+	public static void setWalls(int w) {
+		GameInfo.setWalls(w);
 	}
 
 	public void sendName() {		//This method sends the player's name to the server when the connection occurs
