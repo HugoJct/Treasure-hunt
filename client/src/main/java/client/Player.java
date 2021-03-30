@@ -1,7 +1,6 @@
 package client;
 
-import client.connex.Writer;
-import client.connex.Reader;
+import client.connex.Communication;
 import client.control.shell.Console;
 import client.view.gui.*;
 import client.control.UI.ControlUI;
@@ -25,12 +24,21 @@ public class Player {
     private static String serverIP;
     private static int serverPort;
     private static Player p;
+    private static FileReader reader;
+    private static Socket s;
+
+    public static boolean isConnected = true;
 
     public Player(String pathToConfigFile) {        
         try {
-            configFile = new File(pathToConfigFile);
-            FileReader reader = new FileReader(configFile);
 
+            configFile = new File(pathToConfigFile);
+            if(configFile.exists()) {
+                reader = new FileReader(configFile);
+            } else {
+                configFile = new File("src/main/java/client/config.json");
+                reader = new FileReader(configFile);
+            }
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
@@ -45,23 +53,12 @@ public class Player {
 
     }
 
-    public Player() {               //If the user did not specify any configuration file, we load the default one
-        try {
-            configFile = new File("src/main/java/client/config.json");
-            FileReader reader = new FileReader(configFile);
+    public Socket getSocket() {
+        return s;
+    }
 
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-
-            this.username = (String) jsonObject.get("name");
-            this.serverIP = (String) jsonObject.get("ip");
-            this.serverPort = ((Long) jsonObject.get("port")).intValue();
-        }  catch(IOException e) {
-            e.printStackTrace();
-        } catch(ParseException e) {
-            e.printStackTrace();
-        } 
-
+    public static boolean isConnected() {
+        return isConnected;
     }
 
     public static String getName() {
@@ -72,22 +69,21 @@ public class Player {
 
 		//new ControlUI(new Menu());
         try {
-
-            if(args.length >= 1)
+            if(args.length > 0)
                 p = new Player(args[0]);
-            else
-                p = new Player();
+            else 
+                p = new Player("");
 
-            Socket s = new Socket(serverIP,serverPort);
-            Reader r = new Reader(s);
-            Writer w = new Writer(s);
-            Thread read = new Thread(r);
-            Thread write = new Thread(w);
-            Thread cons = new Thread(new Console(r, w));
+            s = new Socket(serverIP,serverPort);
 
-            write.start();
-            read.start();
-            cons.start();
+            Communication com = new Communication(p);
+            Console cons = new Console(com);
+
+            Thread communication = new Thread(com);
+            Thread console = new Thread(cons);
+
+            communication.start();
+            console.start();
 
         } catch(IOException e) {
             e.printStackTrace();

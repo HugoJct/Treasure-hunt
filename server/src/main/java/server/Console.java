@@ -1,6 +1,7 @@
 package server;
 
 import server.io.*;
+import server.io.Communication;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -22,6 +23,8 @@ public class Console implements Runnable {
 				Thread.sleep(1);
 				if (_message != _com.getMessage()) {
 					_message = _com.getMessage();
+					if(_message == null)
+						break;
 					useMessage(_message);
 				}	
 			}
@@ -38,10 +41,10 @@ public class Console implements Runnable {
 			case "0":
 				ServerMain.stop();
 				break;
-			case "broadcast":
+			case "BROADCAST":
 				ServerMain.broadcastMessage(brokenCommand[1]);
 				break;
-			case "listusers":
+			case "LISTUSERS":
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
 			case "110":	// create a new game (args[1] as name)
@@ -57,12 +60,20 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.listGames());
 				break;
 			case "150":
-				String[] broadcast = {brokenCommand[1], "152"};
+				int[] broadcast = {152, _com.getPlayer().getGameId()};
 				ServerMain.broadcastPerGame(broadcast);
+				break;
 			case "152":
-				ServerMain.checkForLaunch(brokenCommand); // 152 gameID playerID response
+				while (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) == false) {
+					// Waiting for everyone
+				}
+				int[] broadcast2 = {153, _com.getPlayer().getGameId()};
+				ServerMain.broadcastPerGame(broadcast2);
+				ServerMain.launchGame(broadcast2[1]);	
+				break;
 			default:
-				_com.sendMessage("UNKNOW");
+				_com.sendMessage("UNKNOWN");
+				break;
 		}
 	}
 
