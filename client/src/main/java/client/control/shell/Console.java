@@ -37,6 +37,9 @@ public class Console implements Runnable {
 		String[] brokenCommand = breakCommand(command);
 
 		switch(brokenCommand[0]) {
+			case "UNKNOW":
+				System.out.println("Server doesn't recognised command");
+				break;
 			case "GETLIST":
 				listGames();
 				break;
@@ -64,8 +67,23 @@ public class Console implements Runnable {
 			case "152":
 				_com.sendMessage("152 1");
 				break;
+			case "153":
+				_com.sendMessage("400 GETHOLES");
+				_com.sendMessage("410 GETTREASURES");
+				_com.sendMessage("420 GETWALLS");
+			case "401":
+				if (brokenCommand[1].equals("NUMBER")) {
+					setHoles((int)brokenCommand[2]);
+				}
+				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
+
+				}
+				else {
+					_com.sendMessage("UNKNOW");
+				}
+				break;
 			default:
-				System.out.println("No command was recognized");;
+				_com.sendMessage("UNKNOW");
 				break; 
 		}
 	}
@@ -75,6 +93,10 @@ public class Console implements Runnable {
 									//the start and end of the group. "+" indicate that conscutive delimitor should be treated as a single one
 		String[] args = command.split(delims);
 		return args;
+	}
+
+	public void setHoles(int h) {
+
 	}
 
 	public void sendName() {		//This method sends the player's name to the server when the connection occurs
