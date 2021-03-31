@@ -12,6 +12,7 @@ public class Console implements Runnable {
 
 	private Communication _com;
 	private String _message;
+	private static int lastMoveRequested = 0;
 
 	public Console(Communication com) {
 		this._message = "";
@@ -76,6 +77,21 @@ public class Console implements Runnable {
 				_com.sendMessage("420 GETWALLS");
 				break;
 			case "201":
+				if (lastMoveRequested == 1) {
+					GameInfo.up();
+				}
+				else if (lastMoveRequested == 2) {
+					GameInfo.down();
+				}
+				else if (lastMoveRequested == 3) {
+					GameInfo.right();
+				}
+				else if (lastMoveRequested == 4) {
+					GameInfo.left();
+				}
+				else {
+					System.out.println("Error : no move engaged");
+				}
 				break;
 			case "202":
 				break;
@@ -224,15 +240,19 @@ public class Console implements Runnable {
 	public void move(String direction) {
 		switch(direction) {
 			case "UP":
+				lastMoveRequested = 1;
 				_com.sendMessage("200 GOUP");
 				break;
 			case "DOWN":
+				lastMoveRequested = 2;
 				_com.sendMessage("200 GODOWN");
 				break;
 			case "LEFT":
+				lastMoveRequested = 4;
 				_com.sendMessage("200 GOLEFT");
 				break;
 			case "RIGHT":
+				lastMoveRequested = 3;
 				_com.sendMessage("200 GORIGHT");
 				break;
 			default:
