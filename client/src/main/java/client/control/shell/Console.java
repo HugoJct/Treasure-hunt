@@ -90,7 +90,7 @@ public class Console implements Runnable {
 	}
 
 	public void joinGame(int id) {
-		_com.sendMessage("130 JOIN "+id);
+		_com.sendMessage("130 JOIN "+id+" "+_com.getPlayer().getName());
 	}
 
 	public void getHoles() {
