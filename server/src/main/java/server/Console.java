@@ -103,7 +103,7 @@ public class Console implements Runnable {
 				}
 				break;
 			default:
-				_com.sendMessage("UNKNOWN");
+				_com.sendMessage("999 COMMAND ERROR");
 				break;
 		}
 	}
