@@ -2,8 +2,6 @@ package client;
 
 import client.connex.Communication;
 import client.control.shell.Console;
-import client.view.gui.*;
-import client.control.UI.ControlUI;
 
 import java.net.Socket;
 import java.io.IOException;
@@ -76,7 +74,6 @@ public class Player {
 
     public static void main(String[] args) {
 
-		//new ControlUI(new Menu());
         try {
             if(args.length > 0)
                 p = new Player(args[0]);
