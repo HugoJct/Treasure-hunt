@@ -1,14 +1,16 @@
+package client;
+
 public class GameInfo {
     private static int nbrOfHoles = 0;
     private static int nbrOfWalls = 0;
     private static int nbrOfTreasures = 0;
     private static int nbrOfPlayers = 0;
 
-    private static int[] map = new map[2];  
-    private static int[] mainPlayerPos = new mainPlayerPos[2];
+    private static int[] map = new int[2];  
+    private static int[] mainPlayerPos = new int[2];
     private static int[] holesPos;
     private static int[] wallsPos;
-    private static int[] tresuresPos;   
+    private static int[] treasuresPos;   
     private static int[] playerPos;
 
     public static int getHoles() {
@@ -27,24 +29,19 @@ public class GameInfo {
         return map;
     }
     public static int[] getHolesPos() {
-        if (holesPos != null) {
-            return holesPos;
-        }
+        return holesPos;
     }
     public static int[] getWallsPos() {
-        if (wallsPos != null) {
-            return wallsPos;
-        }
+        return wallsPos;
     }
     public static int[] getTreasuresPos() {
-        if (tresuresPos != null) {
-            return wallsPos;
-        }
+        return wallsPos;
     }
     public static int[] getPlayerPos() {
         if (playerPos != null) {
             return playerPos;
         }
+        return null;
     }
     public static int[] getMainPlayerPos() {
         return mainPlayerPos;
@@ -84,16 +81,16 @@ public class GameInfo {
         holesPos[pos+1] = y;
     }
     public static void initHolesPos() {
-        holesPos = new holesPos[nbrOfHoles*2];
+        holesPos = new int[nbrOfHoles*2];
     }
     public static void initWallsPos() {
-        wallsPos = new wallsPos[nbrOfWalls*2];
+        wallsPos = new int[nbrOfWalls*2];
     }
     public static void initTreasuresPos() {
-        treasuresPos = new treasuresPos[nbrOfTreasures*2];
+        treasuresPos = new int[nbrOfTreasures*2];
     }
     public static void initPlayerPos() {
-        playerPos = new playerPos[nbrOfPlayers*2];
+        playerPos = new int[nbrOfPlayers*2];
     }
     public static void setMainPlayerPos(int x, int y) {
         mainPlayerPos[0] = x;
