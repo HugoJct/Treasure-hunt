@@ -53,6 +53,7 @@ public class Console implements Runnable {
 			case "130":
 				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID
 					_com.sendMessage("131 MAP "+_com.getPlayer().getGameId()+" JOINED");
+					broadcastInGame("The player "+_com.getPlayer().getName()+" joined the game",_com.getPlayer().getGameId());
 				}
 				else 
 					_com.sendMessage("No such game found");
@@ -188,6 +189,14 @@ public class Console implements Runnable {
 				count++;
 			}
 			_com.sendMessage(toSend);
+		}
+	}
+
+	public void broadcastInGame(String message, int gameID) {
+		for(Communication c : ServerMain.launchedCom) {
+			if(c.getPlayer().getGameId() == gameID) {
+				c.sendMessage(message);
+			}
 		}
 	}
 
