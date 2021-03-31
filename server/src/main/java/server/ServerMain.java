@@ -175,7 +175,7 @@ public class ServerMain {
 	public static String listGamesWithDetails(){
 		String games = "";
 		for(Game g : createGames){
-			games += "["+g+" ; "+g.getPlayers().size()+" Players Connected ; "+g.getB().getSizeX()+"x"+g.getB().getSizeY()+" Board ; Status: ";
+			games += "["+g+" ; "+g.getPlayers().size()+" Players Connected ; "+g.getBoard().getSizeX()+"x"+g.getBoard().getSizeY()+" Board ; Status: ";
 			if(g.getPlayers().size() < g.getCapacity()){
 				games +="Waiting for additional players (At least "+(g.getCapacity() - g.getPlayers().size())+" more)";
 			}else if(g.getPlayers().size() >= g.getCapacity() && !(g.isRunning())){
