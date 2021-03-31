@@ -128,7 +128,6 @@ public class Console implements Runnable {
 				else {
 					_com.sendMessage("UNKNOW");
 				}
-				System.out.println();
 				break;
 			// set walls data
 			case "421":	
