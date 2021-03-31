@@ -104,7 +104,7 @@ public class Game implements Runnable{
 		return this.id;
 	}
 
-	public Board getB(){
+	public Board getBoard(){
 		return this.b;
 	}
 

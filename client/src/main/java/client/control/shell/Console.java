@@ -87,7 +87,7 @@ public class Console implements Runnable {
 					setHoles(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initHolesPos();
 				}
-				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
+				if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
 					int k = Integer.parseInt(brokenCommand[2]);
 					int nbrLastCoo = GameInfo.getHoles() - (k-1)*5;
 					if (k/GameInfo.getHoles() == 1) {
@@ -111,7 +111,7 @@ public class Console implements Runnable {
 					setTreasures(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initTreasuresPos();
 				}
-				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
+				if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
 					int k = (Integer.parseInt(brokenCommand[2]));
 					int nbrLastCoo = GameInfo.getTreasures() - (k-1)*5;
 					if (k/GameInfo.getTreasures() == 1) {
@@ -128,6 +128,7 @@ public class Console implements Runnable {
 				else {
 					_com.sendMessage("UNKNOW");
 				}
+				System.out.println();
 				break;
 			// set walls data
 			case "421":	
@@ -135,7 +136,7 @@ public class Console implements Runnable {
 					setWalls(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initWallsPos();
 				}
-				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
+				if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
 					int k = (Integer.parseInt(brokenCommand[2]));
 					int nbrLastCoo = GameInfo.getWalls() - (k-1)*5;
 					if (k/GameInfo.getWalls() == 1) {
