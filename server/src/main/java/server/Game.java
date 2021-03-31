@@ -30,6 +30,7 @@ public class Game implements Runnable{
 		this.capacity = 4;
 		this.b = new Board();
 		this.gameId = id;
+		id++;
 		try{
 			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
 
