@@ -94,8 +94,10 @@ public class Console implements Runnable {
 				}
 				break;
 			case "202":
+				System.out.println("Impossible mouvement, wall meeted");
 				break;
 			case "203":
+				System.out.println("Treasure found");
 				break;
 			// set holes data
 			case "401":	
@@ -183,6 +185,7 @@ public class Console implements Runnable {
 				}
 				break;
 			case "666":
+			System.out.println("U'R DEAD");
 				break;
 			default:
 				_com.sendMessage("UNKNOW");
