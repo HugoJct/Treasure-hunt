@@ -137,26 +137,18 @@ public class ServerMain {
 		}
 	}
 
-	public static void joinGame(String[] info) {	// 130 gameId playerID
-		Player player = null;
-		int i = 1;
-		boolean retVal = false;
+	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerID
 		for(Game g : createGames) {
-			if (String.valueOf(g.getID()) == info[1]) {
-				for (Player p : connectedUsers) {
-					if (String.valueOf(p.getPlayerId()) == info[2]) {
-						player = p;
+			if(g.getGameId() == Integer.parseInt(info[2])) {
+				for(Player p : connectedUsers) {
+					if(p.getName().equals(info[3])) {
+						p.setGameId(Integer.parseInt(info[2]));
+						return true;
 					}
 				}
-				do {
-					retVal = g.addPlayer(player);	
-					if (retVal == false) {
-						player.setUserName(player.getUserName() + i);
-						i++;
-					}
-				} while (!(retVal));
 			}
 		}
+		return false;
 	}
 
 	public static String stopGame(int id) {		//stops the specified game

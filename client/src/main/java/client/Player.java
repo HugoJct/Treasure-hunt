@@ -26,6 +26,7 @@ public class Player {
     private static Player p;
     private static FileReader reader;
     private static Socket s;
+    private static int gameID;
 
     public static boolean isConnected = true;
 
@@ -55,6 +56,14 @@ public class Player {
 
     public Socket getSocket() {
         return s;
+    }
+
+    public int getGameId() {
+        return gameID;
+    }
+
+    public void setGameId(int id) {
+        gameID = id;
     }
 
     public static boolean isConnected() {

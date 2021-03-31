@@ -29,6 +29,7 @@ public class Game implements Runnable{
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
+		this.gameId = id;
 		try{
 			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
 
@@ -71,6 +72,7 @@ public class Game implements Runnable{
 					}
 				}
 			}
+			b.countElements();
 			b.setBorder();
 		} catch(IOException e) {
 			e.printStackTrace();

@@ -13,9 +13,11 @@ public class Communication implements Runnable{
     Socket s;
     BufferedReader in;
     PrintStream out;
+    Player p;
     String serverMsg = "";
 
     public Communication(Player p) {
+        this.p = p;
     	this.s = p.getSocket();
     	try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -32,6 +34,10 @@ public class Communication implements Runnable{
 
     public String getServerMessage() {
     	return serverMsg;
+    }
+
+    public Player getPlayer() {
+        return this.p;
     }
 
 	@Override

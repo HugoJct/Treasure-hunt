@@ -9,6 +9,10 @@ public class Board {
     private final int sizeX;
     private final int sizeY;
 
+    private int wallCount = 0;
+    private int holeCount = 0;
+    private int treasureCount = 0;
+
     public Board() {        //default constructor generates the default board
 
         this.sizeX = 15+2;
@@ -86,6 +90,77 @@ public class Board {
 
     public Element getElementAt(int x, int y) {
     	return elements[y][x];
+    }
+
+    public void countElements() {
+      for(int i=1;i<elements.length-1;i++) {
+        for(int j=1;j<elements[i].length-1;j++) {
+          if(elements[i][j] instanceof Wall)
+            wallCount++;
+          if(elements[i][j] instanceof Hole)
+            holeCount++;
+          if(elements[i][j] instanceof Treasure)
+            treasureCount++;
+        }
+      }
+    }
+
+    public int[][] getWallPos() {
+      int[][] wallPos = new int[wallCount][2];
+      int x = 0;
+      for(int i=1;i<elements.length-1;i++) {
+        for(int j=1;j<elements[i].length-1;j++) {
+          if(elements[i][j] instanceof Wall) {
+            wallPos[x][0] = i;
+            wallPos[x][1] = j;
+            x++;
+          }
+        }
+      }
+      return wallPos;
+    }
+
+    public int[][] getHolePos() {
+      int[][] holePos = new int[holeCount][2];
+      int x = 0;
+      for(int i=1;i<elements.length-1;i++) {
+        for(int j=1;j<elements[i].length-1;j++) {
+          if(elements[i][j] instanceof Hole) {
+            holePos[x][0] = i;
+            holePos[x][1] = j;
+            x++;
+          }
+        }
+      }
+      return holePos;
+    }
+
+    public int[][] getTreasurePos() {
+      int[][] trePos = new int[treasureCount][3];
+      int x = 0;
+      for(int i=1;i<elements.length-1;i++) {
+        for(int j=1;j<elements[i].length-1;j++) {
+          if(elements[i][j] instanceof Treasure) {
+            trePos[x][0] = i;
+            trePos[x][1] = j;
+            trePos[x][2] = ((Treasure) elements[i][j]).getTreasureValue();
+            x++;
+          }
+        }
+      }
+      return trePos;
+    }
+
+    public int getWallCount() {
+      return wallCount;
+    }
+
+    public int getHoleCount() {
+      return holeCount;
+    }
+
+    public int getTreasureCount() {
+      return treasureCount;
     }
     
     //Getter of the two dimensional array

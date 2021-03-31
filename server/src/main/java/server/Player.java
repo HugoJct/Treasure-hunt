@@ -148,6 +148,10 @@ public class Player {
         return this.playerID;
     }
 
+    public void setGameId(int id) {
+        this.gameID = id;
+    }
+
     public String getUserName() {
         return this.username;
     }
