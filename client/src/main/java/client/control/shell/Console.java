@@ -38,6 +38,7 @@ public class Console implements Runnable {
 		String[] brokenCommand = breakCommand(command);
 
 		switch(brokenCommand[0]) {
+			// Client -> Client
 			case "UNKNOW":
 				System.out.println("Server doesn't recognised command");
 				break;
@@ -65,6 +66,7 @@ public class Console implements Runnable {
 			case "STOP":
 				stopServer();
 				break;
+			// Client -> Server
 			case "152":
 				_com.sendMessage("152 1");
 				break;
@@ -72,6 +74,13 @@ public class Console implements Runnable {
 				_com.sendMessage("400 GETHOLES");
 				_com.sendMessage("410 GETTREASURES");
 				_com.sendMessage("420 GETWALLS");
+				break;
+			case "201":
+				break;
+			case "202":
+				break;
+			case "203":
+				break;
 			case "401":	// set holes data
 				if (brokenCommand[1].equals("NUMBER")) {
 					setHoles((int)brokenCommand[2]);
@@ -104,6 +113,21 @@ public class Console implements Runnable {
 				else {
 					_com.sendMessage("UNKNOW");
 				}
+				break;
+			case "501":
+				break;
+			case "511":
+				if (brokenCommand[2].equals("UPDATED")) {
+
+				}
+				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
+
+				}
+				else {
+					_com.sendMessage("UNKNOW");
+				}
+				break;
+			case "666":
 				break;
 			default:
 				_com.sendMessage("UNKNOW");
