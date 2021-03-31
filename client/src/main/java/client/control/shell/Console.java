@@ -133,7 +133,18 @@ public class Console implements Runnable {
 					GameInfo.initWallsPos();
 				}
 				else if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
-
+					int k = ((int)brokenCommand[2]);
+					int nbrLastCoo = GameInfo.getWalls() - (k-1)*5;
+					if (k/GameInfo.getWalls() == 1) {
+						for (int i = 0 ; i < nbrLastCoo ; i++) {
+							GameInfo.setWallsPos(i+k, ((int)brokenCommand[4+i]), ((int)brokenCommand[5+i]));
+						}
+					}
+					GameInfo.setWallsPos(0+k, ((int)brokenCommand[4]), ((int)brokenCommand[5]));
+					GameInfo.setWallsPos(1+k, ((int)brokenCommand[6]), ((int)brokenCommand[7]));
+					GameInfo.setWallsPos(2+k, ((int)brokenCommand[8]), ((int)brokenCommand[9]));
+					GameInfo.setWallsPos(3+k, ((int)brokenCommand[10]), ((int)brokenCommand[11]));
+					GameInfo.setWallsPos(4+k, ((int)brokenCommand[12]), ((int)brokenCommand[13]));
 				}
 				else {
 					_com.sendMessage("UNKNOW");
