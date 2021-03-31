@@ -10,7 +10,8 @@ public class Board {
     private final int sizeY;
 
     public Board() {        //default constructor generates the default board
-
+		this.sizeX = 0;
+		this.sizeY = 0;
     }
 
     public int getSizeX(){

@@ -2,8 +2,6 @@ package client;
 
 import client.connex.Communication;
 import client.control.shell.Console;
-import client.view.gui.*;
-import client.control.UI.ControlUI;
 
 import java.net.Socket;
 import java.io.IOException;
