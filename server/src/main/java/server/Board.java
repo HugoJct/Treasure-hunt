@@ -50,7 +50,7 @@ public class Board {
     	return elements[y][x];
     }
 
-    public void countElements() {
+    public void countElements() {                     //This function sets the number of each element on the board
       for(int i=1;i<elements.length-1;i++) {
         for(int j=1;j<elements[i].length-1;j++) {
           if(elements[i][j] instanceof Wall)
@@ -63,22 +63,22 @@ public class Board {
       }
     }
 
-    public int[][] getWallPos() {
-      int[][] wallPos = new int[wallCount][2];
-      int x = 0;
-      for(int i=1;i<elements.length-1;i++) {
-        for(int j=1;j<elements[i].length-1;j++) {
-          if(elements[i][j] instanceof Wall) {
-            wallPos[x][0] = i;
+    public int[][] getWallPos() {                 //This function returns an array of arrays[2] that contains couples of coordinates indicating where walls are
+      int[][] wallPos = new int[wallCount][2];        //initialize the array to return 
+      int x = 0;                                      //keep track of wallPos filling
+      for(int i=1;i<elements.length-1;i++) {          //browse elements[][]
+        for(int j=1;j<elements[i].length-1;j++) {     
+          if(elements[i][j] instanceof Wall) {        //if the element is a wall
+            wallPos[x][0] = i;                        //add to wall pos the coordinates of the element
             wallPos[x][1] = j;
-            x++;
+            x++;                                      //increment the cursor in wallPos
           }
         }
       }
       return wallPos;
     }
 
-    public int[][] getHolePos() {
+    public int[][] getHolePos() {            //This function returns an array of arrays[2] that contains couples of coordinates indicating where holes are 
       int[][] holePos = new int[holeCount][2];
       int x = 0;
       for(int i=1;i<elements.length-1;i++) {
@@ -93,7 +93,7 @@ public class Board {
       return holePos;
     }
 
-    public int[][] getTreasurePos() {
+    public int[][] getTreasurePos() {     //This function returns an array of arrays[3] that contains couples of coordinates indicating where treasures are
       int[][] trePos = new int[treasureCount][3];
       int x = 0;
       for(int i=1;i<elements.length-1;i++) {

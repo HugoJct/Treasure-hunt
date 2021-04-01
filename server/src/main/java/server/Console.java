@@ -108,7 +108,7 @@ public class Console implements Runnable {
 		}
 	}
 
-	public void sendHoleInfo(Game g) {
+	public void sendHoleInfo(Game g) {			//for comments see sendTreasureInfo
 
 		int k = g.getBoard().getHoleCount();
 		int[][] b = g.getBoard().getHolePos();
@@ -136,7 +136,7 @@ public class Console implements Runnable {
 		}
 	}
 
-	public void sendWallInfo(Game g) {
+	public void sendWallInfo(Game g) {			//for comments see sendTreasureInfo
 
 		int k = g.getBoard().getWallCount();
 		int[][] b = g.getBoard().getWallPos();
@@ -163,36 +163,35 @@ public class Console implements Runnable {
 		}
 	}
 
-	public void sendTreasureInfo(Game g) {
+	public void sendTreasureInfo(Game g) {			//This function generates and sends as many lines as needed to provide informations about the treasures to the client 
 
-		int k = g.getBoard().getTreasureCount();
-		int[][] b = g.getBoard().getTreasurePos();
+		int k = g.getBoard().getTreasureCount();		//initialize number of treasures
+		int[][] b = g.getBoard().getTreasurePos();		//get an 
 
-		_com.sendMessage("411 NUMBER "+k);
+		_com.sendMessage("411 NUMBER "+k);				//send number of treasures
 
 		int index = 0;
-		String toSend = "";
+		String toSend = "";	
 
-		int stop = k%5 == 0 ? (k/5) : (k/5) + 1;
+		int stop = k%5 == 0 ? (k/5) : (k/5) + 1;		//initialize the number of lines needed 
 
-		for(int i=1;i<=stop;i++) {
-			toSend = "411 MESS "+i+" POS";
+		for(int i=1;i<=stop;i++) {						//this loop executes the code "stop" times
+			toSend = "411 MESS "+i+" POS";				//prepare the line
 			int count = 0;
-			for(int j=index;j<b.length;j++) {
+			for(int j=index;j<b.length;j++) {			//browse the array of array
 				index = j;
-				if(count == 5)
+				if(count == 5)							//if 5 couples of coordinates have been sent
 					break;
-				for(int l=0;l<b[j].length;l++) {
-					//System.out.println("i: "+i+" j: "+j);
-					toSend += " "+b[j][l];		
+				for(int l=0;l<b[j].length;l++) {		//browse each tile of the array
+					toSend += " "+b[j][l];				//add the coordinates to the line
 				}
 				count++;
 			}
-			_com.sendMessage(toSend);
+			_com.sendMessage(toSend);					// send each line
 		}
 	}
 
-	public void broadcastInGame(String message, int gameID) {
+	public void broadcastInGame(String message, int gameID) {		//send a message to all players in a specific game
 		for(Communication c : ServerMain.launchedCom) {
 			if(c.getPlayer().getGameId() == gameID) {
 				c.sendMessage(message);
