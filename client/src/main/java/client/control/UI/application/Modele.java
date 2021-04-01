@@ -7,20 +7,26 @@ import java.util.Random;
 public class Modele {
 	int Lines;
 	int Columns;
-	Element tab[][];
-	
-	
+	int[] TreasurePos;
+	int[] WallPos;
+	int[] HolePos;
+	int[] PlayerPos;
+ 	
 	
 	//Constructor
-	public Modele(Game g) {
-		this.Lines = g.b.getSizeY();
-		this.Columns = g.b.getSizeX();
-		this.tab = g.b.getElement();
-		
-		//this.GenerateRandomBoard();
+	public Modele(GameInfo g) {
+		this.Lines = g.map[1];
+		this.Columns = g.map[0];
+		this.TreasurePos = g.getTreasuresPos();
+		this.WallPos = g.getWallsPos();
+		this.HolePos = g.getHolesPos();
+		this.PlayerPos = g.getPlayersPos();
 	}
 	
 	
+	
+	
+	/*
 	//Initializate a char tab (used for tests)
 	public void init() {
 		for(int i = 0; i<this.Lines; i++) {
@@ -80,4 +86,5 @@ public class Modele {
     		tab[y][x] = 'w';
     	}
     }
+    */
 }
