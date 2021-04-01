@@ -80,6 +80,18 @@ public class GameInfo {
         holesPos[pos] = x;
         holesPos[pos+1] = y;
     }
+    public static void up() {
+        mainPlayerPos[0] = mainPlayerPos[0]-1;
+    }
+    public static void down() {
+        mainPlayerPos[0] = mainPlayerPos[0]+1;
+    }
+    public static void right() {
+        mainPlayerPos[1] = mainPlayerPos[1]+1;
+    }
+    public static void left() {
+        mainPlayerPos[1] = mainPlayerPos[1]-1;
+    }
     public static void initHolesPos() {
         holesPos = new int[nbrOfHoles*2];
     }

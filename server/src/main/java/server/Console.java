@@ -64,6 +64,7 @@ public class Console implements Runnable {
 			case "120":												// GETLIST
 				_com.sendMessage(ServerMain.listNbrOfGames());
 				_com.sendMessage(ServerMain.listGames());
+				//ServerMain.printGame(_com.getPlayer().getGameId());
 				break;
 			case "150":												// BROADCAST inside game (for REQUEST START)
 				int[] broadcast = {152, _com.getPlayer().getGameId()};

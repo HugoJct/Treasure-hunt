@@ -205,4 +205,5 @@ public class Game implements Runnable{
 	public int getGameId() {
 		return this.gameId;
 	}
+
 }
