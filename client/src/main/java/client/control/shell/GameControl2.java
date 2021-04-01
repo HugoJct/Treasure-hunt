@@ -1,4 +1,4 @@
-package Client.src.main.java.client.control.shell;
+package client.control.shell;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
