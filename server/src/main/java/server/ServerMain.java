@@ -108,6 +108,16 @@ public class ServerMain {
 		return true;
 	}
 
+	public static void printGame(int gameID) {
+		System.out.println("ENTREE");
+		for (Game g : createGames) {
+			if (g.getGameId() == gameID) {
+				System.out.println("OK");
+				System.out.println(g.getBoard().toString());
+			}
+		}
+	}
+
 	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
 		String list = "";
 		if(connectedUsers.size() > 0) {
