@@ -151,8 +151,10 @@ public class Board {
           else {
 					  retour += ". ";
     		  }
+        }
     		retour +="\n";
     	}
-    	return retour+="\n";
-    }
+    return retour+="\n";
+  }
+
 }
