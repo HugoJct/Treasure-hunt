@@ -40,8 +40,11 @@ public class Console implements Runnable {
 
 		switch(brokenCommand[0]) {
 			// Client -> Client
-			case "UNKNOW":
+			case "UNKNOWN":
 				System.out.println("Server doesn't recognised command");
+				break;
+			case "BROADCAST":
+				broadcast(brokenCommand);
 				break;
 			case "GETLIST":
 				listGames();
@@ -120,7 +123,7 @@ public class Console implements Runnable {
 					GameInfo.setHolesPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
 				}
 				else {
-					_com.sendMessage("UNKNOW");
+					_com.sendMessage("UNKNOWN");
 				}
 				break;
 			// set treasures data
@@ -144,7 +147,7 @@ public class Console implements Runnable {
 					GameInfo.setTreasuresPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
 				}
 				else {
-					_com.sendMessage("UNKNOW");
+					_com.sendMessage("UNKNOWN");
 				}
 				break;
 			// set walls data
@@ -168,7 +171,7 @@ public class Console implements Runnable {
 					GameInfo.setWallsPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
 				}
 				else {
-					_com.sendMessage("UNKNOW");
+					_com.sendMessage("UNKNOWN");
 				}
 				break;
 			case "501":
@@ -181,14 +184,14 @@ public class Console implements Runnable {
 
 				}
 				else {
-					_com.sendMessage("UNKNOW");
+					_com.sendMessage("UNKNOWN");
 				}
 				break;
 			case "666":
 			System.out.println("U'R DEAD");
 				break;
 			default:
-				_com.sendMessage("UNKNOW");
+				_com.sendMessage("UNKNOWN");
 				break; 
 		}
 	}
@@ -238,6 +241,13 @@ public class Console implements Runnable {
 
 	public void getTreasures() {
 		_com.sendMessage("410 GETTREASURES");
+	}
+
+	public void broadcast(String[] s) {
+		String s2 = "";
+		for(int i=1;i<s.length;i++)
+			s2 += " "+s[i];
+		_com.sendMessage("BROADCAST"+s2);
 	}
 
 	public void move(String direction) {

@@ -42,18 +42,18 @@ public class Console implements Runnable {
 				ServerMain.stop();
 				break;
 			case "BROADCAST":
-				ServerMain.broadcastMessage(brokenCommand[1]);
+				ServerMain.broadcastMessage(brokenCommand);
 				break;
 			case "LISTUSERS":
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
-			case "110":												//CREATE GAME
-				ServerMain.createGame(brokenCommand[1]);
+			case "110":												//110 CREATEGAME "name"
+				ServerMain.createGame(brokenCommand[2]);
 				break;
 			case "130":
-				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID
+				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID				
 					_com.sendMessage("131 MAP "+_com.getPlayer().getGameId()+" JOINED");
-					broadcastInGame("The player "+_com.getPlayer().getName()+" joined the game",_com.getPlayer().getGameId());
+					broadcastInGame("The player "+_com.getPlayer().getName()+" joined the game",_com.getPlayer().getGameId());				//shitty (use player and game functions)
 				}
 				else 
 					_com.sendMessage("No such game found");
@@ -78,7 +78,23 @@ public class Console implements Runnable {
 				ServerMain.broadcastPerGame(broadcast2);
 				ServerMain.launchGame(broadcast2[1]);	
 				break;
+			case "200":
 
+				switch(brokenCommand[1]) {
+					case "GOUP":
+					_com.getPlayer().setPo
+						break;
+					case "GODOWN":
+						break;
+					case "GOLEFT":
+						break;
+					case "GORIGHT"
+						break;
+					default:
+						break;
+				}
+
+				break;
 			case "400":												//GETHOLES
 				for(Game g : ServerMain.createGames) {
 					if(g.getGameId() == _com.getPlayer().getGameId()) {
@@ -206,5 +222,4 @@ public class Console implements Runnable {
 		String[] args = command.split(delims);
 		return args;
 	}
-
 }
