@@ -1,5 +1,8 @@
-package Client.src.main.java.client.control.UI.application;
+package client.control.UI.application;
 	
+import client.GameInfo;
+import client.control.UI.application.Modele;
+
 import java.io.File;
 import java.net.MalformedURLException;
 

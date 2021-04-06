@@ -1,5 +1,7 @@
-package Client.src.main.java.client.control.UI.application;
+package client.control.UI.application;
 
+import client.GameInfo;
+import client.control.UI.application.Main;
 import java.util.Random;
 
 
@@ -15,12 +17,12 @@ public class Modele {
 	
 	//Constructor
 	public Modele(GameInfo g) {
-		this.Lines = g.map[1];
-		this.Columns = g.map[0];
-		this.TreasurePos = g.getTreasuresPos();
-		this.WallPos = g.getWallsPos();
-		this.HolePos = g.getHolesPos();
-		this.PlayerPos = g.getPlayersPos();
+		this.Lines = GameInfo.getMap()[1];
+		this.Columns = GameInfo.getMap()[0];
+		this.TreasurePos = GameInfo.getTreasuresPos();
+		this.WallPos = GameInfo.getWallsPos();
+		this.HolePos = GameInfo.getHolesPos();
+		this.PlayerPos = GameInfo.getPlayersPos();
 	}
 	
 	
