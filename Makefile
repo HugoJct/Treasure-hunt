@@ -7,17 +7,22 @@ build:
 run: build
 	./gradlew run
 
+
 #the build and run recipes for the client side of the project only
 client: clearT buildClient
 	./gradlew :client:run --console=plain
-buildClient:
+buildClient: clearT
 	./gradlew :client:build
+runClient: clearT 
+	./gradlew :client:run --console=plain
 
 #the build and run recipes for the server side of the project only
 server: clearT buildServer
 	./gradlew :server:run --console=plain
-buildServer:
+buildServer: clearT
 	./gradlew :server:build
+runServer: clearT
+	./gradlew :server:run --console=plain
 
 #convenience recipes
 clearT:
