@@ -49,17 +49,21 @@ public class Player {
     }
 
     public void setGame(Game g) {
-        if(this.gameID == -1)
-            this.gameID = g.getID();
-        else if(this.gameID == g.getID())
+        if(this.gameID == -1) {
+            this.gameID = g.getGameId();
+        }
+        else if(this.gameID == g.getGameId())
             System.out.println("The player is already connected to this game");
         else
             System.out.println("The player is already connected to another game");
     }
 
     public void leaveGame() {
-        if(this.gameID != -1)
+        if(this.gameID != -1) {
             this.gameID = -1;
+            if(this.getGameConnectedTo().removePlayer(this))
+                System.out.println("The player successfully left the game");
+        }
         else
             System.out.println("This player isn't currently in any game");
     }
@@ -81,21 +85,23 @@ public class Player {
     	this.setPos(b, pos);
     }
 
-    protected boolean setPos(Board b, int[] tab) {
+    protected String setPos(Board b, int[] tab) {
     	if(b.getElementAt(tab[1], tab[0]) instanceof Wall) {
-    		return false;
+    		return "Wall";
     	}
     	this.posX = tab[1];
     	this.posY = tab[0];
     	if(b.getElementAt(tab[1], tab[0]) instanceof Hole){ //Added this directly in this function to avoid overencumber the run method in 'Game'
     	    this.killPlayer();
+            return "Hole";
     	}
     	if((b.getElementAt(tab[1], tab[0]) instanceof Treasure)){//The player steps on a treasure, the content is added to his money and the treasure is emptied
     	    Treasure tmp = (Treasure)b.getElementAt(tab[1], tab[0]);
     	    this.addMoney(tmp.getTreasureValue());
     	    tmp.setTreasureValue(0);
+            return "Treasure";
     	}
-    	return true;
+    	return "ok";
     }
 
     protected void setPosFromInput(Board b, int[] currentPos){
@@ -164,6 +170,13 @@ public class Player {
         return this.money;
     }
 
+    public Game getGameConnectedTo() {
+        for(Game g : ServerMain.createGames) {
+            if(g.getGameId() == this.gameID)
+                return g;
+        }
+        return null;
+    }
 
     public void setReady(boolean b) {
         this.ready = b;

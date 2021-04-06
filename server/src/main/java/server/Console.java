@@ -2,6 +2,7 @@ package server;
 
 import server.io.*;
 import server.io.Communication;
+import server.Game;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -79,42 +80,59 @@ public class Console implements Runnable {
 				ServerMain.launchGame(broadcast2[1]);	
 				break;
 			case "200":
-
-				switch(brokenCommand[1]) {
+				Game g = _com.getPlayer().getGameConnectedTo();
+				Player p = _com.getPlayer();
+				int[] pos = p.getPos();
+				switch(brokenCommand[1]) {						//NOT sure about the direction to move towards
 					case "GOUP":
-					_com.getPlayer().setPo
+						pos[0]--;
 						break;
 					case "GODOWN":
+						pos[0]++;
 						break;
 					case "GOLEFT":
+						pos[1]--;
 						break;
-					case "GORIGHT"
+					case "GORIGHT":
+						pos[1]++;
 						break;
 					default:
 						break;
 				}
+				if(p.setPos(g.getBoard(),pos).equals("ok")) {
+					_com.sendMessage("201 MOVE OK");
+					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]);
+				} else if(p.setPos(g.getBoard(),pos).equals("Wall")) {
+					_com.sendMessage("202 MOVE BLOCKED");
+					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]);
+				} else if(p.setPos(g.getBoard(),pos).equals("Treasure")) {
+					_com.sendMessage("203 MOVE OK TRES "+g.getBoard().getElementAt(pos[0],pos[1]));
+					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]+" value");		//missing treasure value
+				} else if(p.setPos(g.getBoard(),pos).equals("Hole")) {
+					_com.sendMessage("666 MOVE HOLE DEAD");
+				}
 
 				break;
 			case "400":												//GETHOLES
-				for(Game g : ServerMain.createGames) {
-					if(g.getGameId() == _com.getPlayer().getGameId()) {
-						sendHoleInfo(g);
+				for(Game g2 : ServerMain.createGames) {
+					if(g2.getGameId() == _com.getPlayer().getGameId()) {
+						sendHoleInfo(g2);
 						break;
 					}
 				}
 				break;
 			case "410":												//GETTREASURES
-				for(Game g : ServerMain.createGames) {
-					if(g.getGameId() == _com.getPlayer().getGameId()) {
-						sendTreasureInfo(g);
+				for(Game g2 : ServerMain.createGames) {
+					if(g2.getGameId() == _com.getPlayer().getGameId()) {
+						sendTreasureInfo(g2);
 						break;
 					}
 				}
 				break;
 			case "420":												//GETWALLS
-				for(Game g : ServerMain.createGames) {
-					if(g.getGameId() == _com.getPlayer().getGameId()) {
-						sendWallInfo(g);
+				for(Game g2 : ServerMain.createGames) {
+					if(g2.getGameId() == _com.getPlayer().getGameId()) {
+						sendWallInfo(g2);
 						break;
 					}
 				}

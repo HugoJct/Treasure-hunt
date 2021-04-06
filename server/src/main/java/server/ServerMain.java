@@ -145,11 +145,12 @@ public class ServerMain {
 		}
 	}
 
-	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerID 
+	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 
 		for(Game g : createGames) {	
 			if(g.getGameId() == Integer.parseInt(info[2])) {
 				for(Player p : connectedUsers) {
-					if(p.getName().equals(info[3]) && g.addPlayer(p)) {
+					if(p.getName().equals(info[3])) {
+						g.addPlayer(p);
 						return true;
 					}
 				}
