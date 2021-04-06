@@ -72,9 +72,9 @@ public class Console implements Runnable {
 				ServerMain.broadcastPerGame(broadcast);
 				break;
 			case "152":												// REQUEST START RESPONSE
-				while (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) == false) {
+				/* while (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) == false) {
 					// Waiting for everyone
-				}
+				} */
 				int[] broadcast2 = {153, _com.getPlayer().getGameId()};
 				ServerMain.broadcastPerGame(broadcast2);
 				ServerMain.launchGame(broadcast2[1]);	
