@@ -1,5 +1,8 @@
-package Client.src.main.java.client.control.UI.application;
+package client.control.UI.application;
 	
+import client.GameInfo;
+import client.control.UI.application.Modele;
+
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -14,7 +17,7 @@ import javafx.scene.layout.HBox;
 
 
 public class Main extends Application {
-	Modele m = new Modele(new GameInfo()); //Put a game object in argument
+	Modele m = new Modele(); //Put a game object in argument
 	
 	@Override
 	public void start(Stage primaryStage) throws MalformedURLException {

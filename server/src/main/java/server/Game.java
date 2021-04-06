@@ -29,6 +29,8 @@ public class Game implements Runnable{
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
+		this.gameId = id;
+		id++;
 		try{
 			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
 
@@ -61,7 +63,6 @@ public class Game implements Runnable{
 							String amount = "";
 							for(int k=1;k<((String) obj.get(j)).length();k++)
 								amount += ((String) obj.get(j)).charAt(k);
-							System.out.println(amount);
 							this.b.setElementAt(new Treasure(Integer.parseInt(amount)),j+1,i+1);
 							break;
 						case ' ':
@@ -72,7 +73,8 @@ public class Game implements Runnable{
 					}
 				}
 			}
-
+			b.countElements();
+			b.setBorder();
 		} catch(IOException e) {
 			e.printStackTrace();
 		} catch(ParseException e) {
@@ -102,7 +104,7 @@ public class Game implements Runnable{
 		return this.id;
 	}
 
-	public Board getB(){
+	public Board getBoard(){
 		return this.b;
 	}
 
@@ -203,4 +205,5 @@ public class Game implements Runnable{
 	public int getGameId() {
 		return this.gameId;
 	}
+
 }

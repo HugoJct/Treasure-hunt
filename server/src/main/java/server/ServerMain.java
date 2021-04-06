@@ -63,12 +63,6 @@ public class ServerMain {
 		ch = new ConnectionHandler(port);		//Launch the server	
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-		/* while (true) {
-			if (ch.getCom() != null) {
-				console = new Console(ch.getCom());
-				break;
-			}
-		}		*/
 
 		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
 		checkInput.start();
@@ -87,34 +81,39 @@ public class ServerMain {
 			c.sendMessage(wholeMessage);
 	}
 
-	public static void broadcastPerGame(String[] message) {
-		for (Communication c : launchedCom) {
-			if (String.valueOf(c.getPlayer().getGameId()) == message[0]) {
-				c.sendMessage(message[1]);
+	public static void broadcastPerGame(int[] message) {
+		if (message[0] == 152) {
+			for (Communication c : launchedCom) {
+				if (c.getPlayer().getGameId() == message[1]) {
+					c.sendMessage("152");
+				}
+			}
+		}
+		if (message[0] == 153) {
+			for (Communication c : launchedCom) {
+				if (c.getPlayer().getGameId() == message[1]) {
+					c.sendMessage("153");
+				}
 			}
 		}
 	}
 
-	public static void checkForLaunch(String[] message) {
-		if (message[2] == "1") {
-			for (Communication c : launchedCom) {
-				if (String.valueOf(c.getPlayer().getGameId()) == message[1]) {
-					if (String.valueOf(c.getPlayer().getPlayerId()) == message[2]) {
-						c.getPlayer().setReady(true);
-						for (Player p : connectedUsers) {
-							if (p.getReady() == false) {
-								System.out.println("Not Ready");
-								return;
-							}
-						}
-					}
-				}
+	public static boolean checkForLaunch(int gameID) {
+		for (Player p : connectedUsers) {
+			if (p.getGameId() == gameID && p.getReady() == false) {
+				//System.out.println("Everyone is not ready");
+				return false;
 			}
 		}
-		System.out.println("READY");
+		return true;
+	}
+
+	public static void printGame(int gameID) {
+		System.out.println("ENTREE");
 		for (Game g : createGames) {
-			if (String.valueOf(g.getGameId()) == message[1]) {
-				g.start();
+			if (g.getGameId() == gameID) {
+				System.out.println("OK");
+				System.out.println(g.getBoard().toString());
 			}
 		}
 	}
@@ -140,26 +139,26 @@ public class ServerMain {
 		//game.start();
 	}
 
-	public static void joinGame(String[] info) {	// 130 gameId playerID
-		Player player = null;
-		int i = 1;
-		boolean retVal = false;
-		for(Game g : createGames) {
-			if (String.valueOf(g.getID()) == info[1]) {
-				for (Player p : connectedUsers) {
-					if (String.valueOf(p.getPlayerId()) == info[2]) {
-						player = p;
-					}
-				}
-				do {
-					retVal = g.addPlayer(player);	
-					if (retVal == false) {
-						player.setUserName(player.getUserName() + i);
-						i++;
-					}
-				} while (!(retVal));
+	public static void launchGame(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				g.start();
 			}
 		}
+	}
+
+	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerID
+		for(Game g : createGames) {
+			if(g.getGameId() == Integer.parseInt(info[2])) {
+				for(Player p : connectedUsers) {
+					if(p.getName().equals(info[3])) {
+						p.setGameId(Integer.parseInt(info[2]));
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	public static String stopGame(int id) {		//stops the specified game
@@ -186,7 +185,7 @@ public class ServerMain {
 	public static String listGamesWithDetails(){
 		String games = "";
 		for(Game g : createGames){
-			games += "["+g+" ; "+g.getPlayers().size()+" Players Connected ; "+g.getB().getSizeX()+"x"+g.getB().getSizeY()+" Board ; Status: ";
+			games += "["+g+" ; "+g.getPlayers().size()+" Players Connected ; "+g.getBoard().getSizeX()+"x"+g.getBoard().getSizeY()+" Board ; Status: ";
 			if(g.getPlayers().size() < g.getCapacity()){
 				games +="Waiting for additional players (At least "+(g.getCapacity() - g.getPlayers().size())+" more)";
 			}else if(g.getPlayers().size() >= g.getCapacity() && !(g.isRunning())){
