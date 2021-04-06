@@ -72,12 +72,11 @@ public class Console implements Runnable {
 				ServerMain.broadcastPerGame(broadcast);
 				break;
 			case "152":												// REQUEST START RESPONSE
-				/* while (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) == false) {
-					// Waiting for everyone
-				} */
-				int[] broadcast2 = {153, _com.getPlayer().getGameId()};
-				ServerMain.broadcastPerGame(broadcast2);
-				ServerMain.launchGame(broadcast2[1]);	
+			//	if (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) != false) {
+					int[] broadcast2 = {153, _com.getPlayer().getGameId()};
+					ServerMain.broadcastPerGame(broadcast2);
+					ServerMain.launchGame(broadcast2[1]);	
+			//	}
 				break;
 			case "200":
 				Game g = _com.getPlayer().getGameConnectedTo();
@@ -86,15 +85,19 @@ public class Console implements Runnable {
 				switch(brokenCommand[1]) {						//NOT sure about the direction to move towards
 					case "GOUP":
 						pos[0]--;
+						ServerMain.printGame(_com.getPlayer().getGameId());
 						break;
 					case "GODOWN":
 						pos[0]++;
+						ServerMain.printGame(_com.getPlayer().getGameId());
 						break;
 					case "GOLEFT":
 						pos[1]--;
+						ServerMain.printGame(_com.getPlayer().getGameId());
 						break;
 					case "GORIGHT":
 						pos[1]++;
+						ServerMain.printGame(_com.getPlayer().getGameId());
 						break;
 					default:
 						break;

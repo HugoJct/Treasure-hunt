@@ -74,6 +74,7 @@ public class Communication implements Runnable{
                     sendMessage("400 GETHOLES");
                     Thread.sleep(3);
                     sendMessage("410 GETTREASURES");
+					Thread.sleep(3);
                     sendMessage("420 GETWALLS");
                 }
                 catch(InterruptedException e) {
