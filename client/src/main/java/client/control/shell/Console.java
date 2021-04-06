@@ -37,7 +37,7 @@ public class Console implements Runnable {
 
 	public void useMessage(String command) {
 		String[] brokenCommand = breakCommand(command);
-
+		Scanner sc = new Scanner(System.in);
 		switch(brokenCommand[0]) {
 			// Client -> Client
 			case "UNKNOWN":
@@ -72,7 +72,12 @@ public class Console implements Runnable {
 				break;
 			// Client -> Server
 			case "152":
-				_com.sendMessage("152 1");
+				System.out.println("Ready to Play ? y/N : ");
+				String s = sc.nextLine();
+				if (s.equals("y")) {
+					_com.sendMessage("152 1");
+				}
+				_com.sendMessage("152 0");
 				break;
 			case "153":
 				_com.sendMessage("400 GETHOLES");
