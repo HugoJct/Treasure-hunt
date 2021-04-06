@@ -15,6 +15,8 @@ buildClient: clearT
 	./gradlew :client:build
 runClient: clearT 
 	./gradlew :client:run --console=plain
+runClientCfg: clearT 
+	./gradlew :client:run --console=plain --args="src/main/java/client/customConfig.json"
 
 #the build and run recipes for the server side of the project only
 server: clearT buildServer

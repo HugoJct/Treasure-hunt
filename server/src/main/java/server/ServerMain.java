@@ -37,8 +37,6 @@ public class ServerMain {
 	private static int port;
 	private static File configFile;
 
-	public ServerMain() {}
-
 	public static void main(String[] args) {
 
 		try {
@@ -76,7 +74,7 @@ public class ServerMain {
 	public static void broadcastMessage(String[] message) {		//method charged of executing the behaviour of the "broadcast" command but from a string array (making it easier to use with the command breaker)
 		String wholeMessage = "";
 		for(int i=1;i<message.length;i++)
-			wholeMessage += message[i] + " ";
+			wholeMessage += message[i]+" ";
 		for(Communication c : launchedCom)
 			c.sendMessage(wholeMessage);
 	}
@@ -132,7 +130,7 @@ public class ServerMain {
 	}
 
 	public static void createGame(String name) {		//this creates the game with the specified name 
-		Game g = new Game();
+		Game g = new Game(name);
 		createGames.add(g);
 
 		Thread game = new Thread(g);
@@ -147,12 +145,12 @@ public class ServerMain {
 		}
 	}
 
-	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerID
-		for(Game g : createGames) {
+	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 
+		for(Game g : createGames) {	
 			if(g.getGameId() == Integer.parseInt(info[2])) {
 				for(Player p : connectedUsers) {
 					if(p.getName().equals(info[3])) {
-						p.setGameId(Integer.parseInt(info[2]));
+						g.addPlayer(p);
 						return true;
 					}
 				}
