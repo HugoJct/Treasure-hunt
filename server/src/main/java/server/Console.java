@@ -82,7 +82,7 @@ public class Console implements Runnable {
 				Game g = _com.getPlayer().getGameConnectedTo();
 				Player p = _com.getPlayer();
 				int[] pos = p.getPos();
-				switch(brokenCommand[1]) {						//NOT sure about the direction to move towards
+				switch(brokenCommand[1]) {
 					case "GOUP":
 						pos[0]--;
 						ServerMain.printGame(_com.getPlayer().getGameId());
@@ -102,17 +102,27 @@ public class Console implements Runnable {
 					default:
 						break;
 				}
-				if(p.setPos(g.getBoard(),pos).equals("ok")) {
+				String ret = p.setPos(g.getBoard(),pos);
+				pos = p.getPos();
+				if(ret.equals("ok")) {
+
 					_com.sendMessage("201 MOVE OK");
-					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1],g.getGameId());
-				} else if(p.setPos(g.getBoard(),pos).equals("Wall")) {
+					broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0],g.getGameId());
+
+				} else if(ret.equals("Wall")) {
+
 					_com.sendMessage("202 MOVE BLOCKED");
-					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1],g.getGameId());
-				} else if(p.setPos(g.getBoard(),pos).equals("Treasure")) {
+					broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0],g.getGameId());
+
+				} else if(ret.equals("Treasure")) {
+
 					_com.sendMessage("203 MOVE OK TRES "+g.getBoard().getElementAt(pos[0],pos[1]));
-					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]+" value",g.getGameId());		//missing treasure value
-				} else if(p.setPos(g.getBoard(),pos).equals("Hole")) {
+					broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" value",g.getGameId());		//missing treasure value
+
+				} else if(ret.equals("Hole")) {
+
 					_com.sendMessage("666 MOVE HOLE DEAD");
+
 				}
 
 				break;
