@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 
 
 public class Main extends Application {
-	Modele m = new Modele(new GameInfo()); //Put a game object in argument
+	Modele m = new Modele(); //Put a game object in argument
 	
 	@Override
 	public void start(Stage primaryStage) throws MalformedURLException {

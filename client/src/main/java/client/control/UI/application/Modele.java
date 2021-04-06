@@ -16,13 +16,13 @@ public class Modele {
  	
 	
 	//Constructor
-	public Modele(GameInfo g) {
+	public Modele() {
 		this.Lines = GameInfo.getMap()[1];
 		this.Columns = GameInfo.getMap()[0];
 		this.TreasurePos = GameInfo.getTreasuresPos();
 		this.WallPos = GameInfo.getWallsPos();
 		this.HolePos = GameInfo.getHolesPos();
-		this.PlayerPos = GameInfo.getPlayersPos();
+		this.PlayerPos = GameInfo.getPlayerPos();
 	}
 	
 	
