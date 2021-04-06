@@ -13,6 +13,8 @@ public class GameInfo {
     private static int[] treasuresPos;   
     private static int[] playerPos;
 
+
+    // to get various elements
     public static int getHoles() {
         return nbrOfHoles;
     }
@@ -25,6 +27,8 @@ public class GameInfo {
     public static int getPlayers() {
         return nbrOfPlayers;
     }
+
+    // to get the map size
     public static int[] getMap() {
         return map;
     }
@@ -43,11 +47,13 @@ public class GameInfo {
         }
         return null;
     }
+
+    // to get the position of the client player
     public static int[] getMainPlayerPos() {
         return mainPlayerPos;
     }
 
-
+    // to set each element number 
     public static void setHoles(int h) {
         nbrOfHoles = h;
     }
@@ -60,10 +66,14 @@ public class GameInfo {
     public static void setPlayers(int p) {
         nbrOfPlayers = p;
     }
+
+    // to define the map size
     public static void setMap(int x, int y) {
         map[0] = x;
         map[1] = y;
     }
+
+    // to define each element position
     public static void setHolesPos(int pos, int x, int y) {
         holesPos[pos] = x;
         holesPos[pos+1] = y;
@@ -80,6 +90,8 @@ public class GameInfo {
         holesPos[pos] = x;
         holesPos[pos+1] = y;
     }
+
+    // to set player client position
     public static void up() {
         mainPlayerPos[0] = mainPlayerPos[0]-1;
     }
@@ -92,6 +104,8 @@ public class GameInfo {
     public static void left() {
         mainPlayerPos[1] = mainPlayerPos[1]-1;
     }
+
+    // to init various position
     public static void initHolesPos() {
         holesPos = new int[nbrOfHoles*2];
     }
@@ -104,6 +118,8 @@ public class GameInfo {
     public static void initPlayerPos() {
         playerPos = new int[nbrOfPlayers*2];
     }
+    
+    // to set the client player position
     public static void setMainPlayerPos(int x, int y) {
         mainPlayerPos[0] = x;
         mainPlayerPos[1] = y;

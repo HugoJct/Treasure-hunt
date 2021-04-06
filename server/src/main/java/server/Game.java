@@ -24,7 +24,7 @@ public class Game implements Runnable{
 	private static int id = 0;
 	private int gameId;
 
-	public Game() {
+	public Game(String name) {
 		this.isRunning = false;
 		this.name = "default";
 		this.capacity = 4;
@@ -46,7 +46,7 @@ public class Game implements Runnable{
 			b = new Board(dimX,dimY);
 
 			this.capacity = ((Long) jsonObject.get("capacity")).intValue();
-			this.name = (String) jsonObject.get("name");
+			this.name = name;
 
 			JSONArray board = (JSONArray) jsonObject.get("elements");
 			for(int i = 0;i<dimY;i++) {
@@ -81,7 +81,7 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 		System.out.println(this.b);
-	}
+	}/*
 
 	public Game(String name) {
 		this.isRunning = false;
@@ -90,7 +90,7 @@ public class Game implements Runnable{
 		b = new Board();
 		this.gameId = id;
 		this.id++;
-	}
+	}*/
 
 	public void stop() {
 		this.isRunning = false;
