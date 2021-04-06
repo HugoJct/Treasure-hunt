@@ -74,13 +74,8 @@ public class Console implements Runnable {
 				_com.sendMessage("150");
 				break;
 			// Server -> Client
-			case "152":
-				System.out.println("Ready to Play ? y/N : ");
-				String s = sc.nextLine();
-				if (s.equals("y")) {
-					_com.sendMessage("152 1");
-				}
-				_com.sendMessage("152 0");
+			case "y":
+				_com.sendMessage("152 1");
 				break;
 			case "153":
 				_com.sendMessage("400 GETHOLES");
