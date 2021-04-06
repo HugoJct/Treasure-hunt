@@ -75,12 +75,11 @@ public class Player {
     }
 
     protected void setStartingPos(Board b){ //initiate beginning positions randomly for players
-    	Random rx = new Random();
-    	Random ry = new Random();
+    	Random rand = new Random();
     	int[] pos = {-1,-1};
     	do{
-    	    pos[0] = ry.nextInt(b.getSizeY()-1)+ 1; 
-    	    pos[1] = rx.nextInt(b.getSizeX()-1)+ 1;
+    	    pos[0] = rand.nextInt(b.getSizeY()-2)+ 1; 
+    	    pos[1] = rand.nextInt(b.getSizeX()-2)+ 1;
          } while(b.getElementAt(pos[1],pos[0]) != null);/*keep going until the starting location isn't a special item */
     	this.setPos(b, pos);
     }
@@ -89,8 +88,8 @@ public class Player {
     	if(b.getElementAt(tab[1], tab[0]) instanceof Wall) {
     		return "Wall";
     	}
-    	this.posX = tab[1];
-    	this.posY = tab[0];
+    	this.posX = tab[0];
+    	this.posY = tab[1];
     	if(b.getElementAt(tab[1], tab[0]) instanceof Hole){ //Added this directly in this function to avoid overencumber the run method in 'Game'
     	    this.killPlayer();
             return "Hole";
