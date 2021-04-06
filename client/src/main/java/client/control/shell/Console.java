@@ -70,7 +70,10 @@ public class Console implements Runnable {
 			case "STOP":
 				stopServer();
 				break;
-			// Client -> Server
+			case "REQUESTSTART":
+				_com.sendMessage("150");
+				break;
+			// Server -> Client
 			case "152":
 				System.out.println("Ready to Play ? y/N : ");
 				String s = sc.nextLine();
