@@ -101,13 +101,13 @@ public class Console implements Runnable {
 				}
 				if(p.setPos(g.getBoard(),pos).equals("ok")) {
 					_com.sendMessage("201 MOVE OK");
-					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]);
+					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1],g.getGameId());
 				} else if(p.setPos(g.getBoard(),pos).equals("Wall")) {
 					_com.sendMessage("202 MOVE BLOCKED");
-					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]);
+					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1],g.getGameId());
 				} else if(p.setPos(g.getBoard(),pos).equals("Treasure")) {
 					_com.sendMessage("203 MOVE OK TRES "+g.getBoard().getElementAt(pos[0],pos[1]));
-					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]+" value");		//missing treasure value
+					broadcastInGame("510 "+p.getName()+" POS "+pos[0]+" "+pos[1]+" value",g.getGameId());		//missing treasure value
 				} else if(p.setPos(g.getBoard(),pos).equals("Hole")) {
 					_com.sendMessage("666 MOVE HOLE DEAD");
 				}
