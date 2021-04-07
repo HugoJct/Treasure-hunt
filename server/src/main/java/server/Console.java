@@ -80,19 +80,19 @@ public class Console implements Runnable {
 				ServerMain.broadcastPerGame(broadcast);
 
 				Thread t = new Thread() {
-			      public void run() {
-			        if(ServerMain.checkForLaunch(g.getGameId())) {
-			        	ServerMain.launchGame(g.getGameId());
-			        	broadcastInGame("153 GAME STARTED",g.getGameId());
-			        } else {
-			        	String playersNotReady = "";
-			        	for(Player pl : g.getPlayers()) {
-			        		if(!pl.getReady())
-			        			playersNotReady += pl.getName() + " ";
-			        	}
-			        	broadcastInGame("154 START ABORTED "+playersNotReady,g.getGameId());
-			        }
-			      }
+			      	public void run() {
+			        	if(ServerMain.checkForLaunch(g.getGameId())) {
+				        	ServerMain.launchGame(g.getGameId());
+				        	broadcastInGame("153 GAME STARTED",g.getGameId());
+				        } else {
+				        	String playersNotReady = "";
+				        	for(Player pl : g.getPlayers()) {
+				        		if(!pl.getReady())
+				        			playersNotReady += pl.getName() + " ";
+				        	}
+				        	broadcastInGame("154 START ABORTED "+playersNotReady,g.getGameId());
+				        }
+				      }
 			    };
 
 			    t.start();
