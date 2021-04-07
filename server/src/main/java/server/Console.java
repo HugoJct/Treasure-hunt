@@ -49,7 +49,8 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
 			case "110":												//110 CREATEGAME "name"
-				ServerMain.createGame(brokenCommand[2]);
+				int id = ServerMain.createGame(brokenCommand[2]);
+				_com.sendMessage("111 MAP CREATED " + id);
 				break;
 			case "130":
 				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID				

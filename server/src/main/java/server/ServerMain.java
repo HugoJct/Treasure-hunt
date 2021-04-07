@@ -127,12 +127,13 @@ public class ServerMain {
 		}		
 	}
 
-	public static void createGame(String name) {		//this creates the game with the specified name 
+	public static int createGame(String name) {		//this creates the game with the specified name 
 		Game g = new Game(name);
 		createGames.add(g);
 
 		Thread game = new Thread(g);
 		game.start();
+		return g.getGameId();
 	}
 
 	public static void launchGame(int id) {
