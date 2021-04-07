@@ -65,8 +65,7 @@ public class Console implements Runnable {
 				break;
 			case "120":												// GETLIST
 				_com.sendMessage(ServerMain.listNbrOfGames());
-				_com.sendMessage(ServerMain.listGames());
-				//ServerMain.printGame(_com.getPlayer().getGameId());
+				sendGameInfo();
 				break;
 			case "150":												// BROADCAST inside game (for REQUEST START)
 				int[] broadcast = {152, _com.getPlayer().getGameId()};
@@ -157,6 +156,26 @@ public class Console implements Runnable {
 		}
 	}
 
+	public void sendGameInfo() {
+
+		int nbrOfGames = ServerMain.getNumberOfGames();
+		int tab[] = new int[nbrOfGames*5];
+
+		if (nbrOfGames != 0) {
+			for (int i = 0 ; i < nbrOfGames ; i++) {
+				tab[0+i] = 0;	// No game mod for now
+				tab[1+i] = ServerMain.getGameX(i);
+				tab[2+i] = ServerMain.getGameY(i);
+				tab[3+i] = ServerMain.getNumberOfHoles(i);
+				tab[4+i] = ServerMain.getNumberOfTreasures(i);
+			}
+
+			for (int i = 0 ; i < nbrOfGames ; i++) {
+				_com.sendMessage("121 MESS " + (i+1) + " ID " + i + " " + tab[0+i] + " " + tab[1+i] + " " + tab[2+i] + " " + tab[3+i] + " " + tab[4+i]);
+			}
+		}
+	}
+ 
 	public void sendHoleInfo(Game g) {			//for comments see sendTreasureInfo
 
 		int k = g.getBoard().getHoleCount();

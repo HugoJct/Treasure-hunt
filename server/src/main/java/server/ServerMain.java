@@ -207,6 +207,50 @@ public class ServerMain {
 		return "121 NUMBER " + x;
 	}
 
+	public static int getNumberOfGames() {
+		int x = 0;
+		for (Game g : createGames) {
+			x++;
+		}
+		return x;
+	}
+
+	public static int getGameX(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getSizeX();
+			}
+		}
+		return -1;
+	}
+
+	public static int getGameY(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getSizeY();
+			}
+		}
+		return -1;
+	}
+
+	public static int getNumberOfHoles(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getHoleCount();
+			}
+		}
+		return -1;
+	}
+
+	public static int getNumberOfTreasures(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getTreasureCount();
+			}
+		}
+		return -1;
+	}
+
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;
 		for(Game g : createGames)
