@@ -95,7 +95,7 @@ public class ServerMain {
 			}
 		}
 	}
-
+	/*
 	public static boolean checkForLaunch(int gameID) {
 		for (Player p : connectedUsers) {
 			if (p.getGameId() == gameID && p.getReady() == false) {
@@ -104,7 +104,7 @@ public class ServerMain {
 			}
 		}
 		return true;
-	}
+	}*/
 
 	public static void printGame(int gameID) {
 		for (Game g : createGames) {
@@ -141,6 +141,21 @@ public class ServerMain {
 				g.start();
 			}
 		}
+	}
+
+	public static boolean checkForLaunch(int id) {
+		for(Game g : createGames) {
+			if(g.getGameId() == id) {
+				for(Player p : g.getPlayers()) {
+					while(!p.getAnswered()) {
+						System.out.print("");
+					}
+					if(!p.getReady())
+						return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 

@@ -159,7 +159,7 @@ public class Game implements Runnable{
 	public String toString() {
 		String s = this.gameId + " " + this.name;
 		for(Player p : players)
-			s += players.toString() + "\n";
+			s += players.toString();
 		return s;
 	}
 

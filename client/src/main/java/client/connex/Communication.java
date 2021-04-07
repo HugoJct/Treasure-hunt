@@ -104,7 +104,7 @@ public class Communication implements Runnable{
 				System.out.println("Impossible movement, wall met");
 				break;
 			case "203":
-				System.out.println("Treasure found");
+				System.out.println("Treasure found: "+brokenCommand[4]+"$");
 				break;
 			// set holes data
 			case "401":

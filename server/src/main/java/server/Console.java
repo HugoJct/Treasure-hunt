@@ -73,14 +73,38 @@ public class Console implements Runnable {
 				//ServerMain.printGame(_com.getPlayer().getGameId());
 				break;
 			case "150":												// BROADCAST inside game (for REQUEST START)
-				int[] broadcast = {152, _com.getPlayer().getGameId()};
+				int[] broadcast = {152, p.getGameId()};
+				for(Player p2 : g.getPlayers()) {
+					p2.setAnswered(false);
+				}
 				ServerMain.broadcastPerGame(broadcast);
+
+				Thread t = new Thread() {
+			      public void run() {
+			        if(ServerMain.checkForLaunch(g.getGameId())) {
+			        	ServerMain.launchGame(g.getGameId());
+			        	broadcastInGame("153 GAME STARTED",g.getGameId());
+			        } else {
+			        	String playersNotReady = "";
+			        	for(Player pl : g.getPlayers()) {
+			        		if(!pl.getReady())
+			        			playersNotReady += pl.getName() + " ";
+			        	}
+			        	broadcastInGame("154 START ABORTED "+playersNotReady,g.getGameId());
+			        }
+			      }
+			    };
+
+			    t.start();
 				break;
 			case "152":												// REQUEST START RESPONSE
 			//	if (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) != false) {
-					int[] broadcast2 = {153, _com.getPlayer().getGameId()};
-					ServerMain.broadcastPerGame(broadcast2);
-					ServerMain.launchGame(broadcast2[1]);	
+				if(brokenCommand[2].equals("YES")) {
+					p.setReady(true);
+				} else {
+					p.setReady(false);
+				}
+				p.setAnswered(true);
 			//	}
 				break;
 			case "200":

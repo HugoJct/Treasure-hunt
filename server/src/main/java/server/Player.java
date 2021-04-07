@@ -22,6 +22,8 @@ public class Player {
     private int gameID = -1;
     private boolean ready;
 
+    private boolean answered = false;
+
     private String _msg;
 
     //Network attributes
@@ -183,6 +185,14 @@ public class Player {
 
     public void setUserName(String s) {
         this.username = s;
+    }
+
+    public void setAnswered(boolean b) {
+        this.answered = b;
+    }
+
+    public boolean getAnswered() {
+        return this.answered;
     }
 
     public String toString() {
