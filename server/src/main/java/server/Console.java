@@ -3,6 +3,7 @@ package server;
 import server.io.*;
 import server.io.Communication;
 import server.Game;
+import server.Player;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -38,7 +39,11 @@ public class Console implements Runnable {
 	public void useMessage(String command) {
 		String[] brokenCommand = breakCommand(command);
 
+		Game g = _com.getPlayer().getGameConnectedTo();
+		Player p = _com.getPlayer();
+
 		switch(brokenCommand[0]) {
+
 			case "0":												//STOP
 				ServerMain.stop();
 				break;
@@ -53,8 +58,8 @@ public class Console implements Runnable {
 				break;
 			case "130":
 				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID				
-					_com.sendMessage("131 MAP "+_com.getPlayer().getGameId()+" JOINED");
-					broadcastInGame("The player "+_com.getPlayer().getName()+" joined the game",_com.getPlayer().getGameId());				//shitty (use player and game functions)
+					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED");
+					broadcastInGame("The player "+p.getName()+" joined the game",p.getGameId());				//shitty (use player and game functions)
 				}
 				else 
 					_com.sendMessage("No such game found");
@@ -79,8 +84,6 @@ public class Console implements Runnable {
 			//	}
 				break;
 			case "200":
-				Game g = _com.getPlayer().getGameConnectedTo();
-				Player p = _com.getPlayer();
 				int[] pos = p.getPos();
 				switch(brokenCommand[1]) {
 					case "GOUP":
@@ -122,33 +125,19 @@ public class Console implements Runnable {
 				} else if(ret.equals("Hole")) {
 
 					_com.sendMessage("666 MOVE HOLE DEAD");
+					broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
 
 				}
 
 				break;
 			case "400":												//GETHOLES
-				for(Game g2 : ServerMain.createGames) {
-					if(g2.getGameId() == _com.getPlayer().getGameId()) {
-						sendHoleInfo(g2);
-						break;
-					}
-				}
+				sendHoleInfo(g);
 				break;
 			case "410":												//GETTREASURES
-				for(Game g2 : ServerMain.createGames) {
-					if(g2.getGameId() == _com.getPlayer().getGameId()) {
-						sendTreasureInfo(g2);
-						break;
-					}
-				}
+				sendTreasureInfo(g);
 				break;
 			case "420":												//GETWALLS
-				for(Game g2 : ServerMain.createGames) {
-					if(g2.getGameId() == _com.getPlayer().getGameId()) {
-						sendWallInfo(g2);
-						break;
-					}
-				}
+				sendWallInfo(g);
 				break;
 			default:
 				_com.sendMessage("999 COMMAND ERROR");
