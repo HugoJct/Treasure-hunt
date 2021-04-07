@@ -170,7 +170,7 @@ public class Game implements Runnable{
 			try {
 				Thread.sleep(1);
 				if(!ServerMain.isRunning()) {
-					System.out.println("Server stopped ! ");
+					System.out.println("Server stopped !");
 					return;
 				}
 			} catch(InterruptedException e) {
@@ -182,7 +182,7 @@ public class Game implements Runnable{
 			players.get(i).setStartingPos(this.b); //Initializing a starting position for each player
 	    }
 
-	    while(ServerMain.isRunning()) {
+	    while(ServerMain.isRunning()) {/*
 			for(int i=0; i<players.size() ; i++){
 			    if(!(players.get(i).isPlayerDead()) && players.get(i).isConnected){
 					players.get(i).setPosFromInput(this.b, players.get(i).getPos()); 
@@ -195,10 +195,8 @@ public class Game implements Runnable{
 					break;
 			    }
 			    // Should add a printing of all the ranks for each player along with the money collected by each one
-			}
-			if(!this.isRunning){
-		    	break;
-			}
+			}*/
+			System.out.print("");
 	    }
 	}
 

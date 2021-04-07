@@ -37,7 +37,7 @@ public class Console implements Runnable {
 
 	public void useMessage(String command) {
 		String[] brokenCommand = breakCommand(command);
-
+		Scanner sc = new Scanner(System.in);
 		switch(brokenCommand[0]) {
 			// Client -> Client
 			case "UNKNOWN":
@@ -70,8 +70,11 @@ public class Console implements Runnable {
 			case "STOP":
 				stopServer();
 				break;
-			// Client -> Server
-			case "152":
+			case "REQUESTSTART":
+				_com.sendMessage("150");
+				break;
+			// Server -> Client
+			case "y":
 				_com.sendMessage("152 1");
 				break;
 			case "153":

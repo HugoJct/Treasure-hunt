@@ -107,10 +107,8 @@ public class ServerMain {
 	}
 
 	public static void printGame(int gameID) {
-		System.out.println("ENTREE");
 		for (Game g : createGames) {
 			if (g.getGameId() == gameID) {
-				System.out.println("OK");
 				System.out.println(g.getBoard().toString());
 			}
 		}
@@ -134,7 +132,7 @@ public class ServerMain {
 		createGames.add(g);
 
 		Thread game = new Thread(g);
-		//game.start();
+		game.start();
 	}
 
 	public static void launchGame(int id) {
