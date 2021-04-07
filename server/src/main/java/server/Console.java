@@ -20,6 +20,7 @@ public class Console implements Runnable {
 	@Override
 	public void run() {
 		
+		_com.sendMessage("101 WELCOME "+_com.getPlayer().getName());
 		while(ServerMain.isRunning()) {
 			try {
 				Thread.sleep(1);
