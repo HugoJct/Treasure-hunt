@@ -3,6 +3,7 @@ package server;
 import server.io.*;
 import server.io.Communication;
 import server.Game;
+import server.Player;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ public class Console implements Runnable {
 	@Override
 	public void run() {
 		
+		_com.sendMessage("101 WELCOME "+_com.getPlayer().getName());
 		while(ServerMain.isRunning()) {
 			try {
 				Thread.sleep(1);
@@ -38,7 +40,11 @@ public class Console implements Runnable {
 	public void useMessage(String command) {
 		String[] brokenCommand = breakCommand(command);
 
+		Game g = _com.getPlayer().getGameConnectedTo();
+		Player p = _com.getPlayer();
+
 		switch(brokenCommand[0]) {
+
 			case "0":												//STOP
 				ServerMain.stop();
 				break;
@@ -49,12 +55,13 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
 			case "110":												//110 CREATEGAME "name"
-				ServerMain.createGame(brokenCommand[2]);
+				int id = ServerMain.createGame(brokenCommand[2]);
+				_com.sendMessage("111 MAP CREATED " + id);
 				break;
 			case "130":
 				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID				
-					_com.sendMessage("131 MAP "+_com.getPlayer().getGameId()+" JOINED");
-					broadcastInGame("The player "+_com.getPlayer().getName()+" joined the game",_com.getPlayer().getGameId());				//shitty (use player and game functions)
+					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED");
+					broadcastInGame("The player "+p.getName()+" joined the game",p.getGameId());				//shitty (use player and game functions)
 				}
 				else 
 					_com.sendMessage("No such game found");
@@ -64,23 +71,44 @@ public class Console implements Runnable {
 				break;
 			case "120":												// GETLIST
 				_com.sendMessage(ServerMain.listNbrOfGames());
-				_com.sendMessage(ServerMain.listGames());
-				//ServerMain.printGame(_com.getPlayer().getGameId());
+				sendGameInfo();
 				break;
 			case "150":												// BROADCAST inside game (for REQUEST START)
-				int[] broadcast = {152, _com.getPlayer().getGameId()};
+				int[] broadcast = {152, p.getGameId()};
+				for(Player p2 : g.getPlayers()) {
+					p2.setAnswered(false);
+				}
 				ServerMain.broadcastPerGame(broadcast);
+
+				Thread t = new Thread() {
+			      	public void run() {
+			        	if(ServerMain.checkForLaunch(g.getGameId())) {
+				        	ServerMain.launchGame(g.getGameId());
+				        	broadcastInGame("153 GAME STARTED",g.getGameId());
+				        } else {
+				        	String playersNotReady = "";
+				        	for(Player pl : g.getPlayers()) {
+				        		if(!pl.getReady())
+				        			playersNotReady += pl.getName() + " ";
+				        	}
+				        	broadcastInGame("154 START ABORTED "+playersNotReady,g.getGameId());
+				        }
+				      }
+			    };
+
+			    t.start();
 				break;
 			case "152":												// REQUEST START RESPONSE
 			//	if (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) != false) {
-					int[] broadcast2 = {153, _com.getPlayer().getGameId()};
-					ServerMain.broadcastPerGame(broadcast2);
-					ServerMain.launchGame(broadcast2[1]);	
+				if(brokenCommand[2].equals("YES")) {
+					p.setReady(true);
+				} else {
+					p.setReady(false);
+				}
+				p.setAnswered(true);
 			//	}
 				break;
 			case "200":
-				Game g = _com.getPlayer().getGameConnectedTo();
-				Player p = _com.getPlayer();
 				int[] pos = p.getPos();
 				switch(brokenCommand[1]) {
 					case "GOUP":
@@ -122,33 +150,19 @@ public class Console implements Runnable {
 				} else if(ret.equals("Hole")) {
 
 					_com.sendMessage("666 MOVE HOLE DEAD");
+					broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
 
 				}
 
 				break;
 			case "400":												//GETHOLES
-				for(Game g2 : ServerMain.createGames) {
-					if(g2.getGameId() == _com.getPlayer().getGameId()) {
-						sendHoleInfo(g2);
-						break;
-					}
-				}
+				sendHoleInfo(g);
 				break;
 			case "410":												//GETTREASURES
-				for(Game g2 : ServerMain.createGames) {
-					if(g2.getGameId() == _com.getPlayer().getGameId()) {
-						sendTreasureInfo(g2);
-						break;
-					}
-				}
+				sendTreasureInfo(g);
 				break;
 			case "420":												//GETWALLS
-				for(Game g2 : ServerMain.createGames) {
-					if(g2.getGameId() == _com.getPlayer().getGameId()) {
-						sendWallInfo(g2);
-						break;
-					}
-				}
+				sendWallInfo(g);
 				break;
 			default:
 				_com.sendMessage("999 COMMAND ERROR");
@@ -156,6 +170,26 @@ public class Console implements Runnable {
 		}
 	}
 
+	public void sendGameInfo() {
+
+		int nbrOfGames = ServerMain.getNumberOfGames();
+		int tab[] = new int[nbrOfGames*5];
+
+		if (nbrOfGames != 0) {
+			for (int i = 0 ; i < nbrOfGames ; i++) {
+				tab[0+i] = 0;	// No game mod for now
+				tab[1+i] = ServerMain.getGameX(i);
+				tab[2+i] = ServerMain.getGameY(i);
+				tab[3+i] = ServerMain.getNumberOfHoles(i);
+				tab[4+i] = ServerMain.getNumberOfTreasures(i);
+			}
+
+			for (int i = 0 ; i < nbrOfGames ; i++) {
+				_com.sendMessage("121 MESS " + (i+1) + " ID " + i + " " + tab[0+i] + " " + tab[1+i] + " " + tab[2+i] + " " + tab[3+i] + " " + tab[4+i]);
+			}
+		}
+	}
+ 
 	public void sendHoleInfo(Game g) {			//for comments see sendTreasureInfo
 
 		int k = g.getBoard().getHoleCount();

@@ -95,7 +95,7 @@ public class ServerMain {
 			}
 		}
 	}
-
+	/*
 	public static boolean checkForLaunch(int gameID) {
 		for (Player p : connectedUsers) {
 			if (p.getGameId() == gameID && p.getReady() == false) {
@@ -104,7 +104,7 @@ public class ServerMain {
 			}
 		}
 		return true;
-	}
+	}*/
 
 	public static void printGame(int gameID) {
 		for (Game g : createGames) {
@@ -127,12 +127,13 @@ public class ServerMain {
 		}		
 	}
 
-	public static void createGame(String name) {		//this creates the game with the specified name 
+	public static int createGame(String name) {		//this creates the game with the specified name 
 		Game g = new Game(name);
 		createGames.add(g);
 
 		Thread game = new Thread(g);
 		game.start();
+		return g.getGameId();
 	}
 
 	public static void launchGame(int id) {
@@ -141,6 +142,21 @@ public class ServerMain {
 				g.start();
 			}
 		}
+	}
+
+	public static boolean checkForLaunch(int id) {
+		for(Game g : createGames) {
+			if(g.getGameId() == id) {
+				for(Player p : g.getPlayers()) {
+					while(!p.getAnswered()) {
+						System.out.print("");
+					}
+					if(!p.getReady())
+						return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 
@@ -204,6 +220,50 @@ public class ServerMain {
 			}
 		}
 		return "121 NUMBER " + x;
+	}
+
+	public static int getNumberOfGames() {
+		int x = 0;
+		for (Game g : createGames) {
+			x++;
+		}
+		return x;
+	}
+
+	public static int getGameX(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getSizeX();
+			}
+		}
+		return -1;
+	}
+
+	public static int getGameY(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getSizeY();
+			}
+		}
+		return -1;
+	}
+
+	public static int getNumberOfHoles(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getHoleCount();
+			}
+		}
+		return -1;
+	}
+
+	public static int getNumberOfTreasures(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getTreasureCount();
+			}
+		}
+		return -1;
 	}
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
