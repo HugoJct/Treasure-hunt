@@ -74,9 +74,9 @@ public class Communication implements Runnable{
 			case "153":
                 try {
                     sendMessage("400 GETHOLES");
-                    Thread.sleep(3);
+                    Thread.sleep(5);
                     sendMessage("410 GETTREASURES");
-					Thread.sleep(3);
+					Thread.sleep(5);
                     sendMessage("420 GETWALLS");
                 }
                 catch(InterruptedException e) {
@@ -109,68 +109,68 @@ public class Communication implements Runnable{
 			// set holes data
 			case "401":
 				if (brokenCommand[1].equals("NUMBER")) {
-					setHoles(Integer.parseInt(brokenCommand[2]));
+					GameInfo.setHoles(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initHolesPos();
 				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
 					int k = Integer.parseInt(brokenCommand[2]);
-					int nbrLastCoo = GameInfo.getHoles() - (k-1)*5;
-					if (k/GameInfo.getHoles() == 1) {
+					if (k*5 > GameInfo.getHoles()) {
+						int nbrLastCoo = GameInfo.getHoles() - (k-1)*5;
 						for (int i = 0 ; i < nbrLastCoo ; i++) {
 							GameInfo.setHolesPos(i+k, Integer.parseInt(brokenCommand[4+i]), Integer.parseInt(brokenCommand[5+i]));
 						}
 					}
-					GameInfo.setHolesPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
-					GameInfo.setHolesPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
-					GameInfo.setHolesPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
-					GameInfo.setHolesPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
-					GameInfo.setHolesPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
-				} else {
-					System.out.println("error 401");
+					else {
+						GameInfo.setHolesPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
+						GameInfo.setHolesPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
+						GameInfo.setHolesPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
+						GameInfo.setHolesPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
+						GameInfo.setHolesPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
+					}
 				}
 				break;
 			// set treasures data
 			case "411":	
 				if (brokenCommand[1].equals("NUMBER")) {
-					setTreasures(Integer.parseInt(brokenCommand[2]));
+					GameInfo.setTreasures(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initTreasuresPos();
 				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
 					int k = (Integer.parseInt(brokenCommand[2]));
-					int nbrLastCoo = GameInfo.getTreasures() - (k-1)*5;
-					if (k/GameInfo.getTreasures() == 1) {
+					if (k*5 > GameInfo.getTreasures()) {
+						int nbrLastCoo = GameInfo.getTreasures() - (k-1)*5;
 						for (int i = 0 ; i < nbrLastCoo ; i++) {
 							GameInfo.setTreasuresPos(i+k, Integer.parseInt(brokenCommand[4+i]), Integer.parseInt(brokenCommand[5+i]));
 						}
 					}
-					GameInfo.setTreasuresPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
-					GameInfo.setTreasuresPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
-					GameInfo.setTreasuresPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
-					GameInfo.setTreasuresPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
-					GameInfo.setTreasuresPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
-				} else {
-					System.out.println("error 411");
+					else {
+						GameInfo.setTreasuresPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
+						GameInfo.setTreasuresPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
+						GameInfo.setTreasuresPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
+						GameInfo.setTreasuresPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
+						GameInfo.setTreasuresPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
+					}
 				}
 				break;
 			// set walls data
 			case "421":	
 				if (brokenCommand[1].equals("NUMBER")) {
-					setWalls(Integer.parseInt(brokenCommand[2]));
+					GameInfo.setWalls(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initWallsPos();
 				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
 					int k = (Integer.parseInt(brokenCommand[2]));
-					int nbrLastCoo = GameInfo.getWalls() - (k-1)*5;
-					if (k/GameInfo.getWalls() == 1) {
+					if (k*5 > GameInfo.getWalls()) {
+						int nbrLastCoo = GameInfo.getWalls() - (k-1)*5;
 						for (int i = 0 ; i < nbrLastCoo ; i++) {
 							GameInfo.setWallsPos(i+k, Integer.parseInt(brokenCommand[4+i]), Integer.parseInt(brokenCommand[5+i]));
 						}
 					}
-					GameInfo.setWallsPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
-					GameInfo.setWallsPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
-					GameInfo.setWallsPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
-					GameInfo.setWallsPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
-					GameInfo.setWallsPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
-				} else {
-					System.out.println("error 421");
-				}
+					else {
+						GameInfo.setWallsPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
+						GameInfo.setWallsPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
+						GameInfo.setWallsPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
+						GameInfo.setWallsPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
+						GameInfo.setWallsPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
+					}
+				} 
 				break;
 			case "501":
 				break;
@@ -193,17 +193,6 @@ public class Communication implements Runnable{
 		}
 	}
 
-	public static void setHoles(int h) {
-		GameInfo.setHoles(h);	
-	}
-
-	public static void setTreasures(int t) {
-		GameInfo.setTreasures(t);
-	}
-
-	public static void setWalls(int w) {
-		GameInfo.setWalls(w);
-	}
 	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces
 		String delims = "[ ]+";		//This line sets the delimiter between words. Here we use "space" as delimiter, brackets indicate 
 									//the start and end of the group. "+" indicate that conscutive delimitor should be treated as a single one
