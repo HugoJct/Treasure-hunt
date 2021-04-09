@@ -25,8 +25,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws MalformedURLException {
 		/* ----------  Creation of window  ---------- */
 		primaryStage.setTitle("Chasse au trésor"); //Title of window
-		primaryStage.setWidth(31*m.Columns); //Width
-		primaryStage.setHeight(31*m.Lines); //Height
+		primaryStage.setWidth(31*m.getColumns()); //Width
+		primaryStage.setHeight(31*m.getLines()); //Height
 		primaryStage.setResizable(false); //Not resizable
 		primaryStage.centerOnScreen(); //Window is centered on screen
 		
@@ -51,50 +51,50 @@ public class Main extends Application {
 		//La fonction génère une erreur (cause pour le moment inconnue
 		try {
 			//Display Walls from Model informations
-			for(int i = 0; i<m.WallPos.length; i++) {
+			for(int i = 0; i<m.getWallPos().length; i++) {
 				File fw = new File("Images/wall2.png");
 				String pathWall = fw.toURI().toURL().toString();
 				Image WallImg = new Image(pathWall, false);
 				ImageView Wall = new ImageView(WallImg);
-				Wall.setLayoutX(m.WallPos[i]*30);
-				Wall.setLayoutY(m.WallPos[i+1]*28);
+				Wall.setLayoutX(m.getWallPos()[i]*30);
+				Wall.setLayoutY(m.getWallPos()[i+1]*28);
 				AllElements.getChildren().add(Wall);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			//Display treasures
-			for(int i = 0; i<m.TreasurePos.length; i++) {
+			for(int i = 0; i<m.getTreasurePos().length; i++) {
 				File ft = new File("Images/treasure.png");
 				String pathTreasure = ft.toURI().toURL().toString();
 				Image TreasureImg = new Image(pathTreasure, false);
 				ImageView Treasure = new ImageView(TreasureImg);
-				Treasure.setLayoutX(m.TreasurePos[i]*30);
-				Treasure.setLayoutY(m.TreasurePos[i+1]*28);
+				Treasure.setLayoutX(m.getTreasurePos()[i]*30);
+				Treasure.setLayoutY(m.getTreasurePos()[i+1]*28);
 				AllElements.getChildren().add(Treasure);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			//Display Holes
-			for(int i = 0; i<m.HolePos.length; i++) {
+			for(int i = 0; i<m.getHolePos().length; i++) {
 				File fh = new File("Images/hole.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.HolePos[i]*30);
-				Hole.setLayoutY(m.HolePos[i+1]*28);
+				Hole.setLayoutX(m.getHolePos()[i]*30);
+				Hole.setLayoutY(m.getHolePos()[i+1]*28);
 				AllElements.getChildren().add(Hole);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			
 			//Display players (Black square for tests)
-			for(int i = 0; i<m.PlayerPos.length; i++) {
+			for(int i = 0; i<m.getPlayerPos().length; i++) {
 				File fh = new File("Images/Player.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.PlayerPos[i]*30);
-				Hole.setLayoutY(m.PlayerPos[i+1]*28);
+				Hole.setLayoutX(m.getPlayerPos()[i]*30);
+				Hole.setLayoutY(m.getPlayerPos()[i+1]*28);
 				AllElements.getChildren().add(Hole);
 				i++; // i used for x and i+1 for y.
 			}

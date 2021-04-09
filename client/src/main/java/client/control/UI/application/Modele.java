@@ -7,12 +7,12 @@ import java.util.Random;
 
 
 public class Modele {
-	int Lines;
-	int Columns;
-	int[] TreasurePos;
-	int[] WallPos;
-	int[] HolePos;
-	int[] PlayerPos;
+	private int Lines;
+	private int Columns;
+	private int[] TreasurePos;
+	private int[] WallPos;
+	private int[] HolePos;
+	private int[] PlayerPos;
  	
 	
 	//Constructor
@@ -23,6 +23,33 @@ public class Modele {
 		this.WallPos = GameInfo.getWallsPos();
 		this.HolePos = GameInfo.getHolesPos();
 		this.PlayerPos = GameInfo.getPlayerPos();
+	}
+	
+	
+	
+	//Definition of getters :
+	public int getLines() {
+		return Lines;
+	}
+
+	public int getColumns() {
+		return Columns;
+	}
+	
+	public int[] getTreasurePos() {
+		return TreasurePos;
+	}
+	
+	public int[] getWallPos() {
+		return WallPos;
+	}
+	
+	public int[] getHolePos() {
+		return HolePos;
+	}
+	
+	public int[] getPlayerPos() {
+		return PlayerPos;
 	}
 	
 	
