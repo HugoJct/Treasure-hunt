@@ -95,10 +95,10 @@ public class Communication implements Runnable{
 				}
 				else if (lastMoveRequested == 4) {
 					GameInfo.left();
-				}
+				}/*
 				else {
 					System.out.println("Error : no move engaged");
-				}
+				}*/
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");

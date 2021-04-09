@@ -37,8 +37,8 @@
  -   **Le speeding contest :** Dans ce mode de jeu, tout le monde a la vision complète du plateau avec les trous, murs et trésors. Il faut juste être le plus rapide pour gagner. On interdira le mix entre joueurs "Humain" et "Ordinateur" pour ce mode.
  -   **Le tour par tour :** A nouveau, tout le monde a la vision complète du plateau mais on doit attendre son tour pour jouer.
  -  **Le brouillard de guerre :** Dans ce mode de jeu, les joueurs connaissent uniquement la position et la valeur des trésors. Chaque joueur peut voir les murs et joueurs dans un rayon de deux cases autour de lui. En revanche, il ne connait que le nombre de trous autour de lui (dans un rayon d’une case). Pour aider, les joueurs peuvent dépenser des points de trésors pour révéler :     
-	 - les pièges autour de lui pendant 5 tours
-	 - une partie de la carte pendant 3 tours. Pendant ces trois 3 tours, le
+   - les pièges autour de lui pendant 5 tours
+   - une partie de la carte pendant 3 tours. Pendant ces trois 3 tours, le
    joueur peut voir la position des joueurs, les tours et les trésors
    encore présents. 
 
@@ -67,3 +67,28 @@ Vous serez libre de programmer comme vous le souhaitez la structure interne du c
 
 **Objectifs supplémentaires** : 
     Vous pourrez ensuite implémenter le mode de jeu brouillard de guerre, une représentation graphique et les joueurs "Ordinateur". Pour ces derniers, vous êtes libre de choisir comment implémenter l’intelligence artificielle des joueurs "Ordinateur". Si vous avez plusieurs idées, vous pouvez alors faire des compétitions entre joueurs "Ordinateur" et évaluer vos performances. Dans ce cas, il ne sera pas nécessaire d’implémenter tous les modes de jeu.
+
+## Instructions de compilation
+
+ **Compilation du serveur**:
+*  `make server`: lance le serveur sur le port par défaut (12345)
+*  `./gradlew :server:run --console=plain --args="<lien vers le fichier>"`: lance le serveur avec le fichier de configuration spécifié
+*  Syntaxe du fichier de configuration du serveur: 
+
+```
+{
+  "port": 12345
+}
+```
+
+**Coompilation du client**:
+*  `make client`: lance le client avec le fichier de configuration par défaut
+*  `./gradlew :client:run --console=plain --args="<lien vers le fichier>"`: lance le client avec le fichier de configuration spécifié
+*  Syntaxe du fichier de configuration du client:
+```
+{
+  "name": "Example",
+  "ip": "127.0.0.1",
+  "port": 12345
+}
+```
