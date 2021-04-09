@@ -36,7 +36,7 @@ public class Main extends Application {
 		/* ----------  Adding elements of the game  ---------- */
 		//Background
 		try {
-			File f = new File("Images/Background3.jpg"); 
+			File f = new File("client/src/main/java/client/control/UI/Images/Background3.jpg"); 
 			String path = f.toURI().toURL().toString();
 			Image BackImg = new Image(path, false); //Creation of Image from a file
 			ImageView Background = new ImageView(BackImg); //Conversion to an ImageView
@@ -52,7 +52,7 @@ public class Main extends Application {
 		try {
 			//Display Walls from Model informations
 			for(int i = 0; i<m.getWallPos().length; i++) {
-				File fw = new File("Images/wall2.png");
+				File fw = new File("client/src/main/java/client/control/UI/Images/wall2.png");
 				String pathWall = fw.toURI().toURL().toString();
 				Image WallImg = new Image(pathWall, false);
 				ImageView Wall = new ImageView(WallImg);
@@ -64,7 +64,7 @@ public class Main extends Application {
 			
 			//Display treasures
 			for(int i = 0; i<m.getTreasurePos().length; i++) {
-				File ft = new File("Images/treasure.png");
+				File ft = new File("client/src/main/java/client/control/UI/Images/treasure.png");
 				String pathTreasure = ft.toURI().toURL().toString();
 				Image TreasureImg = new Image(pathTreasure, false);
 				ImageView Treasure = new ImageView(TreasureImg);
@@ -76,7 +76,7 @@ public class Main extends Application {
 			
 			//Display Holes
 			for(int i = 0; i<m.getHolePos().length; i++) {
-				File fh = new File("Images/hole.png");
+				File fh = new File("client/src/main/java/client/control/UI/Images/hole.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
@@ -89,7 +89,7 @@ public class Main extends Application {
 			
 			//Display players (Black square for tests)
 			for(int i = 0; i<m.getPlayerPos().length; i++) {
-				File fh = new File("Images/Player.png");
+				File fh = new File("client/src/main/java/client/control/UI/Images/Player.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
@@ -98,6 +98,7 @@ public class Main extends Application {
 				AllElements.getChildren().add(Hole);
 				i++; // i used for x and i+1 for y.
 			}
+			
 		}catch(Exception e){
 			System.out.println("Erreur lors de l'affichage des éléments surement dû à un manque de données dans GameInfo");
 			e.printStackTrace();
@@ -116,6 +117,7 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		System.out.println("test");
 		launch(args);
 	}
 }
