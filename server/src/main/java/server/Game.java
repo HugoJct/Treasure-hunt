@@ -108,6 +108,10 @@ public class Game implements Runnable{
 		return this.b;
 	}
 
+	public String getName(){
+		return this.name;
+	}
+
 	public boolean isRunning(){
 		return this.isRunning;
 	}
@@ -138,19 +142,60 @@ public class Game implements Runnable{
 		return false;
 	}
 
-	public String leadingPlayer(){
-		if(players.size() > 0){
-			Player leading = players.get(0);
-			for(int i = 1 ; i<players.size() ; i++){
-				if(players.get(i).getMoney() > leading.getMoney()){
-					leading = players.get(i);
+	public Player leadingPlayer(Vector<Player> p){
+		if(p.size() > 0){
+			Player leading = p.get(0);
+			for(int i = 1 ; i<p.size() ; i++){
+				if(p.get(i).getMoney() > leading.getMoney()){
+					leading = p.get(i);
 				}
 			}
-			return leading.getUserName();
+			return leading;
 		}
-		return "No players in game";
+		System.out.println("No players in game");
+		return null;
 	}
 
+	public int leadingPlayerIndex(Vector<Player> p){
+		int ret = -1;
+		if(p.size() > 0){
+			Player leading = p.get(0);
+			ret = 0;
+			for(int i = 1 ; i<p.size() ; i++){
+				if(p.get(i).getMoney() > leading.getMoney()){
+					leading = p.get(i);
+					ret = i;
+				}
+			}
+		}
+		return ret;
+	}
+
+	public Player leadingPlayer(){
+		return leadingPlayer(this.players);
+	}
+
+	public String gameRank(){
+		int rank = 0;
+		Vector<Player> p = (Vector<Player>)this.players.clone();
+		String ret = "----------Ranking----------\n";
+		while(p.size()>0){
+			ret += "[ "+(++rank)+". "+this.leadingPlayer(p).getUserName()+"   Score: "+this.leadingPlayer(p).getMoney()+" ]\n";
+			p.remove(this.leadingPlayerIndex(p));
+		}
+		return ret;
+	}
+
+	public void endGameRequest(){
+		for(int i = 0 ; i<players.size();i++){
+			boolean decision = players.get(i).endGameRequest();
+			if(!decision){
+				players.get(i).leaveGame();
+				players.remove(i);
+			}
+		}
+		ServerMain.redirectPlayers(players);
+	}
 
 	public Vector<Player> getPlayers() {
 		return players;
