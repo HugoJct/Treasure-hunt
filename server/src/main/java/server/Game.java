@@ -108,6 +108,10 @@ public class Game implements Runnable{
 		return this.b;
 	}
 
+	public String getName(){
+		return this.name;
+	}
+
 	public boolean isRunning(){
 		return this.isRunning;
 	}
@@ -180,6 +184,17 @@ public class Game implements Runnable{
 			p.remove(this.leadingPlayerIndex(p));
 		}
 		return ret;
+	}
+
+	public void endGameRequest(){
+		for(int i = 0 ; i<players.size();i++){
+			boolean decision = players.get(i).endGameRequest();
+			if(!decision){
+				players.get(i).leaveGame();
+				players.remove(i);
+			}
+		}
+		ServerMain.redirectPlayers(players);
 	}
 
 	public Vector<Player> getPlayers() {
