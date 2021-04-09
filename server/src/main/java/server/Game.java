@@ -24,12 +24,13 @@ public class Game implements Runnable{
 	private static int id = 0;
 	private int gameId;
 
-	public Game() {
+	public Game(String name) {
 		this.isRunning = false;
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
 		this.gameId = id;
+		id++;
 		try{
 			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
 
@@ -45,7 +46,7 @@ public class Game implements Runnable{
 			b = new Board(dimX,dimY);
 
 			this.capacity = ((Long) jsonObject.get("capacity")).intValue();
-			this.name = (String) jsonObject.get("name");
+			this.name = name;
 
 			JSONArray board = (JSONArray) jsonObject.get("elements");
 			for(int i = 0;i<dimY;i++) {
@@ -80,7 +81,7 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 		System.out.println(this.b);
-	}
+	}/*
 
 	public Game(String name) {
 		this.isRunning = false;
@@ -89,7 +90,7 @@ public class Game implements Runnable{
 		b = new Board();
 		this.gameId = id;
 		this.id++;
-	}
+	}*/
 
 	public void stop() {
 		this.isRunning = false;
@@ -158,7 +159,7 @@ public class Game implements Runnable{
 	public String toString() {
 		String s = this.gameId + " " + this.name;
 		for(Player p : players)
-			s += players.toString() + "\n";
+			s += players.toString();
 		return s;
 	}
 
@@ -169,7 +170,7 @@ public class Game implements Runnable{
 			try {
 				Thread.sleep(1);
 				if(!ServerMain.isRunning()) {
-					System.out.println("Server stopped ! ");
+					System.out.println("Server stopped !");
 					return;
 				}
 			} catch(InterruptedException e) {
@@ -181,7 +182,7 @@ public class Game implements Runnable{
 			players.get(i).setStartingPos(this.b); //Initializing a starting position for each player
 	    }
 
-	    while(ServerMain.isRunning()) {
+	    while(ServerMain.isRunning()) {/*
 			for(int i=0; i<players.size() ; i++){
 			    if(!(players.get(i).isPlayerDead()) && players.get(i).isConnected){
 					players.get(i).setPosFromInput(this.b, players.get(i).getPos()); 
@@ -194,14 +195,13 @@ public class Game implements Runnable{
 					break;
 			    }
 			    // Should add a printing of all the ranks for each player along with the money collected by each one
-			}
-			if(!this.isRunning){
-		    	break;
-			}
+			}*/
+			System.out.print("");
 	    }
 	}
 
 	public int getGameId() {
 		return this.gameId;
 	}
+
 }

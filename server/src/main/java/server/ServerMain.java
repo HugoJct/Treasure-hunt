@@ -37,8 +37,6 @@ public class ServerMain {
 	private static int port;
 	private static File configFile;
 
-	public ServerMain() {}
-
 	public static void main(String[] args) {
 
 		try {
@@ -76,7 +74,7 @@ public class ServerMain {
 	public static void broadcastMessage(String[] message) {		//method charged of executing the behaviour of the "broadcast" command but from a string array (making it easier to use with the command breaker)
 		String wholeMessage = "";
 		for(int i=1;i<message.length;i++)
-			wholeMessage += message[i] + " ";
+			wholeMessage += message[i]+" ";
 		for(Communication c : launchedCom)
 			c.sendMessage(wholeMessage);
 	}
@@ -97,7 +95,7 @@ public class ServerMain {
 			}
 		}
 	}
-
+	/*
 	public static boolean checkForLaunch(int gameID) {
 		for (Player p : connectedUsers) {
 			if (p.getGameId() == gameID && p.getReady() == false) {
@@ -106,6 +104,14 @@ public class ServerMain {
 			}
 		}
 		return true;
+	}*/
+
+	public static void printGame(int gameID) {
+		for (Game g : createGames) {
+			if (g.getGameId() == gameID) {
+				System.out.println(g.getBoard().toString());
+			}
+		}
 	}
 
 	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
@@ -121,12 +127,13 @@ public class ServerMain {
 		}		
 	}
 
-	public static void createGame(String name) {		//this creates the game with the specified name 
-		Game g = new Game();
+	public static int createGame(String name) {		//this creates the game with the specified name 
+		Game g = new Game(name);
 		createGames.add(g);
 
 		Thread game = new Thread(g);
-		//game.start();
+		game.start();
+		return g.getGameId();
 	}
 
 	public static void launchGame(int id) {
@@ -137,12 +144,27 @@ public class ServerMain {
 		}
 	}
 
-	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerID
+	public static boolean checkForLaunch(int id) {
 		for(Game g : createGames) {
+			if(g.getGameId() == id) {
+				for(Player p : g.getPlayers()) {
+					while(!p.getAnswered()) {
+						System.out.print("");
+					}
+					if(!p.getReady())
+						return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 
+		for(Game g : createGames) {	
 			if(g.getGameId() == Integer.parseInt(info[2])) {
 				for(Player p : connectedUsers) {
 					if(p.getName().equals(info[3])) {
-						p.setGameId(Integer.parseInt(info[2]));
+						g.addPlayer(p);
 						return true;
 					}
 				}
@@ -198,6 +220,50 @@ public class ServerMain {
 			}
 		}
 		return "121 NUMBER " + x;
+	}
+
+	public static int getNumberOfGames() {
+		int x = 0;
+		for (Game g : createGames) {
+			x++;
+		}
+		return x;
+	}
+
+	public static int getGameX(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getSizeX();
+			}
+		}
+		return -1;
+	}
+
+	public static int getGameY(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getSizeY();
+			}
+		}
+		return -1;
+	}
+
+	public static int getNumberOfHoles(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getHoleCount();
+			}
+		}
+		return -1;
+	}
+
+	public static int getNumberOfTreasures(int id) {
+		for (Game g : createGames) {
+			if (g.getGameId() == id) {
+				return g.getBoard().getTreasureCount();
+			}
+		}
+		return -1;
 	}
 
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads

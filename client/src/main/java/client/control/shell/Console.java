@@ -13,6 +13,7 @@ public class Console implements Runnable {
 	private Communication _com;
 	private String _message;
 	private static int lastMoveRequested = 0;
+	public static boolean startRequested = false;
 
 	public Console(Communication com) {
 		this._message = "";
@@ -37,11 +38,29 @@ public class Console implements Runnable {
 
 	public void useMessage(String command) {
 		String[] brokenCommand = breakCommand(command);
-
+		if(startRequested) {
+			switch(brokenCommand[0]) {
+				case "y":
+					_com.sendMessage("152 START YES");
+					startRequested = false;
+					break;
+				case "n":
+					_com.sendMessage("152 START NO");
+					startRequested = false;
+					break;
+				default:
+					System.out.println("Unrecognized answer");
+					break;
+			}
+			return;
+		}
 		switch(brokenCommand[0]) {
 			// Client -> Client
-			case "UNKNOW":
+			case "UNKNOWN":
 				System.out.println("Server doesn't recognised command");
+				break;
+			case "BROADCAST":
+				broadcast(brokenCommand);
 				break;
 			case "GETLIST":
 				listGames();
@@ -67,128 +86,11 @@ public class Console implements Runnable {
 			case "STOP":
 				stopServer();
 				break;
-			// Client -> Server
-			case "152":
-				_com.sendMessage("152 1");
-				break;
-			case "153":
-				_com.sendMessage("400 GETHOLES");
-				_com.sendMessage("410 GETTREASURES");
-				_com.sendMessage("420 GETWALLS");
-				break;
-			case "201":
-				if (lastMoveRequested == 1) {
-					GameInfo.up();
-				}
-				else if (lastMoveRequested == 2) {
-					GameInfo.down();
-				}
-				else if (lastMoveRequested == 3) {
-					GameInfo.right();
-				}
-				else if (lastMoveRequested == 4) {
-					GameInfo.left();
-				}
-				else {
-					System.out.println("Error : no move engaged");
-				}
-				break;
-			case "202":
-				System.out.println("Impossible mouvement, wall meeted");
-				break;
-			case "203":
-				System.out.println("Treasure found");
-				break;
-			// set holes data
-			case "401":	
-				if (brokenCommand[1].equals("NUMBER")) {
-					setHoles(Integer.parseInt(brokenCommand[2]));
-					GameInfo.initHolesPos();
-				}
-				if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
-					int k = Integer.parseInt(brokenCommand[2]);
-					int nbrLastCoo = GameInfo.getHoles() - (k-1)*5;
-					if (k/GameInfo.getHoles() == 1) {
-						for (int i = 0 ; i < nbrLastCoo ; i++) {
-							GameInfo.setHolesPos(i+k, Integer.parseInt(brokenCommand[4+i]), Integer.parseInt(brokenCommand[5+i]));
-						}
-					}
-					GameInfo.setHolesPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
-					GameInfo.setHolesPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
-					GameInfo.setHolesPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
-					GameInfo.setHolesPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
-					GameInfo.setHolesPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
-				}
-				else {
-					_com.sendMessage("UNKNOW");
-				}
-				break;
-			// set treasures data
-			case "411":	
-				if (brokenCommand[1].equals("NUMER")) {
-					setTreasures(Integer.parseInt(brokenCommand[2]));
-					GameInfo.initTreasuresPos();
-				}
-				if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
-					int k = (Integer.parseInt(brokenCommand[2]));
-					int nbrLastCoo = GameInfo.getTreasures() - (k-1)*5;
-					if (k/GameInfo.getTreasures() == 1) {
-						for (int i = 0 ; i < nbrLastCoo ; i++) {
-							GameInfo.setTreasuresPos(i+k, Integer.parseInt(brokenCommand[4+i]), Integer.parseInt(brokenCommand[5+i]));
-						}
-					}
-					GameInfo.setTreasuresPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
-					GameInfo.setTreasuresPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
-					GameInfo.setTreasuresPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
-					GameInfo.setTreasuresPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
-					GameInfo.setTreasuresPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
-				}
-				else {
-					_com.sendMessage("UNKNOW");
-				}
-				break;
-			// set walls data
-			case "421":	
-				if (brokenCommand[1].equals("NUMBER")) {
-					setWalls(Integer.parseInt(brokenCommand[2]));
-					GameInfo.initWallsPos();
-				}
-				if (brokenCommand[1].equals("MESS") && brokenCommand[3] == "POS") {
-					int k = (Integer.parseInt(brokenCommand[2]));
-					int nbrLastCoo = GameInfo.getWalls() - (k-1)*5;
-					if (k/GameInfo.getWalls() == 1) {
-						for (int i = 0 ; i < nbrLastCoo ; i++) {
-							GameInfo.setWallsPos(i+k, Integer.parseInt(brokenCommand[4+i]), Integer.parseInt(brokenCommand[5+i]));
-						}
-					}
-					GameInfo.setWallsPos(0+k, Integer.parseInt(brokenCommand[4]), Integer.parseInt(brokenCommand[5]));
-					GameInfo.setWallsPos(1+k, Integer.parseInt(brokenCommand[6]), Integer.parseInt(brokenCommand[7]));
-					GameInfo.setWallsPos(2+k, Integer.parseInt(brokenCommand[8]), Integer.parseInt(brokenCommand[9]));
-					GameInfo.setWallsPos(3+k, Integer.parseInt(brokenCommand[10]), Integer.parseInt(brokenCommand[11]));
-					GameInfo.setWallsPos(4+k, Integer.parseInt(brokenCommand[12]), Integer.parseInt(brokenCommand[13]));
-				}
-				else {
-					_com.sendMessage("UNKNOW");
-				}
-				break;
-			case "501":
-				break;
-			case "511":
-				if (brokenCommand[2].equals("UPDATED")) {
-
-				}
-				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
-
-				}
-				else {
-					_com.sendMessage("UNKNOW");
-				}
-				break;
-			case "666":
-			System.out.println("U'R DEAD");
+			case "REQUESTSTART":
+				_com.sendMessage("150");
 				break;
 			default:
-				_com.sendMessage("UNKNOW");
+				System.out.println("Unknown command");
 				break; 
 		}
 	}
@@ -240,6 +142,13 @@ public class Console implements Runnable {
 		_com.sendMessage("410 GETTREASURES");
 	}
 
+	public void broadcast(String[] s) {
+		String s2 = "";
+		for(int i=1;i<s.length;i++)
+			s2 += " "+s[i];
+		_com.sendMessage("BROADCAST"+s2);
+	}
+
 	public void move(String direction) {
 		switch(direction) {
 			case "UP":
@@ -266,9 +175,5 @@ public class Console implements Runnable {
 
 	public void stopServer() {
 		_com.sendMessage("0");
-	}
-
-	public void help() {
-
 	}
 }

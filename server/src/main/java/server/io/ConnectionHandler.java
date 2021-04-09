@@ -52,8 +52,7 @@ public class ConnectionHandler implements Runnable{
 
 					users.add(sc);		//add the client to the list
 					coms.add(com);		//add the communication to the list
-
-					com.sendMessage("Connected !");		//Notify the client that the connection succeeded 
+					
 					for(Player sc2 : users) {	//list update 
 						if(!sc2.isConnected())	//if the client is disconnected
 							users.remove(sc2);	//it is removed from the list
