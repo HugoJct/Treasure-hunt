@@ -7,14 +7,21 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 
 public class Main extends Application {
@@ -29,6 +36,9 @@ public class Main extends Application {
 		primaryStage.setHeight(31*m.getLines()); //Height
 		primaryStage.setResizable(false); //Not resizable
 		primaryStage.centerOnScreen(); //Window is centered on screen
+		
+		
+		
 		
 		
 		Group AllElements = new Group(); //Regroups all Elements of the screen(Background image, wall, hole, treasures and players)
@@ -108,11 +118,53 @@ public class Main extends Application {
 			
 		/* ----------  Push all graphic elements in the window  --------- */
 		Scene SceneAllElements = new Scene(AllElements);
-		primaryStage.setScene(SceneAllElements);
+		
+		//primaryStage.setScene(SceneAllElements);
 		
 		
 		/* ----------  Display  ---------- */
-		primaryStage.show(); //Display of window
+		//primaryStage.show(); //Display of window
+		
+		
+		// ************ Menu scene ************
+		Group MenuElements = new Group();
+		
+		//Creation of button and adaptation of their style (color, position, action ...)
+		Label l1 = new Label("Menu");
+		l1.setStyle("-fx-text-fill : #FFFFFF; -fx-font-size : 40; ");
+		l1.setLayoutX(primaryStage.getWidth()/2 - 60);
+		
+		
+		Button b1 = new Button("Ready");
+		b1.setStyle("-fx-background-color: #B9AA6A; -fx-font-size : 20; ");
+		b1.setLayoutX(primaryStage.getWidth()/2 - 52);
+		b1.setLayoutY(80);
+		
+		
+		Button b2 = new Button("Quit");
+		b2.setStyle("-fx-background-color: #B9AA6A; -fx-font-size : 20;");
+		b2.setLayoutX(primaryStage.getWidth()/2 - 43);
+		b2.setLayoutY(150);
+		
+		
+		b1.setOnAction(e -> primaryStage.setScene(SceneAllElements));
+		b2.setOnAction((ActionEvent event) -> {
+		    Platform.exit();
+		});
+		
+		//File for background image
+		File f = new File("client/src/main/java/client/control/UI/Images/Background3.jpg"); 
+		String path = f.toURI().toURL().toString();
+		Image BackImg = new Image(path, false); //Creation of Image from a file
+		ImageView Background = new ImageView(BackImg); //Conversion to an ImageView
+		
+		//Add elements to create Menu's scene
+		MenuElements.getChildren().addAll(Background, l1, b1, b2);
+		Scene Menu = new Scene(MenuElements);
+		
+		//Displays Menu scene
+		primaryStage.setScene(Menu);
+		primaryStage.show();
 		
 	}
 	
