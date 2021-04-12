@@ -82,7 +82,7 @@ public class Console implements Runnable {
 
 				Thread t = new Thread() {
 			      	public void run() {
-			        	if(ServerMain.checkForLaunch(g.getGameId())) {
+				        if(ServerMain.checkForLaunch(g.getGameId())) {
 				        	ServerMain.launchGame(g.getGameId());
 				        	broadcastInGame("153 GAME STARTED",g.getGameId());
 				        } else {
@@ -91,9 +91,22 @@ public class Console implements Runnable {
 				        		if(!pl.getReady())
 				        			playersNotReady += pl.getName() + " ";
 				        	}
-				        	broadcastInGame("154 START ABORTED "+playersNotReady,g.getGameId());
+				        	String[] playersNotReadyTab = breakCommand(playersNotReady);
+				        	broadcastInGame("154 START ABORTED "+playersNotReadyTab.length,g.getGameId());
+				        	for(int i=0;i<playersNotReadyTab.length;i++) {
+				        		String req = "154 MESS "+(i+1)+" PLAYER ";
+
+				        		for(int j=0; j<5;j++) {
+				        			req += playersNotReadyTab[i]+" ";
+				        			i++;
+				        			if(i == playersNotReadyTab.length)
+				        				break;
+				        		}
+
+				        		broadcastInGame(req,g.getGameId());
+				        	}
 				        }
-				      }
+				    }
 			    };
 
 			    t.start();
