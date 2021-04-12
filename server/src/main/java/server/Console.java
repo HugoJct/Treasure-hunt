@@ -5,6 +5,8 @@ import server.io.Communication;
 import server.Game;
 import server.Player;
 
+import server.elements.Treasure;
+
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -157,8 +159,10 @@ public class Console implements Runnable {
 
 				} else if(ret.equals("Treasure")) {
 
-					_com.sendMessage("203 MOVE OK TRES "+g.getBoard().getElementAt(pos[0],pos[1]));
-					broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" value",g.getGameId());		//missing treasure value
+					Treasure tr = (Treasure) g.getBoard().getElementAt(pos[1],pos[0]);
+
+					_com.sendMessage("203 MOVE OK TRES "+tr.getTreasureValue());
+					broadcastInGame("511 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" TRES "+tr.getTreasureValue(),g.getGameId());		//missing treasure value
 
 				} else if(ret.equals("Hole")) {
 
