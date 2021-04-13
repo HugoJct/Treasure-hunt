@@ -149,7 +149,8 @@ public class ServerMain {
 			if(g.getGameId() == id) {
 				for(Player p : g.getPlayers()) {
 					while(!p.getAnswered()) {
-						System.out.print("");
+						if(!isRunning)
+							return false;
 					}
 					if(!p.getReady())
 						return false;
