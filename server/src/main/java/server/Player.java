@@ -125,16 +125,6 @@ public class Player {
     	    this.setPos(b, currentPos);
     	}
     }
-    
-    public boolean endGameRequest(){
-        Scanner s = new Scanner(System.in);
-        System.out.println("would you want to play again? (yes/no)");
-        if(s.nextLine().equals("yes")){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     public void killPlayer() {
     	isDead = true;
