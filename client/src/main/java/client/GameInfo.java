@@ -12,6 +12,7 @@ public class GameInfo {
     private static int[] wallsPos;
     private static int[] treasuresPos;   
     private static int[] playerPos;
+    private static String[] playerName;
 
 
     // to get various elements
@@ -86,9 +87,20 @@ public class GameInfo {
         treasuresPos[pos] = x;
         treasuresPos[pos+1] = y;
     }
-    public static void setPlayersPos(int pos, int x, int y) {
-        holesPos[pos] = x;
-        holesPos[pos+1] = y;
+    public static void setPlayersPos(int x, int y) {
+        for (int i = 0 ; i<playerPos.length ; i++) {
+            if (playerPos[i] == -1) {
+                playerPos[i] = x;
+                playerPos[i+1] = y;
+            }
+        }
+    }
+    public static void setPlayerName(String name) {
+        for (int i = 0 ; i<playerName.length ; i++) {
+            if (playerName[i].equals("")) {
+                playerName[i] = name;
+            }
+        }
     }
 
     // to set player client position
@@ -117,6 +129,12 @@ public class GameInfo {
     }
     public static void initPlayerPos() {
         playerPos = new int[nbrOfPlayers*2];
+        for (int i = 0 ; i < playerPos.length ; i++) {
+            playerPos[i] = -1;
+        }
+    }
+    public static void initPlayerName() {
+        playerName = new String[nbrOfPlayers];
     }
     
     // to set the client player position
