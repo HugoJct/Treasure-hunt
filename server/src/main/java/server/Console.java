@@ -122,7 +122,6 @@ public class Console implements Runnable {
 				} else {
 					_com.sendMessage("You do not have permission to request start");
 				}
-				ServerMain.broadcastPerGame(broadcast);
 
 				Thread t = new Thread() {
 			      	public void run() {
