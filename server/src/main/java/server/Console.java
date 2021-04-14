@@ -5,6 +5,8 @@ import server.io.Communication;
 import server.Game;
 import server.Player;
 
+import server.elements.Treasure;
+
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -55,8 +57,14 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
 			case "110":												//110 CREATEGAME "name"
-				int id = ServerMain.createGame(brokenCommand[2]);
+				int id = ServerMain.createGame(brokenCommand[2],brokenCommand[3]);
 				_com.sendMessage("111 MAP CREATED " + id);
+				String s = ""+id;
+				String infos[] = {"130","JOIN",s,p.getName()};
+				if(ServerMain.joinGame(infos)) {
+					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED");
+					broadcastInGame("The player "+p.getName()+" joined the game",p.getGameId());
+				}
 				break;
 			case "130":
 				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID				
@@ -74,9 +82,45 @@ public class Console implements Runnable {
 				sendGameInfo();
 				break;
 			case "150":												// BROADCAST inside game (for REQUEST START)
-				int[] broadcast = {152, p.getGameId()};
-				for(Player p2 : g.getPlayers()) {
-					p2.setAnswered(false);
+				if(g.getOwnerID() == p.getPlayerId()) {
+					int[] broadcast = {152, p.getGameId()};
+					for(Player p2 : g.getPlayers()) {
+						p2.setAnswered(false);
+					}
+					ServerMain.broadcastPerGame(broadcast);
+
+					Thread t = new Thread() {
+				      	public void run() {
+					        if(ServerMain.checkForLaunch(g.getGameId())) {
+					        	ServerMain.launchGame(g.getGameId());
+					        	broadcastInGame("153 GAME STARTED",g.getGameId());
+					        } else {
+					        	String playersNotReady = "";
+					        	for(Player pl : g.getPlayers()) {
+					        		if(!pl.getReady())
+					        			playersNotReady += pl.getName() + " ";
+					        	}
+					        	String[] playersNotReadyTab = breakCommand(playersNotReady);
+					        	broadcastInGame("154 START ABORTED "+playersNotReadyTab.length,g.getGameId());
+					        	for(int i=0;i<playersNotReadyTab.length;i++) {
+					        		String req = "154 MESS "+(i+1)+" PLAYER ";
+
+					        		for(int j=0; j<5;j++) {
+					        			req += playersNotReadyTab[i]+" ";
+					        			i++;
+					        			if(i == playersNotReadyTab.length)
+					        				break;
+					        		}
+
+					        		broadcastInGame(req,g.getGameId());
+					        	}
+					        }
+					    }
+				    };
+
+				    t.start();
+				} else {
+					_com.sendMessage("You do not have permission to request start");
 				}
 				ServerMain.broadcastPerGame(broadcast);
 
@@ -104,14 +148,12 @@ public class Console implements Runnable {
 			    t.start();
 				break;
 			case "152":												// REQUEST START RESPONSE
-			//	if (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) != false) {
 				if(brokenCommand[2].equals("YES")) {
 					p.setReady(true);
 				} else {
 					p.setReady(false);
 				}
 				p.setAnswered(true);
-			//	}
 				break;
 			case "200":
 				int[] pos = p.getPos();
@@ -149,8 +191,10 @@ public class Console implements Runnable {
 
 				} else if(ret.equals("Treasure")) {
 
-					_com.sendMessage("203 MOVE OK TRES "+g.getBoard().getElementAt(pos[0],pos[1]));
-					broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" value",g.getGameId());		//missing treasure value
+					Treasure tr = (Treasure) g.getBoard().getElementAt(pos[1],pos[0]);
+
+					_com.sendMessage("203 MOVE OK TRES "+tr.getTreasureValue());
+					broadcastInGame("511 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" TRES "+tr.getTreasureValue(),g.getGameId());		//missing treasure value
 
 				} else if(ret.equals("Hole")) {
 
@@ -200,7 +244,7 @@ public class Console implements Runnable {
 		int k = g.getBoard().getHoleCount();
 		int[][] b = g.getBoard().getHolePos();
 
-		_com.sendMessage("421 NUMBER "+k);
+		_com.sendMessage("401 NUMBER "+k);
 
 		int index = 0;
 		String toSend = "";
@@ -208,7 +252,7 @@ public class Console implements Runnable {
 		int stop = k%5 == 0 ? (k/5) : (k/5) + 1;
 
 		for(int i=1;i<=stop;i++) {
-			toSend = "421 MESS "+i+" POS";
+			toSend = "401 MESS "+i+" POS";
 			int count = 0;
 			for(int j=index;j<b.length;j++) {
 				index = j;
@@ -228,14 +272,14 @@ public class Console implements Runnable {
 		int k = g.getBoard().getWallCount();
 		int[][] b = g.getBoard().getWallPos();
 
-		_com.sendMessage("401 NUMBER "+k);
+		_com.sendMessage("421 NUMBER "+k);
 
 		int index = 0;
 		String toSend = "";
 		int stop = k%5 == 0 ? (k/5) : (k/5) + 1;
 
 		for(int i=1;i<=stop;i++) {
-			toSend = "401 MESS "+i+" POS";
+			toSend = "421 MESS "+i+" POS";
 			int count = 0;
 			for(int j=index;j<b.length;j++) {
 				index = j;

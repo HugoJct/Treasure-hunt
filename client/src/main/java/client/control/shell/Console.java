@@ -89,6 +89,15 @@ public class Console implements Runnable {
 			case "REQUESTSTART":
 				_com.sendMessage("150");
 				break;
+			case "PRINTTREASURES":
+				System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
+				break;
+			case "PRINTWALLS":
+				System.out.println(Arrays.toString(GameInfo.getWallsPos()));
+				break;
+			case "PRINTHOLES":
+				System.out.println(Arrays.toString(GameInfo.getHolesPos()));
+				break;
 			default:
 				System.out.println("Unknown command");
 				break; 
@@ -119,7 +128,7 @@ public class Console implements Runnable {
 	}
 
 	public void createGame(String name) {
-		_com.sendMessage("110 CREATE "+name);
+		_com.sendMessage("110 CREATE "+name+" "+_com.getPlayer().getName());
 	}
 
 	public void listGames() {
