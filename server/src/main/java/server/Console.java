@@ -85,6 +85,7 @@ public class Console implements Runnable {
 			        	if(ServerMain.checkForLaunch(g.getGameId())) {
 				        	ServerMain.launchGame(g.getGameId());
 				        	broadcastInGame("153 GAME STARTED",g.getGameId());
+							broadcastInGame("510 "+p.getName()+" POS "+p.getPos()[1]+" "+p.getPos()[0],g.getGameId());
 				        } else {
 				        	String playersNotReady = "";
 				        	for(Player pl : g.getPlayers()) {

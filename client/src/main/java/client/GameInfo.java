@@ -11,8 +11,8 @@ public class GameInfo {
     private static int[] holesPos;
     private static int[] wallsPos;
     private static int[] treasuresPos;   
-    private static int[] playerPos;
-    private static String[] playerName;
+    private static int[] playerPos = new int[2];
+    private static String[] playerName = {""};
 
 
     // to get various elements
@@ -64,9 +64,6 @@ public class GameInfo {
     public static void setTreasures(int t) {
         nbrOfTreasures = t;
     }
-    public static void setPlayers(int p) {
-        nbrOfPlayers = p;
-    }
 
     // to define the map size
     public static void setMap(int x, int y) {
@@ -87,20 +84,53 @@ public class GameInfo {
         treasuresPos[pos] = x;
         treasuresPos[pos+1] = y;
     }
-    public static void setPlayersPos(int x, int y) {
-        for (int i = 0 ; i<playerPos.length ; i++) {
-            if (playerPos[i] == -1) {
-                playerPos[i] = x;
-                playerPos[i+1] = y;
-            }
+    public static void setPlayers(String name, int x, int y) {
+        int pos = 0;
+        if (!checkPlayerName(name)) {
+            addPlayerName(name);
+            addPlayersPos(x, y);
+        } else {
+            pos = findPos(name)*2;
+            playerPos[pos] = x;
+            playerPos[pos+1] = y;
         }
     }
-    public static void setPlayerName(String name) {
+    public static int findPos(String name) {
+        int i = 0;
+        while (!playerName[i].equals(name)) {
+            i++;
+        } return i;
+    }
+    public static boolean checkPlayerName(String name) {
         for (int i = 0 ; i<playerName.length ; i++) {
-            if (playerName[i].equals("")) {
-                playerName[i] = name;
+            if (playerName[i].equals(name)) {
+                return true;
             }
+        } return false;
+    }
+    public static void addPlayersPos(int x, int y) {
+        if (playerPos.length != 2) {
+            int[] tBis = new int[playerPos.length + 2];
+            tBis[playerPos.length + 1] = x;
+            tBis[playerPos.length + 2] = y;
+            playerPos = tBis;
+        } else {
+            playerPos[0] = x;
+            playerPos[1] = y;
         }
+        nbrOfPlayers++;
+
+    }
+    public static void addPlayerName(String name) {
+        
+        if (playerName.length != 1) {
+            String[] tBis = new String[playerName.length + 1];
+            tBis[playerName.length + 1] = name;
+            playerName = tBis;
+        } else {
+            playerName[0] = name;
+        }
+
     }
 
     // to set player client position
@@ -126,15 +156,6 @@ public class GameInfo {
     }
     public static void initTreasuresPos() {
         treasuresPos = new int[nbrOfTreasures*2];
-    }
-    public static void initPlayerPos() {
-        playerPos = new int[nbrOfPlayers*2];
-        for (int i = 0 ; i < playerPos.length ; i++) {
-            playerPos[i] = -1;
-        }
-    }
-    public static void initPlayerName() {
-        playerName = new String[nbrOfPlayers];
     }
     
     // to set the client player position
