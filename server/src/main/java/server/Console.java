@@ -57,8 +57,14 @@ public class Console implements Runnable {
 				_com.sendMessage(ServerMain.printConnectedUsers()); 
 				break;
 			case "110":												//110 CREATEGAME "name"
-				int id = ServerMain.createGame(brokenCommand[2]);
+				int id = ServerMain.createGame(brokenCommand[2],brokenCommand[3]);
 				_com.sendMessage("111 MAP CREATED " + id);
+				String s = ""+id;
+				String infos[] = {"130","JOIN",s,p.getName()};
+				if(ServerMain.joinGame(infos)) {
+					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED");
+					broadcastInGame("The player "+p.getName()+" joined the game",p.getGameId());
+				}
 				break;
 			case "130":
 				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID				
@@ -76,42 +82,47 @@ public class Console implements Runnable {
 				sendGameInfo();
 				break;
 			case "150":												// BROADCAST inside game (for REQUEST START)
-				int[] broadcast = {152, p.getGameId()};
-				for(Player p2 : g.getPlayers()) {
-					p2.setAnswered(false);
+				if(g.getOwnerID() == p.getPlayerId()) {
+					int[] broadcast = {152, p.getGameId()};
+					for(Player p2 : g.getPlayers()) {
+						p2.setAnswered(false);
+					}
+					ServerMain.broadcastPerGame(broadcast);
+
+					Thread t = new Thread() {
+				      	public void run() {
+					        if(ServerMain.checkForLaunch(g.getGameId())) {
+					        	ServerMain.launchGame(g.getGameId());
+					        	broadcastInGame("153 GAME STARTED",g.getGameId());
+					        } else {
+					        	String playersNotReady = "";
+					        	for(Player pl : g.getPlayers()) {
+					        		if(!pl.getReady())
+					        			playersNotReady += pl.getName() + " ";
+					        	}
+					        	String[] playersNotReadyTab = breakCommand(playersNotReady);
+					        	broadcastInGame("154 START ABORTED "+playersNotReadyTab.length,g.getGameId());
+					        	for(int i=0;i<playersNotReadyTab.length;i++) {
+					        		String req = "154 MESS "+(i+1)+" PLAYER ";
+
+					        		for(int j=0; j<5;j++) {
+					        			req += playersNotReadyTab[i]+" ";
+					        			i++;
+					        			if(i == playersNotReadyTab.length)
+					        				break;
+					        		}
+
+					        		broadcastInGame(req,g.getGameId());
+					        	}
+					        }
+					    }
+				    };
+
+				    t.start();
+				} else {
+					_com.sendMessage("You do not have permission to request start");
 				}
-				ServerMain.broadcastPerGame(broadcast);
-
-				Thread t = new Thread() {
-			      	public void run() {
-				        if(ServerMain.checkForLaunch(g.getGameId())) {
-				        	ServerMain.launchGame(g.getGameId());
-				        	broadcastInGame("153 GAME STARTED",g.getGameId());
-				        } else {
-				        	String playersNotReady = "";
-				        	for(Player pl : g.getPlayers()) {
-				        		if(!pl.getReady())
-				        			playersNotReady += pl.getName() + " ";
-				        	}
-				        	String[] playersNotReadyTab = breakCommand(playersNotReady);
-				        	broadcastInGame("154 START ABORTED "+playersNotReadyTab.length,g.getGameId());
-				        	for(int i=0;i<playersNotReadyTab.length;i++) {
-				        		String req = "154 MESS "+(i+1)+" PLAYER ";
-
-				        		for(int j=0; j<5;j++) {
-				        			req += playersNotReadyTab[i]+" ";
-				        			i++;
-				        			if(i == playersNotReadyTab.length)
-				        				break;
-				        		}
-
-				        		broadcastInGame(req,g.getGameId());
-				        	}
-				        }
-				    }
-			    };
-
-			    t.start();
+				
 				break;
 			case "152":												// REQUEST START RESPONSE
 				if(brokenCommand[2].equals("YES")) {

@@ -119,7 +119,7 @@ public class Console implements Runnable {
 	}
 
 	public void createGame(String name) {
-		_com.sendMessage("110 CREATE "+name);
+		_com.sendMessage("110 CREATE "+name+" "+_com.getPlayer().getName());
 	}
 
 	public void listGames() {
