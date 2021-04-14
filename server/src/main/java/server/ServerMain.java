@@ -135,6 +135,7 @@ public class ServerMain {
 	}
 
 	public static boolean checkForLaunch(int id) {
+		boolean ok = true;
 		for(Game g : createGames) {
 			if(g.getGameId() == id) {
 				for(Player p : g.getPlayers()) {
@@ -144,12 +145,12 @@ public class ServerMain {
 						System.out.print("");
 					}
 					if(!p.getReady()) {
-						return false;
+						ok = false;
 					}
 				}
 			}
 		}
-		return true;
+		return ok;
 	}
 
 	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 
