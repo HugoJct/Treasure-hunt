@@ -114,14 +114,12 @@ public class Console implements Runnable {
 			    t.start();
 				break;
 			case "152":												// REQUEST START RESPONSE
-			//	if (ServerMain.checkForLaunch(_com.getPlayer().getGameId()) != false) {
 				if(brokenCommand[2].equals("YES")) {
 					p.setReady(true);
 				} else {
 					p.setReady(false);
 				}
 				p.setAnswered(true);
-			//	}
 				break;
 			case "200":
 				int[] pos = p.getPos();

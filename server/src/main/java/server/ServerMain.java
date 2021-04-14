@@ -95,16 +95,6 @@ public class ServerMain {
 			}
 		}
 	}
-	/*
-	public static boolean checkForLaunch(int gameID) {
-		for (Player p : connectedUsers) {
-			if (p.getGameId() == gameID && p.getReady() == false) {
-				//System.out.println("Everyone is not ready");
-				return false;
-			}
-		}
-		return true;
-	}*/
 
 	public static void printGame(int gameID) {
 		for (Game g : createGames) {
@@ -151,9 +141,11 @@ public class ServerMain {
 					while(!p.getAnswered()) {
 						if(!isRunning)
 							return false;
+						System.out.print("");
 					}
-					if(!p.getReady())
+					if(!p.getReady()) {
 						return false;
+					}
 				}
 			}
 		}
@@ -185,42 +177,6 @@ public class ServerMain {
 		return "Game ID not found";
 	}
 
-	public static int resetGame(int id){
-		for(Game g : createGames){
-			if(g.getID() == id){
-				String gameName = g.getName();
-				stopGame(g.getID());
-				return createGame(gameName);
-			}
-		}
-		return -1;
-	}
-
-	public static boolean redirectPlayers(Vector<Player> players){
-		if(players.size() == 0){
-			return false;
-		}
-		int oldGameID = players.get(0).getGameId();
-		for(Player p : players){
-			p.leaveGame();
-		}
-		int newGameID = resetGame(oldGameID);
-		Game g = getGameFromCreateGames(newGameID);
-		for(Player p : players){
-			g.addPlayer(p);
-		}
-		return true;
-	}
-
-	public static Game getGameFromCreateGames(int id){
-		for(Game g : createGames){
-			if(g.getGameId() == id){
-				return g;
-			}
-		}
-		return null;
-	}
-
 	public static String listGames() {		//lists the existing games
 		String list = "121 ID ";
 		if(createGames.size() > 0) {
@@ -240,7 +196,7 @@ public class ServerMain {
 			}else if(g.getPlayers().size() >= g.getCapacity() && !(g.isRunning())){
 				games += "About to start";
 			}else if(g.isRunning()){
-				games += "Running ; Leading player : "+g.leadingPlayer().getUserName()+" ; Players left : "+g.getPlayers().size();
+				games += "Running ; Leading player : "+g.leadingPlayer()+" ; Players left : "+g.getPlayers().size();
 			}
 
 			games += "]\n";
