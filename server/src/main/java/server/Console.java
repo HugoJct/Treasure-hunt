@@ -221,7 +221,7 @@ public class Console implements Runnable {
 		int k = g.getBoard().getHoleCount();
 		int[][] b = g.getBoard().getHolePos();
 
-		_com.sendMessage("420 NUMBER "+k);
+		_com.sendMessage("401 NUMBER "+k);
 
 		int index = 0;
 		String toSend = "";
