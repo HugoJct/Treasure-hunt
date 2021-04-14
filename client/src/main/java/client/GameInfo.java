@@ -1,5 +1,7 @@
 package client;
 
+import java.util.Arrays;
+
 public class GameInfo {
     private static int nbrOfHoles = 0;
     private static int nbrOfWalls = 0;
@@ -39,7 +41,7 @@ public class GameInfo {
         return wallsPos;
     }
     public static int[] getTreasuresPos() {
-        return wallsPos;
+        return treasuresPos;
     }
     public static int[] getPlayerPos() {
         if (playerPos != null) {
@@ -82,9 +84,10 @@ public class GameInfo {
         wallsPos[pos] = x;
         wallsPos[pos+1] = y;
     }
-    public static void setTreasuresPos(int pos, int x, int y) {
+    public static void setTreasuresPos(int pos, int x, int y, int v) {
         treasuresPos[pos] = x;
         treasuresPos[pos+1] = y;
+        treasuresPos[pos+2] = v;        
     }
     public static void setPlayersPos(int pos, int x, int y) {
         holesPos[pos] = x;
@@ -113,7 +116,8 @@ public class GameInfo {
         wallsPos = new int[nbrOfWalls*2];
     }
     public static void initTreasuresPos() {
-        treasuresPos = new int[nbrOfTreasures*2];
+        treasuresPos = new int[nbrOfTreasures*3];
+        System.out.println("initialized: "+Arrays.toString(treasuresPos));
     }
     public static void initPlayerPos() {
         playerPos = new int[nbrOfPlayers*2];
