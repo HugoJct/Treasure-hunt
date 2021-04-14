@@ -95,16 +95,6 @@ public class ServerMain {
 			}
 		}
 	}
-	/*
-	public static boolean checkForLaunch(int gameID) {
-		for (Player p : connectedUsers) {
-			if (p.getGameId() == gameID && p.getReady() == false) {
-				//System.out.println("Everyone is not ready");
-				return false;
-			}
-		}
-		return true;
-	}*/
 
 	public static void printGame(int gameID) {
 		for (Game g : createGames) {
@@ -151,9 +141,11 @@ public class ServerMain {
 					while(!p.getAnswered()) {
 						if(!isRunning)
 							return false;
+						System.out.print("");
 					}
-					if(!p.getReady())
+					if(!p.getReady()) {
 						return false;
+					}
 				}
 			}
 		}
