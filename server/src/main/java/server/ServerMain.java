@@ -265,6 +265,10 @@ public class ServerMain {
 		return -1;
 	}
 
+	public static Vector<Player> getConnectedUsers() {
+		return connectedUsers;
+	}
+
 	public static void stop() {		//this method sets the boolean to false to stop the execution of server relateds threads
 		isRunning = false;
 		for(Game g : createGames)

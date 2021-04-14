@@ -172,6 +172,9 @@ public class Communication implements Runnable{
 				break;
 			case "501":
 				break;
+			case "510":
+				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				break;
 			case "511":
 				if (brokenCommand[2].equals("UPDATED")) {
 

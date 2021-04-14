@@ -122,7 +122,30 @@ public class Console implements Runnable {
 				} else {
 					_com.sendMessage("You do not have permission to request start");
 				}
-				
+				ServerMain.broadcastPerGame(broadcast);
+
+				Thread t = new Thread() {
+			      	public void run() {
+			        	if(ServerMain.checkForLaunch(g.getGameId())) {
+				        	ServerMain.launchGame(g.getGameId());
+				        	broadcastInGame("153 GAME STARTED",g.getGameId());
+							for (Player pl : ServerMain.getConnectedUsers()) {
+								if (pl.getGameId() == g.getGameId()) {
+									broadcastInGame("510 "+pl.getName()+" POS "+pl.getPos()[1]+" "+pl.getPos()[0],g.getGameId());
+								}
+							}
+				        } else {
+				        	String playersNotReady = "";
+				        	for(Player pl : g.getPlayers()) {
+				        		if(!pl.getReady())
+				        			playersNotReady += pl.getName() + " ";
+				        	}
+				        	broadcastInGame("154 START ABORTED "+playersNotReady,g.getGameId());
+				        }
+				      }
+			    };
+
+			    t.start();
 				break;
 			case "152":												// REQUEST START RESPONSE
 				if(brokenCommand[2].equals("YES")) {
