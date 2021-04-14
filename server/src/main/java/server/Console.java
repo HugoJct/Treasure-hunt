@@ -221,7 +221,7 @@ public class Console implements Runnable {
 		int k = g.getBoard().getHoleCount();
 		int[][] b = g.getBoard().getHolePos();
 
-		_com.sendMessage("421 NUMBER "+k);
+		_com.sendMessage("420 NUMBER "+k);
 
 		int index = 0;
 		String toSend = "";
@@ -229,7 +229,7 @@ public class Console implements Runnable {
 		int stop = k%5 == 0 ? (k/5) : (k/5) + 1;
 
 		for(int i=1;i<=stop;i++) {
-			toSend = "421 MESS "+i+" POS";
+			toSend = "401 MESS "+i+" POS";
 			int count = 0;
 			for(int j=index;j<b.length;j++) {
 				index = j;
@@ -249,14 +249,14 @@ public class Console implements Runnable {
 		int k = g.getBoard().getWallCount();
 		int[][] b = g.getBoard().getWallPos();
 
-		_com.sendMessage("401 NUMBER "+k);
+		_com.sendMessage("421 NUMBER "+k);
 
 		int index = 0;
 		String toSend = "";
 		int stop = k%5 == 0 ? (k/5) : (k/5) + 1;
 
 		for(int i=1;i<=stop;i++) {
-			toSend = "401 MESS "+i+" POS";
+			toSend = "421 MESS "+i+" POS";
 			int count = 0;
 			for(int j=index;j<b.length;j++) {
 				index = j;
