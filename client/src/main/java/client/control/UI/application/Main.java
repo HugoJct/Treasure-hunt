@@ -99,7 +99,7 @@ public class Main extends Application {
 			
 			//Display players (Black square for tests)
 			for(int i = 0; i<m.getPlayerPos().length; i++) {
-				File fh = new File("client/src/main/java/client/control/UI/Images/Player.png");
+				File fh = new File("client/src/main/java/client/control/UI/Images/Player2.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
