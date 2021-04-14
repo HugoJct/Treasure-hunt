@@ -21,15 +21,19 @@ public class Game implements Runnable{
 	private String name;
 	private int capacity;
 
+	private int ownerID = -1;
+
 	private static int id = 0;
 	private int gameId;
 
-	public Game(String name) {
+	public Game(String name, int ownerID) {
+
 		this.isRunning = false;
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
 		this.gameId = id;
+		this.ownerID = ownerID;
 		id++;
 		try{
 			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
@@ -106,6 +110,10 @@ public class Game implements Runnable{
 
 	public Board getBoard(){
 		return this.b;
+	}
+
+	public int getOwnerID() {
+		return this.ownerID;
 	}
 
 	public boolean isRunning(){
