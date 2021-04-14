@@ -174,6 +174,8 @@ public class Communication implements Runnable{
 				break;
 			case "501":
 				break;
+			case "510":
+				
 			case "511":
 				if (brokenCommand[2].equals("UPDATED")) {
 
