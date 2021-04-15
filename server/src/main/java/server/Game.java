@@ -96,6 +96,10 @@ public class Game implements Runnable{
 		this.id++;
 	}*/
 
+	public String getName(){
+		return this.name;
+	}
+
 	public void stop() {
 		this.isRunning = false;
 	}
@@ -146,17 +150,69 @@ public class Game implements Runnable{
 		return false;
 	}
 
-	public String leadingPlayer(){
-		if(players.size() > 0){
-			Player leading = players.get(0);
-			for(int i = 1 ; i<players.size() ; i++){
-				if(players.get(i).getMoney() > leading.getMoney()){
-					leading = players.get(i);
+	public Player leadingPlayer(Vector<Player> p){ // returns the leading player in p
+		if(p.size() > 0){
+			Player leading = p.get(0);
+			for(int i = 1 ; i<p.size() ; i++){
+				if(p.get(i).getMoney() > leading.getMoney()){
+					leading = p.get(i);
+				}
+			}
+			return leading;
+		}
+		System.out.println("No players in game");
+		return null;
+	}
+
+	public int leadingPlayerIndex(Vector<Player> p){  // returns the index of the leading player(that has the most money) in p
+		int ret = -1;
+		if(p.size() > 0){
+			Player leading = p.get(0);
+			ret = 0;
+			for(int i = 1 ; i<p.size() ; i++){
+				if(p.get(i).getMoney() > leading.getMoney()){
+					leading = p.get(i);
+					ret = i;
 				}
 			}
 			return leading.getUserName();
 		}
 		return "No players in game";
+		return ret;
+	}
+
+
+	public Player leadingPlayer(){ // returns the leading player in the players Vector attribute of the class
+		return leadingPlayer(this.players);
+	}
+
+	public String gameRank(){ // prints the rank of each player along with the amount of money collected by each one. Takes only still connected players into account
+		int rank = 0;
+		Vector<Player> p = (Vector<Player>)this.players.clone();
+		String ret = "----------Ranking----------\n";
+		while(p.size()>0){ // while the temporary Vector p is not empty. we add each player with their appropriate ranking
+			ret += "[ "+(++rank)+". "+this.leadingPlayer(p).getUserName()+"   Score: "+this.leadingPlayer(p).getMoney()+" ]\n";
+			p.remove(this.leadingPlayerIndex(p));
+		}
+		return ret;
+	}
+
+	public void endGameRequest(){ // 
+		ArrayList<Player> playerList = new ArrayList<Player>(players); //shallow copy of players
+		for(int i = 0 ; i<playerList.size();i++){
+			boolean decision = playerList.get(i).endGameRequest();
+			if(!decision){
+				playerList.get(i).leaveGame();
+				playerList.remove(i);
+			}
+		}
+		Vector<Player> playersToRedirect = new Vector<Player>();
+		for(int i = 0; i<playerList.size();i++){
+			if(playerList.get(i) != null){
+				playersToRedirect.addElement(playerList.get(i));
+			}
+		}
+		ServerMain.redirectPlayers(playersToRedirect);
 	}
 
 
