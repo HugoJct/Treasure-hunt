@@ -1,6 +1,7 @@
 package server;
 
 import server.elements.*;
+import server.io.Communication;
 
 import java.net.Socket;
 import java.io.IOException;

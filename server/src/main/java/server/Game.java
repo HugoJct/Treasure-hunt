@@ -1,6 +1,7 @@
 package server;
 
 import java.util.Vector;
+import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
@@ -175,9 +176,8 @@ public class Game implements Runnable{
 					ret = i;
 				}
 			}
-			return leading.getUserName();
 		}
-		return "No players in game";
+		
 		return ret;
 	}
 
@@ -197,7 +197,7 @@ public class Game implements Runnable{
 		return ret;
 	}
 
-	public void endGameRequest(){ // 
+	public void endGameRequest(){ 
 		ArrayList<Player> playerList = new ArrayList<Player>(players); //shallow copy of players
 		for(int i = 0 ; i<playerList.size();i++){
 			boolean decision = playerList.get(i).endGameRequest();
