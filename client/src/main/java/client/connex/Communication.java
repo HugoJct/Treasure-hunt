@@ -133,8 +133,6 @@ public class Communication implements Runnable{
 				if (brokenCommand[1].equals("NUMBER")) {
 					GameInfo.setTreasures(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initTreasuresPos();
-					System.out.println(GameInfo.getTreasures());
-					System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
 				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
 					int fill = 0;
 					for(int i=0;i<(GameInfo.getTreasures() * 3);i++) {

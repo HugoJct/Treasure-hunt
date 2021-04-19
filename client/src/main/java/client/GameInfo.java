@@ -159,7 +159,6 @@ public class GameInfo {
     }
     public static void initTreasuresPos() {
         treasuresPos = new int[nbrOfTreasures*3];
-        System.out.println("initialized: "+Arrays.toString(treasuresPos));
     }
     
     // to set the client player position
