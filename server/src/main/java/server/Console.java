@@ -62,13 +62,14 @@ public class Console implements Runnable {
 				String s = ""+id;
 				String infos[] = {"130","JOIN",s,p.getName()};
 				if(ServerMain.joinGame(infos)) {
-					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED");
+					//System.out.println(g.getBoard());
+					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED "+15+" "+15);
 					broadcastInGame("The player "+p.getName()+" joined the game",p.getGameId());
 				}
 				break;
 			case "130":
 				if(ServerMain.joinGame(brokenCommand)) { 				//JOINGAME 130 gameId playerID				
-					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED");
+					_com.sendMessage("131 MAP "+p.getGameId()+" JOINED "+g.getBoard().getSizeX()+" "+g.getBoard().getSizeY());
 					broadcastInGame("The player "+p.getName()+" joined the game",p.getGameId());				//shitty (use player and game functions)
 				}
 				else 

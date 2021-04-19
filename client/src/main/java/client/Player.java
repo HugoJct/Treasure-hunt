@@ -72,6 +72,40 @@ public class Player {
         return username;
     }
 
+    public static void printGameBoard() {
+        char[][] board = new char[GameInfo.getMap()[0]][GameInfo.getMap()[1]];
+        for(int i=0;i<board.length;i++)
+            for(int j=0;j<board[i].length;j++)
+                board[i][j] = '.';
+
+        for(int i=0;i<GameInfo.getHolesPos().length;i++) {
+            int x = GameInfo.getHolesPos()[i];
+            int y = GameInfo.getHolesPos()[i+1];
+            board[x][y] = 'H';
+            i++;
+        }
+        for(int i=0;i<GameInfo.getWallsPos().length;i++) {
+            int x = GameInfo.getWallsPos()[i];
+            int y = GameInfo.getWallsPos()[i+1];
+            board[x][y] = 'W';
+            i++;
+        }
+
+        for(int i=0;i<GameInfo.getTreasuresPos().length;i++) {
+            int x = GameInfo.getTreasuresPos()[i];
+            int y = GameInfo.getTreasuresPos()[i+1];
+            board[x][y] = 'T';
+            i+=2;
+        }
+
+        for(int i=0;i<board.length;i++) {
+            for(int j=0;j<board[i].length;j++) {
+                System.out.print(board[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
 
         try {

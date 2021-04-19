@@ -99,7 +99,6 @@ public class Player {
     	if((b.getElementAt(tab[1], tab[0]) instanceof Treasure)){//The player steps on a treasure, the content is added to his money and the treasure is emptied
     	    Treasure tmp = (Treasure)b.getElementAt(tab[1], tab[0]);
     	    this.addMoney(tmp.getTreasureValue());
-    	    tmp.setTreasureValue(0);
             return "Treasure";
     	}
     	return "ok";

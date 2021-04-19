@@ -67,8 +67,11 @@ public class Communication implements Runnable{
 
 	public void useMessage(String command) {
         String[] brokenCommand = breakCommand(command);
-		switch(brokenCommand[0]) {
+		switch(brokenCommand[0]) {/*
 			// Server -> Client
+			case "131":
+                GameInfo.setMap(Integer.parseInt(brokenCommand[4])+2,Integer.parseInt(brokenCommand[5])+2);
+                break;*/
 			case "152":
 				System.out.println("Ready to Play ? y/N : ");
 				Console.startRequested = true;
@@ -133,8 +136,6 @@ public class Communication implements Runnable{
 				if (brokenCommand[1].equals("NUMBER")) {
 					GameInfo.setTreasures(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initTreasuresPos();
-					System.out.println(GameInfo.getTreasures());
-					System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
 				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
 					int fill = 0;
 					for(int i=0;i<(GameInfo.getTreasures() * 3);i++) {
