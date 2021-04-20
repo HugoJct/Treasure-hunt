@@ -35,8 +35,9 @@ public class Board {
     }
   }
 
-  protected void setElementAt(Element elem, int x, int y) {
+  public void setElementAt(Element elem, int x, int y) {
     elements[y][x] = elem;
+    countElements();
   }
 
   public Element getElementAt(int x, int y) {
@@ -44,16 +45,23 @@ public class Board {
   }
 
   public void countElements() {
+    int newWallCount = 0;
+    int newHoleCount = 0;
+    int newTreasureCount = 0;
     for(int i=1;i<elements.length-1;i++) {
       for(int j=1;j<elements[i].length-1;j++) {
         if(elements[i][j] instanceof Wall)
-          wallCount++;
+          newWallCount++;
         if(elements[i][j] instanceof Hole)
-          holeCount++;
+          newHoleCount++;
         if(elements[i][j] instanceof Treasure)
-          treasureCount++;
+          newTreasureCount++;
       }
     }
+    this.holeCount = newHoleCount;
+    this.wallCount = newWallCount;
+    this.treasureCount = newTreasureCount;
+    System.out.println("walls: "+wallCount+" holes: "+holeCount+" tres: "+treasureCount);
   }
 
   public int[][] getWallPos() {

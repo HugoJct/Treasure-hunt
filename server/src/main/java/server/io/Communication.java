@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import server.Player;
 import server.ServerMain;
 import server.elements.Treasure;
+import server.elements.Element;
 
 import server.Game;
 
@@ -152,19 +153,15 @@ public class Communication implements Runnable {
                 switch(brokenCommand[1]) {
                     case "GOUP":
                         pos[0]--;
-                        ServerMain.printGame(getPlayer().getGameId());
                         break;
                     case "GODOWN":
                         pos[0]++;
-                        ServerMain.printGame(getPlayer().getGameId());
                         break;
                     case "GOLEFT":
                         pos[1]--;
-                        ServerMain.printGame(getPlayer().getGameId());
                         break;
                     case "GORIGHT":
                         pos[1]++;
-                        ServerMain.printGame(getPlayer().getGameId());
                         break;
                     default:
                         break;
@@ -188,13 +185,18 @@ public class Communication implements Runnable {
                     sendMessage("203 MOVE OK TRES "+tr.getTreasureValue());
                     broadcastInGame("511 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" TRES "+tr.getTreasureValue(),g.getGameId());     //missing treasure value
 
+                    tr.setTreasureValue(0);
+                    g.getBoard().setElementAt(null,pos[1],pos[0]);
+
                 } else if(ret.equals("Hole")) {
 
                     sendMessage("666 MOVE HOLE DEAD");
                     broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
-
+                    p.killPlayer();
                 }
 
+                ServerMain.printGame(getPlayer().getGameId());
+                
                 break;
             case "400":                                             //GETHOLES
                 sendHoleInfo(g);

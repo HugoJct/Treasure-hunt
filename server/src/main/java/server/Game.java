@@ -66,12 +66,13 @@ public class Game implements Runnable{
 							String amount = "";
 							for(int k=1;k<((String) obj.get(j)).length();k++)
 								amount += ((String) obj.get(j)).charAt(k);
-							this.b.setElementAt(new Treasure(Integer.parseInt(amount)),j+1,i+1);
+							Treasure t = new Treasure(Integer.parseInt(amount));
+							this.b.setElementAt(t,j+1,i+1);
 							break;
 						case ' ':
 							break;
 						default:
-							System.out.println("Unknown symbol encoutered while parsing board configuration layout");
+							System.out.println("Unknown symbol encountered while parsing board configuration layout");
 							break;
 					}
 				}
@@ -104,13 +105,12 @@ public class Game implements Runnable{
 			players.get(i).setStartingPos(this.b); //Initializing a starting position for each player
 	    }
 
-	    while(ServerMain.isRunning()) {
-			while(this.b.getTreasureCount() != 0) {
-				if(!ServerMain.isRunning() || !this.isRunning)
-					break;
-			}
-			System.out.print("Game ended");
-	    }
+		while(this.b.getTreasureCount() != 0 && !this.areAllPlayersDead()) {
+			System.out.print("");
+			if(!ServerMain.isRunning())
+				break;
+		}
+		System.out.print("Game ended");
 	}
 
 	public boolean addPlayer(Player p) {		//this method tests if a player doesn't have the same name as another one in the game
@@ -154,6 +154,17 @@ public class Game implements Runnable{
 
 	public void start() {
 		this.isRunning = true;
+	}
+
+	public boolean areAllPlayersDead() {
+		boolean b = true;
+		for(Player p : players) {
+			if(!p.isPlayerDead()) {
+				b = false;
+				break;
+			}
+		}
+		return b;
 	}
 
 	public int getID() {
