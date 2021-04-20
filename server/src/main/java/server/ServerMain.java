@@ -211,6 +211,46 @@ public class ServerMain {
 	}
 
 
+	public static int resetGame(int id, String ownerName){
+		for(Game g : createGames){
+			if(g.getID() == id){
+				String gameName = g.getName();
+				stopGame(g.getID());
+				return createGame(gameName, ownerName);
+			}
+		}
+		return -1;
+	}
+
+	public static boolean redirectPlayers(Vector<Player> players){ // redirect players to another generated Game
+		if(players.size() == 0){
+			return false;
+		}
+		int oldGameID = players.get(0).getGameId();
+		for(Player p : players){
+			p.resurrect();
+			p.setMoney(0);
+			p.setReady(false);
+			p.leaveGame();
+		}
+		int newGameID = resetGame(oldGameID, players.get(0).getName());
+		Game g = getGameFromCreateGames(newGameID);
+		for(Player p : players){
+			g.addPlayer(p);
+		}
+		return true;
+	}
+
+	public static Game getGameFromCreateGames(int id){
+		for(Game g : createGames){
+			if(g.getGameId() == id){
+				return g;
+			}
+		}
+		return null;
+	}
+
+
 	public static String listNbrOfGames() {
 		int x = 0;
 		if(createGames.size() > 0) {
