@@ -86,7 +86,7 @@ public class Player {
     	this.setPos(b, pos);
     }
 
-    protected String setPos(Board b, int[] tab) {
+    public String setPos(Board b, int[] tab) {
     	if(b.getElementAt(tab[1], tab[0]) instanceof Wall) {
     		return "Wall";
     	}
