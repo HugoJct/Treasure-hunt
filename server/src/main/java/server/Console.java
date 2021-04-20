@@ -38,6 +38,5 @@ public class Console implements Runnable {
 			}*/		
 			System.out.print("");
 		}
-		System.out.println("console stopped");
 	}
 }

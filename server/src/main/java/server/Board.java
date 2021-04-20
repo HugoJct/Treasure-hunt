@@ -13,38 +13,30 @@ public class Board {
   private int holeCount = 0;
   private int treasureCount = 0;
 
-  public Board() {        //default constructor generates the default board
+  public Board() {
     this.sizeX = 0;
     this.sizeY = 0;
   }
 
-  public int getSizeX(){
-	  return this.sizeX;
-  }
-
-  public int getSizeY(){
-	  return this.sizeY;
-  }
-  
   public Board(int x, int y) {
     this.sizeX = x+2;
     this.sizeY = y+2;
-	  this.elements = new Element[this.sizeY][this.sizeX];
+    this.elements = new Element[this.sizeY][this.sizeX];
   }
 
-	public void setBorder() {
-		for (int i = 0 ; i < sizeY ; i++) {
-			this.elements[i][0] = new Wall();
-			this.elements[i][sizeX-1] = new Wall();
-		}
-		for (int i = 0 ; i < sizeX ; i++) {
-			this.elements[sizeY-1][i] = new Wall();
-			this.elements[0][i] = new Wall();
-		}
-	}
+  public void setBorder() {
+    for (int i = 0 ; i < sizeY ; i++) {
+      this.elements[i][0] = new Wall();
+      this.elements[i][sizeX-1] = new Wall();
+    }
+    for (int i = 0 ; i < sizeX ; i++) {
+      this.elements[sizeY-1][i] = new Wall();
+      this.elements[0][i] = new Wall();
+    }
+  }
 
   protected void setElementAt(Element elem, int x, int y) {
-   	elements[y][x] = elem;
+    elements[y][x] = elem;
   }
 
   public Element getElementAt(int x, int y) {
@@ -65,6 +57,7 @@ public class Board {
   }
 
   public int[][] getWallPos() {
+    countElements();
     int[][] wallPos = new int[wallCount][2];
     int x = 0;
     for(int i=1;i<elements.length-1;i++) {
@@ -80,6 +73,7 @@ public class Board {
   }
 
   public int[][] getHolePos() {
+    countElements();
     int[][] holePos = new int[holeCount][2];
     int x = 0;
     for(int i=1;i<elements.length-1;i++) {
@@ -95,6 +89,7 @@ public class Board {
   }
 
   public int[][] getTreasurePos() {
+    countElements();
     int[][] trePos = new int[treasureCount][3];
     int x = 0;
     for(int i=1;i<elements.length-1;i++) {
@@ -108,6 +103,51 @@ public class Board {
       }
     }
     return trePos;
+  }
+
+  public int sumAllTreasures(){
+    int sum = 0;
+    /*
+    for(int i=0;i<elements.length;i++){
+      for(int j=0;j<elements[i].length;j++){
+        if(elements[i][j] instanceof Treasure){
+        
+        Treasure tmp = (Treasure) this.elements[i][j];
+        sum += tmp.getTreasureValue();
+        }
+      }
+    }*/
+
+    int[][] tres = getTreasurePos();
+    for(int i=0;i<tres.length;i++) {
+        sum += tres[i][2];
+    }
+
+    return sum;
+  }
+  
+  public String toString() {
+    String retour = "";
+      for(int i=0;i<elements.length;i++) {
+        for(int j=0; j<elements[i].length;j++) {
+          if(elements[i][j] != null) {
+            retour += elements[i][j].toString()+" ";
+          }
+          else {
+            retour += ". ";
+          }
+        }
+        retour +="\n";
+      }
+    return retour+="\n";
+  }
+
+  public int getSizeX(){
+	  return this.sizeX;
+  }
+
+  public int getSizeY(){
+	  return this.sizeY;
   }
 
   public int getWallCount() {
@@ -126,35 +166,4 @@ public class Board {
   public Element[][] getElement(){
     return this.elements;
   }
-
-  public int sumAllTreasures(){
-	  int sum = 0;
-	  for(int i=0;i<elements.length;i++){
-	    for(int j=0;j<elements[i].length;j++){
-		    if(elements[i][j] instanceof Treasure){
-		    
-		    Treasure tmp = (Treasure) this.elements[i][j];
-		    sum += tmp.getTreasureValue();
-		    }
-	    }
-	  }
-	  return sum;
-  }
-  
-  public String toString() {
-    String retour = "";
-    	for(int i=0;i<elements.length;i++) {
-    		for(int j=0; j<elements[i].length;j++) {
-				  if(elements[i][j] != null) {
-    				retour += elements[i][j].toString()+" ";
-          }
-          else {
-					  retour += ". ";
-    		  }
-        }
-    		retour +="\n";
-    	}
-    return retour+="\n";
-  }
-
 }
