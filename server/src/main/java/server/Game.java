@@ -105,14 +105,6 @@ public class Game implements Runnable{
 		this.isRunning = false;
 	}
 
-	public void start() {
-		this.isRunning = true;
-	}
-
-	public int getID() {
-		return this.id;
-	}
-
 	@Override
 	public void run() {
 
@@ -224,10 +216,6 @@ public class Game implements Runnable{
 			}
 		}
 		ServerMain.redirectPlayers(playersToRedirect);
-	}
-
-	public void stop() {
-		this.isRunning = false;
 	}
 
 	public void start() {
