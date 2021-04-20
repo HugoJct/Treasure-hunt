@@ -36,12 +36,6 @@ public class Communication implements Runnable {
         }
     }
 
-    public boolean sendMessage(String message) {        //This method sends a message to the client handled by the instance of the class
-        out.println(message);
-        out.flush();
-        return true;
-    }
-
     public String returnInput(){ // Created this so I can get the answer of a Client from endGameRequest() in Player class Server side
         while(ServerMain.isRunning()){
            try{ 
@@ -55,10 +49,6 @@ public class Communication implements Runnable {
         }
         this.isConnected = false;
         return "The remote socket is disconnected"; 
-    }
-
-    public String getMessage() {
-        return this._msg;
     }
 
     @Override

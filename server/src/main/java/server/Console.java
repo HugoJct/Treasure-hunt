@@ -21,22 +21,6 @@ public class Console implements Runnable {
 
 	@Override
 	public void run() {
-		
 		_com.sendMessage("101 WELCOME "+_com.getPlayer().getName());
-		while(ServerMain.isRunning()) {
-			/*try {
-				Thread.sleep(1);
-				if (_message != _com.getMessage()) {
-					_message = _com.getMessage();
-					if(_message == null)
-						break;
-					useMessage(_message);
-				}	
-			}
-			catch(InterruptedException e) {
-				
-			}*/		
-			System.out.print("");
-		}
 	}
 }
