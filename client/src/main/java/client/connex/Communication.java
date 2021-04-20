@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import java.net.Socket;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -18,7 +18,7 @@ public class Communication implements Runnable{
 
     Socket s;
     BufferedReader in;
-    PrintStream out;
+    PrintWriter out;
     Player p;
     String serverMsg = "";
     private static int lastMoveRequested = 0;
@@ -28,7 +28,7 @@ public class Communication implements Runnable{
     	this.s = p.getSocket();
     	try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintStream(s.getOutputStream());
+            out = new PrintWriter(s.getOutputStream());
         } catch( IOException e) {
             e.printStackTrace();
         }
@@ -74,16 +74,9 @@ public class Communication implements Runnable{
 				Console.startRequested = true;
 				break;
 			case "153":
-                try {
                     sendMessage("400 GETHOLES");
-                    Thread.sleep(5);
                     sendMessage("410 GETTREASURES");
-					Thread.sleep(5);
                     sendMessage("420 GETWALLS");
-                }
-                catch(InterruptedException e) {
-                    
-                }
 				break;
 			case "201":
 				if (lastMoveRequested == 1) {
@@ -133,8 +126,6 @@ public class Communication implements Runnable{
 				if (brokenCommand[1].equals("NUMBER")) {
 					GameInfo.setTreasures(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initTreasuresPos();
-					System.out.println(GameInfo.getTreasures());
-					System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
 				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
 					int fill = 0;
 					for(int i=0;i<(GameInfo.getTreasures() * 3);i++) {

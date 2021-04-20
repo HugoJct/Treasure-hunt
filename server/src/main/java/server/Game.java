@@ -26,7 +26,6 @@ public class Game implements Runnable{
 
 	private static int id = 0;
 	private int gameId;
-
 	public Game(String name, int ownerID) {
 
 		this.isRunning = false;
@@ -68,12 +67,13 @@ public class Game implements Runnable{
 							String amount = "";
 							for(int k=1;k<((String) obj.get(j)).length();k++)
 								amount += ((String) obj.get(j)).charAt(k);
-							this.b.setElementAt(new Treasure(Integer.parseInt(amount)),j+1,i+1);
+							Treasure t = new Treasure(Integer.parseInt(amount));
+							this.b.setElementAt(t,j+1,i+1);
 							break;
 						case ' ':
 							break;
 						default:
-							System.out.println("Unknown symbol encoutered while parsing board configuration layout");
+							System.out.println("Unknown symbol encountered while parsing board configuration layout");
 							break;
 					}
 				}
@@ -113,20 +113,31 @@ public class Game implements Runnable{
 		return this.id;
 	}
 
-	public Board getBoard(){
-		return this.b;
-	}
+	@Override
+	public void run() {
 
-	public int getOwnerID() {
-		return this.ownerID;
-	}
+		while(!isRunning) {
+			try {
+				Thread.sleep(1);
+				if(!ServerMain.isRunning()) {
+					System.out.println("Server stopped !");
+					return;
+				}
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 
-	public boolean isRunning(){
-		return this.isRunning;
-	}
+	    for(int i =0;i<players.size();i++){
+			players.get(i).setStartingPos(this.b); //Initializing a starting position for each player
+	    }
 
-	public int getCapacity(){
-		return this.capacity;
+		while(this.b.getTreasureCount() != 0 && !this.areAllPlayersDead()) {
+			System.out.print("");
+			if(!ServerMain.isRunning())
+				break;
+		}
+		System.out.print("Game ended");
 	}
 
 	public boolean addPlayer(Player p) {		//this method tests if a player doesn't have the same name as another one in the game
@@ -215,9 +226,51 @@ public class Game implements Runnable{
 		ServerMain.redirectPlayers(playersToRedirect);
 	}
 
+	public void stop() {
+		this.isRunning = false;
+	}
+
+	public void start() {
+		this.isRunning = true;
+	}
+
+	public boolean areAllPlayersDead() {
+		boolean b = true;
+		for(Player p : players) {
+			if(!p.isPlayerDead()) {
+				b = false;
+				break;
+			}
+		}
+		return b;
+	}
+
+	public int getID() {
+		return this.id;
+	}
+
+	public Board getBoard(){
+		return this.b;
+	}
+
+	public int getOwnerID() {
+		return this.ownerID;
+	}
+
+	public boolean isRunning(){
+		return this.isRunning;
+	}
+
+	public int getCapacity(){
+		return this.capacity;
+	}
 
 	public Vector<Player> getPlayers() {
 		return players;
+	}
+
+	public int getGameId() {
+		return this.gameId;
 	}
 
 	public String toString() {
@@ -226,46 +279,4 @@ public class Game implements Runnable{
 			s += players.toString();
 		return s;
 	}
-
-	@Override
-	public void run() {
-
-		while(!isRunning) {
-			try {
-				Thread.sleep(1);
-				if(!ServerMain.isRunning()) {
-					System.out.println("Server stopped !");
-					return;
-				}
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-	    for(int i =0;i<players.size();i++){
-			players.get(i).setStartingPos(this.b); //Initializing a starting position for each player
-	    }
-
-	    while(ServerMain.isRunning()) {/*
-			for(int i=0; i<players.size() ; i++){
-			    if(!(players.get(i).isPlayerDead()) && players.get(i).isConnected){
-					players.get(i).setPosFromInput(this.b, players.get(i).getPos()); 
-				
-			    }
-			    if(this.b.sumAllTreasures() == 0){
-					this.stop();
-			    }
-			    	if(!this.isRunning){
-					break;
-			    }
-			    // Should add a printing of all the ranks for each player along with the money collected by each one
-			}*/
-			System.out.print("");
-	    }
-	}
-
-	public int getGameId() {
-		return this.gameId;
-	}
-
 }
