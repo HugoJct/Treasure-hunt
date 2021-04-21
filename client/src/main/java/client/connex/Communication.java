@@ -178,6 +178,7 @@ public class Communication implements Runnable{
 				}
 				break;
 			case "666":
+				GameInfo.setLifeState(true);
 				System.out.println("U'R DEAD");
 				break;
 			default:

@@ -16,6 +16,8 @@ public class GameInfo {
     private static int[] playerPos = new int[2];
     private static String[] playerName = {""};
 
+    private static boolean isDead = false;
+
 
     // to get various elements
     public static int getHoles() {
@@ -29,6 +31,9 @@ public class GameInfo {
     }
     public static int getPlayers() {
         return nbrOfPlayers;
+    }
+    public static boolean getLifeState() {
+        return isDead;
     }
 
     // to get the map size
@@ -65,6 +70,9 @@ public class GameInfo {
     }
     public static void setTreasures(int t) {
         nbrOfTreasures = t;
+    }
+    public static void setLifeState(boolean b) {
+        isDead = b;
     }
 
     // to define the map size
