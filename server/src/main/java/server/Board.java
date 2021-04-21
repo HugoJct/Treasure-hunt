@@ -61,7 +61,6 @@ public class Board {
     this.holeCount = newHoleCount;
     this.wallCount = newWallCount;
     this.treasureCount = newTreasureCount;
-    System.out.println("walls: "+wallCount+" holes: "+holeCount+" tres: "+treasureCount);
   }
 
   public int[][] getWallPos() {
