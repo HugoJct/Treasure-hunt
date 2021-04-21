@@ -204,10 +204,12 @@ public class Communication implements Runnable {
                     g.getBoard().setElementAt(null,pos[1],pos[0]);
 
                 } else if(ret.equals("Hole")) {
-
                     sendMessage("666 MOVE HOLE DEAD");
                     broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
                     p.killPlayer();
+                    if (ServerMain.everyoneIsDead(g)) {
+                        broadcastInGame("600 GAME OVER", g.getGameId());
+                    }
                 }
 
                 ServerMain.printGame(getPlayer().getGameId());
