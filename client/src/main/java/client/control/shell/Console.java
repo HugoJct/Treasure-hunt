@@ -83,10 +83,10 @@ public class Console implements Runnable {
 			case "MOVE":
 				if (GameInfo.getLifeState() == false) {
 					move(brokenCommand[1]);
-					break;
 				} else {
 					System.out.println("You can't, you are dead...");
 				}
+				break;
 			case "STOP":
 				stopServer();
 				break;
