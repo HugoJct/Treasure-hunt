@@ -28,17 +28,21 @@ public class Main extends Application {
 	FXMLLoader loader = new FXMLLoader(Main.class.getResource("MainFXML.fxml"));
 	Modele m = new Modele(); //Put a game object in argument
 	
+	
+	public boolean Menu = true;
+	public boolean Waiting = false;
+	public boolean UI = false;
+	
 	@Override
 	public void start(Stage primaryStage) throws MalformedURLException {
 		/* ----------  Creation of window  ---------- */
 		primaryStage.setTitle("Chasse au trésor"); //Title of window
-		primaryStage.setWidth(31*m.getColumns()); //Width
-		primaryStage.setHeight(31*m.getLines()); //Height
 		primaryStage.setResizable(false); //Not resizable
 		primaryStage.centerOnScreen(); //Window is centered on screen
 		
 		
-		
+		primaryStage.setWidth(31*m.getColumns()); //Width
+		primaryStage.setHeight(31*m.getLines()); //Height
 		
 		
 		Group AllElements = new Group(); //Regroups all Elements of the screen(Background image, wall, hole, treasures and players)
@@ -46,7 +50,7 @@ public class Main extends Application {
 		/* ----------  Adding elements of the game  ---------- */
 		//Background
 		try {
-			File f = new File("client/src/main/java/client/control/UI/Images/Background3.jpg"); 
+			File f = new File("./src/main/java/client/control/UI/Images/Background3.jpg"); 
 			String path = f.toURI().toURL().toString();
 			Image BackImg = new Image(path, false); //Creation of Image from a file
 			ImageView Background = new ImageView(BackImg); //Conversion to an ImageView
@@ -62,7 +66,7 @@ public class Main extends Application {
 		try {
 			//Display Walls from Model informations
 			for(int i = 0; i<m.getWallPos().length; i++) {
-				File fw = new File("client/src/main/java/client/control/UI/Images/wall2.png");
+				File fw = new File("./src/main/java/client/control/UI/Images/wall2.png");
 				String pathWall = fw.toURI().toURL().toString();
 				Image WallImg = new Image(pathWall, false);
 				ImageView Wall = new ImageView(WallImg);
@@ -74,7 +78,7 @@ public class Main extends Application {
 			
 			//Display treasures
 			for(int i = 0; i<m.getTreasurePos().length; i++) {
-				File ft = new File("client/src/main/java/client/control/UI/Images/treasure.png");
+				File ft = new File("./src/main/java/client/control/UI/Images/treasure.png");
 				String pathTreasure = ft.toURI().toURL().toString();
 				Image TreasureImg = new Image(pathTreasure, false);
 				ImageView Treasure = new ImageView(TreasureImg);
@@ -86,7 +90,7 @@ public class Main extends Application {
 			
 			//Display Holes
 			for(int i = 0; i<m.getHolePos().length; i++) {
-				File fh = new File("client/src/main/java/client/control/UI/Images/hole.png");
+				File fh = new File("./src/main/java/client/control/UI/Images/hole.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
@@ -99,7 +103,7 @@ public class Main extends Application {
 			
 			//Display players (Black square for tests)
 			for(int i = 0; i<m.getPlayerPos().length; i++) {
-				File fh = new File("client/src/main/java/client/control/UI/Images/Player2.png");
+				File fh = new File("./src/main/java/client/control/UI/Images/Player2.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
@@ -110,7 +114,7 @@ public class Main extends Application {
 			}
 			
 		}catch(Exception e){
-			System.out.println("Erreur lors de l'affichage des éléments surement dû à un manque de données dans GameInfo");
+			System.out.println("Error, some GameInfo attributes are null");
 			e.printStackTrace();
 		}
 			
@@ -118,14 +122,12 @@ public class Main extends Application {
 			
 		/* ----------  Push all graphic elements in the window  --------- */
 		Scene SceneAllElements = new Scene(AllElements);
-		
-		//primaryStage.setScene(SceneAllElements);
-		
-		
-		/* ----------  Display  ---------- */
-		//primaryStage.show(); //Display of window
+		/*primaryStage.setScene(SceneAllElements);
+		primaryStage.show();*/
 		
 		
+		primaryStage.setWidth(310); //Width
+		primaryStage.setHeight(310); //Height
 		// ************ Menu scene ************
 		Group MenuElements = new Group();
 		
@@ -147,13 +149,19 @@ public class Main extends Application {
 		b2.setLayoutY(150);
 		
 		
-		b1.setOnAction(e -> primaryStage.setScene(SceneAllElements));
+		b1.setOnAction(e -> {this.Menu = false; 
+							 this.Waiting = true; 
+							 this.UI = true;
+							 primaryStage.centerOnScreen(); //Window is centered on screen
+							 primaryStage.setWidth(31*m.getColumns()); //Width
+							 primaryStage.setHeight(31*m.getLines()); //Height
+							 primaryStage.setScene(SceneAllElements);});
 		b2.setOnAction((ActionEvent event) -> {
 		    Platform.exit();
 		});
 		
 		//File for background image
-		File f = new File("client/src/main/java/client/control/UI/Images/Background3.jpg"); 
+		File f = new File("./src/main/java/client/control/UI/Images/Background3.jpg"); //initial : client/src/main/java/client/control/UI/Images/Background3.jpg
 		String path = f.toURI().toURL().toString();
 		Image BackImg = new Image(path, false); //Creation of Image from a file
 		ImageView Background = new ImageView(BackImg); //Conversion to an ImageView
@@ -168,8 +176,8 @@ public class Main extends Application {
 		
 	}
 	
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		System.out.println("test");
 		launch(args);
-	}
+	}*/
 }
