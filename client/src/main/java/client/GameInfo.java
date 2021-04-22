@@ -90,6 +90,15 @@ public class GameInfo {
         wallsPos[pos] = x;
         wallsPos[pos+1] = y;
     }
+    public static void removeTreasure(int x, int y) {
+        int treasuresPosBis[] = new int[treasuresPos.length-2];
+        for (int i = 0 ; i<treasuresPos.length ; i++) {
+            if (treasuresPos[i] != x && treasuresPos[i+1] != y) {
+                treasuresPosBis[i] = treasuresPos[i];
+            }
+        }
+        treasuresPos = treasuresPosBis;
+    }
     public static void setTreasuresPos(int pos, int x, int y, int v) {
         treasuresPos[pos] = x;
         treasuresPos[pos+1] = y;

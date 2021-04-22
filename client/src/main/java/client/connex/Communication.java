@@ -171,7 +171,9 @@ public class Communication implements Runnable{
 
 				}
 				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
-
+					GameInfo.setTreasures(GameInfo.getTreasures()-1);
+					GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+					sendMessage("512 " + Player.getName() + " UPDATED");
 				}
 				else {
 					sendMessage("UNKNOWN");
