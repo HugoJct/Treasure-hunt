@@ -81,7 +81,11 @@ public class Console implements Runnable {
 				getTreasures();
 				break;
 			case "MOVE":
-				move(brokenCommand[1]);
+				if (GameInfo.getLifeState() == false) {
+					move(brokenCommand[1]);
+				} else {
+					System.out.println("You can't, you are dead...");
+				}
 				break;
 			case "STOP":
 				stopServer();
@@ -193,6 +197,10 @@ public class Console implements Runnable {
 				System.out.println("No valid direction was recognized");
 				break;
 		}
+	}
+
+	public static int getLastMove() {
+		return lastMoveRequested;
 	}
 
 	public void stopServer() {
