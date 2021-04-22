@@ -234,16 +234,20 @@ public class Communication implements Runnable {
         int tab[] = new int[nbrOfGames*5];
 
         if (nbrOfGames != 0) {
-            for (int i = 0 ; i < nbrOfGames ; i++) {
+            int k = 0;
+            for (int i = 0 ; i < tab.length ; i+=5) {
                 tab[0+i] = 0;   // No game mod for now
-                tab[1+i] = ServerMain.getGameX(i);
-                tab[2+i] = ServerMain.getGameY(i);
-                tab[3+i] = ServerMain.getNumberOfHoles(i);
-                tab[4+i] = ServerMain.getNumberOfTreasures(i);
+                tab[1+i] = ServerMain.getGameX(k);
+                tab[2+i] = ServerMain.getGameY(k);
+                tab[3+i] = ServerMain.getNumberOfHoles(k);
+                tab[4+i] = ServerMain.getNumberOfTreasures(k);
+                k++;
             }
 
-            for (int i = 0 ; i < nbrOfGames ; i++) {
-                sendMessage("121 MESS " + (i+1) + " ID " + i + " " + tab[0+i] + " " + tab[1+i] + " " + tab[2+i] + " " + tab[3+i] + " " + tab[4+i]);
+            int j = 0;
+            for (int i = 0 ; i < tab.length ; i+=5) {
+                sendMessage("121 MESS " + (j+1) + " ID " + j + " " + tab[0+i] + " " + tab[1+i] + " " + tab[2+i] + " " + tab[3+i] + " " + tab[4+i]);
+                j++;
             }
         }
     }
