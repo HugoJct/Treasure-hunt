@@ -216,7 +216,6 @@ public class Communication implements Runnable {
                 }
 
                 ServerMain.printGame(getPlayer().getGameId());
-                
                 break;
             case "400":                                             //GETHOLES
                 sendHoleInfo(g);

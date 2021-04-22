@@ -12,7 +12,6 @@ public class GameInfo {
     private static int nbrOfPlayers = 0;
 
     private static int[] map = new int[2];  
-    private static int[] mainPlayerPos = new int[2];
     private static int[] holesPos;
     private static int[] wallsPos;
     private static int[] treasuresPos;   
@@ -112,14 +111,49 @@ public class GameInfo {
         wallsPos[pos] = x;
         wallsPos[pos+1] = y;
     }
+    public static void removeTreasure(int x, int y) {
+        int treasuresPosBis[] = new int[treasuresPos.length-2];
+        for (int i = 0 ; i<treasuresPos.length ; i++) {
+            if (treasuresPos[i] != x && treasuresPos[i+1] != y) {
+                treasuresPosBis[i] = treasuresPos[i];
+            }
+        }
+        treasuresPos = treasuresPosBis;
+    }
     public static void setTreasuresPos(int pos, int x, int y, int v) {
         treasuresPos[pos] = x;
         treasuresPos[pos+1] = y;
         treasuresPos[pos+2] = v;        
     }
+
+    public static void removePlayer(String name) {    
+        String[] playerNameBis = new String[playerName.length-1];
+        for (int i = 0 ; i<playerName.length ; i++) {
+            if (playerName[i].contentEquals(name)) {
+                removePlayerPos(i*2);
+            } else {
+                playerNameBis[i] = playerName[i];
+            }
+        }
+        playerName = playerNameBis;
+    }
+    public static void removePlayerPos(int pos) {
+        int[] playerPosBis = new int[playerPos.length-2];
+        for (int i = 0 ; i<playerPos.length ; i++) {
+            if (i == pos) {
+                i++;
+            } else {
+                playerPosBis[i] = playerPos[i];
+            }
+        }
+        playerPos = playerPosBis;
+    }
+
+
     public static void setGamePos(int pos, int[] tab) {
         availableGameInfos[pos] = tab;
     }
+
     public static void setPlayers(String name, int x, int y) {
         int pos = 0;
         if (!checkPlayerName(name)) {
@@ -169,20 +203,6 @@ public class GameInfo {
 
     }
 
-    // to set player client position
-    public static void up() {
-        mainPlayerPos[0] = mainPlayerPos[0]-1;
-    }
-    public static void down() {
-        mainPlayerPos[0] = mainPlayerPos[0]+1;
-    }
-    public static void right() {
-        mainPlayerPos[1] = mainPlayerPos[1]+1;
-    }
-    public static void left() {
-        mainPlayerPos[1] = mainPlayerPos[1]-1;
-    }
-
     // to init various position
     public static void initHolesPos() {
         holesPos = new int[nbrOfHoles*2];
@@ -194,9 +214,4 @@ public class GameInfo {
         treasuresPos = new int[nbrOfTreasures*3];
     }
     
-    // to set the client player position
-    public static void setMainPlayerPos(int x, int y) {
-        mainPlayerPos[0] = x;
-        mainPlayerPos[1] = y;
-    }
 }

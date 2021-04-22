@@ -189,6 +189,10 @@ public class Console implements Runnable {
 		}
 	}
 
+	public static int getLastMove() {
+		return lastMoveRequested;
+	}
+
 	public void stopServer() {
 		_com.sendMessage("0");
 	}
