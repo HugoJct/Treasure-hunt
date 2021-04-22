@@ -117,7 +117,7 @@ public class GameInfo {
     public static void removeTreasure(int x, int y) {
         int treasuresPosBis[] = new int[treasuresPos.length-3];
         int j = 0;
-        for (int i = 0 ; i<treasuresPos.length-2 ; i+=3) {
+        for (int i = 0 ; i<treasuresPos.length-3 ; i+=3) {
             if (treasuresPos[i] != x && treasuresPos[i+1] != y) {
                 treasuresPosBis[j] = treasuresPos[i];
                 treasuresPosBis[j+1] = treasuresPos[i+1];
