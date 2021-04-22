@@ -3,6 +3,9 @@ package client;
 import java.util.Arrays;
 
 public class GameInfo {
+
+    private static int[][] availableGameInfos = null;
+
     private static int nbrOfHoles = 0;
     private static int nbrOfWalls = 0;
     private static int nbrOfTreasures = 0;
@@ -32,6 +35,13 @@ public class GameInfo {
     public static int getPlayers() {
         return nbrOfPlayers;
     }
+    public static int getGameNumber() {
+        if(availableGameInfos == null)
+            return 0;
+        else
+            return availableGameInfos.length;
+    }
+    
     public static boolean getLifeState() {
         return isDead;
     }
@@ -61,6 +71,14 @@ public class GameInfo {
         return mainPlayerPos;
     }
 
+    //To set the list of joinable games
+    public static int[][] getJoinableGames() {
+        if(availableGameInfos == null)
+            return new int[0][0];
+        else
+            return availableGameInfos;
+    }
+
     // to set each element number 
     public static void setHoles(int h) {
         nbrOfHoles = h;
@@ -70,6 +88,10 @@ public class GameInfo {
     }
     public static void setTreasures(int t) {
         nbrOfTreasures = t;
+    }
+
+    public static void setGameNumber(int i) {
+        availableGameInfos = new int[i][6];
     }
     public static void setLifeState(boolean b) {
         isDead = b;
@@ -94,6 +116,9 @@ public class GameInfo {
         treasuresPos[pos] = x;
         treasuresPos[pos+1] = y;
         treasuresPos[pos+2] = v;        
+    }
+    public static void setGamePos(int pos, int[] tab) {
+        availableGameInfos[pos] = tab;
     }
     public static void setPlayers(String name, int x, int y) {
         int pos = 0;
