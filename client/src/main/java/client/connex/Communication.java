@@ -68,6 +68,29 @@ public class Communication implements Runnable{
         String[] brokenCommand = breakCommand(command);
 		switch(brokenCommand[0]) {
 			// Server -> Client
+			case "121":
+				if(brokenCommand[1].equals("NUMBER")) {
+					GameInfo.setGameNumber(Integer.parseInt(brokenCommand[2]));
+				} else if(brokenCommand[1].equals("MESS") && brokenCommand[3].equals("ID")) {
+					int[] tab = new int[6];
+					for(int i=0;i<6;i++)
+						tab[i] = Integer.parseInt(brokenCommand[4+i]);
+					int games[][] = GameInfo.getJoinableGames();
+					for(int i=0;i<games.length;i++) {
+						boolean insert = true;
+						for(int j=0;j<games[i].length;j++) {
+							if(games[i][j] != 0) {
+								insert = false;
+								break;
+							}
+						}
+						if(insert) {
+							GameInfo.setGamePos(i,tab);
+							break;
+						}
+					}
+				}
+				break;
 			case "152":
 				System.out.println("Ready to Play ? y/N : ");
 				Console.startRequested = true;

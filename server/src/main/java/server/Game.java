@@ -129,7 +129,8 @@ public class Game implements Runnable{
 			if(!ServerMain.isRunning())
 				break;
 		}
-		System.out.print("Game ended");
+		System.out.println("Game ended");
+		System.out.println(this.gameRank());
 	}
 
 	public boolean addPlayer(Player p) {		//this method tests if a player doesn't have the same name as another one in the game
