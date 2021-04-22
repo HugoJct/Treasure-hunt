@@ -98,12 +98,24 @@ public class Player {
             i+=2;
         }
 
-        for(int i=0;i<board.length;i++) {
-            for(int j=0;j<board[i].length;j++) {
+        for(int i=0;i<board.length;i++){
+            System.out.print("W ");
+        }
+        System.out.println();
+
+        for(int i=1;i<board.length-1;i++) {
+            System.out.print("W ");
+            for(int j=1;j<board[i].length-1;j++) {
                 System.out.print(board[i][j]+" ");
             }
+            System.out.print("W");
             System.out.println();
         }
+
+        for(int i=0;i<board.length;i++){
+            System.out.print("W ");
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {

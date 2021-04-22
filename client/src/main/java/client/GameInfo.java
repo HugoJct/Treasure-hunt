@@ -5,6 +5,15 @@ import java.util.Arrays;
 public class GameInfo {
 
     private static int[][] availableGameInfos = null;
+    private static boolean isStarted = false;
+
+    public static boolean isStarted() {
+        return isStarted;
+    }
+
+    public static void setStarted(boolean b) {
+        isStarted = b;
+    }
 
     private static int nbrOfHoles = 0;
     private static int nbrOfWalls = 0;
@@ -18,7 +27,6 @@ public class GameInfo {
     private static int[] treasuresPos;   
     private static int[] playerPos = new int[2];
     private static String[] playerName = {""};
-
 
     // to get various elements
     public static int getHoles() {
