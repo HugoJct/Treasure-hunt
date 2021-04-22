@@ -21,7 +21,6 @@ public class Communication implements Runnable{
     PrintWriter out;
     Player p;
     String serverMsg = "";
-    private static int lastMoveRequested = 0;
 
     public Communication(Player p) {
         this.p = p;
@@ -79,17 +78,17 @@ public class Communication implements Runnable{
                     sendMessage("420 GETWALLS");
 				break;
 			case "201":
-				if (lastMoveRequested == 1) {
-					GameInfo.up();
+				if (Console.getLastMove() == 1) {
+					System.out.println("MOVE OK : UP");
 				}
-				else if (lastMoveRequested == 2) {
-					GameInfo.down();
+				else if (Console.getLastMove()== 2) {
+					System.out.println("MOVE OK : DOWN");
 				}
-				else if (lastMoveRequested == 3) {
-					GameInfo.right();
+				else if (Console.getLastMove()== 3) {
+					System.out.println("MOVE OK : RIGHT");
 				}
-				else if (lastMoveRequested == 4) {
-					GameInfo.left();
+				else if (Console.getLastMove() == 4) {
+					System.out.println("MOVE OK : LEFT");
 				}/*
 				else {
 					System.out.println("Error : no move engaged");
@@ -179,6 +178,8 @@ public class Communication implements Runnable{
 					sendMessage("UNKNOWN");
 				}
 				break;
+			case "520":
+				
 			case "666":
 				GameInfo.setLifeState(true);
 				System.out.println("U'R DEAD");

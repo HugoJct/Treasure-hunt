@@ -9,7 +9,6 @@ public class GameInfo {
     private static int nbrOfPlayers = 0;
 
     private static int[] map = new int[2];  
-    private static int[] mainPlayerPos = new int[2];
     private static int[] holesPos;
     private static int[] wallsPos;
     private static int[] treasuresPos;   
@@ -54,11 +53,6 @@ public class GameInfo {
             return playerPos;
         }
         return null;
-    }
-
-    // to get the position of the client player
-    public static int[] getMainPlayerPos() {
-        return mainPlayerPos;
     }
 
     // to set each element number 
@@ -153,20 +147,6 @@ public class GameInfo {
 
     }
 
-    // to set player client position
-    public static void up() {
-        mainPlayerPos[0] = mainPlayerPos[0]-1;
-    }
-    public static void down() {
-        mainPlayerPos[0] = mainPlayerPos[0]+1;
-    }
-    public static void right() {
-        mainPlayerPos[1] = mainPlayerPos[1]+1;
-    }
-    public static void left() {
-        mainPlayerPos[1] = mainPlayerPos[1]-1;
-    }
-
     // to init various position
     public static void initHolesPos() {
         holesPos = new int[nbrOfHoles*2];
@@ -178,9 +158,4 @@ public class GameInfo {
         treasuresPos = new int[nbrOfTreasures*3];
     }
     
-    // to set the client player position
-    public static void setMainPlayerPos(int x, int y) {
-        mainPlayerPos[0] = x;
-        mainPlayerPos[1] = y;
-    }
 }
