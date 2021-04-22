@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import java.net.Socket;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -18,7 +18,7 @@ public class Communication implements Runnable{
 
     Socket s;
     BufferedReader in;
-    PrintStream out;
+    PrintWriter out;
     Player p;
     String serverMsg = "";
     private static int lastMoveRequested = 0;
@@ -28,7 +28,7 @@ public class Communication implements Runnable{
     	this.s = p.getSocket();
     	try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintStream(s.getOutputStream());
+            out = new PrintWriter(s.getOutputStream());
         } catch( IOException e) {
             e.printStackTrace();
         }
@@ -69,24 +69,37 @@ public class Communication implements Runnable{
         String[] brokenCommand = breakCommand(command);
 		switch(brokenCommand[0]) {/*
 			// Server -> Client
-			case "131":
-                GameInfo.setMap(Integer.parseInt(brokenCommand[4])+2,Integer.parseInt(brokenCommand[5])+2);
-                break;*/
+			case "121":
+				if(brokenCommand[1].equals("NUMBER")) {
+					GameInfo.setGameNumber(Integer.parseInt(brokenCommand[2]));
+				} else if(brokenCommand[1].equals("MESS") && brokenCommand[3].equals("ID")) {
+					int[] tab = new int[6];
+					for(int i=0;i<6;i++)
+						tab[i] = Integer.parseInt(brokenCommand[4+i]);
+					int games[][] = GameInfo.getJoinableGames();
+					for(int i=0;i<games.length;i++) {
+						boolean insert = true;
+						for(int j=0;j<games[i].length;j++) {
+							if(games[i][j] != 0) {
+								insert = false;
+								break;
+							}
+						}
+						if(insert) {
+							GameInfo.setGamePos(i,tab);
+							break;
+						}
+					}
+				}
+				break;
 			case "152":
 				System.out.println("Ready to Play ? y/N : ");
 				Console.startRequested = true;
 				break;
 			case "153":
-                try {
                     sendMessage("400 GETHOLES");
-                    Thread.sleep(5);
                     sendMessage("410 GETTREASURES");
-					Thread.sleep(5);
                     sendMessage("420 GETWALLS");
-                }
-                catch(InterruptedException e) {
-                    
-                }
 				break;
 			case "201":
 				if (lastMoveRequested == 1) {

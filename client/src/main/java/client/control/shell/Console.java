@@ -103,6 +103,8 @@ public class Console implements Runnable {
 				break;
 			case "PRINTDIMS":
 				System.out.println((GameInfo.getMap()[0]-2)+" "+(GameInfo.getMap()[1]-2));
+			case "PRINTGAMES":
+				System.out.println(Arrays.deepToString(GameInfo.getJoinableGames()));
 				break;
 			default:
 				System.out.println("Unknown command");
