@@ -65,11 +65,6 @@ public class GameInfo {
         return null;
     }
 
-    // to get the position of the client player
-    public static int[] getMainPlayerPos() {
-        return mainPlayerPos;
-    }
-
     //To set the list of joinable games
     public static int[][] getJoinableGames() {
         if(availableGameInfos == null)
@@ -117,6 +112,7 @@ public class GameInfo {
             if (treasuresPos[i] != x && treasuresPos[i+1] != y) {
                 treasuresPosBis[i] = treasuresPos[i];
             }
+            break;
         }
         treasuresPos = treasuresPosBis;
     }
