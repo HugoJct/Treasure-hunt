@@ -98,6 +98,9 @@ public class Console implements Runnable {
 			case "PRINTHOLES":
 				System.out.println(Arrays.toString(GameInfo.getHolesPos()));
 				break;
+			case "PRINTGAMES":
+				System.out.println(Arrays.deepToString(GameInfo.getJoinableGames()));
+				break;
 			default:
 				System.out.println("Unknown command");
 				break; 
