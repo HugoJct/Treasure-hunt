@@ -98,6 +98,30 @@ public class GameInfo {
         treasuresPos[pos+1] = y;
         treasuresPos[pos+2] = v;        
     }
+
+    public static void removePlayer(String name) {    
+        String[] playerNameBis = new String[playerName.length-1];
+        for (int i = 0 ; i<playerName.length ; i++) {
+            if (playerName[i].contentEquals(name)) {
+                removePlayerPos(i*2);
+            } else {
+                playerNameBis[i] = playerName[i];
+            }
+        }
+        playerName = playerNameBis;
+    }
+    public static void removePlayerPos(int pos) {
+        int[] playerPosBis = new int[playerPos.length-2];
+        for (int i = 0 ; i<playerPos.length ; i++) {
+            if (i == pos) {
+                i++;
+            } else {
+                playerPosBis[i] = playerPos[i];
+            }
+        }
+        playerPos = playerPosBis;
+    }
+
     public static void setPlayers(String name, int x, int y) {
         int pos = 0;
         if (!checkPlayerName(name)) {

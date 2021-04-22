@@ -179,7 +179,9 @@ public class Communication implements Runnable{
 				}
 				break;
 			case "520":
-				
+				GameInfo.removePlayer(brokenCommand[1]);
+				sendMessage("521 " + Player.getName() + " UPDATED");
+				break;
 			case "666":
 				GameInfo.setLifeState(true);
 				System.out.println("U'R DEAD");
