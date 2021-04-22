@@ -222,6 +222,17 @@ public class ServerMain {
 		return -1;
 	}
 
+	public static boolean everyoneIsDead(Game g) {
+		for (Player p : connectedUsers) {
+			if (p.getGameId() == g.getGameId()) {
+				if (p.isPlayerDead() == false) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	public static boolean redirectPlayers(Vector<Player> players){ // redirect players to another generated Game
 		if(players.size() == 0){
 			return false;

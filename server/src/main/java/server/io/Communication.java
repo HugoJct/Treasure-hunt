@@ -202,12 +202,17 @@ public class Communication implements Runnable {
 
                     tr.setTreasureValue(0);
                     g.getBoard().setElementAt(null,pos[1],pos[0]);
+                    if (g.getBoard().getTreasureCount() == 0) {
+                        broadcastInGame("530 " + g.leadingPlayer().getName() + " WINS", g.getGameId());
+                    }
 
                 } else if(ret.equals("Hole")) {
-
                     sendMessage("666 MOVE HOLE DEAD");
                     broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
                     p.killPlayer();
+                    if (ServerMain.everyoneIsDead(g)) {
+                        broadcastInGame("600 GAME OVER", g.getGameId());
+                    }
                 }
 
                 ServerMain.printGame(getPlayer().getGameId());
