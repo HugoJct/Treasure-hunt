@@ -226,6 +226,9 @@ public class Communication implements Runnable {
             case "420":                                             //GETWALLS
                 sendWallInfo(g);
                 break;
+            case "512":
+                System.out.println(brokenCommand[1] + " confirmation");
+                break;
             default:
                 sendMessage("999 COMMAND ERROR");
                 break;

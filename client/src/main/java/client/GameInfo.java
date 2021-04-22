@@ -112,6 +112,7 @@ public class GameInfo {
             if (treasuresPos[i] != x && treasuresPos[i+1] != y) {
                 treasuresPosBis[i] = treasuresPos[i];
             }
+            break;
         }
         treasuresPos = treasuresPosBis;
     }
