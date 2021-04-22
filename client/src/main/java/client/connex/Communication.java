@@ -69,36 +69,29 @@ public class Communication implements Runnable{
 		switch(brokenCommand[0]) {
 			// Server -> Client
 			case "121":
-				if(brokenCommand[1].equals("NUMBER")) {
-					GameInfo.setGameNumber(Integer.parseInt(brokenCommand[2]));
-				} else if(brokenCommand[1].equals("MESS") && brokenCommand[3].equals("ID")) {
-					int[] tab = new int[6];
-					for(int i=0;i<6;i++)
-						tab[i] = Integer.parseInt(brokenCommand[4+i]);
-					int games[][] = GameInfo.getJoinableGames();
-					for(int i=0;i<games.length;i++) {
-						boolean insert = true;
-						for(int j=0;j<games[i].length;j++) {
-							if(games[i][j] != 0) {
-								insert = false;
-								break;
-							}
-						}
-						if(insert) {
-							GameInfo.setGamePos(i,tab);
-							break;
-						}
+				updateGameList(brokenCommand);
+
+				int mapID = p.getGameId();
+				int[][] games = GameInfo.getJoinableGames();
+				for(int i=0;i<games.length;i++) {
+					if(games[i][0] == mapID) {
+						GameInfo.setMap(games[i][2],games[i][3]);
+						break;
 					}
 				}
+				break;
+			case "131":
+				sendMessage("120 GETLIST");
 				break;
 			case "152":
 				System.out.println("Ready to Play ? y/N : ");
 				Console.startRequested = true;
 				break;
 			case "153":
-                    sendMessage("400 GETHOLES");
-                    sendMessage("410 GETTREASURES");
-                    sendMessage("420 GETWALLS");
+                sendMessage("400 GETHOLES");
+                sendMessage("410 GETTREASURES");
+                sendMessage("420 GETWALLS");
+                GameInfo.setStarted(true);
 				break;
 			case "201":
 				if (Console.getLastMove() == 1) {
@@ -116,6 +109,8 @@ public class Communication implements Runnable{
 				else {
 					System.out.println("Error : no move engaged");
 				}*/
+
+				Player.printGameBoard();
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");
@@ -211,6 +206,30 @@ public class Communication implements Runnable{
 				break;
 			default:
 				break; 
+		}
+	}
+
+	public void updateGameList(String args[]) {
+		if(args[1].equals("NUMBER")) {
+			GameInfo.setGameNumber(Integer.parseInt(args[2]));
+		} else if(args[1].equals("MESS") && args[3].equals("ID")) {
+			int[] tab = new int[6];
+			for(int i=0;i<6;i++)
+				tab[i] = Integer.parseInt(args[4+i]);
+			int games[][] = GameInfo.getJoinableGames();
+			for(int i=0;i<games.length;i++) {
+				boolean insert = true;
+				for(int j=0;j<games[i].length;j++) {
+					if(games[i][j] != 0) {
+						insert = false;
+						break;
+					}
+				}
+				if(insert) {
+					GameInfo.setGamePos(i,tab);
+					break;
+				}
+			}
 		}
 	}
 

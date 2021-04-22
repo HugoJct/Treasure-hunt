@@ -102,6 +102,16 @@ public class Console implements Runnable {
 			case "PRINTHOLES":
 				System.out.println(Arrays.toString(GameInfo.getHolesPos()));
 				break;
+			case "PRINTBOARD":
+				if(!GameInfo.isStarted()) {
+		            System.out.println("La partie n'a pas encore commencé");
+		            break;
+		        }
+				Player.printGameBoard();
+				break;
+			case "PRINTDIMS":
+				System.out.println((GameInfo.getMap()[0]-2)+" "+(GameInfo.getMap()[1]-2));
+				break;
 			case "PRINTGAMES":
 				System.out.println(Arrays.deepToString(GameInfo.getJoinableGames()));
 				break;

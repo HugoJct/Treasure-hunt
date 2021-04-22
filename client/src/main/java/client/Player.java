@@ -72,6 +72,52 @@ public class Player {
         return username;
     }
 
+    public static void printGameBoard() {
+        char[][] board = new char[GameInfo.getMap()[0]][GameInfo.getMap()[1]];
+        for(int i=0;i<board.length;i++)
+            for(int j=0;j<board[i].length;j++)
+                board[i][j] = '.';
+
+        for(int i=0;i<GameInfo.getHolesPos().length;i++) {
+            int x = GameInfo.getHolesPos()[i];
+            int y = GameInfo.getHolesPos()[i+1];
+            board[x][y] = 'H';
+            i++;
+        }
+        for(int i=0;i<GameInfo.getWallsPos().length;i++) {
+            int x = GameInfo.getWallsPos()[i];
+            int y = GameInfo.getWallsPos()[i+1];
+            board[x][y] = 'W';
+            i++;
+        }
+
+        for(int i=0;i<GameInfo.getTreasuresPos().length;i++) {
+            int x = GameInfo.getTreasuresPos()[i];
+            int y = GameInfo.getTreasuresPos()[i+1];
+            board[x][y] = 'T';
+            i+=2;
+        }
+
+        for(int i=0;i<board.length;i++){
+            System.out.print("W ");
+        }
+        System.out.println();
+
+        for(int i=1;i<board.length-1;i++) {
+            System.out.print("W ");
+            for(int j=1;j<board[i].length-1;j++) {
+                System.out.print(board[i][j]+" ");
+            }
+            System.out.print("W");
+            System.out.println();
+        }
+
+        for(int i=0;i<board.length;i++){
+            System.out.print("W ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
 
         try {
