@@ -65,11 +65,6 @@ public class GameInfo {
         return null;
     }
 
-    // to get the position of the client player
-    public static int[] getMainPlayerPos() {
-        return mainPlayerPos;
-    }
-
     //To set the list of joinable games
     public static int[][] getJoinableGames() {
         if(availableGameInfos == null)
