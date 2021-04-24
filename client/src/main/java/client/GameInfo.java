@@ -29,6 +29,8 @@ public class GameInfo {
 
     private static boolean isDead = false;
 
+    private static int money = 0;
+
     // to get various elements
     public static int getHoles() {
         return nbrOfHoles;
@@ -71,6 +73,17 @@ public class GameInfo {
             return playerPos;
         }
         return null;
+    }
+
+    //money functions
+    public static int getMoney() {
+        return money;
+    }
+
+    public static void addMoney(int amount) {
+        if(money < 0)
+            return;
+        money += amount;
     }
 
     //To set the list of joinable games

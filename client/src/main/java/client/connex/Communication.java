@@ -116,7 +116,8 @@ public class Communication implements Runnable{
 				System.out.println("Impossible movement, wall met");
 				break;
 			case "203":
-				System.out.println("Treasure found: "+brokenCommand[4]+"$");
+				GameInfo.addMoney(Integer.parseInt(brokenCommand[4]));
+				System.out.println("Treasure found: "+brokenCommand[4]+"$, you now have "+GameInfo.getMoney()+"$");
 				break;
 			// set holes data
 			case "401":
@@ -202,6 +203,7 @@ public class Communication implements Runnable{
 				break;
 			case "666":
 				GameInfo.setLifeState(true);
+				GameInfo.resetMoney();
 				System.out.println("U'R DEAD");
 				break;
 			default:
