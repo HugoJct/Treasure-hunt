@@ -2,17 +2,19 @@ package client.control.UI.application;
 
 import client.GameInfo;
 import client.control.UI.application.Main;
+import javafx.application.Application;
+
 import java.util.Random;
 
 
 
 public class Modele {
-	private int Lines;
-	private int Columns;
-	private int[] TreasurePos;
-	private int[] WallPos;
-	private int[] HolePos;
-	private int[] PlayerPos;
+	private int Lines = 20;
+	private int Columns = 20;
+	private int[] TreasurePos;// = {1,1, 1, 5, 6, 9, 15, 1};
+	private int[] WallPos;// = {2, 5, 1, 9, 7, 6, 1, 10, 14, 19, 18, 2};
+	private int[] HolePos;// = {5, 1};
+	private int[] PlayerPos;// = {10, 5, 17, 16};
  	
 	
 	//Constructor

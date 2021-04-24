@@ -3,6 +3,7 @@ package client.control.shell;
 import client.Player;
 import client.connex.Communication;
 import client.control.UI.application.Main;
+import client.control.UI.application.Main.PrimeThread;
 import javafx.application.Application;
 import client.GameInfo;
 
@@ -45,6 +46,8 @@ public class Console implements Runnable {
 				case "y":
 					_com.sendMessage("152 START YES");
 					startRequested = false;
+					PrimeThread pt = new Main.PrimeThread();
+					pt.run();
 					break;
 				case "n":
 					_com.sendMessage("152 START NO");
@@ -69,11 +72,9 @@ public class Console implements Runnable {
 				break;
 			case "CREATEGAME":
 				createGame(brokenCommand[1]);
-				Application.launch(Main.class);
 				break;
 			case "JOIN":
 				joinGame(Integer.parseInt(brokenCommand[1]));
-				Application.launch(Main.class);
 				break;
 			case "GETHOLES":
 				getHoles();
