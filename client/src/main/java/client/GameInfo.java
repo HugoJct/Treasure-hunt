@@ -86,6 +86,10 @@ public class GameInfo {
         money += amount;
     }
 
+    public static void resetMoney() {
+        money = 0;
+    }
+
     //To set the list of joinable games
     public static int[][] getJoinableGames() {
         if(availableGameInfos == null)
