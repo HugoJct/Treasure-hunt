@@ -101,7 +101,7 @@ public class Communication implements Runnable {
             case "130":
                 if(ServerMain.joinGame(brokenCommand)) {                //JOINGAME 130 gameId playerID              
                     sendMessage("131 MAP "+p.getGameId()+" JOINED");
-                    broadcastInGame("The player "+p.getName()+" joined the game",p.getGameId());                //shitty (use player and game functions)
+                    broadcastInGame("140 "+p.getName()+" JOINED",p.getGameId());                //shitty (use player and game functions)
                 }
                 else 
                     sendMessage("No such game found");
@@ -126,6 +126,12 @@ public class Communication implements Runnable {
                             if(ServerMain.checkForLaunch(g.getGameId())) {
                                 ServerMain.launchGame(g.getGameId());
                                 broadcastInGame("153 GAME STARTED",g.getGameId());
+                                for(Player p : g.getPlayers()) {
+                                    while(p.getPos()[0] == 0 & p.getPos()[1] == 0) {
+                                        System.out.print("");
+                                    }
+                                    broadcastInGame("510 "+p.getName()+" POS "+p.getPos()[1]+" "+p.getPos()[0],g.getGameId());
+                                }
                             } else {
                                 String playersNotReady = "";
                                 for(Player pl : g.getPlayers()) {
@@ -214,8 +220,6 @@ public class Communication implements Runnable {
                         broadcastInGame("600 GAME OVER", g.getGameId());
                     }
                 }
-
-                ServerMain.printGame(getPlayer().getGameId());
                 break;
             case "400":                                             //GETHOLES
                 sendHoleInfo(g);

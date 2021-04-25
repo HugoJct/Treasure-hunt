@@ -94,29 +94,39 @@ public class Communication implements Runnable{
                 GameInfo.setStarted(true);
 				break;
 			case "201":
-				if (Console.getLastMove() == 1) {
+				int last = Console.getLastMove();
+				int[] pos = GameInfo.getPlayerPos(p.getName());
+				System.out.println("pos "+Arrays.toString(pos));
+				int j=0;
+				if (last == 1) {
 					System.out.println("MOVE OK : UP");
+					pos[1]--;
 				}
-				else if (Console.getLastMove()== 2) {
+				else if (last == 2) {
 					System.out.println("MOVE OK : DOWN");
+					pos[1]++;
 				}
-				else if (Console.getLastMove()== 3) {
+				else if (last == 3) {
 					System.out.println("MOVE OK : RIGHT");
+					pos[0]++;
 				}
-				else if (Console.getLastMove() == 4) {
+				else if (last == 4) {
 					System.out.println("MOVE OK : LEFT");
-				}/*
+					pos[0]--;
+				}
 				else {
 					System.out.println("Error : no move engaged");
-				}*/
-
+				}
+				GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
+				//System.out.println("pos "+Arrays.toString(pos));
 				Player.printGameBoard();
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");
 				break;
 			case "203":
-				System.out.println("Treasure found: "+brokenCommand[4]+"$");
+				GameInfo.addMoney(Integer.parseInt(brokenCommand[4]));
+				System.out.println("Treasure found: "+brokenCommand[4]+"$, you now have "+GameInfo.getMoney()+"$");
 				break;
 			// set holes data
 			case "401":
@@ -182,6 +192,7 @@ public class Communication implements Runnable{
 				break;
 			case "510":
 				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				Player.printGameBoard();
 				break;
 			case "511":
 				if (brokenCommand[2].equals("UPDATED")) {
@@ -190,11 +201,13 @@ public class Communication implements Runnable{
 				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
 					GameInfo.setTreasures(GameInfo.getTreasures()-1);
 					GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+					GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
 					sendMessage("512 " + Player.getName() + " UPDATED");
 				}
 				else {
 					sendMessage("UNKNOWN");
 				}
+				Player.printGameBoard();
 				break;
 			case "520":
 				GameInfo.removePlayer(brokenCommand[1]);
@@ -202,6 +215,7 @@ public class Communication implements Runnable{
 				break;
 			case "666":
 				GameInfo.setLifeState(true);
+				GameInfo.resetMoney();
 				System.out.println("U'R DEAD");
 				break;
 			default:

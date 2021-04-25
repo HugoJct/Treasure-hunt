@@ -115,6 +115,10 @@ public class Console implements Runnable {
 			case "PRINTGAMES":
 				System.out.println(Arrays.deepToString(GameInfo.getJoinableGames()));
 				break;
+			case "PRINTPLAYERS":
+				System.out.println(Arrays.toString(GameInfo.getPlayersNames()));
+				System.out.println(Arrays.toString(GameInfo.getPlayerPos()));
+				break;
 			default:
 				System.out.println("Unknown command");
 				break; 
