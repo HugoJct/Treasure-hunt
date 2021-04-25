@@ -34,7 +34,6 @@ public class Main extends Application {
 	
 	
 	public void Refresh(Stage primaryStage) {
-		m = new Modele();
 		/* ----------  Creation of window  ---------- */
 		primaryStage.setTitle("Chasse au trésor"); //Title of window
 		primaryStage.setResizable(false); //Not resizable
@@ -61,50 +60,50 @@ public class Main extends Application {
 		//La fonction génère une erreur (cause pour le moment inconnue
 		try {
 			//Display Walls from Model informations
-			for(int i = 0; i<m.getWallPos().length; i++) {
+			for(int i = 0; i<m.getWallPos().length-1; i++) {
 				File fw = new File("./src/main/java/client/control/UI/Images/wall2.png");
 				String pathWall = fw.toURI().toURL().toString();
 				Image WallImg = new Image(pathWall, false);
 				ImageView Wall = new ImageView(WallImg);
-				Wall.setLayoutX(m.getWallPos()[i]*30);
-				Wall.setLayoutY(m.getWallPos()[i+1]*28);
+				Wall.setLayoutX(m.getWallPos()[i+1]*30);
+				Wall.setLayoutY(m.getWallPos()[i]*28);
 				AllElements.getChildren().add(Wall);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			//Display treasures
-			for(int i = 0; i<m.getTreasurePos().length; i++) {
+			for(int i = 0; i<m.getTreasurePos().length-1; i++) {
 				File ft = new File("./src/main/java/client/control/UI/Images/treasure.png");
 				String pathTreasure = ft.toURI().toURL().toString();
 				Image TreasureImg = new Image(pathTreasure, false);
 				ImageView Treasure = new ImageView(TreasureImg);
-				Treasure.setLayoutX(m.getTreasurePos()[i]*30);
-				Treasure.setLayoutY(m.getTreasurePos()[i+1]*28);
+				Treasure.setLayoutX(m.getTreasurePos()[i+1]*30);
+				Treasure.setLayoutY(m.getTreasurePos()[i]*28);
 				AllElements.getChildren().add(Treasure);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			//Display Holes
-			for(int i = 0; i<m.getHolePos().length; i++) {
+			for(int i = 0; i<m.getHolePos().length-1; i++) {
 				File fh = new File("./src/main/java/client/control/UI/Images/hole.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.getHolePos()[i]*30);
-				Hole.setLayoutY(m.getHolePos()[i+1]*28);
+				Hole.setLayoutX(m.getHolePos()[i+1]*30);
+				Hole.setLayoutY(m.getHolePos()[i]*28);
 				AllElements.getChildren().add(Hole);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			
 			//Display players (Black square for tests)
-			for(int i = 0; i<m.getPlayerPos().length; i++) {
+			for(int i = 0; i<m.getPlayerPos().length-1; i++) {
 				File fh = new File("./src/main/java/client/control/UI/Images/Player2.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.getPlayerPos()[i]*30);
-				Hole.setLayoutY(m.getPlayerPos()[i+1]*28);
+				Hole.setLayoutX(m.getPlayerPos()[i+1]*30);
+				Hole.setLayoutY(m.getPlayerPos()[i]*28);
 				AllElements.getChildren().add(Hole);
 				i++; // i used for x and i+1 for y.
 			}
@@ -122,7 +121,7 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 	
-	
+
 	@Override
 	public void start(Stage primaryStage) throws MalformedURLException {
 		// ----------  Creation of window  ---------- 
@@ -155,50 +154,50 @@ public class Main extends Application {
 		//La fonction génère une erreur (cause pour le moment inconnue
 		try {
 			//Display Walls from Model informations
-			for(int i = 0; i<m.getWallPos().length; i++) {
+			for(int i = 0; i<m.getWallPos().length-1; i++) {
 				File fw = new File("./src/main/java/client/control/UI/Images/wall2.png");
 				String pathWall = fw.toURI().toURL().toString();
 				Image WallImg = new Image(pathWall, false);
 				ImageView Wall = new ImageView(WallImg);
-				Wall.setLayoutX(m.getWallPos()[i]*30);
-				Wall.setLayoutY(m.getWallPos()[i+1]*28);
+				Wall.setLayoutX(m.getWallPos()[i+1]*30);
+				Wall.setLayoutY(m.getWallPos()[i]*28);
 				AllElements.getChildren().add(Wall);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			//Display treasures
-			for(int i = 0; i<m.getTreasurePos().length; i++) {
+			for(int i = 0; i<m.getTreasurePos().length-1; i++) {
 				File ft = new File("./src/main/java/client/control/UI/Images/treasure.png");
 				String pathTreasure = ft.toURI().toURL().toString();
 				Image TreasureImg = new Image(pathTreasure, false);
 				ImageView Treasure = new ImageView(TreasureImg);
-				Treasure.setLayoutX(m.getTreasurePos()[i]*30);
-				Treasure.setLayoutY(m.getTreasurePos()[i+1]*28);
+				Treasure.setLayoutX(m.getTreasurePos()[i+1]*30);
+				Treasure.setLayoutY(m.getTreasurePos()[i]*28);
 				AllElements.getChildren().add(Treasure);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			//Display Holes
-			for(int i = 0; i<m.getHolePos().length; i++) {
+			for(int i = 0; i<m.getHolePos().length-1; i++) {
 				File fh = new File("./src/main/java/client/control/UI/Images/hole.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.getHolePos()[i]*30);
-				Hole.setLayoutY(m.getHolePos()[i+1]*28);
+				Hole.setLayoutX(m.getHolePos()[i+1]*30);
+				Hole.setLayoutY(m.getHolePos()[i]*28);
 				AllElements.getChildren().add(Hole);
 				i++; // i used for x and i+1 for y.
 			}
 			
 			
 			//Display players (Black square for tests)
-			for(int i = 0; i<m.getPlayerPos().length; i++) {
+			for(int i = 0; i<m.getPlayerPos().length-1; i++) {
 				File fh = new File("./src/main/java/client/control/UI/Images/Player2.png");
 				String pathHole = fh.toURI().toURL().toString();
 				Image HoleImg = new Image(pathHole, false);
 				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.getPlayerPos()[i]*30);
-				Hole.setLayoutY(m.getPlayerPos()[i+1]*28);
+				Hole.setLayoutX(m.getPlayerPos()[i+1]*30);
+				Hole.setLayoutY(m.getPlayerPos()[i]*28);
 				AllElements.getChildren().add(Hole);
 				i++; // i used for x and i+1 for y.
 			}
@@ -216,8 +215,8 @@ public class Main extends Application {
 		//primaryStage.show();
 		
 		
-		primaryStage.setWidth(310); //Width
-		primaryStage.setHeight(310); //Height
+		primaryStage.setWidth(500); //Width
+		primaryStage.setHeight(500); //Height
 		// ************ Menu scene ************
 		Group MenuElements = new Group();
 		
@@ -227,7 +226,7 @@ public class Main extends Application {
 		l1.setLayoutX(primaryStage.getWidth()/2 - 60);
 		
 		
-		Button b1 = new Button("Ready");
+		Button b1 = new Button("Play");
 		b1.setStyle("-fx-background-color: #B9AA6A; -fx-font-size : 20; ");
 		b1.setLayoutX(primaryStage.getWidth()/2 - 52);
 		b1.setLayoutY(80);
@@ -241,6 +240,9 @@ public class Main extends Application {
 		Timeline loop = new Timeline(new  KeyFrame(Duration.millis(30), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				m = new Modele();
+				primaryStage.setWidth(31*m.getColumns()); //Width
+				primaryStage.setHeight(31*m.getLines()); //Height
 				Refresh(primaryStage);
 			}
 		}));
@@ -276,14 +278,21 @@ public class Main extends Application {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
 	public static class PrimeThread extends Thread {
         public void run() {
         	Application.launch(Main.class);
         }
     }
 	
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		System.out.println("test");
 		launch(args);
-	}
+	}*/
 }

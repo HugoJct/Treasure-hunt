@@ -9,8 +9,8 @@ import java.util.Random;
 
 
 public class Modele {
-	private int Lines = 20;
-	private int Columns = 20;
+	private int Lines;// = 20;
+	private int Columns;// = 20;
 	private int[] TreasurePos;// = {1,1, 1, 5, 6, 9, 15, 1};
 	private int[] WallPos;// = {2, 5, 1, 9, 7, 6, 1, 10, 14, 19, 18, 2};
 	private int[] HolePos;// = {5, 1};
