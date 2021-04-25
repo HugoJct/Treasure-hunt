@@ -120,14 +120,14 @@ public class Game implements Runnable{
 			}
 		}
 
-	    for(int i =0;i<players.size();i++){
-			players.get(i).setStartingPos(this.b); //Initializing a starting position for each player
+	    for(Player p : players){
+			p.setStartingPos(this.b); //Initializing a starting position for each player
 	    }
 
 		while(this.b.getTreasureCount() != 0 && !this.areAllPlayersDead()) {
 			System.out.print("");
 			if(!ServerMain.isRunning())
-				break;
+				return;
 		}
 		System.out.println("Game ended");
 		System.out.println(this.gameRank());

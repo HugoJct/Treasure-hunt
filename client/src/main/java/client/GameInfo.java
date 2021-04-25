@@ -24,8 +24,8 @@ public class GameInfo {
     private static int[] holesPos;
     private static int[] wallsPos;
     private static int[] treasuresPos;   
-    private static int[] playerPos = new int[2];
-    private static String[] playerName = {""};
+    private static int[] playerPos = new int[0];
+    private static String[] playerName = new String[0];
 
     private static boolean isDead = false;
 
@@ -73,6 +73,32 @@ public class GameInfo {
             return playerPos;
         }
         return null;
+    }
+    public static int[] getPlayerPos(String plName) {
+        int j = 0;
+        //System.out.println(Arrays.toString(playerPos));
+        for(int i=0;i<playerPos.length;i+=2) {
+           // System.out.println(playerName[j]+" "+plName+" "+(playerName[j].equals(plName)));
+            if(playerName[j].equals(plName)) {
+                int[] tab = new int[3];
+                tab[0] = playerPos[i];
+                tab[1] = playerPos[i+1];
+                tab[2] = i;/*
+                System.out.println(playerPos[i]+" "+playerPos[i+1]);
+                System.out.println(Arrays.toString(tab));*/
+                return tab;
+            }
+            j++;
+        }
+        return null;
+    }
+
+    public static void setPlayerPos(int pos, int x, int y) {
+        playerPos[pos] = x;
+        playerPos[pos+1] = y;
+    }
+    public static String[] getPlayersNames() {
+        return playerName;
     }
 
     //money functions
@@ -165,7 +191,7 @@ public class GameInfo {
         int[] playerPosBis = new int[playerPos.length-2];
         for (int i = 0 ; i<playerPos.length ; i++) {
             if (i == pos) {
-                i++;
+                i+=2;
             } else {
                 playerPosBis[i] = playerPos[i];
             }
@@ -203,27 +229,31 @@ public class GameInfo {
         } return false;
     }
     public static void addPlayersPos(int x, int y) {
-        if (playerPos.length != 2) {
+        //if (playerPos.length != 2) {
             int[] tBis = new int[playerPos.length + 2];
-            tBis[playerPos.length + 1] = x;
-            tBis[playerPos.length + 2] = y;
-            playerPos = tBis;
+            for(int i=0;i<playerPos.length;i++)
+                tBis[i] = playerPos[i];
+            tBis[playerPos.length] = x;
+            tBis[playerPos.length + 1] = y;
+            playerPos = tBis;/*
         } else {
             playerPos[0] = x;
             playerPos[1] = y;
-        }
+        }*/
         nbrOfPlayers++;
 
     }
     public static void addPlayerName(String name) {
         
-        if (playerName.length != 1) {
+        //if (playerName.length != 1) {
             String[] tBis = new String[playerName.length + 1];
-            tBis[playerName.length + 1] = name;
-            playerName = tBis;
+            for(int i=0;i<playerName.length;i++)
+                tBis[i] = playerName[i];
+            tBis[playerName.length] = name;
+            playerName = tBis;/*
         } else {
             playerName[0] = name;
-        }
+        }*/
 
     }
 
