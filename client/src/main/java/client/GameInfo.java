@@ -76,16 +76,12 @@ public class GameInfo {
     }
     public static int[] getPlayerPos(String plName) {
         int j = 0;
-        //System.out.println(Arrays.toString(playerPos));
         for(int i=0;i<playerPos.length;i+=2) {
-           // System.out.println(playerName[j]+" "+plName+" "+(playerName[j].equals(plName)));
             if(playerName[j].equals(plName)) {
                 int[] tab = new int[3];
                 tab[0] = playerPos[i];
                 tab[1] = playerPos[i+1];
-                tab[2] = i;/*
-                System.out.println(playerPos[i]+" "+playerPos[i+1]);
-                System.out.println(Arrays.toString(tab));*/
+                tab[2] = i;
                 return tab;
             }
             j++;
@@ -189,10 +185,8 @@ public class GameInfo {
     }
     public static void removePlayerPos(int pos) {
         int[] playerPosBis = new int[playerPos.length-2];
-        for (int i = 0 ; i<playerPos.length ; i++) {
-            if (i == pos) {
-                i+=2;
-            } else {
+        for (int i = 0 ; i<playerPos.length ; i+=2) {
+            if (i != pos) {
                 playerPosBis[i] = playerPos[i];
             }
         }

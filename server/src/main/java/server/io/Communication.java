@@ -215,6 +215,7 @@ public class Communication implements Runnable {
                 } else if(ret.equals("Hole")) {
                     sendMessage("666 MOVE HOLE DEAD");
                     broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
+                    p.setMoney(0);
                     p.killPlayer();
                     if (ServerMain.everyoneIsDead(g)) {
                         broadcastInGame("600 GAME OVER", g.getGameId());

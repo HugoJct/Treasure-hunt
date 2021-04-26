@@ -96,7 +96,6 @@ public class Communication implements Runnable{
 			case "201":
 				int last = Console.getLastMove();
 				int[] pos = GameInfo.getPlayerPos(p.getName());
-				System.out.println("pos "+Arrays.toString(pos));
 				int j=0;
 				if (last == 1) {
 					System.out.println("MOVE OK : UP");
@@ -118,8 +117,6 @@ public class Communication implements Runnable{
 					System.out.println("Error : no move engaged");
 				}
 				GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
-				//System.out.println("pos "+Arrays.toString(pos));
-				Player.printGameBoard();
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");
