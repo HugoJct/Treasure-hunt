@@ -81,13 +81,43 @@ public class Console implements Runnable {
 				getTreasures();
 				break;
 			case "MOVE":
-				move(brokenCommand[1]);
+				if (GameInfo.getLifeState() == false) {
+					move(brokenCommand[1]);
+				} else {
+					System.out.println("You can't, you are dead...");
+				}
 				break;
 			case "STOP":
 				stopServer();
 				break;
 			case "REQUESTSTART":
 				_com.sendMessage("150");
+				break;
+			case "PRINTTREASURES":
+				System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
+				break;
+			case "PRINTWALLS":
+				System.out.println(Arrays.toString(GameInfo.getWallsPos()));
+				break;
+			case "PRINTHOLES":
+				System.out.println(Arrays.toString(GameInfo.getHolesPos()));
+				break;
+			case "PRINTBOARD":
+				if(!GameInfo.isStarted()) {
+		            System.out.println("La partie n'a pas encore commencé");
+		            break;
+		        }
+				Player.printGameBoard();
+				break;
+			case "PRINTDIMS":
+				System.out.println((GameInfo.getMap()[0]-2)+" "+(GameInfo.getMap()[1]-2));
+				break;
+			case "PRINTGAMES":
+				System.out.println(Arrays.deepToString(GameInfo.getJoinableGames()));
+				break;
+			case "PRINTPLAYERS":
+				System.out.println(Arrays.toString(GameInfo.getPlayersNames()));
+				System.out.println(Arrays.toString(GameInfo.getPlayerPos()));
 				break;
 			default:
 				System.out.println("Unknown command");
@@ -119,7 +149,7 @@ public class Console implements Runnable {
 	}
 
 	public void createGame(String name) {
-		_com.sendMessage("110 CREATE "+name);
+		_com.sendMessage("110 CREATE "+name+" "+_com.getPlayer().getName());
 	}
 
 	public void listGames() {
@@ -171,6 +201,10 @@ public class Console implements Runnable {
 				System.out.println("No valid direction was recognized");
 				break;
 		}
+	}
+
+	public static int getLastMove() {
+		return lastMoveRequested;
 	}
 
 	public void stopServer() {

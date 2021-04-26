@@ -1,6 +1,7 @@
 package server;
 
 import server.elements.*;
+import server.io.Communication;
 
 import java.net.Socket;
 import java.io.IOException;
@@ -86,7 +87,7 @@ public class Player {
     	this.setPos(b, pos);
     }
 
-    protected String setPos(Board b, int[] tab) {
+    public String setPos(Board b, int[] tab) {
     	if(b.getElementAt(tab[1], tab[0]) instanceof Wall) {
     		return "Wall";
     	}
@@ -99,7 +100,6 @@ public class Player {
     	if((b.getElementAt(tab[1], tab[0]) instanceof Treasure)){//The player steps on a treasure, the content is added to his money and the treasure is emptied
     	    Treasure tmp = (Treasure)b.getElementAt(tab[1], tab[0]);
     	    this.addMoney(tmp.getTreasureValue());
-    	    tmp.setTreasureValue(0);
             return "Treasure";
     	}
     	return "ok";
@@ -126,6 +126,20 @@ public class Player {
     	}
     }
     
+
+    public boolean endGameRequest(){ // Asks each player if they want to play another Game
+       
+        Communication c = new Communication(this);
+        boolean b = c.sendMessage("would you want to play again? (yes/no)");
+        if(b){ // if the message got successfully sent to the player
+            String s = c.returnInput();
+            if(s.equals("yes")){
+                return true;
+            }
+        }
+        return false; 
+    }
+
     public void killPlayer() {
     	isDead = true;
     }
@@ -181,6 +195,14 @@ public class Player {
 
     public void setReady(boolean b) {
         this.ready = b;
+    }
+
+    public void setMoney(int n){
+        this.money = n;
+    }
+
+    public void resurrect(){
+        this.isDead = false;
     }
 
     public void setUserName(String s) {
