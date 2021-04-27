@@ -1,6 +1,7 @@
 package server;
 
 import server.elements.*;
+import java.util.Random;
 
 public class Board {
   private Element[][] elements;
@@ -110,6 +111,138 @@ public class Board {
       }
     }
     return trePos;
+  }
+
+  public boolean placeElementRandomly(Element e){ //Places an element randomly on an empty case
+    Random rand = new Random();
+    int pos[]={-1,-1};
+    do{
+      pos[0] = rand.nextInt(this.getSizeY()-2);
+      pos[1] = rand.nextInt(this.getSizeX()-2);
+    }while(this.getElementAt(pos[1],pos[0])!=null);
+    this.setElementAt(e,pos[1],pos[0]);
+    return true;
+  }
+
+  public boolean fillElements(int hole, int tres){ // function that's used for the constructor we call upon for "110 CREATE", Only works with a board that has no holes or Treasures yet
+    int nbrTres = 0;
+    int nbrHole = 0;
+    while(nbrTres != tres || nbrHole != hole){
+      if(nbrTres < tres){
+        placeElementRandomly(new Treasure(100));
+        nbrTres++;
+      }
+      if(nbrHole < hole){
+        placeElementRandomly(new Hole());
+        nbrHole++;
+      }
+    }
+    return true;
+  }
+
+  public boolean fillWalls(){ //Wall generation on an empty board 
+    int[] posCenter = new int[2];
+    posCenter[0] = (this.elements.length - 1)/2;
+    posCenter[1] = (this.elements[posCenter[0]].length - 1)/2;
+    this.fillWallsInter(posCenter,"nw");
+    this.fillWallsInter(posCenter,"ne");
+    this.fillWallsInter(posCenter,"sw");
+    this.fillWallsInter(posCenter,"se");
+    return true;
+  }
+
+  public boolean fillWallsInter(int posCenter[], String s){//Intermediary function for fillWalls NB:Works only on a board With minimum 8*8 size
+    int x = posCenter[1];
+    int y = posCenter[0];
+    int it = 0;
+    if(s.equals("nw")){
+      x = x - 2;
+      y = y - 2;
+      while(this.withinBorders(x,y)){
+        this.setElementAt(new Wall() ,x,y);
+        this.setElementAt(new Wall() ,x+1,y);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x+1+i,y);
+        }
+        this.setElementAt(new Wall() ,x,y+1);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x,y+1+i);
+        }
+        it+=2;
+        x = x - 2;
+        y = y - 2;
+      }
+      return true;
+    }
+    if(s.equals("ne")){
+      x = x + 2;
+      y = y - 2;
+      while(this.withinBorders(x,y)){
+        this.setElementAt(new Wall() ,x,y);
+        this.setElementAt(new Wall() ,x-1,y);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x-1-i,y);
+        }
+        this.setElementAt(new Wall() ,x,y+1);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x,y+1+i);
+        }
+        it+=2;
+        x = x + 2;
+        y = y - 2;
+      }
+      return true;
+    }
+    if(s.equals("sw")){
+      x = x - 2;
+      y = y + 2;
+      while(this.withinBorders(x,y)){
+        this.setElementAt(new Wall() ,x,y);
+        this.setElementAt(new Wall() ,x+1,y);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x+1+i,y);
+        }
+        this.setElementAt(new Wall() ,x,y-1);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x,y-1-i);
+        }
+        it+=2;
+        x = x - 2;
+        y = y + 2;
+      }
+      return true;
+    }
+    if(s.equals("se")){
+      x = x + 2;
+      y = y + 2;
+      while(this.withinBorders(x,y)){
+        this.setElementAt(new Wall() ,x,y);
+        this.setElementAt(new Wall() ,x-1,y);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x-1-i,y);
+        }
+        this.setElementAt(new Wall() ,x,y-1);
+        for(int i=1;i<=it;i++){
+          this.setElementAt(new Wall() ,x,y-1-i);
+        }
+        it+=2;
+        x = x + 2;
+        y = y + 2;
+      }
+      return true;
+    }
+    return false;
+  }
+
+  public boolean withinBorders(int pos[]){
+    return (pos[0] < this.elements.length-1 && pos[0] > 0 && pos[1] < this.elements[0].length-1 && pos[1] > 0);
+  }
+
+  public boolean withinBorders(int x,int y){
+    int pos[] = new int[2];
+    pos[0] = y;
+    pos[1] = x;
+    return withinBorders(pos);
   }
 
   public int sumAllTreasures(){
