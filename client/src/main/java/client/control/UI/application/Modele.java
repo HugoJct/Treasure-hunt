@@ -2,6 +2,7 @@ package client.control.UI.application;
 
 import client.GameInfo;
 import client.control.UI.application.Main;
+import client.control.UI.application.Main.PrimeThread;
 import javafx.application.Application;
 
 import java.util.Random;
@@ -118,4 +119,12 @@ public class Modele {
     	}
     }
     */
+	
+	
+	public static void main(String[] args) {
+		PrimeThread pt = new Main.PrimeThread();
+		System.out.println("test1");
+		pt.run();
+		System.out.println("test2");
+	}
 }

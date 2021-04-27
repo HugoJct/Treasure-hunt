@@ -129,7 +129,6 @@ public class Main extends Application {
 		primaryStage.setResizable(false); //Not resizable
 		primaryStage.centerOnScreen(); //Window is centered on screen
 		
-		
 		primaryStage.setWidth(31*m.getColumns()); //Width
 		primaryStage.setHeight(31*m.getLines()); //Height
 		
@@ -237,7 +236,7 @@ public class Main extends Application {
 		b2.setLayoutX(primaryStage.getWidth()/2 - 43);
 		b2.setLayoutY(150);
 		
-		Timeline loop = new Timeline(new  KeyFrame(Duration.millis(30), new EventHandler<ActionEvent>() {
+		/*Timeline loop = new Timeline(new  KeyFrame(Duration.millis(30), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
 				m = new Modele();
@@ -245,16 +244,15 @@ public class Main extends Application {
 				primaryStage.setHeight(31*m.getLines()); //Height
 				Refresh(primaryStage);
 			}
-		}));
+		}));*/
 		
-		b1.setOnAction(e -> {Refresh(primaryStage);
-							loop.setCycleCount(Timeline.INDEFINITE);
-							loop.play();
-							});
-							 //primaryStage.centerOnScreen(); //Window is centered on screen
-							 //primaryStage.setWidth(31*m.getColumns()); //Width
-							 //primaryStage.setHeight(31*m.getLines()); //Height
-							 //primaryStage.setScene(SceneAllElements);});
+		b1.setOnAction(e -> {//Refresh(primaryStage);
+							/*loop.setCycleCount(Timeline.INDEFINITE);
+							loop.play();*/
+							 primaryStage.centerOnScreen(); //Window is centered on screen
+							 primaryStage.setWidth(31*m.getColumns()); //Width
+							 primaryStage.setHeight(31*m.getLines()); //Height
+							 primaryStage.setScene(SceneAllElements);});
 		
 		
 		b2.setOnAction((ActionEvent event) -> {

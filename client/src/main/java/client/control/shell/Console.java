@@ -46,8 +46,9 @@ public class Console implements Runnable {
 				case "y":
 					_com.sendMessage("152 START YES");
 					startRequested = false;
-					PrimeThread pt = new Main.PrimeThread();
-					pt.run();
+					/*PrimeThread pt = new Main.PrimeThread();
+					pt.run();*/
+					Application.launch(Main.class);
 					break;
 				case "n":
 					_com.sendMessage("152 START NO");
