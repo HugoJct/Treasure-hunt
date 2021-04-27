@@ -117,13 +117,13 @@ public class ServerMain {
 		}		
 	}
 
-	public static int createGame(String name, String ownerName) {		//this creates the game with the specified name 
+	public static int createGame(int gamemode, int sizeX, int sizeY, int holeNumber, int treasureNumber, int gameOwnerID) {		//this creates the game with the specified name 
 		int ownerID = -1;
 		for(Player p : connectedUsers)
-			if(p.getName().equals(ownerName))
+			if(p.getPlayerId() == gameOwnerID)
 				ownerID = p.getPlayerId();
 
-		Game g = new Game(name,ownerID);
+		Game g = new Game(gamemode,sizeX,sizeY,holeNumber,treasureNumber,gameOwnerID);
 		createGames.add(g);
 
 		Thread game = new Thread(g);
@@ -210,7 +210,7 @@ public class ServerMain {
 		return games;
 	}
 
-
+	/*
 	public static int resetGame(int id, String ownerName){
 		for(Game g : createGames){
 			if(g.getID() == id){
@@ -220,7 +220,7 @@ public class ServerMain {
 			}
 		}
 		return -1;
-	}
+	}*/
 
 	public static boolean everyoneIsDead(Game g) {
 		for (Player p : connectedUsers) {
@@ -231,7 +231,7 @@ public class ServerMain {
 			}
 		}
 		return true;
-	}
+	}/*
 
 	public static boolean redirectPlayers(Vector<Player> players){ // redirect players to another generated Game
 		if(players.size() == 0){
@@ -250,7 +250,7 @@ public class ServerMain {
 			g.addPlayer(p);
 		}
 		return true;
-	}
+	}*/
 
 	public static Game getGameFromCreateGames(int id){
 		for(Game g : createGames){

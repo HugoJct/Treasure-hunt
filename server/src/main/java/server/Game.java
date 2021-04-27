@@ -21,6 +21,7 @@ public class Game implements Runnable{
 	private boolean isRunning;
 	private String name;
 	private int capacity;
+	private int gamemode = 0;
 
 	private int ownerID = -1;
 
@@ -88,13 +89,14 @@ public class Game implements Runnable{
 		System.out.println(this.b);
 	}
 
-	public Game(String name, int ownerID, String m, int dimX, int dimY, int h, int t){
+	public Game(int m, int dimX, int dimY, int h, int t, int gameOwnerID){
 		this.isRunning = false;
+		this.gamemode = gamemode;
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
 		this.gameId = id;
-		this.ownerID = ownerID;
+		this.ownerID = gameOwnerID;
 		id++;
 		try{
 			this.name = name;
@@ -225,7 +227,7 @@ public class Game implements Runnable{
 		}
 		return ret;
 	}
-
+	/*
 	public void endGameRequest(){ 
 		ArrayList<Player> playerList = new ArrayList<Player>(players); //shallow copy of players
 		for(int i = 0 ; i<playerList.size();i++){
@@ -242,7 +244,7 @@ public class Game implements Runnable{
 			}
 		}
 		ServerMain.redirectPlayers(playersToRedirect);
-	}
+	}*/
 
 	public void start() {
 		this.isRunning = true;
