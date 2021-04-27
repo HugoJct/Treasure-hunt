@@ -86,7 +86,32 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 		System.out.println(this.b);
-	}/*
+	}
+
+	public Game(String name, int ownerID, String m, int dimX, int dimY, int h, int t){
+		this.isRunning = false;
+		this.name = "default";
+		this.capacity = 4;
+		this.b = new Board();
+		this.gameId = id;
+		this.ownerID = ownerID;
+		id++;
+		try{
+			this.name = name;
+			this.capacity = 2;  //minimal capacity for all games
+			b = new Board(dimX,dimY);
+			//Board generation
+			b.setBorder(); //Generation of borders
+			b.fillWalls(); // Generation of Walls adapting to the size of the board
+			b.fillElements(h,t); // Generation of Holes and Treasures
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		System.out.println(this.b);
+	}
+
+	/*
 
 	public Game(String name) {
 		this.isRunning = false;
