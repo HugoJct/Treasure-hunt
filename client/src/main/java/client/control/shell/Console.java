@@ -65,8 +65,13 @@ public class Console implements Runnable {
 			case "GETLIST":
 				listGames();
 				break;
-			case "CREATEGAME":
-				createGame(brokenCommand[1]);
+			case "CREATEGAME": 		//CREATEGAME <gamemode> <sizeX> <sizeY> <holeNumber> <treasureNumber>
+				if(brokenCommand.length != 6) {
+					System.out.println("Command syntax error");
+				} else {
+					createGame(Integer.parseInt(brokenCommand[1]),Integer.parseInt(brokenCommand[2]),Integer.parseInt(brokenCommand[3]),Integer.parseInt(brokenCommand[4]),Integer.parseInt(brokenCommand[5]));
+				
+				}
 				break;
 			case "JOIN":
 				joinGame(Integer.parseInt(brokenCommand[1]));
@@ -148,8 +153,8 @@ public class Console implements Runnable {
 		_com.sendMessage("100 HELLO PLAYER "+ Player.getName());
 	}
 
-	public void createGame(String name) {
-		_com.sendMessage("110 CREATE "+name+" "+_com.getPlayer().getName());
+	public void createGame(int gamemode, int sizeX, int sizeY, int holeNumber, int treasureNumber) {
+		_com.sendMessage("110 CREATE "+gamemode+" SIZE "+sizeX+" "+sizeY+" HOLE "+holeNumber+" TRES "+treasureNumber);
 	}
 
 	public void listGames() {
