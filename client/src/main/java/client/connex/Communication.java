@@ -185,7 +185,14 @@ public class Communication implements Runnable{
 					}
 				} 
 				break;
-			case "501":
+			case "500":
+				if (brokenCommand[1].equals(Player.getName())) {
+					GameInfo.setPlayable(true);
+					System.out.println("Your turn");
+					sendMessage("501 TURN UPDATED");
+				} else {
+					System.out.println(brokenCommand[1] + " turn");
+				}
 				break;
 			case "510":
 				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
@@ -215,6 +222,8 @@ public class Communication implements Runnable{
 				GameInfo.resetMoney();
 				System.out.println("U'R DEAD");
 				break;
+			case "902":
+				System.out.println("Not your turn to play");
 			default:
 				break; 
 		}
