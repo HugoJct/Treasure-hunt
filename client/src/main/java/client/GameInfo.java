@@ -28,6 +28,7 @@ public class GameInfo {
     private static String[] playerName = new String[0];
 
     private static boolean isDead = false;
+    private static boolean canPlay = false;
 
     private static int money = 0;
 
@@ -53,6 +54,10 @@ public class GameInfo {
     
     public static boolean getLifeState() {
         return isDead;
+    }
+
+    public static boolean getPlayable() {
+        return canPlay;
     }
 
     // to get the map size
@@ -170,6 +175,10 @@ public class GameInfo {
         treasuresPos[pos] = x;
         treasuresPos[pos+1] = y;
         treasuresPos[pos+2] = v;        
+    }
+
+    public static void setPlayable(boolean b) {
+        canPlay = b;
     }
 
     public static void removePlayer(String name) {    
