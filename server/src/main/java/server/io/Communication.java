@@ -88,6 +88,9 @@ public class Communication implements Runnable {
             case "LISTUSERS":
                 sendMessage(ServerMain.printConnectedUsers()); 
                 break;
+            case "100":
+                sendMessage("101 WELCOME "+p.getName());
+                break;
             case "110":                                             //110 CREATEGAME "name"
                 int id = ServerMain.createGame(Integer.parseInt(brokenCommand[2]),Integer.parseInt(brokenCommand[4]),Integer.parseInt(brokenCommand[5]),Integer.parseInt(brokenCommand[7]),Integer.parseInt(brokenCommand[9]),p.getPlayerId());
                 sendMessage("111 MAP CREATED " + id);

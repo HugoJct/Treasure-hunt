@@ -37,7 +37,7 @@ public class Game implements Runnable{
 		this.ownerID = ownerID;
 		id++;
 		try{
-			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
+			FileReader reader = new FileReader("src/main/java/server/maps/GameConfig.json");
 
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(reader);

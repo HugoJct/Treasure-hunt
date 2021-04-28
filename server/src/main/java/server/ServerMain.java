@@ -32,25 +32,31 @@ public class ServerMain {
 	public static Vector<Console> launchedCons = new Vector<>();
 
 	private static boolean isRunning = true;
-	private static ConnectionHandler ch;
 	private static Console console;
-	private static int port;
-	private static File configFile;
+
+	private static ConnectionHandler ch;
 
 	public static void main(String[] args) {
+		File configFile = null;
+		String configFilePath = "";
+		int port = -1;
 
 		try {
-			if(args.length >= 1)
-				configFile = new File(args[0]);
-			else
-				configFile = new File("src/main/java/server/config.json");
+			if(args.length >= 1) {
+				configFile = new File(configFilePath);
+				configFilePath = configFile.getPath();
+			} else {
+				configFilePath = "src/main/java/server/config.json";
+				configFile = new File(configFilePath);
+			}
 
 			FileReader reader = new FileReader(configFile);
 
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
-            port = ((Long) jsonObject.get("port")).intValue();
+            
+			port = ((Long) jsonObject.get("port")).intValue();
 
         }  catch(IOException e) {
             e.printStackTrace();
@@ -58,7 +64,8 @@ public class ServerMain {
             e.printStackTrace();
         }
 
-		ch = new ConnectionHandler(port);		//Launch the server	
+		ch = new ConnectionHandler(port,configFilePath);		//Launch the server	
+
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
 
@@ -314,7 +321,7 @@ public class ServerMain {
 			}
 		}
 		return -1;
-	}
+	}*/
 
 	public static Vector<Player> getConnectedUsers() {
 		return connectedUsers;
@@ -331,13 +338,5 @@ public class ServerMain {
 
 	public static boolean isRunning() {
 		return isRunning;	
-	}
-
-	public static int getPort() {
-		return port;
-	}
-
-	public static String getConfigFile() {
-		return configFile.getPath();
 	}
 }

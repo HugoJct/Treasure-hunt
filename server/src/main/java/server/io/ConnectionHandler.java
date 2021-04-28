@@ -18,17 +18,20 @@ public class ConnectionHandler implements Runnable{
 
 	Vector<Player> users = ServerMain.connectedUsers;
 	Vector<Communication> coms = ServerMain.launchedCom;
-	private int port;
 	ServerSocket serverSoc;
 
-	public ConnectionHandler(int port) {
+	private int port;
+	private String configFilePath;
+
+	public ConnectionHandler(int port, String configFilePath) {
 		this.port = port;
+		this.configFilePath = configFilePath;
 	}
 
 	public void run() {
-		System.out.println("Config file loaded: "+ServerMain.getConfigFile());
+		System.out.println("Config file loaded: "+this.configFilePath);
 		System.out.println("Server launched on port "+this.port);
-		try {		//This whole code could be turned into a thread to make things more readable and spare space into the main. 
+		try {		
 			serverSoc = new ServerSocket(this.port);	//opening the server
 			Socket client;					
 			while(ServerMain.isRunning()) {			//as long as the server is running
