@@ -5,6 +5,7 @@ public class Treasure extends Element {
 	private int value;
 
 	public Treasure(int value) {
+		super('T');
 	    this.value = value;
 	}
     
@@ -14,9 +15,5 @@ public class Treasure extends Element {
 
 	public int getTreasureValue() {
 		return this.value;
-	}
-    
-	public String toString() {
-		return "T";
 	}
 }

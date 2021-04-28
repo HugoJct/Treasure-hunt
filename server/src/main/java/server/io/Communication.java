@@ -6,11 +6,13 @@ import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import server.Player;
+import server.playingProps.Player;
+
 import server.ServerMain;
 import server.elements.Treasure;
 import server.elements.Element;
-import server.Game;
+
+import server.playingProps.Game;
 
 public class Communication implements Runnable {
     private String _msg;
