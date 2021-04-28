@@ -127,18 +127,6 @@ public class Player {
     }
     
 
-    public boolean endGameRequest(){ // Asks each player if they want to play another Game
-       
-        Communication c = new Communication(this);
-        boolean b = c.sendMessage("would you want to play again? (yes/no)");
-        if(b){ // if the message got successfully sent to the player
-            String s = c.returnInput();
-            if(s.equals("yes")){
-                return true;
-            }
-        }
-        return false; 
-    }
 
     public void killPlayer() {
     	isDead = true;
