@@ -1,4 +1,4 @@
-package server;
+package server.playingProps;
 
 import server.elements.*;
 import java.util.Random;

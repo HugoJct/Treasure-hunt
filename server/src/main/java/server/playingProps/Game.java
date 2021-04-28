@@ -1,4 +1,4 @@
-package server;
+package server.playingProps;
 
 import java.util.Vector;
 import java.util.ArrayList;
@@ -12,6 +12,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 
 import server.elements.*;
+
+import server.playingProps.Player;
+
+import server.ServerMain;
 
 public class Game implements Runnable{
 

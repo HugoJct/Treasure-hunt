@@ -1,9 +1,10 @@
 package server.io;
 
 import server.ServerMain;
-import server.Player;
+import server.playingProps.Player;
+
 import server.io.*;
-import server.Console;
+import server.io.Console;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -45,25 +46,13 @@ public class ConnectionHandler implements Runnable{
 					if(received[0].equals("100")) {							//if the received command is "100" (which means the client sends its name)
 						sc = new Player(client,received[3]);		//build the client manager 
 						com = new Communication(sc);
-						Thread console = new Thread(new Console(com));
-						console.start();
 					}
 
 					System.out.println(com.getName()+" is now connected");	//print in the server console
-					//Thread t = new Thread(sc);	//build the thread with the client manager created above
 					Thread c = new Thread(com);
 
 					users.add(sc);		//add the client to the list
 					coms.add(com);		//add the communication to the list
-					
-					for(Player sc2 : users) {	//list update 
-						if(!sc2.isConnected())	//if the client is disconnected
-							users.remove(sc2);	//it is removed from the list
-						/*else if(sc2.getName().equals("Hugo") && list.size() > 1) 	// This how to send a message
-							sc2.sendMessage("message à Hugo");						// To a specific user
-					*/}
-
-					//t.start();	//thread start
 					c.start();
 			}
 		} catch (IOException e) {

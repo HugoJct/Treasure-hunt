@@ -5,11 +5,11 @@ import server.elements.Hole;
 import server.elements.Treasure;
 import server.elements.Wall;
 
-import server.Board;
-import server.Player;
-import server.Game;
-import server.io.Communication;
+import server.playingProps.Board;
+import server.playingProps.Player;
+import server.playingProps.Game;
 
+import server.io.Communication;
 import server.io.ConnectionHandler;
 
 import java.util.Vector;
@@ -29,10 +29,10 @@ public class ServerMain {
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
-	public static Vector<Console> launchedCons = new Vector<>();
+	//public static Vector<Console> launchedCons = new Vector<>();
 
 	private static boolean isRunning = true;
-	private static Console console;
+	//private static Console console;
 
 	private static ConnectionHandler ch;
 
@@ -68,9 +68,6 @@ public class ServerMain {
 
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-
-		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
-		checkInput.start();
 	}
 
 	public static void broadcastMessage(String message) {		//method charged of executing the behaviour of the "broadcast" command
@@ -199,7 +196,7 @@ public class ServerMain {
 		}	
 		return list;
 	}
-
+	/*
 	public static String listGamesWithDetails(){
 		String games = "";
 		for(Game g : createGames){
@@ -215,18 +212,6 @@ public class ServerMain {
 			games += "]\n";
 		}
 		return games;
-	}
-
-	/*
-	public static int resetGame(int id, String ownerName){
-		for(Game g : createGames){
-			if(g.getID() == id){
-				String gameName = g.getName();
-				stopGame(g.getID());
-				return createGame(gameName, ownerName);
-			}
-		}
-		return -1;
 	}*/
 
 	public static boolean everyoneIsDead(Game g) {
@@ -238,26 +223,7 @@ public class ServerMain {
 			}
 		}
 		return true;
-	}/*
-
-	public static boolean redirectPlayers(Vector<Player> players){ // redirect players to another generated Game
-		if(players.size() == 0){
-			return false;
-		}
-		int oldGameID = players.get(0).getGameId();
-		for(Player p : players){
-			p.resurrect();
-			p.setMoney(0);
-			p.setReady(false);
-			p.leaveGame();
-		}
-		int newGameID = resetGame(oldGameID, players.get(0).getName());
-		Game g = getGameFromCreateGames(newGameID);
-		for(Player p : players){
-			g.addPlayer(p);
-		}
-		return true;
-	}*/
+	}
 
 	public static Game getGameFromCreateGames(int id){
 		for(Game g : createGames){
@@ -321,7 +287,7 @@ public class ServerMain {
 			}
 		}
 		return -1;
-	}*/
+	}
 
 	public static Vector<Player> getConnectedUsers() {
 		return connectedUsers;
