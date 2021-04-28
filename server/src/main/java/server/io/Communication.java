@@ -52,7 +52,6 @@ public class Communication implements Runnable {
          *  read the input
          *  print it
          *  print if user is disconected
-         * 
          */
 
         while(ServerMain.isRunning()) {
@@ -164,6 +163,11 @@ public class Communication implements Runnable {
                 break;
 
             case "501":
+                if (g.getGameMod() != 0) {
+
+                } else {
+                    sendMessage("speeding contest, no rounds");
+                }
                 break;
 
             case "512":
@@ -171,6 +175,10 @@ public class Communication implements Runnable {
                  * WIP : TODO
                  */
                 System.out.println(brokenCommand[1] + " confirmation");
+                break;
+
+            case "902":
+                if (g.)
                 break;
 
             default:
@@ -306,6 +314,8 @@ public class Communication implements Runnable {
                             }
                             broadcastInGame("510 "+p.getName()+" POS "+p.getPos()[1]+" "+p.getPos()[0],g.getGameId());
                         }
+                        // define round if gameMod 1
+                        
                     } else {
                         String playersNotReady = "";
                         for(Player pl : g.getPlayers()) {

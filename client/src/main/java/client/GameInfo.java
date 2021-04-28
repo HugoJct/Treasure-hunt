@@ -31,6 +31,7 @@ public class GameInfo {
     private static boolean canPlay = false;
 
     private static int money = 0;
+    private static int gameMod = -1;
 
     // to get various elements
     public static int getHoles() {
@@ -58,6 +59,10 @@ public class GameInfo {
 
     public static boolean getPlayable() {
         return canPlay;
+    }
+
+    public static int getGameMod() {
+        return gameMod;
     }
 
     // to get the map size
@@ -123,6 +128,10 @@ public class GameInfo {
             return new int[0][0];
         else
             return availableGameInfos;
+    }
+
+    public static void setGameMod(int g) {
+        gameMod = g;
     }
 
     // to set each element number 

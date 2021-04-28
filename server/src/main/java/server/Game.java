@@ -289,6 +289,10 @@ public class Game implements Runnable{
 		return this.gameId;
 	}
 
+	public int getGameMod() {
+		return this.gamemode;
+	} 
+
 	public String toString() {
 		String s = this.gameId + " " + this.name;
 		for(Player p : players)
