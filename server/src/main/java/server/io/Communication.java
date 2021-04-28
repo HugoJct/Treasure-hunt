@@ -180,7 +180,7 @@ public class Communication implements Runnable {
                 break;
 
             case "902":
-                if (g.)
+                //if (g.)
                 break;
 
             default:

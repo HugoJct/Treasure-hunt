@@ -214,6 +214,28 @@ public class ServerMain {
 		return games;
 	}*/
 
+	public static Player[] getPlayersInGame(int id) {
+		Player[] listP = new Player[listLength(id)];
+		int i = 0;
+		for (Player p : connectedUsers) {
+			if (p.getGameId() == id) {
+				listP[i] = p;
+				i+=1;
+			}
+		}
+		return listP;
+	}
+	public static int listLength(int id) {
+		int i = 0;
+		for (Player p : connectedUsers) {
+			if (p.getGameId() == id) {
+				i++;
+			}
+		}		
+		return i;
+	}
+
+
 	public static boolean everyoneIsDead(Game g) {
 		for (Player p : connectedUsers) {
 			if (p.getGameId() == g.getGameId()) {
