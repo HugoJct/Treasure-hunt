@@ -223,7 +223,7 @@ public class Communication implements Runnable{
 				System.out.println("U'R DEAD");
 				break;
 			case "902":
-				System.out.println("Not your turn to play");
+				System.out.println("Not your round");
 			default:
 				break; 
 		}

@@ -26,6 +26,9 @@ public class Game implements Runnable{
 	private String name;
 	private int capacity;
 	private int gamemode = 0;
+	private int playerRoundID = -1;
+
+	private boolean[] confirmations;
 
 	private int ownerID = -1;
 
@@ -95,7 +98,7 @@ public class Game implements Runnable{
 
 	public Game(int m, int dimX, int dimY, int h, int t, int gameOwnerID){
 		this.isRunning = false;
-		this.gamemode = gamemode;
+		this.gamemode = m;
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
@@ -127,6 +130,15 @@ public class Game implements Runnable{
 		this.gameId = id;
 		this.id++;
 	}*/
+
+	public int getPlayerRound() {
+		return this.playerRoundID;
+	}
+
+	public boolean[] getConfirmations() {
+		return this.confirmations;
+	}
+
 
 	public String getName(){
 		return this.name;
@@ -264,6 +276,20 @@ public class Game implements Runnable{
 		}
 		return b;
 	}
+
+	public void setPlayerRound(int id) {
+		this.playerRoundID = id;
+	}
+	public void setConfirmations(boolean[] b) {
+		this.confirmations = b;
+	}
+	public void setConfirmations(int pos) {
+		this.confirmations[pos] = true;
+	}
+	public void setGameMod(int m) {
+		this.gamemode = m;
+	} 
+
 
 	public int getID() {
 		return this.id;

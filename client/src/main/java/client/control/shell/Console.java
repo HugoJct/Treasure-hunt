@@ -86,7 +86,7 @@ public class Console implements Runnable {
 				getTreasures();
 				break;
 			case "MOVE":
-				if (GameInfo.getPlayable() == true && GameInfo.getLifeState() == false) {
+				if (GameInfo.getLifeState() == false) {
 					move(brokenCommand[1]);
 				} else {
 					System.out.println("You can't, you are dead...");
