@@ -1,6 +1,6 @@
 package client.view.shelldisplay;
 
-import server.Board;
+import server.playingProps.Board;
 import server.elements.*;
 
 public class ShellDisplay {

@@ -3,10 +3,6 @@ package server.elements;
 public class Wall extends Element {
 
 	public Wall() {
+		super('W');
 	}
-    
-	public String toString() {
-		return "W";
-	}
-
 }

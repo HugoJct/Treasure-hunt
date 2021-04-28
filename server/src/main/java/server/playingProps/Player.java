@@ -1,4 +1,4 @@
-package server;
+package server.playingProps;
 
 import server.elements.*;
 import server.io.Communication;
@@ -10,6 +10,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.Random;
+
+import server.playingProps.Game;
+import server.playingProps.Board;
+
+import server.ServerMain;
 
 public class Player {
     //player attributes
@@ -77,7 +82,7 @@ public class Player {
     	this.money += amount;
     }
 
-    protected void setStartingPos(Board b){ //initiate beginning positions randomly for players
+    public void setStartingPos(Board b){ //initiate beginning positions randomly for players
     	Random rand = new Random();
     	int[] pos = {-1,-1};
     	do{

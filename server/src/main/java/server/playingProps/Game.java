@@ -1,4 +1,4 @@
-package server;
+package server.playingProps;
 
 import java.util.Vector;
 import java.util.ArrayList;
@@ -12,6 +12,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 
 import server.elements.*;
+
+import server.playingProps.Player;
+
+import server.ServerMain;
 
 public class Game implements Runnable{
 
@@ -37,7 +41,7 @@ public class Game implements Runnable{
 		this.ownerID = ownerID;
 		id++;
 		try{
-			FileReader reader = new FileReader("src/main/java/server/GameConfig.json");
+			FileReader reader = new FileReader("src/main/java/server/maps/GameConfig.json");
 
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(reader);

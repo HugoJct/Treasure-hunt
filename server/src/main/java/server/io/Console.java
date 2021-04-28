@@ -1,9 +1,10 @@
-package server;
+package server.io;
 
 import server.io.*;
 import server.io.Communication;
-import server.Game;
-import server.Player;
+
+import server.playingProps.Game;
+import server.playingProps.Player;
 
 import server.elements.Treasure;
 
@@ -21,6 +22,5 @@ public class Console implements Runnable {
 
 	@Override
 	public void run() {
-		_com.sendMessage("101 WELCOME "+_com.getPlayer().getName());
 	}
 }
