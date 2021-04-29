@@ -165,6 +165,7 @@ public class Communication implements Runnable {
                 break;
 
             case "512":
+                System.out.println(p.getName() + " confirmation");
                 Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
                 int checkForRound = 0;
                 for (int i = 0 ; i < playerList.length ; i++) {
@@ -188,7 +189,7 @@ public class Communication implements Runnable {
                                 i = -1;
                             }
                             g.setPlayerRound(playerList[i+1].getPlayerId());
-                            p = playerList[i+1];
+                            playerToBroadcast = playerList[i+1];
                             break;
                         }
                     }
@@ -344,8 +345,9 @@ public class Communication implements Runnable {
                         }
                         if (g.getGameMod() != 0) {
                             Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
+                            g.setConfirmations(new boolean[playerList.length]);
                             g.setPlayerRound(playerList[1].getPlayerId());
-                            broadcastInGame("500 " + playerList[1].getName() + " TURN", g.getGameId());
+                            broadcastInGame("500 " + playerList[0].getName() + " TURN", g.getGameId());
                         }
                     } else {
                         String playersNotReady = "";
