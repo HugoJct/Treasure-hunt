@@ -270,7 +270,7 @@ public class Communication implements Runnable {
         if (p.getPlayerId() != g.getPlayerRound() && g.getGameMod() != 0) {
             sendMessage("902 NOT YOUR TURN");
             return;
-        } else {
+        } else if (p.getPlayerId() == g.getPlayerRound()) {
             switch(brokenCommand[1]) {
                 case "GOUP":
                     pos[0]--;
@@ -351,12 +351,12 @@ public class Communication implements Runnable {
                             }
                             broadcastInGame("510 "+p.getName()+" POS "+p.getPos()[1]+" "+p.getPos()[0],g.getGameId());
                         }
-                        if (g.getGameMod() != 0) {
+                        /* if (g.getGameMod() != 0) {
                             Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
                             g.setConfirmations(new boolean[playerList.length]);
                             g.setPlayerRound(playerList[1].getPlayerId());
                             broadcastInGame("500 " + playerList[0].getName() + " TURN", g.getGameId());
-                        }
+                        } */
                     } else {
                         String playersNotReady = "";
                         for(Player pl : g.getPlayers()) {
