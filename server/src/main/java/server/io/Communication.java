@@ -168,6 +168,12 @@ public class Communication implements Runnable {
                 System.out.println(p.getName() + " confirmation");
                 Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
                 int checkForRound = 0;
+                if (g.getConfirmations() == null) {
+                    g.setConfirmations(new boolean[playerList.length]);
+                }
+                if (g.getPlayerRound() == -1) {
+                    g.setPlayerRound(0);
+                }
                 for (int i = 0 ; i < playerList.length ; i++) {
                     if (g.getConfirmations()[i] == false) {
                         g.setConfirmations(i);
@@ -181,6 +187,7 @@ public class Communication implements Runnable {
                         checkForRound++;
                     }
                 }
+                System.out.println(checkForRound);
                 if (checkForRound == playerList.length) {
                     Player playerToBroadcast = null;
                     for (int i = 0 ; i<playerList.length ; i++) {
@@ -194,6 +201,7 @@ public class Communication implements Runnable {
                         }
                     }
                     broadcastInGame("500 " + playerToBroadcast.getName() + " TURN", g.getGameId());
+                    g.setConfirmations(new boolean[playerList.length]);
                 }
                 break;
 

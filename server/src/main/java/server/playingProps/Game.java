@@ -139,7 +139,6 @@ public class Game implements Runnable{
 		return this.confirmations;
 	}
 
-
 	public String getName(){
 		return this.name;
 	}
