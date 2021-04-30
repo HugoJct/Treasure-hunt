@@ -5,11 +5,11 @@ import server.elements.Hole;
 import server.elements.Treasure;
 import server.elements.Wall;
 
-import server.Board;
-import server.Player;
-import server.Game;
-import server.io.Communication;
+import server.playingProps.Board;
+import server.playingProps.Player;
+import server.playingProps.Game;
 
+import server.io.Communication;
 import server.io.ConnectionHandler;
 
 import java.util.Vector;
@@ -29,28 +29,34 @@ public class ServerMain {
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
-	public static Vector<Console> launchedCons = new Vector<>();
+	//public static Vector<Console> launchedCons = new Vector<>();
 
 	private static boolean isRunning = true;
+	//private static Console console;
+
 	private static ConnectionHandler ch;
-	private static Console console;
-	private static int port;
-	private static File configFile;
 
 	public static void main(String[] args) {
+		File configFile = null;
+		String configFilePath = "";
+		int port = -1;
 
 		try {
-			if(args.length >= 1)
-				configFile = new File(args[0]);
-			else
-				configFile = new File("src/main/java/server/config.json");
+			if(args.length >= 1) {
+				configFile = new File(configFilePath);
+				configFilePath = configFile.getPath();
+			} else {
+				configFilePath = "src/main/java/server/config.json";
+				configFile = new File(configFilePath);
+			}
 
 			FileReader reader = new FileReader(configFile);
 
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
-            port = ((Long) jsonObject.get("port")).intValue();
+            
+			port = ((Long) jsonObject.get("port")).intValue();
 
         }  catch(IOException e) {
             e.printStackTrace();
@@ -58,12 +64,10 @@ public class ServerMain {
             e.printStackTrace();
         }
 
-		ch = new ConnectionHandler(port);		//Launch the server	
+		ch = new ConnectionHandler(port,configFilePath);		//Launch the server	
+
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-
-		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
-		checkInput.start();
 	}
 
 	public static void broadcastMessage(String message) {		//method charged of executing the behaviour of the "broadcast" command
@@ -117,13 +121,13 @@ public class ServerMain {
 		}		
 	}
 
-	public static int createGame(String name, String ownerName) {		//this creates the game with the specified name 
+	public static int createGame(int gamemode, int sizeX, int sizeY, int holeNumber, int treasureNumber, int gameOwnerID) {		//this creates the game with the specified name 
 		int ownerID = -1;
 		for(Player p : connectedUsers)
-			if(p.getName().equals(ownerName))
+			if(p.getPlayerId() == gameOwnerID)
 				ownerID = p.getPlayerId();
 
-		Game g = new Game(name,ownerID);
+		Game g = new Game(gamemode,sizeX,sizeY,holeNumber,treasureNumber,gameOwnerID);
 		createGames.add(g);
 
 		Thread game = new Thread(g);
@@ -192,7 +196,7 @@ public class ServerMain {
 		}	
 		return list;
 	}
-
+	/*
 	public static String listGamesWithDetails(){
 		String games = "";
 		for(Game g : createGames){
@@ -208,6 +212,26 @@ public class ServerMain {
 			games += "]\n";
 		}
 		return games;
+	}*/
+
+	public static boolean everyoneIsDead(Game g) {
+		for (Player p : connectedUsers) {
+			if (p.getGameId() == g.getGameId()) {
+				if (p.isPlayerDead() == false) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public static Game getGameFromCreateGames(int id){
+		for(Game g : createGames){
+			if(g.getGameId() == id){
+				return g;
+			}
+		}
+		return null;
 	}
 
 
@@ -280,13 +304,5 @@ public class ServerMain {
 
 	public static boolean isRunning() {
 		return isRunning;	
-	}
-
-	public static int getPort() {
-		return port;
-	}
-
-	public static String getConfigFile() {
-		return configFile.getPath();
 	}
 }

@@ -1,6 +1,7 @@
-package server;
+package server.playingProps;
 
 import server.elements.*;
+import server.io.Communication;
 
 import java.net.Socket;
 import java.io.IOException;
@@ -9,6 +10,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.Random;
+
+import server.playingProps.Game;
+import server.playingProps.Board;
+
+import server.ServerMain;
 
 public class Player {
     //player attributes
@@ -76,7 +82,7 @@ public class Player {
     	this.money += amount;
     }
 
-    protected void setStartingPos(Board b){ //initiate beginning positions randomly for players
+    public void setStartingPos(Board b){ //initiate beginning positions randomly for players
     	Random rand = new Random();
     	int[] pos = {-1,-1};
     	do{
@@ -86,7 +92,7 @@ public class Player {
     	this.setPos(b, pos);
     }
 
-    protected String setPos(Board b, int[] tab) {
+    public String setPos(Board b, int[] tab) {
     	if(b.getElementAt(tab[1], tab[0]) instanceof Wall) {
     		return "Wall";
     	}
@@ -99,7 +105,6 @@ public class Player {
     	if((b.getElementAt(tab[1], tab[0]) instanceof Treasure)){//The player steps on a treasure, the content is added to his money and the treasure is emptied
     	    Treasure tmp = (Treasure)b.getElementAt(tab[1], tab[0]);
     	    this.addMoney(tmp.getTreasureValue());
-    	    tmp.setTreasureValue(0);
             return "Treasure";
     	}
     	return "ok";
@@ -126,6 +131,8 @@ public class Player {
     	}
     }
     
+
+
     public void killPlayer() {
     	isDead = true;
     }
@@ -181,6 +188,14 @@ public class Player {
 
     public void setReady(boolean b) {
         this.ready = b;
+    }
+
+    public void setMoney(int n){
+        this.money = n;
+    }
+
+    public void resurrect(){
+        this.isDead = false;
     }
 
     public void setUserName(String s) {

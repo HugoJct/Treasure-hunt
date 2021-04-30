@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import java.net.Socket;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -18,17 +18,16 @@ public class Communication implements Runnable{
 
     Socket s;
     BufferedReader in;
-    PrintStream out;
+    PrintWriter out;
     Player p;
     String serverMsg = "";
-    private static int lastMoveRequested = 0;
 
     public Communication(Player p) {
         this.p = p;
     	this.s = p.getSocket();
     	try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintStream(s.getOutputStream());
+            out = new PrintWriter(s.getOutputStream());
         } catch( IOException e) {
             e.printStackTrace();
         }
@@ -69,44 +68,62 @@ public class Communication implements Runnable{
         String[] brokenCommand = breakCommand(command);
 		switch(brokenCommand[0]) {
 			// Server -> Client
+			case "121":
+				updateGameList(brokenCommand);
+
+				int mapID = p.getGameId();
+				int[][] games = GameInfo.getJoinableGames();
+				for(int i=0;i<games.length;i++) {
+					if(games[i][0] == mapID) {
+						GameInfo.setMap(games[i][2],games[i][3]);
+						break;
+					}
+				}
+				break;
+			case "131":
+				sendMessage("120 GETLIST");
+				break;
 			case "152":
 				System.out.println("Ready to Play ? y/N : ");
 				Console.startRequested = true;
 				break;
 			case "153":
-                try {
-                    sendMessage("400 GETHOLES");
-                    Thread.sleep(5);
-                    sendMessage("410 GETTREASURES");
-					Thread.sleep(5);
-                    sendMessage("420 GETWALLS");
-                }
-                catch(InterruptedException e) {
-                    
-                }
+                sendMessage("400 GETHOLES");
+                sendMessage("410 GETTREASURES");
+                sendMessage("420 GETWALLS");
+                GameInfo.setStarted(true);
 				break;
 			case "201":
-				if (lastMoveRequested == 1) {
-					GameInfo.up();
+				int last = Console.getLastMove();
+				int[] pos = GameInfo.getPlayerPos(p.getName());
+				int j=0;
+				if (last == 1) {
+					System.out.println("MOVE OK : UP");
+					pos[1]--;
 				}
-				else if (lastMoveRequested == 2) {
-					GameInfo.down();
+				else if (last == 2) {
+					System.out.println("MOVE OK : DOWN");
+					pos[1]++;
 				}
-				else if (lastMoveRequested == 3) {
-					GameInfo.right();
+				else if (last == 3) {
+					System.out.println("MOVE OK : RIGHT");
+					pos[0]++;
 				}
-				else if (lastMoveRequested == 4) {
-					GameInfo.left();
-				}/*
+				else if (last == 4) {
+					System.out.println("MOVE OK : LEFT");
+					pos[0]--;
+				}
 				else {
 					System.out.println("Error : no move engaged");
-				}*/
+				}
+				GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");
 				break;
 			case "203":
-				System.out.println("Treasure found: "+brokenCommand[4]+"$");
+				GameInfo.addMoney(Integer.parseInt(brokenCommand[4]));
+				System.out.println("Treasure found: "+brokenCommand[4]+"$, you now have "+GameInfo.getMoney()+"$");
 				break;
 			// set holes data
 			case "401":
@@ -133,8 +150,6 @@ public class Communication implements Runnable{
 				if (brokenCommand[1].equals("NUMBER")) {
 					GameInfo.setTreasures(Integer.parseInt(brokenCommand[2]));
 					GameInfo.initTreasuresPos();
-					System.out.println(GameInfo.getTreasures());
-					System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
 				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
 					int fill = 0;
 					for(int i=0;i<(GameInfo.getTreasures() * 3);i++) {
@@ -170,27 +185,71 @@ public class Communication implements Runnable{
 					}
 				} 
 				break;
-			case "501":
+			case "500":
+				if (brokenCommand[1].equals(Player.getName())) {
+					GameInfo.setPlayable(true);
+					System.out.println("Your turn");
+					sendMessage("501 TURN UPDATED");
+				} else {
+					System.out.println(brokenCommand[1] + " turn");
+				}
 				break;
 			case "510":
 				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				Player.printGameBoard();
 				break;
 			case "511":
 				if (brokenCommand[2].equals("UPDATED")) {
 
 				}
 				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
-
+					GameInfo.setTreasures(GameInfo.getTreasures()-1);
+					GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+					GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+					sendMessage("512 " + Player.getName() + " UPDATED");
 				}
 				else {
 					sendMessage("UNKNOWN");
 				}
+				Player.printGameBoard();
+				break;
+			case "520":
+				GameInfo.removePlayer(brokenCommand[1]);
+				sendMessage("521 " + Player.getName() + " UPDATED");
 				break;
 			case "666":
+				GameInfo.setLifeState(true);
+				GameInfo.resetMoney();
 				System.out.println("U'R DEAD");
 				break;
+			case "902":
+				System.out.println("Not your turn to play");
 			default:
 				break; 
+		}
+	}
+
+	public void updateGameList(String args[]) {
+		if(args[1].equals("NUMBER")) {
+			GameInfo.setGameNumber(Integer.parseInt(args[2]));
+		} else if(args[1].equals("MESS") && args[3].equals("ID")) {
+			int[] tab = new int[6];
+			for(int i=0;i<6;i++)
+				tab[i] = Integer.parseInt(args[4+i]);
+			int games[][] = GameInfo.getJoinableGames();
+			for(int i=0;i<games.length;i++) {
+				boolean insert = true;
+				for(int j=0;j<games[i].length;j++) {
+					if(games[i][j] != 0) {
+						insert = false;
+						break;
+					}
+				}
+				if(insert) {
+					GameInfo.setGamePos(i,tab);
+					break;
+				}
+			}
 		}
 	}
 
