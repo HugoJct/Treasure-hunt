@@ -168,41 +168,44 @@ public class Communication implements Runnable {
                 System.out.println(p.getName() + " confirmation");
                 Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
                 int checkForRound = 0;
-                if (g.getConfirmations() == null) {
-                    g.setConfirmations(new boolean[playerList.length]);
-                }
-                if (g.getPlayerRound() == -1) {
-                    g.setPlayerRound(0);
-                }
-                for (int i = 0 ; i < playerList.length ; i++) {
-                    if (g.getConfirmations()[i] == false) {
-                        g.setConfirmations(i);
-                        break;
+                if (g.getGameMod() != 0) {
+                    if (g.getConfirmations() == null) {
+                        g.setConfirmations(new boolean[playerList.length]);
                     }
-                }
-                for (int i = 0 ; i<playerList.length ; i++) {
-                    if (g.getConfirmations()[i] == false) {
-                        break;
-                    } else {
-                        checkForRound++;
+                    if (g.getPlayerRound() == -1) {
+                        g.setPlayerRound(0);
                     }
-                }
-                System.out.println(checkForRound);
-                if (checkForRound == playerList.length) {
-                    Player playerToBroadcast = null;
-                    for (int i = 0 ; i<playerList.length ; i++) {
-                        if (g.getPlayerRound() == playerList[i].getPlayerId()) {
-                            if (i == playerList.length-1) {
-                                i = -1;
-                            }
-                            g.setPlayerRound(playerList[i+1].getPlayerId());
-                            playerToBroadcast = playerList[i+1];
+                    for (int i = 0 ; i < playerList.length ; i++) {
+                        if (g.getConfirmations()[i] == false) {
+                            g.setConfirmations(i);
                             break;
                         }
                     }
-                    broadcastInGame("500 " + playerToBroadcast.getName() + " TURN", g.getGameId());
-                    g.setConfirmations(new boolean[playerList.length]);
+                    for (int i = 0 ; i<playerList.length ; i++) {
+                        if (g.getConfirmations()[i] == false) {
+                            break;
+                        } else {
+                            checkForRound++;
+                        }
+                    }
+                    System.out.println(checkForRound);
+                    if (checkForRound == playerList.length) {
+                        Player playerToBroadcast = null;
+                        for (int i = 0 ; i<playerList.length ; i++) {
+                            if (g.getPlayerRound() == playerList[i].getPlayerId()) {
+                                if (i == playerList.length-1) {
+                                    i = -1;
+                                }
+                                g.setPlayerRound(playerList[i+1].getPlayerId());
+                                playerToBroadcast = playerList[i+1];
+                                break;
+                            }
+                        }
+                        broadcastInGame("500 " + playerToBroadcast.getName() + " TURN", g.getGameId());
+                        g.setConfirmations(new boolean[playerList.length]);
+                    }
                 }
+
                 break;
 
             case "501":
@@ -254,7 +257,7 @@ public class Communication implements Runnable {
 
 
 
-    public void playerMouvementProcess(Game g, Player p, String[] brokenCommand) {
+    public boolean playerMouvementProcess(Game g, Player p, String[] brokenCommand) {
         /**
          * try to move the curent player
          * check if there is something on the new position
@@ -269,8 +272,8 @@ public class Communication implements Runnable {
         int[] pos = p.getPos();
         if (p.getPlayerId() != g.getPlayerRound() && g.getGameMod() != 0) {
             sendMessage("902 NOT YOUR TURN");
-            return;
-        } else if (p.getPlayerId() == g.getPlayerRound()) {
+            return false;
+        } else {
             switch(brokenCommand[1]) {
                 case "GOUP":
                     pos[0]--;
@@ -322,7 +325,7 @@ public class Communication implements Runnable {
                 }
             }
         }
-
+        return true;
     }
 
 
@@ -351,12 +354,6 @@ public class Communication implements Runnable {
                             }
                             broadcastInGame("510 "+p.getName()+" POS "+p.getPos()[1]+" "+p.getPos()[0],g.getGameId());
                         }
-                        /* if (g.getGameMod() != 0) {
-                            Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
-                            g.setConfirmations(new boolean[playerList.length]);
-                            g.setPlayerRound(playerList[1].getPlayerId());
-                            broadcastInGame("500 " + playerList[0].getName() + " TURN", g.getGameId());
-                        } */
                     } else {
                         String playersNotReady = "";
                         for(Player pl : g.getPlayers()) {
