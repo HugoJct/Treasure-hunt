@@ -192,20 +192,25 @@ public class GameInfo {
 
     public static void removePlayer(String name) {    
         String[] playerNameBis = new String[playerName.length-1];
+        int j = 0;
         for (int i = 0 ; i<playerName.length ; i++) {
             if (playerName[i].contentEquals(name)) {
                 removePlayerPos(i*2);
             } else {
-                playerNameBis[i] = playerName[i];
+                playerNameBis[j] = playerName[i];
+                j+=1;
             }
         }
         playerName = playerNameBis;
     }
     public static void removePlayerPos(int pos) {
         int[] playerPosBis = new int[playerPos.length-2];
+        int j = 0;
         for (int i = 0 ; i<playerPos.length ; i+=2) {
             if (i != pos) {
-                playerPosBis[i] = playerPos[i];
+                playerPosBis[j] = playerPos[i];
+                playerPosBis[j+1] = playerPos[i+1];
+                j+=2;
             }
         }
         playerPos = playerPosBis;
