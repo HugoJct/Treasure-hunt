@@ -166,7 +166,7 @@ public class Communication implements Runnable {
 
             case "512":
                 System.out.println(p.getName() + " : position updated CONFIRMATION");
-                roundManager(g, p);
+                roundManager(g, p, 0);
                 break;
 
             case "501":
@@ -177,7 +177,7 @@ public class Communication implements Runnable {
                 break;
             case "521":
                 System.out.println(p.getName() + " : player state updated CONFIRMATION");
-                roundManager(g, p);
+                roundManager(g, p, 1);
                 break;
             default:
                 sendMessage("999 COMMAND ERROR");
@@ -185,12 +185,13 @@ public class Communication implements Runnable {
         }
     }
 
-    public void roundManager(Game g, Player p) {
+    public void roundManager(Game g, Player p, int caseVal) {
         Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
         int checkForRound = 0;
         if (g.getGameMod() != 0) {
-            if (g.getConfirmations() == null) {
+            if (g.getConfirmations() == null || caseVal == 1) {
                 g.setConfirmations(new boolean[playerList.length]);
+                System.out.println("CONSTRUCT");
             }
             if (g.getPlayerRound() == -1) {
                 g.setPlayerRound(0);
@@ -201,7 +202,7 @@ public class Communication implements Runnable {
                     break;
                 }
             }
-            for (int i = 0 ; i<playerList.length ; i++) {
+            for (int i = 0 ; i<g.getConfirmations().length ; i++) {
                 if (g.getConfirmations()[i] == false) {
                     break;
                 } else {
@@ -209,6 +210,7 @@ public class Communication implements Runnable {
                 }
             }
             System.out.println(checkForRound);
+            System.out.println(playerList.length);
             if (checkForRound == playerList.length) {
                 Player playerToBroadcast = null;
                 for (int i = 0 ; i<playerList.length ; i++) {
@@ -225,6 +227,7 @@ public class Communication implements Runnable {
                 }
                 broadcastInGame("500 " + playerToBroadcast.getName() + " TURN", g.getGameId());
                 g.setConfirmations(new boolean[playerList.length]);
+
             }
         }
     }
