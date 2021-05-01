@@ -55,7 +55,7 @@ public class Console implements Runnable {
 			return;
 		}
 		switch(brokenCommand[0]) {
-			// Client -> Client
+			// Client -> Server
 			case "UNKNOWN":
 				System.out.println("Server doesn't recognised command");
 				break;
@@ -95,7 +95,6 @@ public class Console implements Runnable {
 			 *	Every case that follows is to be removed later as they are just used for debugging
 			 *
 			 */
-			
 			case "GETHOLES":
 				getHoles();
 				break;

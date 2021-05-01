@@ -94,29 +94,7 @@ public class Communication implements Runnable{
                 GameInfo.setStarted(true);
 				break;
 			case "201":
-				int last = Console.getLastMove();
-				int[] pos = GameInfo.getPlayerPos(p.getName());
-				int j=0;
-				if (last == 1) {
-					System.out.println("MOVE OK : UP");
-					pos[1]--;
-				}
-				else if (last == 2) {
-					System.out.println("MOVE OK : DOWN");
-					pos[1]++;
-				}
-				else if (last == 3) {
-					System.out.println("MOVE OK : RIGHT");
-					pos[0]++;
-				}
-				else if (last == 4) {
-					System.out.println("MOVE OK : LEFT");
-					pos[0]--;
-				}
-				else {
-					System.out.println("Error : no move engaged");
-				}
-				GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
+				updatePlayerPos(brokenCommand);
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");
@@ -263,6 +241,32 @@ public class Communication implements Runnable{
 				}
 			}
 		}
+	}
+
+	public void updatePlayerPos(String args[]) {
+		int last = Console.getLastMove();
+		int[] pos = GameInfo.getPlayerPos(p.getName());
+		int j=0;
+		if (last == 1) {
+			System.out.println("MOVE OK : UP");
+			pos[1]--;
+		}
+		else if (last == 2) {
+			System.out.println("MOVE OK : DOWN");
+			pos[1]++;
+		}
+		else if (last == 3) {
+			System.out.println("MOVE OK : RIGHT");
+			pos[0]++;
+		}
+		else if (last == 4) {
+			System.out.println("MOVE OK : LEFT");
+			pos[0]--;
+		}
+		else {
+			System.out.println("Error : no move engaged");
+		}
+		GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
 	}
 
 	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces

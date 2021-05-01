@@ -43,7 +43,7 @@ public class ConnectionHandler implements Runnable{
 					String[] received = breakCommand(in.readLine());		//we receive an input from the client
 					Player sc = null;
 					Communication com = null;
-					if(received[0].equals("100")) {							//if the received command is "100" (which means the client sends its name)
+					if(received[0].equals("100")) {							//if the received command is "100" (which means the client their its name)
 						sc = new Player(client,received[3]);		//build the client manager 
 						com = new Communication(sc);
 					}
