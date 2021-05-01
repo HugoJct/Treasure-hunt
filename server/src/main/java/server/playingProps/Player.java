@@ -1,7 +1,8 @@
-package server;
+package server.playingProps;
 
 import server.elements.*;
 import server.io.Communication;
+import server.ServerMain;
 
 import java.net.Socket;
 import java.io.IOException;
