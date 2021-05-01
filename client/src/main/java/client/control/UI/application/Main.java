@@ -80,7 +80,7 @@ public class Main extends Application {
 				Treasure.setLayoutX(m.getTreasurePos()[i+1]*30);
 				Treasure.setLayoutY(m.getTreasurePos()[i]*28);
 				AllElements.getChildren().add(Treasure);
-				i++; // i used for x and i+1 for y.
+				i+=2; // i used for x and i+1 for y.
 			}
 			
 			//Display Holes
@@ -99,12 +99,12 @@ public class Main extends Application {
 			//Display players (Black square for tests)
 			for(int i = 0; i<m.getPlayerPos().length-1; i++) {
 				File fh = new File("./src/main/java/client/control/UI/Images/Player2.png");
-				String pathHole = fh.toURI().toURL().toString();
-				Image HoleImg = new Image(pathHole, false);
-				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.getPlayerPos()[i+1]*30);
-				Hole.setLayoutY(m.getPlayerPos()[i]*28);
-				AllElements.getChildren().add(Hole);
+				String pathPlayer = fh.toURI().toURL().toString();
+				Image PlayerImg = new Image(pathPlayer, false);
+				ImageView Player = new ImageView(PlayerImg);
+				Player.setLayoutX(m.getPlayerPos()[i+1]*30);
+				Player.setLayoutY(m.getPlayerPos()[i]*28);
+				AllElements.getChildren().add(Player);
 				i++; // i used for x and i+1 for y.
 			}
 			
@@ -173,7 +173,7 @@ public class Main extends Application {
 				Treasure.setLayoutX(m.getTreasurePos()[i+1]*30);
 				Treasure.setLayoutY(m.getTreasurePos()[i]*28);
 				AllElements.getChildren().add(Treasure);
-				i++; // i used for x and i+1 for y.
+				i+=2; // i used for x and i+1 for y.
 			}
 			
 			//Display Holes
@@ -192,12 +192,12 @@ public class Main extends Application {
 			//Display players (Black square for tests)
 			for(int i = 0; i<m.getPlayerPos().length-1; i++) {
 				File fh = new File("./src/main/java/client/control/UI/Images/Player2.png");
-				String pathHole = fh.toURI().toURL().toString();
-				Image HoleImg = new Image(pathHole, false);
-				ImageView Hole = new ImageView(HoleImg);
-				Hole.setLayoutX(m.getPlayerPos()[i+1]*30);
-				Hole.setLayoutY(m.getPlayerPos()[i]*28);
-				AllElements.getChildren().add(Hole);
+				String pathPlayer = fh.toURI().toURL().toString();
+				Image PlayerImg = new Image(pathPlayer, false);
+				ImageView Player = new ImageView(PlayerImg);
+				Player.setLayoutX(m.getPlayerPos()[i+1]*30);
+				Player.setLayoutY(m.getPlayerPos()[i]*28);
+				AllElements.getChildren().add(Player);
 				i++; // i used for x and i+1 for y.
 			}
 			
@@ -249,6 +249,7 @@ public class Main extends Application {
 		b1.setOnAction(e -> {//Refresh(primaryStage);
 							/*loop.setCycleCount(Timeline.INDEFINITE);
 							loop.play();*/
+							this.m = new Modele();
 							 primaryStage.centerOnScreen(); //Window is centered on screen
 							 primaryStage.setWidth(31*m.getColumns()); //Width
 							 primaryStage.setHeight(31*m.getLines()); //Height
