@@ -196,21 +196,14 @@ public class Communication implements Runnable{
 				break;
 			case "510":
 				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				sendMessage("512 " + brokenCommand[1] + " UPDATED");
 				Player.printGameBoard();
 				break;
 			case "511":
-				if (brokenCommand[2].equals("UPDATED")) {
-
-				}
-				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
-					GameInfo.setTreasures(GameInfo.getTreasures()-1);
-					GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
-					GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
-					sendMessage("512 " + Player.getName() + " UPDATED");
-				}
-				else {
-					sendMessage("UNKNOWN");
-				}
+				GameInfo.setTreasures(GameInfo.getTreasures()-1);
+				GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				sendMessage("512 " + brokenCommand[1] + " UPDATED");
 				Player.printGameBoard();
 				break;
 			case "520":
@@ -223,7 +216,7 @@ public class Communication implements Runnable{
 				System.out.println("U'R DEAD");
 				break;
 			case "902":
-				System.out.println("Not your turn to play");
+				System.out.println("Not your round");
 			default:
 				break; 
 		}

@@ -54,7 +54,6 @@ public class Communication implements Runnable {
          *  read the input
          *  print it
          *  print if user is disconected
-         * 
          */
 
         while(ServerMain.isRunning()) {
@@ -115,7 +114,7 @@ public class Communication implements Runnable {
                  * send the list of every created games with paremeters
                  */
                 sendMessage(ServerMain.listNbrOfGames());
-                sendGameInfo();
+                sendGameInfo(g);
                 break;
 
             case "150":
@@ -165,19 +164,71 @@ public class Communication implements Runnable {
                 sendWallInfo(g);
                 break;
 
-            case "501":
+            case "512":
+                System.out.println(p.getName() + " : position updated CONFIRMATION");
+                roundManager(g, p, 0);
                 break;
 
-            case "512":
+            case "501":
                 /**
                  * WIP : TODO
                  */
-                System.out.println(brokenCommand[1] + " confirmation");
+                System.out.println("confirmation");
                 break;
-
+            case "521":
+                System.out.println(p.getName() + " : player state updated CONFIRMATION");
+                roundManager(g, p, 1);
+                break;
             default:
                 sendMessage("999 COMMAND ERROR");
                 break;
+        }
+    }
+
+    public void roundManager(Game g, Player p, int caseVal) {
+        Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
+        int checkForRound = 0;
+        if (g.getGameMod() != 0) {
+            if (g.getConfirmations() == null || caseVal == 1) {
+                g.setConfirmations(new boolean[playerList.length]);
+                System.out.println("CONSTRUCT");
+            }
+            if (g.getPlayerRound() == -1) {
+                g.setPlayerRound(0);
+            }
+            for (int i = 0 ; i < playerList.length ; i++) {
+                if (g.getConfirmations()[i] == false) {
+                    g.setConfirmations(i);
+                    break;
+                }
+            }
+            for (int i = 0 ; i<g.getConfirmations().length ; i++) {
+                if (g.getConfirmations()[i] == false) {
+                    break;
+                } else {
+                    checkForRound++;
+                }
+            }
+            System.out.println(checkForRound);
+            System.out.println(playerList.length);
+            if (checkForRound == playerList.length) {
+                Player playerToBroadcast = null;
+                for (int i = 0 ; i<playerList.length ; i++) {
+                    if (g.getPlayerRound() == playerList[i].getPlayerId()) {
+                        if (i == playerList.length-1) {
+                            i = -1;
+                        }
+                        if (playerList[i+1].isPlayerDead() == false) {
+                            g.setPlayerRound(playerList[i+1].getPlayerId());
+                            playerToBroadcast = playerList[i+1];
+                        }
+                        break;
+                    }
+                }
+                broadcastInGame("500 " + playerToBroadcast.getName() + " TURN", g.getGameId());
+                g.setConfirmations(new boolean[playerList.length]);
+
+            }
         }
     }
 
@@ -217,7 +268,7 @@ public class Communication implements Runnable {
 
 
 
-    public void playerMouvementProcess(Game g, Player p, String[] brokenCommand) {
+    public boolean playerMouvementProcess(Game g, Player p, String[] brokenCommand) {
         /**
          * try to move the curent player
          * check if there is something on the new position
@@ -230,56 +281,62 @@ public class Communication implements Runnable {
          * send the new game state to the client
          */
         int[] pos = p.getPos();
-        switch(brokenCommand[1]) {
-            case "GOUP":
-                pos[0]--;
-                break;
-            case "GODOWN":
-                pos[0]++;
-                break;
-            case "GOLEFT":
-                pos[1]--;
-                break;
-            case "GORIGHT":
-                pos[1]++;
-                break;
-            default:
-                break;
-        }
-        String ret = p.setPos(g.getBoard(),pos);
-        pos = p.getPos();
-        if(ret.equals("ok")) {
-
-            sendMessage("201 MOVE OK");
-            broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0],g.getGameId());
-
-        } else if(ret.equals("Wall")) {
-
-            sendMessage("202 MOVE BLOCKED");
-            broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0],g.getGameId());
-
-        } else if(ret.equals("Treasure")) {
-
-            Treasure tr = (Treasure) g.getBoard().getElementAt(pos[1],pos[0]);
-
-            sendMessage("203 MOVE OK TRES "+tr.getTreasureValue());
-            broadcastInGame("511 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" TRES "+tr.getTreasureValue(),g.getGameId());     //missing treasure value
-
-            tr.setTreasureValue(0);
-            g.getBoard().setElementAt(null,pos[1],pos[0]);
-            if (g.getBoard().getTreasureCount() == 0) {
-                broadcastInGame("530 " + g.leadingPlayer().getName() + " WINS", g.getGameId());
+        if (p.getPlayerId() != g.getPlayerRound() && g.getGameMod() != 0) {
+            sendMessage("902 NOT YOUR TURN");
+            return false;
+        } else {
+            switch(brokenCommand[1]) {
+                case "GOUP":
+                    pos[0]--;
+                    break;
+                case "GODOWN":
+                    pos[0]++;
+                    break;
+                case "GOLEFT":
+                    pos[1]--;
+                    break;
+                case "GORIGHT":
+                    pos[1]++;
+                    break;
+                default:
+                    break;
             }
-
-        } else if(ret.equals("Hole")) {
-            sendMessage("666 MOVE HOLE DEAD");
-            broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
-            p.setMoney(0);
-            p.killPlayer();
-            if (ServerMain.everyoneIsDead(g)) {
-                broadcastInGame("600 GAME OVER", g.getGameId());
+            String ret = p.setPos(g.getBoard(),pos);
+            pos = p.getPos();
+            if(ret.equals("ok")) {
+    
+                sendMessage("201 MOVE OK");
+                broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0],g.getGameId());
+    
+            } else if(ret.equals("Wall")) {
+    
+                sendMessage("202 MOVE BLOCKED");
+                broadcastInGame("510 "+p.getName()+" POS "+pos[1]+" "+pos[0],g.getGameId());
+    
+            } else if(ret.equals("Treasure")) {
+    
+                Treasure tr = (Treasure) g.getBoard().getElementAt(pos[1],pos[0]);
+    
+                sendMessage("203 MOVE OK TRES "+tr.getTreasureValue());
+                broadcastInGame("511 "+p.getName()+" POS "+pos[1]+" "+pos[0]+" TRES "+tr.getTreasureValue(),g.getGameId());     //missing treasure value
+    
+                tr.setTreasureValue(0);
+                g.getBoard().setElementAt(null,pos[1],pos[0]);
+                if (g.getBoard().getTreasureCount() == 0) {
+                    broadcastInGame("530 " + g.leadingPlayer().getName() + " WINS", g.getGameId());
+                }
+    
+            } else if(ret.equals("Hole")) {
+                sendMessage("666 MOVE HOLE DEAD");
+                broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
+                p.setMoney(0);
+                p.killPlayer();
+                if (ServerMain.everyoneIsDead(g)) {
+                    broadcastInGame("600 GAME OVER", g.getGameId());
+                }
             }
         }
+        return true;
     }
 
 
@@ -339,7 +396,7 @@ public class Communication implements Runnable {
 
 
 
-    public void sendGameInfo() {
+    public void sendGameInfo(Game g) {
 
         int nbrOfGames = ServerMain.getNumberOfGames();
         int tab[] = new int[nbrOfGames*5];
@@ -347,7 +404,7 @@ public class Communication implements Runnable {
         if (nbrOfGames != 0) {
             int k = 0;
             for (int i = 0 ; i < tab.length ; i+=5) {
-                tab[0+i] = 0;   // No game mod for now
+                tab[0+i] = g.getGameMod();
                 tab[1+i] = ServerMain.getGameX(k);
                 tab[2+i] = ServerMain.getGameY(k);
                 tab[3+i] = ServerMain.getNumberOfHoles(k);

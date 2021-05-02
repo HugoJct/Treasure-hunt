@@ -17,6 +17,8 @@ runClient: clearT
 	./gradlew :client:run --console=plain
 runClientCfg: clearT 
 	./gradlew :client:run --console=plain --args="src/main/java/client/customConfig.json"
+clientCustom: clearT
+	./gradlew :client:run --console=plain --args="$(MAKECMDGOALS)"
 
 #the build and run recipes for the server side of the project only
 server: clearT buildServer
