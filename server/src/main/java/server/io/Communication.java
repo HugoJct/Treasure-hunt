@@ -216,7 +216,8 @@ public class Communication implements Runnable {
                     System.out.println("DEBBUG 1");
                     if (g.getPlayerRound() == playerList[i].getPlayerId()) {
                         System.out.println("DEBBUG 2");
-                        for (int j = i ; 1 == 1; i++) {
+                        for (int j = i ; 1 == 1; j++) {
+                            System.out.println("DEBBUG LOOP");
                             if (j == playerList.length-1) {
                                 j = -1;
                                 System.out.println("DEBBUG 3");
