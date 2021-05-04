@@ -214,17 +214,12 @@ public class Communication implements Runnable {
             if (checkForRound == playerList.length) {
                 Player playerToBroadcast = null;
                 for (int i = 0 ; i<playerList.length ; i++) {
-                    System.out.println("DEBBUG 1");
                     if (g.getPlayerRound() == playerList[i].getPlayerId()) {
-                        System.out.println("DEBBUG 2");
                         for (int j = i ; 1 == 1; j++) {
-                            System.out.println("DEBBUG LOOP");
                             if (j == playerList.length-1) {
                                 j = -1;
-                                System.out.println("DEBBUG 3");
                             }
                             if (playerList[j+1].isPlayerDead() == false) {
-                                System.out.println("DEBBUG 4");
                                 g.setPlayerRound(playerList[j+1].getPlayerId());
                                 playerToBroadcast = playerList[j+1];
                                 System.out.println("round : " + g.getPlayerRound());
