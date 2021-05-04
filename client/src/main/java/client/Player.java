@@ -28,13 +28,12 @@ public class Player {
 
     public static boolean isConnected = true;
     
-    public Player(String name, char c) {
+    public Player(String name) {
         try {
             configFile = new File("src/main/java/client/config.json");
             reader = new FileReader(configFile); 
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
-
             this.username = name;
             this.serverIP = (String) jsonObject.get("ip");
             this.serverPort = ((Long) jsonObject.get("port")).intValue();    
@@ -43,29 +42,6 @@ public class Player {
         } catch(ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    public Player(String pathToConfigFile) {        
-        try {
-            configFile = new File(pathToConfigFile);
-            if(configFile.exists()) {
-                reader = new FileReader(configFile);
-            } else {
-                configFile = new File("src/main/java/client/config.json");
-                reader = new FileReader(configFile);
-            }
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-
-            this.username = (String) jsonObject.get("name");
-            this.serverIP = (String) jsonObject.get("ip");
-            this.serverPort = ((Long) jsonObject.get("port")).intValue();
-        }  catch(IOException e) {
-            e.printStackTrace();
-        } catch(ParseException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public Socket getSocket() {
@@ -143,10 +119,10 @@ public class Player {
     public static void main(String[] args) {
 
         try {
-            if (args.length > 0) {
-                p = new Player(args[1], 'c');
+            if (args.length > 1) {
+                p = new Player(args[1]);
             } else { 
-                p = new Player("");
+                p = new Player("Unnamed_User");
             }
             s = new Socket(serverIP,serverPort);
 

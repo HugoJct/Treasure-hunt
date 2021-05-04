@@ -218,7 +218,7 @@ public class ServerMain {
 		Player[] listP = new Player[listLength(id)];
 		int i = 0;
 		for (Player p : connectedUsers) {
-			if (p.getGameId() == id && p.isPlayerDead() == false) {
+			if (p.getGameId() == id) {
 				listP[i] = p;
 				i+=1;
 			}

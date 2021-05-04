@@ -124,6 +124,8 @@ public class Console implements Runnable {
 				System.out.println(Arrays.toString(GameInfo.getPlayersNames()));
 				System.out.println(Arrays.toString(GameInfo.getPlayerPos()));
 				break;
+			case "EXIT":
+				System.exit(0);
 			default:
 				System.out.println("Unknown command");
 				break; 
