@@ -68,6 +68,7 @@ public class Communication implements Runnable {
                 
             } catch(IOException e) {
                 System.out.println(this.username + (": socket closed by the server."));
+                ServerMain.stop();
             }
         }
         this.isConnected = false;   //update status
@@ -227,6 +228,10 @@ public class Communication implements Runnable {
                                 g.setPlayerRound(playerList[j+1].getPlayerId());
                                 playerToBroadcast = playerList[j+1];
                                 System.out.println("round : " + g.getPlayerRound());
+                                break;
+                            }
+                            if (ServerMain.everyoneIsDead(g)) {
+                                broadcastInGame("600 GAME OVER", g.getGameId());
                                 break;
                             }
                         }
