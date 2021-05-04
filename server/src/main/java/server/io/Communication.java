@@ -166,7 +166,7 @@ public class Communication implements Runnable {
 
             case "512":
                 System.out.println(p.getName() + " : position updated CONFIRMATION");
-                roundManager(g, p, 0);
+                roundManager(g, p);
                 break;
 
             case "501":
@@ -177,7 +177,7 @@ public class Communication implements Runnable {
                 break;
             case "521":
                 System.out.println(p.getName() + " : player state updated CONFIRMATION");
-                roundManager(g, p, 1);
+                roundManager(g, p);
                 break;
             default:
                 sendMessage("999 COMMAND ERROR");
@@ -185,16 +185,15 @@ public class Communication implements Runnable {
         }
     }
 
-    public void roundManager(Game g, Player p, int caseVal) {
+    public void roundManager(Game g, Player p) {
         Player[] playerList = ServerMain.getPlayersInGame(g.getGameId());
         int checkForRound = 0;
         if (g.getGameMod() != 0) {
-            if (g.getConfirmations() == null || caseVal == 1) {
+            if (g.getConfirmations() == null) {
                 g.setConfirmations(new boolean[playerList.length]);
-                System.out.println("CONSTRUCT");
             }
             if (g.getPlayerRound() == -1) {
-                g.setPlayerRound(0);
+                g.setPlayerRound(playerList[0].getPlayerId());
             }
             for (int i = 0 ; i < playerList.length ; i++) {
                 if (g.getConfirmations()[i] == false) {
