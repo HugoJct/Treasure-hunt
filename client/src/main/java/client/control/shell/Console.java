@@ -1,12 +1,15 @@
 package client.control.shell;
 
+// import java Classes
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Scanner;
+
+// import our Classes
 import client.Player;
 import client.connex.Communication;
 import client.GameInfo;
 
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Console implements Runnable {
 

@@ -1,6 +1,8 @@
 package client;
 
+// import java Classes
 import java.util.Arrays;
+
 
 public class GameInfo {
 

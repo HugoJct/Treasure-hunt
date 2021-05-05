@@ -1,8 +1,6 @@
 package server.playingProps;
 
-import server.elements.*;
-import server.io.Communication;
-
+// import java Classes
 import java.net.Socket;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -11,10 +9,14 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.Random;
 
+
+// import our Classes
+import server.elements.*;
+import server.io.Communication;
 import server.playingProps.Game;
 import server.playingProps.Board;
-
 import server.ServerMain;
+
 
 public class Player {
     //player attributes
