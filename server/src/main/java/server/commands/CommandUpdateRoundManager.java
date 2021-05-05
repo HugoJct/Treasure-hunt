@@ -54,7 +54,7 @@ public class CommandUpdateRoundManager extends Command {
                                 System.out.println("round : " + g.getPlayerRound());
                                 break;
                             }
-                            if (ServerMain.everyoneIsDead(g)) {
+                            if (g.areAllPlayersDead()) {
                                 broadcastInGame("600 GAME OVER", g.getGameId());
                                 break;
                             }

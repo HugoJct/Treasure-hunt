@@ -24,10 +24,10 @@ public class CommandSendGameInfo extends Command {
             int k = 0;
             for (int i = 0 ; i < tab.length ; i+=5) {
                 tab[0+i] = g.getGameMod();
-                tab[1+i] = ServerMain.getGameX(k);
-                tab[2+i] = ServerMain.getGameY(k);
-                tab[3+i] = ServerMain.getNumberOfHoles(k);
-                tab[4+i] = ServerMain.getNumberOfTreasures(k);
+                tab[1+i] = g.getBoard().getSizeX();
+                tab[2+i] = g.getBoard().getSizeY();
+                tab[3+i] = g.getBoard().getHoleCount();
+                tab[4+i] = g.getBoard().getTreasureCount();
                 k++;
             }
 

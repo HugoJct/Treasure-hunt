@@ -29,10 +29,7 @@ public class ServerMain {
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
-	//public static Vector<Console> launchedCons = new Vector<>();
-
 	private static boolean isRunning = true;
-	//private static Console console;
 
 	private static ConnectionHandler ch;
 
@@ -68,14 +65,6 @@ public class ServerMain {
 
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-	}
-
-	public static void printGame(int gameID) {
-		for (Game g : createGames) {
-			if (g.getGameId() == gameID) {
-				System.out.println(g.getBoard().toString());
-			}
-		}
 	}
 
 	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
@@ -157,100 +146,12 @@ public class ServerMain {
 		return "Game ID not found";
 	}
 
-	public static String listGames() {		//lists the existing games
-		String list = "121 ID ";
-		if(createGames.size() > 0) {
-			for(Game g : createGames) {
-				list += (g + " ");
-			}
-		}	
-		return list;
-	}
-
-	public static int listLength(int id) {
-		int i = 0;
-		for (Player p : connectedUsers) {
-			if (p.getGameId() == id) {
-				i++;
-			}
-		}		
-		return i;
-	}
-
-
-	public static boolean everyoneIsDead(Game g) {
-		for (Player p : connectedUsers) {
-			if (p.getGameId() == g.getGameId()) {
-				if (p.isPlayerDead() == false) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	public static Game getGameFromCreateGames(int id){
-		for(Game g : createGames){
-			if(g.getGameId() == id){
-				return g;
-			}
-		}
-		return null;
-	}
-
-
-	public static String listNbrOfGames() {
-		int x = 0;
-		if(createGames.size() > 0) {
-			for (Game g : createGames) {
-				x++;
-			}
-		}
-		return "121 NUMBER " + x;
-	}
-
 	public static int getNumberOfGames() {
 		int x = 0;
 		for (Game g : createGames) {
 			x++;
 		}
 		return x;
-	}
-
-	public static int getGameX(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getSizeX();
-			}
-		}
-		return -1;
-	}
-
-	public static int getGameY(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getSizeY();
-			}
-		}
-		return -1;
-	}
-
-	public static int getNumberOfHoles(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getHoleCount();
-			}
-		}
-		return -1;
-	}
-
-	public static int getNumberOfTreasures(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getTreasureCount();
-			}
-		}
-		return -1;
 	}
 
 	public static Vector<Player> getConnectedUsers() {

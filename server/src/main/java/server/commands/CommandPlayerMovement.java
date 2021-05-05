@@ -77,7 +77,7 @@ public class CommandPlayerMovement extends Command {
                 broadcastInGame("520 "+p.getName()+" DIED",g.getGameId());
                 p.setMoney(0);
                 p.killPlayer();
-                if (ServerMain.everyoneIsDead(g)) {
+                if (g.areAllPlayersDead()) {
                     broadcastInGame("600 GAME OVER", g.getGameId());
                 }
             }
