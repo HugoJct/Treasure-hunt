@@ -5,14 +5,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import server.playingProps.Player;
+import server.playingProps.Game;
 
 import server.ServerMain;
+
 import server.elements.Treasure;
 import server.elements.Element;
 
-import server.playingProps.Game;
+import server.commands.*;
 
 public class Communication implements Runnable {
     private String _msg;
@@ -22,6 +25,8 @@ public class Communication implements Runnable {
     Socket s;
     BufferedReader in;
     PrintWriter out;
+
+    private HashMap<String,Command> commandList = new HashMap<String,Command>();
 
     public Communication(Player p) {
         this._player = p;
@@ -42,6 +47,15 @@ public class Communication implements Runnable {
             e.printStackTrace();
         }
 
+        /*
+         *  Filling the hashmap that will be used to recognize the commands
+         *
+         */
+
+        commandList.put("120",new CommandSendGameInfo(out));
+        commandList.put("400",new CommandSendHolesInfos(out));
+        commandList.put("410",new CommandSendTreasuresInfos(out));
+        commandList.put("420",new CommandSendWallsInfos(out));
     }
 
 
@@ -65,6 +79,7 @@ public class Communication implements Runnable {
                 }
                 System.out.println(this.username+" wrote: "+ this._msg);
                 useMessage(this._msg);
+                cleanUseMessage(_msg);
                 
             } catch(IOException e) {
                 System.out.println(this.username + (": socket closed by the server."));
@@ -74,7 +89,17 @@ public class Communication implements Runnable {
         this.isConnected = false;   //update status
     }
 
+    private void cleanUseMessage(String command) {
+        String[] brokenCommand = breakCommand(command);
+        Game g = getPlayer().getGameConnectedTo();
+        Player p = getPlayer();
 
+        for(String s : commandList.keySet()) {
+            if(s.equals(brokenCommand[0])) {
+                commandList.get(s).execute(g,p,brokenCommand);
+            }
+        }
+    }
 
     public void useMessage(String command) {
 
@@ -110,14 +135,6 @@ public class Communication implements Runnable {
                 joinAGameProcess(g, p, brokenCommand);
                 break;
 
-            case "120":
-                /**
-                 * send the list of every created games with paremeters
-                 */
-                sendMessage(ServerMain.listNbrOfGames());
-                sendGameInfo(g);
-                break;
-
             case "150":
                 /**
                  * process to launch the game and check if everyone is ready
@@ -142,27 +159,6 @@ public class Communication implements Runnable {
                  * process the movement of a player on game board
                  */
                 playerMouvementProcess(g, p, brokenCommand);
-                break;
-
-            case "400":
-                /** 
-                 * GETHOLES
-                */
-                sendHoleInfo(g);
-                break;
-
-            case "410":                                             
-                /**
-                 * GETTREASURES
-                 */
-                sendTreasureInfo(g);
-                break;
-
-            case "420":                                             
-                /**
-                 * GETWALLS
-                 */
-                sendWallInfo(g);
                 break;
 
             case "512":
@@ -399,121 +395,6 @@ public class Communication implements Runnable {
             t.start();
         } else {
             sendMessage("You do not have permission to request start");
-        }
-    }
-
-
-
-    public void sendGameInfo(Game g) {
-
-        int nbrOfGames = ServerMain.getNumberOfGames();
-        int tab[] = new int[nbrOfGames*5];
-
-        if (nbrOfGames != 0) {
-            int k = 0;
-            for (int i = 0 ; i < tab.length ; i+=5) {
-                tab[0+i] = g.getGameMod();
-                tab[1+i] = ServerMain.getGameX(k);
-                tab[2+i] = ServerMain.getGameY(k);
-                tab[3+i] = ServerMain.getNumberOfHoles(k);
-                tab[4+i] = ServerMain.getNumberOfTreasures(k);
-                k++;
-            }
-
-            int j = 0;
-            for (int i = 0 ; i < tab.length ; i+=5) {
-                sendMessage("121 MESS " + (j+1) + " ID " + j + " " + tab[0+i] + " " + tab[1+i] + " " + tab[2+i] + " " + tab[3+i] + " " + tab[4+i]);
-                j++;
-            }
-        }
-    }
- 
-
-
-    public void sendHoleInfo(Game g) {         //for comments see sendTreasureInfo
-
-        int k = g.getBoard().getHoleCount();
-        int[][] b = g.getBoard().getHolePos();
-
-        sendMessage("401 NUMBER "+k);
-
-        int index = 0;
-        String toSend = "";
-
-        int stop = k%5 == 0 ? (k/5) : (k/5) + 1;
-
-        for(int i=1;i<=stop;i++) {
-            toSend = "401 MESS "+i+" POS";
-            int count = 0;
-            for(int j=index;j<b.length;j++) {
-                index = j;
-                if(count == 5)
-                    break;
-                for(int l=0;l<b[j].length;l++) {
-                    toSend += " "+b[j][l];      
-                }
-                count++;
-            }
-            sendMessage(toSend);
-        }
-    }
-
-
-
-    public void sendWallInfo(Game g) {         //for comments see sendTreasureInfo
-
-        int k = g.getBoard().getWallCount();
-        int[][] b = g.getBoard().getWallPos();
-
-        sendMessage("421 NUMBER "+k);
-
-        int index = 0;
-        String toSend = "";
-        int stop = k%5 == 0 ? (k/5) : (k/5) + 1;
-
-        for(int i=1;i<=stop;i++) {
-            toSend = "421 MESS "+i+" POS";
-            int count = 0;
-            for(int j=index;j<b.length;j++) {
-                index = j;
-                if(count == 5)
-                    break;
-                for(int l=0;l<b[j].length;l++) {
-                    toSend += " "+b[j][l];      
-                }
-                count++;
-            }
-            sendMessage(toSend);
-        }
-    }
-
-
-
-    public void sendTreasureInfo(Game g) {         //This function generates and sends as many lines as needed to provide informations about the treasures to the client 
-
-        int k = g.getBoard().getTreasureCount();        //initialize number of treasures
-        int[][] b = g.getBoard().getTreasurePos();      //get an 
-
-        sendMessage("411 NUMBER "+k);              //send number of treasures
-
-        int index = 0;
-        String toSend = ""; 
-
-        int stop = k%5 == 0 ? (k/5) : (k/5) + 1;        //initialize the number of lines needed 
-
-        for(int i=1;i<=stop;i++) {                      //this loop executes the code "stop" times
-            toSend = "411 MESS "+i+" POS";              //prepare the line
-            int count = 0;
-            for(int j=index;j<b.length;j++) {           //browse the array of array
-                index = j;
-                if(count == 5)                          //if 5 couples of coordinates have been sent
-                    break;
-                for(int l=0;l<b[j].length;l++) {        //browse each tile of the array
-                    toSend += " "+b[j][l];              //add the coordinates to the line
-                }
-                count++;
-            }
-            sendMessage(toSend);                   // send each line
         }
     }
 
