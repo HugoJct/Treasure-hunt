@@ -167,18 +167,6 @@ public class ServerMain {
 		return list;
 	}
 
-	public static Player[] getPlayersInGame(int id) {
-		Player[] listP = new Player[listLength(id)];
-		int i = 0;
-		for (Player p : connectedUsers) {
-			if (p.getGameId() == id) {
-				listP[i] = p;
-				i+=1;
-			}
-		}
-		return listP;
-	}
-
 	public static int listLength(int id) {
 		int i = 0;
 		for (Player p : connectedUsers) {
