@@ -36,8 +36,14 @@ public abstract class Command {
     }
 
    	protected String[] breakCommand(String command) {         //This method breaks the command which arguments are separated by spaces
-        String delims = "[ ]+";     //This line sets the delimiter between words. Here we use "space" as delimiter, brackets indicate 
-                                    //the start and end of the group. "+" indicate that conscutive delimitor should be treated as a single one
+        String delims = "[ ]+";     
+        /*
+		 * The delimiter is set. 
+         * Here we use "space" as delimiter, brackets indicate the start and end of the group.
+         *  "+" indicate that consecutive delimitors should be treated as a single one
+         *
+         *   It is basically a rational expression :P (Just like what we learned in AAL3 but simpler)
+         */
         String[] args = command.split(delims);
         return args;
     }
