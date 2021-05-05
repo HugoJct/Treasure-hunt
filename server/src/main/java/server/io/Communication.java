@@ -49,12 +49,13 @@ public class Communication implements Runnable {
 
         /*
          *  Filling the hashmap that will be used to recognize the commands
-         *
          */
 
         commandList.put("110",new CommandCreateGame(out));
         commandList.put("120",new CommandSendGameInfo(out));
+        commandList.put("130",new CommandJoinGame(out));
         commandList.put("150",new CommandRequestStart(out));
+        commandList.put("152",new CommandRequestStartResponse(out));
         commandList.put("200",new CommandPlayerMovement(out));
         commandList.put("400",new CommandSendHolesInfos(out));
         commandList.put("410",new CommandSendTreasuresInfos(out));
@@ -79,7 +80,7 @@ public class Communication implements Runnable {
                     break;
                 }
                 System.out.println(this.username+" wrote: "+ this._msg);
-                useMessage(this._msg);
+                //useMessage(this._msg);
                 cleanUseMessage(_msg);
                 
             } catch(IOException e) {
@@ -91,6 +92,7 @@ public class Communication implements Runnable {
     }
 
     private void cleanUseMessage(String command) {
+
         String[] brokenCommand = breakCommand(command);
         Game g = getPlayer().getGameConnectedTo();
         Player p = getPlayer();
@@ -122,25 +124,6 @@ public class Communication implements Runnable {
 
             case "0":                                               //STOP
                 ServerMain.stop();
-                break;
-
-            case "130":
-                /**
-                 * process to join a created game
-                 */
-                joinAGameProcess(g, p, brokenCommand);
-                break;
-
-            case "152":
-                /**
-                 * check the response to resquest start (case 153)
-                 */
-                if(brokenCommand[2].equals("YES")) {
-                    p.setReady(true);
-                } else {
-                    p.setReady(false);
-                }
-                p.setAnswered(true);
                 break;
 
             case "512":
@@ -215,23 +198,6 @@ public class Communication implements Runnable {
                 g.setConfirmations(new boolean[playerList.length]);
 
             }
-        }
-    }
-
-    public void joinAGameProcess(Game g, Player p, String[] brokenCommand) {
-        /**
-         * to join a game with the id
-         * if the given id exist : 
-         *  join the associate game
-         *  send confirmation message to the player (131 command) with the game id
-         *  broadcast to every players in game 140 command with the new player name
-         * else we send to the sender that the specified game doesn't exist
-         */
-        if(ServerMain.joinGame(brokenCommand)) {                          
-            sendMessage("131 MAP "+p.getGameId()+" JOINED");
-            broadcastInGame("140 "+p.getName()+" JOINED",p.getGameId());                
-        } else {
-            sendMessage("No such game found");
         }
     }
 
