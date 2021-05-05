@@ -1,11 +1,6 @@
 package server.io;
 
-import server.ServerMain;
-import server.playingProps.Player;
-
-import server.io.*;
-import server.io.Console;
-
+// import java Classes
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,6 +9,13 @@ import java.io.PrintStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Vector;
+
+// import our Classes
+import server.ServerMain;
+import server.playingProps.Player;
+import server.io.*;
+import server.io.Console;
+
 
 public class ConnectionHandler implements Runnable{
 

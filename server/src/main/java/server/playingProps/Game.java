@@ -1,21 +1,21 @@
 package server.playingProps;
 
+// import java Classes
 import java.util.Vector;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 
+// import our Classes
 import server.elements.*;
-
 import server.playingProps.Player;
-
 import server.ServerMain;
+
 
 public class Game implements Runnable{
 

@@ -1,17 +1,17 @@
 package server.io;
 
+// import java Classes
 import java.net.Socket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
 import server.playingProps.Player;
 
+// import our Classes
 import server.ServerMain;
 import server.elements.Treasure;
 import server.elements.Element;
-
 import server.playingProps.Game;
 
 public class Communication implements Runnable {
@@ -166,17 +166,23 @@ public class Communication implements Runnable {
                 break;
 
             case "512":
+                /**
+                 * client confirm player position is updated 
+                 */
                 System.out.println(p.getName() + " : position updated CONFIRMATION");
                 roundManager(g, p);
                 break;
 
             case "501":
                 /**
-                 * WIP : TODO
+                 * client confirm player round is updated 
                  */
-                System.out.println("confirmation");
+                System.out.println(p.getName() + " : player round updated CONFIRMATION");
                 break;
             case "521":
+                /**
+                 * client confirm player state of life is updated 
+                 */
                 System.out.println(p.getName() + " : player state updated CONFIRMATION");
                 roundManager(g, p);
                 break;
