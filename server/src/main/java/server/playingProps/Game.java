@@ -1,21 +1,21 @@
 package server.playingProps;
 
+// import java Classes
 import java.util.Vector;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 
+// import our Classes
 import server.elements.*;
-
 import server.playingProps.Player;
-
 import server.ServerMain;
+
 
 public class Game implements Runnable{
 
@@ -26,6 +26,9 @@ public class Game implements Runnable{
 	private String name;
 	private int capacity;
 	private int gamemode = 0;
+	private int playerRoundID = -1;
+
+	private boolean[] confirmations;
 
 	private int ownerID = -1;
 
@@ -95,7 +98,7 @@ public class Game implements Runnable{
 
 	public Game(int m, int dimX, int dimY, int h, int t, int gameOwnerID){
 		this.isRunning = false;
-		this.gamemode = gamemode;
+		this.gamemode = m;
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
@@ -115,6 +118,25 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 		System.out.println(this.b);
+	}
+
+	/*
+
+	public Game(String name) {
+		this.isRunning = false;
+		this.name = name;
+		this.capacity = 4;
+		b = new Board();
+		this.gameId = id;
+		this.id++;
+	}*/
+
+	public int getPlayerRound() {
+		return this.playerRoundID;
+	}
+
+	public boolean[] getConfirmations() {
+		return this.confirmations;
 	}
 
 	public String getName(){
@@ -235,6 +257,20 @@ public class Game implements Runnable{
 		return b;
 	}
 
+	public void setPlayerRound(int id) {
+		this.playerRoundID = id;
+	}
+	public void setConfirmations(boolean[] b) {
+		this.confirmations = b;
+	}
+	public void setConfirmations(int pos) {
+		this.confirmations[pos] = true;
+	}
+	public void setGameMod(int m) {
+		this.gamemode = m;
+	} 
+
+
 	public int getID() {
 		return this.id;
 	}
@@ -262,6 +298,10 @@ public class Game implements Runnable{
 	public int getGameId() {
 		return this.gameId;
 	}
+
+	public int getGameMod() {
+		return this.gamemode;
+	} 
 
 	public String toString() {
 		String s = this.gameId + " " + this.name;

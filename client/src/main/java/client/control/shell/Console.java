@@ -1,12 +1,15 @@
 package client.control.shell;
 
+// import java Classes
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Scanner;
+
+// import our Classes
 import client.Player;
 import client.connex.Communication;
 import client.GameInfo;
 
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Console implements Runnable {
 
@@ -77,7 +80,7 @@ public class Console implements Runnable {
 				joinGame(Integer.parseInt(brokenCommand[1]));
 				break;
 			case "MOVE":
-				if (GameInfo.getPlayable() == true && GameInfo.getLifeState() == false) {
+				if (GameInfo.getLifeState() == false) {
 					move(brokenCommand[1]);
 				} else {
 					System.out.println("You can't, you are dead...");
@@ -130,6 +133,8 @@ public class Console implements Runnable {
 				System.out.println(Arrays.toString(GameInfo.getPlayersNames()));
 				System.out.println(Arrays.toString(GameInfo.getPlayerPos()));
 				break;
+			case "EXIT":
+				System.exit(0);
 			default:
 				System.out.println("Unknown command");
 				break; 

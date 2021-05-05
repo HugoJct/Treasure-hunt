@@ -1,7 +1,11 @@
 package server.playingProps;
 
-import server.elements.*;
+// import java Classes
 import java.util.Random;
+
+// import our Classes
+import server.elements.*;
+
 
 public class Board {
   private Element[][] elements;

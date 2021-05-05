@@ -1,18 +1,19 @@
 package client.connex;
 
+// import java Classes
 import java.util.Scanner;
-
 import java.net.Socket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
+// import our Classes
 import client.Player;
 import client.GameInfo;
 import client.control.shell.Console;
 
-import java.util.Arrays;
 
 public class Communication implements Runnable{
 
@@ -147,13 +148,16 @@ public class Communication implements Runnable{
 				GameInfo.removePlayer(brokenCommand[1]);
 				sendMessage("521 " + Player.getName() + " UPDATED");
 				break;
+			case "600":
+				System.out.println("Everyone is dead : GAME OVER");
+				System.exit(0);
 			case "666":
 				GameInfo.setLifeState(true);
 				GameInfo.resetMoney();
 				System.out.println("U'R DEAD");
 				break;
 			case "902":
-				System.out.println("Not your turn to play");
+				System.out.println("Not your round");
 			default:
 				break; 
 		}
