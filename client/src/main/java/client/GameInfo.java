@@ -286,5 +286,57 @@ public class GameInfo {
     public static void initTreasuresPos() {
         treasuresPos = new int[nbrOfTreasures*3];
     }
+
+    public static void printGameBoard() {
+        char[][] board = new char[getMap()[0]][getMap()[1]];
+        for(int i=0;i<board.length;i++)
+            for(int j=0;j<board[i].length;j++)
+                board[i][j] = '.';
+
+        for(int i=0;i<getHolesPos().length;i++) {
+            int x = getHolesPos()[i];
+            int y = getHolesPos()[i+1];
+            board[x][y] = 'H';
+            i++;
+        }
+        for(int i=0;i<getWallsPos().length;i++) {
+            int x = getWallsPos()[i];
+            int y = getWallsPos()[i+1];
+            board[x][y] = 'W';
+            i++;
+        }
+
+        for(int i=0;i<getTreasuresPos().length;i++) {
+            int x = getTreasuresPos()[i];
+            int y = getTreasuresPos()[i+1];
+            board[x][y] = 'T';
+            i+=2;
+        }
+
+        for(int i=0;i<getPlayersNames().length;i++) {
+            int x = getPlayerPos(GameInfo.getPlayersNames()[i])[1];
+            int y = getPlayerPos(GameInfo.getPlayersNames()[i])[0];
+            board[x][y] = getPlayersNames()[i].toLowerCase().charAt(0);
+        }
+
+        for(int i=0;i<board.length;i++){
+            System.out.print("W ");
+        }
+        System.out.println();
+
+        for(int i=1;i<board.length-1;i++) {
+            System.out.print("W ");
+            for(int j=1;j<board[i].length-1;j++) {
+                System.out.print(board[i][j]+" ");
+            }
+            System.out.print("W");
+            System.out.println();
+        }
+
+        for(int i=0;i<board.length;i++){
+            System.out.print("W ");
+        }
+        System.out.println();
+    }
     
 }

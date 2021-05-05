@@ -58,7 +58,7 @@ public class Console implements Runnable {
 			return;
 		}
 		switch(brokenCommand[0]) {
-			// Client -> Client
+			// Client -> Server
 			case "UNKNOWN":
 				System.out.println("Server doesn't recognised command");
 				break;
@@ -79,15 +79,6 @@ public class Console implements Runnable {
 			case "JOIN":
 				joinGame(Integer.parseInt(brokenCommand[1]));
 				break;
-			case "GETHOLES":
-				getHoles();
-				break;
-			case "GETWALLS":
-				getWalls();
-				break;
-			case "GETTREASURES":
-				getTreasures();
-				break;
 			case "MOVE":
 				if (GameInfo.getLifeState() == false) {
 					move(brokenCommand[1]);
@@ -100,6 +91,21 @@ public class Console implements Runnable {
 				break;
 			case "REQUESTSTART":
 				_com.sendMessage("150");
+				break;
+
+			/*
+			 *
+			 *	Every case that follows is to be removed later as they are just used for debugging
+			 *
+			 */
+			case "GETHOLES":
+				getHoles();
+				break;
+			case "GETWALLS":
+				getWalls();
+				break;
+			case "GETTREASURES":
+				getTreasures();
 				break;
 			case "PRINTTREASURES":
 				System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));

@@ -84,7 +84,7 @@ public class Player {
     	this.money += amount;
     }
 
-    public void setStartingPos(Board b){ //initiate beginning positions randomly for players
+    protected void setStartingPos(Board b){ //initiate beginning positions randomly for players
     	Random rand = new Random();
     	int[] pos = {-1,-1};
     	do{
@@ -112,29 +112,6 @@ public class Player {
     	return "ok";
     }
 
-    protected void setPosFromInput(Board b, int[] currentPos){
-    	Scanner sc = new Scanner(System.in);
-    	System.out.println("Move: Up(u),Right(r),Left(l),Down(d)");
-    	if(sc.nextLine().equals("u")){
-    	    currentPos[0] -= 1;
-    	    this.setPos(b, currentPos);
-    	}
-    	if(sc.nextLine().equals("r")){
-    	    currentPos[1] += 1;
-    	    this.setPos(b, currentPos);
-    	}
-    	if(sc.nextLine().equals("l")){
-    	    currentPos[1] -= 1;
-    	    this.setPos(b, currentPos);
-    	}
-    	if(sc.nextLine().equals("d")){
-    	    currentPos[0] += 1;
-    	    this.setPos(b, currentPos);
-    	}
-    }
-    
-
-
     public void killPlayer() {
     	isDead = true;
     }
@@ -152,10 +129,6 @@ public class Player {
         return this.s;
     }
 
-    public String getMsg() {
-        return this._msg;
-    }
-
     public int getGameId() {
         return this.gameID;
     }
@@ -166,10 +139,6 @@ public class Player {
 
     public void setGameId(int id) {
         this.gameID = id;
-    }
-
-    public String getUserName() {
-        return this.username;
     }
 
     public boolean getReady() {
@@ -194,14 +163,6 @@ public class Player {
 
     public void setMoney(int n){
         this.money = n;
-    }
-
-    public void resurrect(){
-        this.isDead = false;
-    }
-
-    public void setUserName(String s) {
-        this.username = s;
     }
 
     public void setAnswered(boolean b) {

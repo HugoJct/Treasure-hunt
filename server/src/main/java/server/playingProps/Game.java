@@ -227,7 +227,6 @@ public class Game implements Runnable{
 		return ret;
 	}
 
-
 	public Player leadingPlayer(){ // returns the leading player in the players Vector attribute of the class
 		return leadingPlayer(this.players);
 	}
@@ -237,29 +236,11 @@ public class Game implements Runnable{
 		Vector<Player> p = (Vector<Player>)this.players.clone();
 		String ret = "----------Ranking----------\n";
 		while(p.size()>0){ // while the temporary Vector p is not empty. we add each player with their appropriate ranking
-			ret += "[ "+(++rank)+". "+this.leadingPlayer(p).getUserName()+"   Score: "+this.leadingPlayer(p).getMoney()+" ]\n";
+			ret += "[ "+(++rank)+". "+this.leadingPlayer(p).getName()+"   Score: "+this.leadingPlayer(p).getMoney()+" ]\n";
 			p.remove(this.leadingPlayerIndex(p));
 		}
 		return ret;
 	}
-	/*
-	public void endGameRequest(){ 
-		ArrayList<Player> playerList = new ArrayList<Player>(players); //shallow copy of players
-		for(int i = 0 ; i<playerList.size();i++){
-			boolean decision = playerList.get(i).endGameRequest();
-			if(!decision){
-				playerList.get(i).leaveGame();
-				playerList.remove(i);
-			}
-		}
-		Vector<Player> playersToRedirect = new Vector<Player>();
-		for(int i = 0; i<playerList.size();i++){
-			if(playerList.get(i) != null){
-				playersToRedirect.addElement(playerList.get(i));
-			}
-		}
-		ServerMain.redirectPlayers(playersToRedirect);
-	}*/
 
 	public void start() {
 		this.isRunning = true;
