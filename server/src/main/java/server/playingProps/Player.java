@@ -57,13 +57,10 @@ public class Player {
     }
 
     public void setGame(Game g) {
-        if(this.gameID == -1) {
-            this.gameID = g.getGameId();
-        }
-        else if(this.gameID == g.getGameId())
+        if(this.gameID == g.getGameId())
             System.out.println("The player is already connected to this game");
         else
-            System.out.println("The player is already connected to another game");
+            this.gameID = g.getGameId();
     }
 
     public void leaveGame() {

@@ -70,36 +70,6 @@ public class ServerMain {
 		waitForConnection.start();
 	}
 
-	public static void broadcastMessage(String message) {		//method charged of executing the behaviour of the "broadcast" command
-		for(Communication c : launchedCom)
-			c.sendMessage(message);
-	}
-
-	public static void broadcastMessage(String[] message) {		//method charged of executing the behaviour of the "broadcast" command but from a string array (making it easier to use with the command breaker)
-		String wholeMessage = "";
-		for(int i=1;i<message.length;i++)
-			wholeMessage += message[i]+" ";
-		for(Communication c : launchedCom)
-			c.sendMessage(wholeMessage);
-	}
-
-	public static void broadcastPerGame(int[] message) {
-		if (message[0] == 152) {
-			for (Communication c : launchedCom) {
-				if (c.getPlayer().getGameId() == message[1]) {
-					c.sendMessage("152");
-				}
-			}
-		}
-		if (message[0] == 153) {
-			for (Communication c : launchedCom) {
-				if (c.getPlayer().getGameId() == message[1]) {
-					c.sendMessage("153");
-				}
-			}
-		}
-	}
-
 	public static void printGame(int gameID) {
 		for (Game g : createGames) {
 			if (g.getGameId() == gameID) {
@@ -162,11 +132,11 @@ public class ServerMain {
 		return ok;
 	}
 
-	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 
+	public static boolean joinGame(String[] args) {	// 130 JOIN gameId playerName 
 		for(Game g : createGames) {	
-			if(g.getGameId() == Integer.parseInt(info[2])) {
+			if(g.getGameId() == Integer.parseInt(args[2])) {
 				for(Player p : connectedUsers) {
-					if(p.getName().equals(info[3])) {
+					if(p.getName().equals(args[3])) {
 						g.addPlayer(p);
 						return true;
 					}
@@ -196,23 +166,6 @@ public class ServerMain {
 		}	
 		return list;
 	}
-	/*
-	public static String listGamesWithDetails(){
-		String games = "";
-		for(Game g : createGames){
-			games += "["+g+" ; "+g.getPlayers().size()+" Players Connected ; "+g.getBoard().getSizeX()+"x"+g.getBoard().getSizeY()+" Board ; Status: ";
-			if(g.getPlayers().size() < g.getCapacity()){
-				games +="Waiting for additional players (At least "+(g.getCapacity() - g.getPlayers().size())+" more)";
-			}else if(g.getPlayers().size() >= g.getCapacity() && !(g.isRunning())){
-				games += "About to start";
-			}else if(g.isRunning()){
-				games += "Running ; Leading player : "+g.leadingPlayer()+" ; Players left : "+g.getPlayers().size();
-			}
-
-			games += "]\n";
-		}
-		return games;
-	}*/
 
 	public static Player[] getPlayersInGame(int id) {
 		Player[] listP = new Player[listLength(id)];
@@ -225,6 +178,7 @@ public class ServerMain {
 		}
 		return listP;
 	}
+
 	public static int listLength(int id) {
 		int i = 0;
 		for (Player p : connectedUsers) {

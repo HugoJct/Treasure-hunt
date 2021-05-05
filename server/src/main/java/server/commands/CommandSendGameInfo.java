@@ -18,6 +18,8 @@ public class CommandSendGameInfo extends Command {
 		int nbrOfGames = ServerMain.getNumberOfGames();
         int tab[] = new int[nbrOfGames*5];
 
+        sendMessage("121 NUMBER "+nbrOfGames);
+
         if (nbrOfGames != 0) {
             int k = 0;
             for (int i = 0 ; i < tab.length ; i+=5) {

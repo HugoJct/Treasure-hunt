@@ -120,17 +120,6 @@ public class Game implements Runnable{
 		System.out.println(this.b);
 	}
 
-	/*
-
-	public Game(String name) {
-		this.isRunning = false;
-		this.name = name;
-		this.capacity = 4;
-		b = new Board();
-		this.gameId = id;
-		this.id++;
-	}*/
-
 	public int getPlayerRound() {
 		return this.playerRoundID;
 	}
@@ -242,24 +231,6 @@ public class Game implements Runnable{
 		}
 		return ret;
 	}
-	/*
-	public void endGameRequest(){ 
-		ArrayList<Player> playerList = new ArrayList<Player>(players); //shallow copy of players
-		for(int i = 0 ; i<playerList.size();i++){
-			boolean decision = playerList.get(i).endGameRequest();
-			if(!decision){
-				playerList.get(i).leaveGame();
-				playerList.remove(i);
-			}
-		}
-		Vector<Player> playersToRedirect = new Vector<Player>();
-		for(int i = 0; i<playerList.size();i++){
-			if(playerList.get(i) != null){
-				playersToRedirect.addElement(playerList.get(i));
-			}
-		}
-		ServerMain.redirectPlayers(playersToRedirect);
-	}*/
 
 	public void start() {
 		this.isRunning = true;
@@ -288,7 +259,6 @@ public class Game implements Runnable{
 	public void setGameMod(int m) {
 		this.gamemode = m;
 	} 
-
 
 	public int getID() {
 		return this.id;

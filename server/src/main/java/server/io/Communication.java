@@ -196,7 +196,6 @@ public class Communication implements Runnable {
                 }
                 broadcastInGame("500 " + playerToBroadcast.getName() + " TURN", g.getGameId());
                 g.setConfirmations(new boolean[playerList.length]);
-
             }
         }
     }
