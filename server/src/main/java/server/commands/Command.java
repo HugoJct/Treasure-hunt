@@ -30,7 +30,8 @@ public abstract class Command {
 	protected void broadcastInGame(String message, int gameID) {       //send a message to all players in a specific game
         for(Communication c : ServerMain.launchedCom) {
             if(c.getPlayer().getGameId() == gameID) {
-                sendMessage(message);
+                c.getOutput().println(message);
+                c.getOutput().flush();
             }
         }
     }

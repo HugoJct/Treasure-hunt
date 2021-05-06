@@ -127,4 +127,7 @@ public class Communication implements Runnable {
     public String getName() {
         return this._player.getName();
     }
+    public PrintWriter getOutput() {
+        return this.out;
+    }
 }
