@@ -29,7 +29,10 @@ public class ServerMain {
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
+	//public static Vector<Console> launchedCons = new Vector<>();
+
 	private static boolean isRunning = true;
+	//private static Console console;
 
 	private static ConnectionHandler ch;
 
