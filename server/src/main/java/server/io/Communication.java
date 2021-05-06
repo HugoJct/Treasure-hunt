@@ -1,5 +1,6 @@
 package server.io;
 
+// import java Classes
 import java.net.Socket;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import server.playingProps.Player;
 import server.playingProps.Game;
 
+// import our Classes
 import server.ServerMain;
 
 import server.elements.Treasure;

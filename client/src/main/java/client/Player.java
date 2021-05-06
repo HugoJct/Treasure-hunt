@@ -1,8 +1,6 @@
 package client;
 
-import client.connex.Communication;
-import client.control.shell.Console;
-
+// import java Classes
 import java.net.Socket;
 import java.io.IOException;
 import java.lang.InterruptedException;
@@ -10,10 +8,14 @@ import java.lang.Thread;
 import java.io.FileReader;
 import java.io.File;
 import java.io.IOException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+
+// import our Classes
+import client.connex.Communication;
+import client.control.shell.Console;
+
 
 public class Player {
 

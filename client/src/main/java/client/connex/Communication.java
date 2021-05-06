@@ -1,18 +1,19 @@
 package client.connex;
 
+// import java Classes
 import java.util.Scanner;
-
 import java.net.Socket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
+// import our Classes
 import client.Player;
 import client.GameInfo;
 import client.control.shell.Console;
 
-import java.util.Arrays;
 
 public class Communication implements Runnable{
 

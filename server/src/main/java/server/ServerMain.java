@@ -1,25 +1,25 @@
 package server;
 
-import server.elements.Element;
-import server.elements.Hole;
-import server.elements.Treasure;
-import server.elements.Wall;
-
-import server.playingProps.Board;
-import server.playingProps.Player;
-import server.playingProps.Game;
-
-import server.io.Communication;
-import server.io.ConnectionHandler;
-
+// import java Classes
 import java.util.Vector;
 import java.io.FileReader;
 import java.io.File;
 import java.io.IOException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+
+// import our Classes
+import server.elements.Element;
+import server.elements.Hole;
+import server.elements.Treasure;
+import server.elements.Wall;
+import server.playingProps.Board;
+import server.playingProps.Player;
+import server.playingProps.Game;
+import server.io.Communication;
+import server.io.ConnectionHandler;
+
 
 public class ServerMain {
 
