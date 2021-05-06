@@ -20,12 +20,15 @@ import server.ServerMain;
 
 public class Player {
     //player attributes
+
+    private static int globalId = 0;
+
+    private final int playerID;
+    private String username;
+    private int money;
+
     private int posX;
     private int posY;
-    private static int globalId = 0;
-    private String username;
-    private final int playerID;
-    private int money;
     private boolean isDead;
     private int gameID = -1;
     private boolean ready;
@@ -35,39 +38,26 @@ public class Player {
     private String _msg;
 
     //Network attributes
-    boolean isConnected;
     Socket s;
     
+    //CONSTRUCTOR
     public Player(Socket s, String name) {
     	this.username = name;
     	this.isDead = false;
-        this.isConnected = true;
         this.s = s;
         this._msg = "";
         this.ready = false;
         this.playerID = globalId;
         globalId++;
     }
-    
-    //Network methods
-    public String getName() {       //returns the name of the class instance
-        return username;
-    }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
+    //GAME MANAGEMENT METHODS
     public void setGame(Game g) {
-        if(this.gameID == -1) {
-            this.gameID = g.getGameId();
-        }
-        else if(this.gameID == g.getGameId())
+        if(this.gameID == g.getGameId())
             System.out.println("The player is already connected to this game");
         else
-            System.out.println("The player is already connected to another game");
+            this.gameID = g.getGameId();
     }
-
     public void leaveGame() {
         if(this.gameID != -1) {
             this.gameID = -1;
@@ -79,7 +69,7 @@ public class Player {
     }
 
 
-    //Player managament methods
+    //Player management methods
     protected void addMoney(int amount) {
     	this.money += amount;
     }
@@ -132,54 +122,46 @@ public class Player {
     	    this.setPos(b, currentPos);
     	}
     }
-    
-
 
     public void killPlayer() {
     	isDead = true;
     }
-    
-    public boolean isPlayerDead() {
-    	return isDead;
-    }
-    
-    public int[] getPos() {
-    	int[] tab = {posX,posY};
-    	return tab;
-    }
 
+    //GETTERS
+    public String getName() {       //returns the name of the class instance
+        return username;
+    }
+    public boolean getAnswered() {
+        return this.answered;
+    }
+    public boolean isPlayerDead() {
+        return isDead;
+    }
+    public int[] getPos() {
+        int[] tab = {posX,posY};
+        return tab;
+    }
     public Socket getSocket() {
         return this.s;
     }
-
     public String getMsg() {
         return this._msg;
     }
-
     public int getGameId() {
         return this.gameID;
     }
-    
     public int getPlayerId() {
         return this.playerID;
     }
-
-    public void setGameId(int id) {
-        this.gameID = id;
-    }
-
     public String getUserName() {
         return this.username;
     }
-
     public boolean getReady() {
         return this.ready;
     }
-    
     public int getMoney(){
         return this.money;
     }
-
     public Game getGameConnectedTo() {
         for(Game g : ServerMain.createGames) {
             if(g.getGameId() == this.gameID)
@@ -188,32 +170,25 @@ public class Player {
         return null;
     }
 
+    //SETTERS
+    public void setUserName(String s) {
+        this.username = s;
+    }
+    public void setAnswered(boolean b) {
+        this.answered = b;
+    }
+    public void setGameId(int id) {
+        this.gameID = id;
+    }
     public void setReady(boolean b) {
         this.ready = b;
     }
-
     public void setMoney(int n){
         this.money = n;
     }
 
-    public void resurrect(){
-        this.isDead = false;
-    }
-
-    public void setUserName(String s) {
-        this.username = s;
-    }
-
-    public void setAnswered(boolean b) {
-        this.answered = b;
-    }
-
-    public boolean getAnswered() {
-        return this.answered;
-    }
-
+    //TOSTRING
     public String toString() {
-    	return this.username + " ["+this.posX+","+this.posY+"] "+money+"$ "+isDead;
+        return this.username + " ["+this.posX+","+this.posY+"] "+money+"$ "+isDead;
     }
-
 }
