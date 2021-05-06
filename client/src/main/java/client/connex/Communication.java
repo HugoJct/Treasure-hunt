@@ -95,7 +95,29 @@ public class Communication implements Runnable{
                 GameInfo.setStarted(true);
 				break;
 			case "201":
-				updatePlayerPos(brokenCommand);
+				int last = Console.getLastMove();
+				int[] pos = GameInfo.getPlayerPos(p.getName());
+				int j=0;
+				if (last == 1) {
+					System.out.println("MOVE OK : UP");
+					pos[1]--;
+				}
+				else if (last == 2) {
+					System.out.println("MOVE OK : DOWN");
+					pos[1]++;
+				}
+				else if (last == 3) {
+					System.out.println("MOVE OK : RIGHT");
+					pos[0]++;
+				}
+				else if (last == 4) {
+					System.out.println("MOVE OK : LEFT");
+					pos[0]--;
+				}
+				else {
+					System.out.println("Error : no move engaged");
+				}
+				GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");
@@ -106,15 +128,63 @@ public class Communication implements Runnable{
 				break;
 			// set holes data
 			case "401":
-				setHolesData(brokenCommand);
+				if (brokenCommand[1].equals("NUMBER")) {
+					GameInfo.setHoles(Integer.parseInt(brokenCommand[2]));
+					GameInfo.initHolesPos();
+				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
+					int fill = 0;
+					for(int i=0;i<(GameInfo.getHoles() * 2);i++) {
+						if(GameInfo.getHolesPos()[i] == 0) {
+							fill = (i == 0 ? 0 : i);
+							break;
+						}
+					}
+					for(int i=4;i<brokenCommand.length;i++) {
+						GameInfo.setHolesPos(fill,Integer.parseInt(brokenCommand[i]),Integer.parseInt(brokenCommand[i+1]));
+						i++;
+						fill += 2;
+					}
+				}
 				break;
 			// set treasures data
 			case "411":	
-				setTreasureData(brokenCommand);
+				if (brokenCommand[1].equals("NUMBER")) {
+					GameInfo.setTreasures(Integer.parseInt(brokenCommand[2]));
+					GameInfo.initTreasuresPos();
+				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
+					int fill = 0;
+					for(int i=0;i<(GameInfo.getTreasures() * 3);i++) {
+						if(GameInfo.getTreasuresPos()[i] == 0) {
+							fill = (i == 0 ? 0 : i);
+							break;
+						}
+					}
+					for(int i=4;i<brokenCommand.length;i++) {
+						GameInfo.setTreasuresPos(fill,Integer.parseInt(brokenCommand[i]),Integer.parseInt(brokenCommand[i+1]),Integer.parseInt(brokenCommand[i+2]));
+						i+=2;
+						fill += 3;
+					}
+				}
 				break;
 			// set walls data
 			case "421":	
-				setWallsData(brokenCommand); 
+				if (brokenCommand[1].equals("NUMBER")) {
+					GameInfo.setWalls(Integer.parseInt(brokenCommand[2]));
+					GameInfo.initWallsPos();
+				} else if (brokenCommand[1].equals("MESS") && brokenCommand[3].equals("POS")) {
+					int fill = 0;
+					for(int i=0;i<(GameInfo.getWalls() * 3);i++) {
+						if(GameInfo.getWallsPos()[i] == 0) {
+							fill = (i == 0 ? 0 : i);
+							break;
+						}
+					}
+					for(int i=4;i<brokenCommand.length;i++) {
+						GameInfo.setWallsPos(fill,Integer.parseInt(brokenCommand[i]),Integer.parseInt(brokenCommand[i+1]));
+						i++;
+						fill += 2;
+					}
+				} 
 				break;
 			case "500":
 				if (brokenCommand[1].equals(Player.getName())) {
@@ -127,22 +197,15 @@ public class Communication implements Runnable{
 				break;
 			case "510":
 				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
-				GameInfo.printGameBoard();
+				sendMessage("512 " + brokenCommand[1] + " UPDATED");
+				Player.printGameBoard();
 				break;
 			case "511":
-				if (brokenCommand[2].equals("UPDATED")) {
-
-				}
-				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
-					GameInfo.setTreasures(GameInfo.getTreasures()-1);
-					GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
-					GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
-					sendMessage("512 " + Player.getName() + " UPDATED");
-				}
-				else {
-					sendMessage("UNKNOWN");
-				}
-				GameInfo.printGameBoard();
+				GameInfo.setTreasures(GameInfo.getTreasures()-1);
+				GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				sendMessage("512 " + brokenCommand[1] + " UPDATED");
+				Player.printGameBoard();
 				break;
 			case "520":
 				GameInfo.removePlayer(brokenCommand[1]);
@@ -160,66 +223,6 @@ public class Communication implements Runnable{
 				System.out.println("Not your round");
 			default:
 				break; 
-		}
-	}
-
-	public void setHolesData(String args[]) {
-		if (args[1].equals("NUMBER")) {
-			GameInfo.setHoles(Integer.parseInt(args[2]));
-			GameInfo.initHolesPos();
-		} else if (args[1].equals("MESS") && args[3].equals("POS")) {
-			int fill = 0;
-			for(int i=0;i<(GameInfo.getHoles() * 2);i++) {
-				if(GameInfo.getHolesPos()[i] == 0) {
-					fill = (i == 0 ? 0 : i);
-					break;
-				}
-			}
-			for(int i=4;i<args.length;i++) {
-				GameInfo.setHolesPos(fill,Integer.parseInt(args[i]),Integer.parseInt(args[i+1]));
-				i++;
-				fill += 2;
-			}
-		}
-	}
-
-	public void setTreasureData(String args[]) {
-		if (args[1].equals("NUMBER")) {
-			GameInfo.setTreasures(Integer.parseInt(args[2]));
-			GameInfo.initTreasuresPos();
-		} else if (args[1].equals("MESS") && args[3].equals("POS")) {
-			int fill = 0;
-			for(int i=0;i<(GameInfo.getTreasures() * 3);i++) {
-				if(GameInfo.getTreasuresPos()[i] == 0) {
-					fill = (i == 0 ? 0 : i);
-					break;
-				}
-			}
-			for(int i=4;i<args.length;i++) {
-				GameInfo.setTreasuresPos(fill,Integer.parseInt(args[i]),Integer.parseInt(args[i+1]),Integer.parseInt(args[i+2]));
-				i+=2;
-				fill += 3;
-			}
-		}
-	}
-
-	public void setWallsData(String args[]) {
-		if (args[1].equals("NUMBER")) {
-			GameInfo.setWalls(Integer.parseInt(args[2]));
-			GameInfo.initWallsPos();
-		} else if (args[1].equals("MESS") && args[3].equals("POS")) {
-			int fill = 0;
-			for(int i=0;i<(GameInfo.getWalls() * 3);i++) {
-				if(GameInfo.getWallsPos()[i] == 0) {
-					fill = (i == 0 ? 0 : i);
-					break;
-				}
-			}
-			for(int i=4;i<args.length;i++) {
-				GameInfo.setWallsPos(fill,Integer.parseInt(args[i]),Integer.parseInt(args[i+1]));
-				i++;
-				fill += 2;
-			}
 		}
 	}
 
@@ -245,32 +248,6 @@ public class Communication implements Runnable{
 				}
 			}
 		}
-	}
-
-	public void updatePlayerPos(String args[]) {
-		int last = Console.getLastMove();
-		int[] pos = GameInfo.getPlayerPos(p.getName());
-		int j=0;
-		if (last == 1) {
-			System.out.println("MOVE OK : UP");
-			pos[1]--;
-		}
-		else if (last == 2) {
-			System.out.println("MOVE OK : DOWN");
-			pos[1]++;
-		}
-		else if (last == 3) {
-			System.out.println("MOVE OK : RIGHT");
-			pos[0]++;
-		}
-		else if (last == 4) {
-			System.out.println("MOVE OK : LEFT");
-			pos[0]--;
-		}
-		else {
-			System.out.println("Error : no move engaged");
-		}
-		GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
 	}
 
 	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces
