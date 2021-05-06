@@ -1,10 +1,13 @@
 package server.commands;
 
+// import java Classes
 import java.io.PrintWriter;
 
+// import our Classes
 import server.ServerMain;
 import server.playingProps.Player;
 import server.playingProps.Game;
+
 
 public class CommandJoinGame extends Command {
 

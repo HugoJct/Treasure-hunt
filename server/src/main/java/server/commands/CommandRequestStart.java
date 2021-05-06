@@ -1,10 +1,13 @@
 package server.commands;
 
+// import java Classes
 import java.io.PrintWriter;
 
+// import our Classes
 import server.ServerMain;
 import server.playingProps.Game;
 import server.playingProps.Player;
+
 
 public class CommandRequestStart extends Command {
 
