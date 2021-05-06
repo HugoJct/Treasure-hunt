@@ -1,17 +1,21 @@
+package client;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.control.UI.application.Modele;
+import client.VueSwing;
 
 @SuppressWarnings("serial")
 public class SceneSwing extends JPanel{
-	public static Modele m = new Modele();
+	public Modele m = new Modele();
 	
 
 	private Image Back;
@@ -27,12 +31,24 @@ public class SceneSwing extends JPanel{
 	public SceneSwing() {
 		super();
 
+
 		try {
-			this.Back = (new ImageIcon("Images/Background3.jpg")).getImage();
-			this.Wall = (new ImageIcon("Images/wall2.png")).getImage();
-			this.Treasure  = (new ImageIcon("Images/treasure.png")).getImage();
-			this.Hole = (new ImageIcon("Images/hole.png")).getImage();
-			this.Player  = (new ImageIcon("Images/Player2.png")).getImage();
+			if(this.m == null) {
+				System.out.println("modele null");
+			}
+			
+			/*this.Back = (new ImageIcon("./Images/Background3.jpg")).getImage();
+			this.Wall = (new ImageIcon("./Images/wall2.png")).getImage();
+			this.Treasure  = (new ImageIcon("./Images/treasure.png")).getImage();
+			this.Hole = (new ImageIcon("./Images/hole.png")).getImage();
+			this.Player  = (new ImageIcon("./Images/Player2.png")).getImage();*/
+			
+			this.Back = (new ImageIcon("/Images/Background3.jpg")).getImage();
+			this.Wall = (new ImageIcon("/Images/wall2.png")).getImage();
+			this.Treasure  = (new ImageIcon("/Images/treasure.png")).getImage();
+			this.Hole = (new ImageIcon("/Images/hole.png")).getImage();
+			this.Player  = (new ImageIcon("/Images/Player2.png")).getImage();
+			
 			
 			/*this.Back = (new ImageIcon(getClass().getResource("/Images/Background3.jpg"))).getImage();
 			this.Wall = (new ImageIcon(getClass().getResource("/Images/wall2.png"))).getImage();
@@ -42,8 +58,9 @@ public class SceneSwing extends JPanel{
 			
 		}catch(Exception e) {
 			System.out.println("Error : Images not found");
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
+		
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -81,4 +98,19 @@ public class SceneSwing extends JPanel{
 		}
 		
 	}
+	
+	
+	/*public static void main(String[] args) {
+		JFrame fen = new JFrame();
+		SceneSwing scene = new SceneSwing();
+		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fen.setSize(scene.m.getColumns()*30, scene.m.getLines()*28);
+		fen.setLocationRelativeTo(null);
+		fen.setResizable(false);
+		fen.setAlwaysOnTop(true);
+		
+		
+		fen.setContentPane(scene);
+		fen.setVisible(true);
+	}*/
 }

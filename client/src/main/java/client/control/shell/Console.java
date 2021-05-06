@@ -5,11 +5,15 @@ import client.connex.Communication;
 import client.control.UI.application.Main;
 import client.control.UI.application.Main.PrimeThread;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import client.GameInfo;
+import client.VueSwing;
+import client.SceneSwing;
 
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.awt.*;
 
 public class Console implements Runnable {
 
@@ -46,9 +50,20 @@ public class Console implements Runnable {
 				case "y":
 					_com.sendMessage("152 START YES");
 					startRequested = false;
-					/*PrimeThread pt = new Main.PrimeThread();
-					pt.run();*/
-					Application.launch(Main.class);
+					
+
+
+					
+					
+					javax.swing.SwingUtilities.invokeLater(
+						      new Runnable() {
+						        public void run() { 
+						        	VueSwing v = new VueSwing();
+						        }
+						      }
+					);
+					
+					
 					break;
 				case "n":
 					_com.sendMessage("152 START NO");

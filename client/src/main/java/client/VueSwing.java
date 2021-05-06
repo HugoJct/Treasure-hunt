@@ -1,3 +1,5 @@
+package client;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,6 +22,7 @@ import javax.swing.event.MouseInputListener;
 import client.control.UI.application.Modele;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import client.SceneSwing;
 
 
 @SuppressWarnings("serial")
@@ -34,17 +37,12 @@ public class VueSwing extends JFrame implements MouseInputListener{
 		this.setSize(m.getColumns()*30+20, m.getLines()*28+50);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
-		/*File f = new File("Images/Background3.jpg");
-		System.out.println(f.exists());
-		ImageIcon BackImg = new ImageIcon("Images/Background3.jpg");
-		JLabel BI = new JLabel(BackImg);*/
 
 		scene = new SceneSwing();
-		scene.setVisible(true);
 		scene.addMouseListener(this);
 		this.setContentPane(scene);
-		
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	
@@ -104,7 +102,7 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(
 	      new Runnable() {
 	        public void run() { 
@@ -113,5 +111,8 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	         }
 	      }
 	    );		
-	}
+	}*/
+	
+	
+	
 }
