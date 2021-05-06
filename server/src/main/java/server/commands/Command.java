@@ -1,12 +1,14 @@
 package server.commands;
 
+// import java Classes
 import java.io.PrintWriter;
 
+// import our Classes
 import server.playingProps.Game;
 import server.playingProps.Player;
-
 import server.ServerMain;
 import server.io.Communication;
+
 
 public abstract class Command {
 

@@ -1,11 +1,13 @@
 package server.commands;
 
+// import java Classes
 import java.io.PrintWriter;
 
+// import our Classes
 import server.playingProps.Game;
 import server.playingProps.Player;
-
 import server.ServerMain;
+
 
 public class CommandSendHolesInfos extends Command {
 

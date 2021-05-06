@@ -1,11 +1,13 @@
 package server.commands;
 
+// import our Classes
 import java.io.PrintWriter;
 
+// import java Classes
 import server.playingProps.Game;
 import server.playingProps.Player;
-
 import server.ServerMain;
+
 
 public class CommandSendGameInfo extends Command {
 
