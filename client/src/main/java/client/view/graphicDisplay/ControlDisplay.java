@@ -30,6 +30,18 @@ public class ControlDisplay extends JFrame {
 
         frame.setSize(400, 400);
         frame.setVisible(true);
+    }
 
+    public JButton getUp() {
+        return up;
+    }
+    public JButton getDown() {
+        return down;
+    }
+    public JButton getLeft() {
+        return left;
+    }
+    public JButton getRight() {
+        return right;
     }
 }
