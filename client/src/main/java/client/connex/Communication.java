@@ -13,6 +13,8 @@ import java.util.Arrays;
 import client.Player;
 import client.GameInfo;
 import client.control.shell.Console;
+import client.view.graphicDisplay.ControlDisplay;
+import client.control.UIBis.DirectionalCrosses;
 
 
 public class Communication implements Runnable{
@@ -22,6 +24,7 @@ public class Communication implements Runnable{
     PrintWriter out;
     Player p;
     String serverMsg = "";
+
 
     public Communication(Player p) {
         this.p = p;
@@ -93,6 +96,7 @@ public class Communication implements Runnable{
                 sendMessage("410 GETTREASURES");
                 sendMessage("420 GETWALLS");
                 GameInfo.setStarted(true);
+				new DirectionalCrosses(new ControlDisplay(), this);
 				break;
 			case "201":
 				int last = Console.getLastMove();
