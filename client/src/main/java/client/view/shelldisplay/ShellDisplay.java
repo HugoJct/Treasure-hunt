@@ -1,7 +1,9 @@
 package client.view.shelldisplay;
 
-import server.Board;
+// import our Classes
+import server.playingProps.Board;
 import server.elements.*;
+
 
 public class ShellDisplay {
     Board b;

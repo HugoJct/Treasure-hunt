@@ -1,6 +1,8 @@
 package client;
 
+// import java Classes
 import java.util.Arrays;
+
 
 public class GameInfo {
 
@@ -28,8 +30,10 @@ public class GameInfo {
     private static String[] playerName = new String[0];
 
     private static boolean isDead = false;
+    private static boolean canPlay = false;
 
     private static int money = 0;
+    private static int gameMod = -1;
 
     // to get various elements
     public static int getHoles() {
@@ -55,6 +59,14 @@ public class GameInfo {
         return isDead;
     }
 
+    public static boolean getPlayable() {
+        return canPlay;
+    }
+
+    public static int getGameMod() {
+        return gameMod;
+    }
+
     // to get the map size
     public static int[] getMap() {
         return map;
@@ -76,16 +88,12 @@ public class GameInfo {
     }
     public static int[] getPlayerPos(String plName) {
         int j = 0;
-        //System.out.println(Arrays.toString(playerPos));
         for(int i=0;i<playerPos.length;i+=2) {
-           // System.out.println(playerName[j]+" "+plName+" "+(playerName[j].equals(plName)));
             if(playerName[j].equals(plName)) {
                 int[] tab = new int[3];
                 tab[0] = playerPos[i];
                 tab[1] = playerPos[i+1];
-                tab[2] = i;/*
-                System.out.println(playerPos[i]+" "+playerPos[i+1]);
-                System.out.println(Arrays.toString(tab));*/
+                tab[2] = i;
                 return tab;
             }
             j++;
@@ -122,6 +130,10 @@ public class GameInfo {
             return new int[0][0];
         else
             return availableGameInfos;
+    }
+
+    public static void setGameMod(int g) {
+        gameMod = g;
     }
 
     // to set each element number 
@@ -176,24 +188,31 @@ public class GameInfo {
         treasuresPos[pos+2] = v;        
     }
 
+    public static void setPlayable(boolean b) {
+        canPlay = b;
+    }
+
     public static void removePlayer(String name) {    
         String[] playerNameBis = new String[playerName.length-1];
+        int j = 0;
         for (int i = 0 ; i<playerName.length ; i++) {
             if (playerName[i].contentEquals(name)) {
                 removePlayerPos(i*2);
             } else {
-                playerNameBis[i] = playerName[i];
+                playerNameBis[j] = playerName[i];
+                j+=1;
             }
         }
         playerName = playerNameBis;
     }
     public static void removePlayerPos(int pos) {
         int[] playerPosBis = new int[playerPos.length-2];
-        for (int i = 0 ; i<playerPos.length ; i++) {
-            if (i == pos) {
-                i+=2;
-            } else {
-                playerPosBis[i] = playerPos[i];
+        int j = 0;
+        for (int i = 0 ; i<playerPos.length ; i+=2) {
+            if (i != pos) {
+                playerPosBis[j] = playerPos[i];
+                playerPosBis[j+1] = playerPos[i+1];
+                j+=2;
             }
         }
         playerPos = playerPosBis;

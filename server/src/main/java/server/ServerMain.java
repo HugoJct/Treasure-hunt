@@ -1,25 +1,25 @@
 package server;
 
-import server.elements.Element;
-import server.elements.Hole;
-import server.elements.Treasure;
-import server.elements.Wall;
-
-import server.Board;
-import server.Player;
-import server.Game;
-import server.io.Communication;
-
-import server.io.ConnectionHandler;
-
+// import java Classes
 import java.util.Vector;
 import java.io.FileReader;
 import java.io.File;
 import java.io.IOException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+
+// import our Classes
+import server.elements.Element;
+import server.elements.Hole;
+import server.elements.Treasure;
+import server.elements.Wall;
+import server.playingProps.Board;
+import server.playingProps.Player;
+import server.playingProps.Game;
+import server.io.Communication;
+import server.io.ConnectionHandler;
+
 
 public class ServerMain {
 
@@ -29,28 +29,31 @@ public class ServerMain {
 
 	public static Vector<Communication> launchedCom = new Vector<>();
 
-	public static Vector<Console> launchedCons = new Vector<>();
-
 	private static boolean isRunning = true;
+
 	private static ConnectionHandler ch;
-	private static Console console;
-	private static int port;
-	private static File configFile;
 
 	public static void main(String[] args) {
+		File configFile = null;
+		String configFilePath = "";
+		int port = -1;
 
 		try {
-			if(args.length >= 1)
-				configFile = new File(args[0]);
-			else
-				configFile = new File("src/main/java/server/config.json");
+			if(args.length >= 1) {
+				configFile = new File(configFilePath);
+				configFilePath = configFile.getPath();
+			} else {
+				configFilePath = "src/main/java/server/config.json";
+				configFile = new File(configFilePath);
+			}
 
 			FileReader reader = new FileReader(configFile);
 
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
-            port = ((Long) jsonObject.get("port")).intValue();
+            
+			port = ((Long) jsonObject.get("port")).intValue();
 
         }  catch(IOException e) {
             e.printStackTrace();
@@ -58,50 +61,10 @@ public class ServerMain {
             e.printStackTrace();
         }
 
-		ch = new ConnectionHandler(port);		//Launch the server	
+		ch = new ConnectionHandler(port,configFilePath);		//Launch the server	
+
 		Thread waitForConnection = new Thread(ch);		//Create and launch the thread for the connection handler
 		waitForConnection.start();
-
-		Thread checkInput = new Thread(console);		//Create and launch the thread for the connection handler
-		checkInput.start();
-	}
-
-	public static void broadcastMessage(String message) {		//method charged of executing the behaviour of the "broadcast" command
-		for(Communication c : launchedCom)
-			c.sendMessage(message);
-	}
-
-	public static void broadcastMessage(String[] message) {		//method charged of executing the behaviour of the "broadcast" command but from a string array (making it easier to use with the command breaker)
-		String wholeMessage = "";
-		for(int i=1;i<message.length;i++)
-			wholeMessage += message[i]+" ";
-		for(Communication c : launchedCom)
-			c.sendMessage(wholeMessage);
-	}
-
-	public static void broadcastPerGame(int[] message) {
-		if (message[0] == 152) {
-			for (Communication c : launchedCom) {
-				if (c.getPlayer().getGameId() == message[1]) {
-					c.sendMessage("152");
-				}
-			}
-		}
-		if (message[0] == 153) {
-			for (Communication c : launchedCom) {
-				if (c.getPlayer().getGameId() == message[1]) {
-					c.sendMessage("153");
-				}
-			}
-		}
-	}
-
-	public static void printGame(int gameID) {
-		for (Game g : createGames) {
-			if (g.getGameId() == gameID) {
-				System.out.println(g.getBoard().toString());
-			}
-		}
 	}
 
 	public static String printConnectedUsers() {					//method charged of executing the behaviour of the "listusers" command
@@ -117,13 +80,13 @@ public class ServerMain {
 		}		
 	}
 
-	public static int createGame(String name, String ownerName) {		//this creates the game with the specified name 
+	public static int createGame(int gamemode, int sizeX, int sizeY, int holeNumber, int treasureNumber, int gameOwnerID) {		//this creates the game with the specified name 
 		int ownerID = -1;
 		for(Player p : connectedUsers)
-			if(p.getName().equals(ownerName))
+			if(p.getPlayerId() == gameOwnerID)
 				ownerID = p.getPlayerId();
 
-		Game g = new Game(name,ownerID);
+		Game g = new Game(gamemode,sizeX,sizeY,holeNumber,treasureNumber,gameOwnerID);
 		createGames.add(g);
 
 		Thread game = new Thread(g);
@@ -158,11 +121,11 @@ public class ServerMain {
 		return ok;
 	}
 
-	public static boolean joinGame(String[] info) {	// 130 JOIN gameId playerName 
+	public static boolean joinGame(String[] args) {	// 130 JOIN gameId playerName 
 		for(Game g : createGames) {	
-			if(g.getGameId() == Integer.parseInt(info[2])) {
+			if(g.getGameId() == Integer.parseInt(args[2])) {
 				for(Player p : connectedUsers) {
-					if(p.getName().equals(info[3])) {
+					if(p.getName().equals(args[3])) {
 						g.addPlayer(p);
 						return true;
 					}
@@ -183,137 +146,12 @@ public class ServerMain {
 		return "Game ID not found";
 	}
 
-	public static String listGames() {		//lists the existing games
-		String list = "121 ID ";
-		if(createGames.size() > 0) {
-			for(Game g : createGames) {
-				list += (g + " ");
-			}
-		}	
-		return list;
-	}
-
-	public static String listGamesWithDetails(){
-		String games = "";
-		for(Game g : createGames){
-			games += "["+g+" ; "+g.getPlayers().size()+" Players Connected ; "+g.getBoard().getSizeX()+"x"+g.getBoard().getSizeY()+" Board ; Status: ";
-			if(g.getPlayers().size() < g.getCapacity()){
-				games +="Waiting for additional players (At least "+(g.getCapacity() - g.getPlayers().size())+" more)";
-			}else if(g.getPlayers().size() >= g.getCapacity() && !(g.isRunning())){
-				games += "About to start";
-			}else if(g.isRunning()){
-				games += "Running ; Leading player : "+g.leadingPlayer()+" ; Players left : "+g.getPlayers().size();
-			}
-
-			games += "]\n";
-		}
-		return games;
-	}
-
-
-	public static int resetGame(int id, String ownerName){
-		for(Game g : createGames){
-			if(g.getID() == id){
-				String gameName = g.getName();
-				stopGame(g.getID());
-				return createGame(gameName, ownerName);
-			}
-		}
-		return -1;
-	}
-
-	public static boolean everyoneIsDead(Game g) {
-		for (Player p : connectedUsers) {
-			if (p.getGameId() == g.getGameId()) {
-				if (p.isPlayerDead() == false) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	public static boolean redirectPlayers(Vector<Player> players){ // redirect players to another generated Game
-		if(players.size() == 0){
-			return false;
-		}
-		int oldGameID = players.get(0).getGameId();
-		for(Player p : players){
-			p.resurrect();
-			p.setMoney(0);
-			p.setReady(false);
-			p.leaveGame();
-		}
-		int newGameID = resetGame(oldGameID, players.get(0).getName());
-		Game g = getGameFromCreateGames(newGameID);
-		for(Player p : players){
-			g.addPlayer(p);
-		}
-		return true;
-	}
-
-	public static Game getGameFromCreateGames(int id){
-		for(Game g : createGames){
-			if(g.getGameId() == id){
-				return g;
-			}
-		}
-		return null;
-	}
-
-
-	public static String listNbrOfGames() {
-		int x = 0;
-		if(createGames.size() > 0) {
-			for (Game g : createGames) {
-				x++;
-			}
-		}
-		return "121 NUMBER " + x;
-	}
-
 	public static int getNumberOfGames() {
 		int x = 0;
 		for (Game g : createGames) {
 			x++;
 		}
 		return x;
-	}
-
-	public static int getGameX(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getSizeX();
-			}
-		}
-		return -1;
-	}
-
-	public static int getGameY(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getSizeY();
-			}
-		}
-		return -1;
-	}
-
-	public static int getNumberOfHoles(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getHoleCount();
-			}
-		}
-		return -1;
-	}
-
-	public static int getNumberOfTreasures(int id) {
-		for (Game g : createGames) {
-			if (g.getGameId() == id) {
-				return g.getBoard().getTreasureCount();
-			}
-		}
-		return -1;
 	}
 
 	public static Vector<Player> getConnectedUsers() {
@@ -331,13 +169,5 @@ public class ServerMain {
 
 	public static boolean isRunning() {
 		return isRunning;	
-	}
-
-	public static int getPort() {
-		return port;
-	}
-
-	public static String getConfigFile() {
-		return configFile.getPath();
 	}
 }

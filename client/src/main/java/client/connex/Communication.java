@@ -1,18 +1,19 @@
 package client.connex;
 
+// import java Classes
 import java.util.Scanner;
-
 import java.net.Socket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
+// import our Classes
 import client.Player;
 import client.GameInfo;
 import client.control.shell.Console;
 
-import java.util.Arrays;
 
 public class Communication implements Runnable{
 
@@ -96,7 +97,6 @@ public class Communication implements Runnable{
 			case "201":
 				int last = Console.getLastMove();
 				int[] pos = GameInfo.getPlayerPos(p.getName());
-				System.out.println("pos "+Arrays.toString(pos));
 				int j=0;
 				if (last == 1) {
 					System.out.println("MOVE OK : UP");
@@ -118,8 +118,6 @@ public class Communication implements Runnable{
 					System.out.println("Error : no move engaged");
 				}
 				GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
-				//System.out.println("pos "+Arrays.toString(pos));
-				Player.printGameBoard();
 				break;
 			case "202":
 				System.out.println("Impossible movement, wall met");
@@ -188,36 +186,41 @@ public class Communication implements Runnable{
 					}
 				} 
 				break;
-			case "501":
+			case "500":
+				if (brokenCommand[1].equals(Player.getName())) {
+					GameInfo.setPlayable(true);
+					System.out.println("Your turn");
+					sendMessage("501 TURN UPDATED");
+				} else {
+					System.out.println(brokenCommand[1] + " turn");
+				}
 				break;
 			case "510":
 				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				sendMessage("512 " + brokenCommand[1] + " UPDATED");
 				Player.printGameBoard();
 				break;
 			case "511":
-				if (brokenCommand[2].equals("UPDATED")) {
-
-				}
-				else if (brokenCommand[2].equals("POS") && brokenCommand[5].equals("TRES")) {
-					GameInfo.setTreasures(GameInfo.getTreasures()-1);
-					GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
-					GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
-					sendMessage("512 " + Player.getName() + " UPDATED");
-				}
-				else {
-					sendMessage("UNKNOWN");
-				}
+				GameInfo.setTreasures(GameInfo.getTreasures()-1);
+				GameInfo.removeTreasure(Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				GameInfo.setPlayers(brokenCommand[1], Integer.parseInt(brokenCommand[3]), Integer.parseInt(brokenCommand[4]));
+				sendMessage("512 " + brokenCommand[1] + " UPDATED");
 				Player.printGameBoard();
 				break;
 			case "520":
 				GameInfo.removePlayer(brokenCommand[1]);
 				sendMessage("521 " + Player.getName() + " UPDATED");
 				break;
+			case "600":
+				System.out.println("Everyone is dead : GAME OVER");
+				System.exit(0);
 			case "666":
 				GameInfo.setLifeState(true);
 				GameInfo.resetMoney();
 				System.out.println("U'R DEAD");
 				break;
+			case "902":
+				System.out.println("Not your round");
 			default:
 				break; 
 		}

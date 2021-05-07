@@ -1,5 +1,13 @@
 package server.elements;
 
 public abstract class Element {
-	public abstract String toString();
+	private char label;
+
+	public Element(char c) {
+		this.label = c;
+	}
+
+	public String toString() {
+		return ""+label;
+	}
 }
