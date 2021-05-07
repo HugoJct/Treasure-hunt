@@ -2,6 +2,8 @@ package server.playingProps;
 
 // import java Classes
 import java.util.Random;
+import static java.lang.Math.*;
+import java.util.Arrays;
 
 // import our Classes
 import server.elements.*;
@@ -155,7 +157,7 @@ public class Board {
     return true;
   }
 
-  public boolean fillWallsInter(int posCenter[], String s){//Intermediary function for fillWalls NB:Works only on a board With minimum 8*8 size
+  public boolean fillWallsInter(int posCenter[], String s){//Intermediary function for fillWalls NB:Works only on a board With minimum 8*8 size(Will not cause any problems either Way&)
     int x = posCenter[1];
     int y = posCenter[0];
     int it = 0;
@@ -236,6 +238,55 @@ public class Board {
       return true;
     }
     return false;
+  }
+
+  public static int[][] copyTab(int[][] source){ //function made for antiSoftLockPlugIn
+  	int[][] copy= new int[source.length][2];
+  	for(int i=0;i<source.length;i++){
+  		copy[i] = Arrays.copyOf(source[i],source[i].length);
+  	}
+  	return copy;
+  }
+
+  public int distanceFromCenter(int[] posElement){ //function made for antiSoftLockPlugIn
+  	int[] posCenter = new int[2];
+    posCenter[0] = (this.elements.length - 1)/2;
+    posCenter[1] = (this.elements[posCenter[0]].length - 1)/2;
+    return abs(posCenter[0] - posElement[0]) + abs(posCenter[1] - posElement[1]);
+  }
+
+  public boolean addHoleAdjacent(int[] pos){ //function made for antiSoftLockPlugIn
+  	if(this.getElementAt(pos[1],pos[0]+1) == null){ //down
+  		this.setElementAt(new Hole(),pos[1],pos[0]+1);
+  		return true;
+  	}else if(this.getElementAt(pos[1],pos[0]-1) == null){ //up
+  		this.setElementAt(new Hole(),pos[1],pos[0]-1);
+  		return true;
+  	}else if(this.getElementAt(pos[1]+1,pos[0]) == null){ //right
+  		this.setElementAt(new Hole(),pos[1]+1,pos[0]);
+  		return true;
+  	}else if(this.getElementAt(pos[1]-1,pos[0]) == null){ //left
+  		this.setElementAt(new Hole(),pos[1]-1,pos[0]);
+  		return true;
+  	}
+  	return false;
+  }
+
+  public boolean antiSoftLockPlugIn(){
+  	int[][] holePos = copyTab(this.getHolePos());
+  	for(int i=0;i<holePos.length-1;i++){
+  		if(holePos[i][0]>=0 && holePos[i][1]>=0){
+  			for(int j=i+1;j<holePos.length;j++){
+  				if(this.distanceFromCenter(holePos[i]) == this.distanceFromCenter(holePos[j])){
+  					this.setElementAt(null,holePos[j][1],holePos[j][0]);
+  					holePos[j][0] = -1;
+  					holePos[j][1] = -1;
+  					this.addHoleAdjacent(holePos[i]);
+  				}
+  			}
+  		}
+  	}
+  	return true;
   }
 
   public boolean withinBorders(int pos[]){

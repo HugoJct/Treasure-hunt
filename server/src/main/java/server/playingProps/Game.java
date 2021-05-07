@@ -122,6 +122,7 @@ public class Game implements Runnable{
 			b.setBorder(); //Generation of borders
 			b.fillWalls(); // Generation of Walls adapting to the size of the board
 			b.fillElements(h,t); // Generation of Holes and Treasures
+			b.antiSoftLockPlugIn(); 
 
 		}catch(Exception e){
 			e.printStackTrace();
