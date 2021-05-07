@@ -96,7 +96,7 @@ public class Communication implements Runnable{
                 sendMessage("410 GETTREASURES");
                 sendMessage("420 GETWALLS");
                 GameInfo.setStarted(true);
-				new DirectionalCrosses(new ControlDisplay(), this);
+				new DirectionalCrosses(new ControlDisplay(p), this);
 				break;
 			case "201":
 				int last = Console.getLastMove();

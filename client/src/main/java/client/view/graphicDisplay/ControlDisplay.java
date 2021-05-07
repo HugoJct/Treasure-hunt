@@ -4,10 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 import client.control.UIBis.DirectionalCrosses;
+import client.Player;
 
 public class ControlDisplay extends JFrame {
     private JFrame frame = new JFrame();
     private JPanel inputs = new JPanel();
+    private JMenuBar head = new JMenuBar();
+    private JMenuItem playerName;
     private DirectionalCrosses control;
 
     private JButton up = new JButton("UP");
@@ -20,12 +23,18 @@ public class ControlDisplay extends JFrame {
     private JButton emptyFor = new JButton();
     private JButton emptyFive = new JButton();
 
-    public ControlDisplay() {
-
+    public ControlDisplay(Player p) {
+        
+        frame.setTitle("control");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.add(inputs);
+        playerName = new JMenuItem(p.getName());
+        head.add(playerName, BorderLayout.CENTER);
+        
+        frame.setJMenuBar(head);
 
+        frame.add(inputs);
+    
         inputs.setLayout(new GridLayout(3, 3));
 
         inputs.add(emptyOne);
