@@ -13,6 +13,7 @@ import java.util.Arrays;
 import client.Player;
 import client.GameInfo;
 import client.control.shell.Console;
+import client.view.graphicDisplay.ControlDisplay;
 
 
 public class Communication implements Runnable{
@@ -23,7 +24,10 @@ public class Communication implements Runnable{
     Player p;
     String serverMsg = "";
 
+
     public Communication(Player p) {
+		new ControlDisplay();
+
         this.p = p;
     	this.s = p.getSocket();
     	try {
@@ -93,6 +97,7 @@ public class Communication implements Runnable{
                 sendMessage("410 GETTREASURES");
                 sendMessage("420 GETWALLS");
                 GameInfo.setStarted(true);
+				new ControlDisplay();
 				break;
 			case "201":
 				int last = Console.getLastMove();
