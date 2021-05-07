@@ -30,10 +30,12 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	JPanel Background = new JPanel();
 	static Modele m = new Modele();
 	public static SceneSwing scene;
+	public static int ID = 0;
 
 
 	public VueSwing() {
-		this.setTitle("Chasse au Trésor"); 
+		ID += 1;
+		this.setTitle("Chasse au Trésor "+ID); 
 		this.setSize(m.getColumns()*30+20, m.getLines()*28+50);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
@@ -102,16 +104,18 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	
 	
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(
 	      new Runnable() {
 	        public void run() { 
 	          VueSwing v = new VueSwing();
 	          v.setVisible(true);
+	          VueSwing v2 = new VueSwing();
+	          v2.setVisible(true);
 	         }
 	      }
 	    );		
-	}*/
+	}
 	
 	
 	

@@ -1,5 +1,7 @@
 package client;
 
+
+import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -37,24 +39,25 @@ public class SceneSwing extends JPanel{
 				System.out.println("modele null");
 			}
 			
-			/*this.Back = (new ImageIcon("./Images/Background3.jpg")).getImage();
-			this.Wall = (new ImageIcon("./Images/wall2.png")).getImage();
-			this.Treasure  = (new ImageIcon("./Images/treasure.png")).getImage();
-			this.Hole = (new ImageIcon("./Images/hole.png")).getImage();
-			this.Player  = (new ImageIcon("./Images/Player2.png")).getImage();*/
 			
-			this.Back = (new ImageIcon("/Images/Background3.jpg")).getImage();
-			this.Wall = (new ImageIcon("/Images/wall2.png")).getImage();
-			this.Treasure  = (new ImageIcon("/Images/treasure.png")).getImage();
-			this.Hole = (new ImageIcon("/Images/hole.png")).getImage();
-			this.Player  = (new ImageIcon("/Images/Player2.png")).getImage();
-			
-			
+			// ------- Fonctionnel avec un lancement windows ------- 
 			/*this.Back = (new ImageIcon(getClass().getResource("/Images/Background3.jpg"))).getImage();
 			this.Wall = (new ImageIcon(getClass().getResource("/Images/wall2.png"))).getImage();
 			this.Treasure  = (new ImageIcon(getClass().getResource("/Images/treasure.png"))).getImage();
 			this.Hole = (new ImageIcon(getClass().getResource("/Images/hole.png"))).getImage();
-			this.Player  = (new ImageIcon(getClass().getResource("/Images/Player2.png"))).getImage();*/
+			this.Player  = (new ImageIcon(getClass().getResource("/Images/Player2.png"))).getImage();
+			*/
+			
+			
+			
+			
+			// -------- Fonctionnel avec lancement linux ------- 
+			this.Back = (new ImageIcon("./src/main/java/client/control/UI/Images/Background3.jpg")).getImage();
+			this.Wall = (new ImageIcon("./src/main/java/client/control/UI/Images/wall2.png")).getImage();
+			this.Treasure  = (new ImageIcon("./src/main/java/client/control/UI/Images/treasure.png")).getImage();
+			this.Hole = (new ImageIcon("./src/main/java/client/control/UI/Images/hole.png")).getImage();
+			this.Player  = (new ImageIcon("./src/main/java/client/control/UI/Images/Player2.png")).getImage();
+			
 			
 		}catch(Exception e) {
 			System.out.println("Error : Images not found");

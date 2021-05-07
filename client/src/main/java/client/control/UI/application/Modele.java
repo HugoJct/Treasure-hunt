@@ -1,21 +1,31 @@
 package client.control.UI.application;
 
 import client.GameInfo;
+import client.SceneSwing;
 import client.control.UI.application.Main;
 import client.control.UI.application.Main.PrimeThread;
 import javafx.application.Application;
 
 import java.util.Random;
 
+import javax.swing.JFrame;
+
 
 
 public class Modele {
-	private int Lines;// = 20;
-	private int Columns;// = 20;
-	private int[] TreasurePos;// = {1,1, 1, 5, 6, 9, 15, 1};
-	private int[] WallPos;// = {2, 5, 1, 9, 7, 6, 1, 10, 14, 19, 18, 2};
-	private int[] HolePos;// = {5, 1};
-	private int[] PlayerPos;// = {10, 5, 17, 16};
+	/*private int Lines = 20;
+	private int Columns = 20;
+	private int[] TreasurePos = {1,1, 1, 5, 6, 9, 15, 1, 2, 19, 19, 18, 18, 17, 17};
+	private int[] WallPos = {0,0,0, 10,0, 15, 0, 16, 0, 18,0, 19, 2, 5, 1, 9, 7, 6, 1, 10, 14, 19, 18, 2, 19, 19, 18, 18, 17,17};
+	private int[] HolePos = {5, 1};
+	private int[] PlayerPos = {10, 5, 17, 16};
+	 */
+	private int Lines;
+	private int Columns;
+	private int[] TreasurePos;
+	private int[] WallPos;
+	private int[] HolePos;
+	private int[] PlayerPos;
  	
 	
 	//Constructor
@@ -121,10 +131,19 @@ public class Modele {
     */
 	
 	
-	public static void main(String[] args) {
+
+	
+	/*
+	public static void main(String[] args) throws Exception {
 		PrimeThread pt = new Main.PrimeThread();
 		System.out.println("test1");
+		//Plateform.runLater(Main.class);
+		//Application.launch(Main.class);
+		//Main m = new Main();
+		//m.init();
+		//m.start(m.View);
 		pt.run();
 		System.out.println("test2");
 	}
+*/
 }
