@@ -27,7 +27,6 @@ public class Communication implements Runnable{
 
 
     public Communication(Player p) {
-
         this.p = p;
     	this.s = p.getSocket();
     	try {
