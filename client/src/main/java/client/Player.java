@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 // import our Classes
 import client.connex.Communication;
 import client.control.shell.Console;
+import client.view.graphicDisplay.GameSelectionDisplay;
 
 
 public class Player {
@@ -140,5 +141,7 @@ public class Player {
         } catch(IOException e) {
             e.printStackTrace();
         }
+
+        new GameSelectionDisplay();
 	}
 }
