@@ -4,16 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class GameSelectionDisplay {
+public class GameSelectionDisplay extends JFrame {
     private JFrame frame = new JFrame();
     private JPanel createGame = new JPanel();
     private JPanel createGameInputs = new JPanel();
     private JPanel joinGame = new JPanel();
-
     private JPanel gamemod = new JPanel();
+
     private JCheckBox gamemodOne = new JCheckBox("Speeding contest");
     private JCheckBox gamemodTwo = new JCheckBox("Round by round");
-
     private JButton confirm = new JButton("Send");
 
     private JMenuBar head = new JMenuBar();
@@ -59,7 +58,30 @@ public class GameSelectionDisplay {
         createGameInputs.add(new JLabel("Number of treasures : "));
         createGameInputs.add(nbrOfTreasures);
         createGameInputs.add(confirm);
-
-
     }
+
+    public JCheckBox getGamemodOne() {
+        return this.gamemodOne;
+    }
+    public JCheckBox getGamemodTwo() {
+        return this.gamemodTwo;
+    }
+
+    public JButton getConfirm() {
+        return this.confirm;
+    }
+
+    public JTextField getX() {
+        return this.dimensionX;
+    }
+    public JTextField getY() {
+        return this.dimensionY;
+    }
+    public JTextField getHoles() {
+        return this.nbrOfHoles;
+    }
+    public JTextField getTreasures() {
+        return this.nbrOfTreasures;
+    }
+
 }
