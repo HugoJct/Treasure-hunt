@@ -16,7 +16,8 @@ import client.GameInfo;
 import client.control.shell.Console;
 import client.view.graphicDisplay.ControlDisplay;
 import client.control.UIBis.DirectionalCrosses;
-import client.commands.*;
+import client.commands.Command;
+import client.commands.in.*;
 
 
 public class Communication implements Runnable{
@@ -69,6 +70,10 @@ public class Communication implements Runnable{
         return this.p;
     }
 
+    public PrintWriter getOutput() {
+        return this.out;
+    }
+
 	@Override
     public void run() {
         try {
@@ -93,6 +98,7 @@ public class Communication implements Runnable{
 		for(String s : commandList.keySet()) {
 			if(s.equals(args[0])) {
 				commandList.get(s).execute(p,args);
+                return;
 			}
 		}
 	}

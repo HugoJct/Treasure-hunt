@@ -4,12 +4,14 @@ package client.control.shell;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.HashMap;
 
 // import our Classes
 import client.Player;
 import client.connex.Communication;
 import client.GameInfo;
-
+import client.commands.Command;
+import client.commands.userIn.*;
 
 public class Console implements Runnable {
 
@@ -18,10 +20,22 @@ public class Console implements Runnable {
 	private static int lastMoveRequested = 0;
 	public static boolean startRequested = false;
 
+	private HashMap<String,Command> commandList = new HashMap<String,Command>();
+
 	public Console(Communication com) {
 		this._message = "";
 		this._com = com;
 		sendName();
+
+		commandList.put("CREATEGAME",new CommandCreateGame(_com.getOutput()));
+		commandList.put("JOIN",new CommandJoinGame(_com.getOutput()));
+		commandList.put("GETLIST",new CommandGetList(_com.getOutput()));
+		commandList.put("MOVE",new CommandMove(_com.getOutput()));
+		commandList.put("REQUESTSTART",new CommandRequestStart(_com.getOutput()));
+		commandList.put("y",new CommandRequestStartSayYes(_com.getOutput()));
+		commandList.put("n",new CommandRequestStartSayNo(_com.getOutput()));
+		commandList.put("STOP",new CommandStopServer(_com.getOutput()));
+
 	}
 
 	@Override
@@ -31,7 +45,7 @@ public class Console implements Runnable {
 			try {
 				Thread.sleep(1);
 				String input = sc.nextLine();
-				useMessage(input);
+				useMessageBetter(input);
 			}
 			catch(InterruptedException e) {
 
@@ -39,46 +53,28 @@ public class Console implements Runnable {
 		}	
 	}
 
+	private void useMessageBetter(String command) {
+		String[] args = breakCommand(command);
+		for(String s : commandList.keySet()) {
+			if(s.equals(args[0])) {
+				if((commandList.get(s) instanceof CommandRequestStartSayYes || commandList.get(s) instanceof CommandRequestStartSayNo) && !startRequested) {
+					break;
+				}
+				commandList.get(s).execute(_com.getPlayer(),args);
+				return;
+			}
+		}
+        System.out.println("Unknown Command");
+	}
+
 	public void useMessage(String command) {
 		String[] brokenCommand = breakCommand(command);
-		if(startRequested) {
-			switch(brokenCommand[0]) {
-				case "y":
-					_com.sendMessage("152 START YES");
-					startRequested = false;
-					break;
-				case "n":
-					_com.sendMessage("152 START NO");
-					startRequested = false;
-					break;
-				default:
-					System.out.println("Unrecognized answer");
-					break;
-			}
-			return;
-		}
 		switch(brokenCommand[0]) {
-			// Client -> Client
-			case "UNKNOWN":
-				System.out.println("Server doesn't recognised command");
-				break;
-			case "BROADCAST":
-				broadcast(brokenCommand);
-				break;
-			case "GETLIST":
-				listGames();
-				break;
-			case "CREATEGAME": 		//CREATEGAME <gamemode> <sizeX> <sizeY> <holeNumber> <treasureNumber>
-				if(brokenCommand.length != 6) {
-					System.out.println("Command syntax error");
-				} else {
-					createGame(Integer.parseInt(brokenCommand[1]),Integer.parseInt(brokenCommand[2]),Integer.parseInt(brokenCommand[3]),Integer.parseInt(brokenCommand[4]),Integer.parseInt(brokenCommand[5]));
-				
-				}
-				break;
-			case "JOIN":
-				joinGame(Integer.parseInt(brokenCommand[1]));
-				break;
+
+				/*
+				 *	All the foollowing commands serve a debug purpose only
+				 */
+
 			case "GETHOLES":
 				getHoles();
 				break;
@@ -87,19 +83,6 @@ public class Console implements Runnable {
 				break;
 			case "GETTREASURES":
 				getTreasures();
-				break;
-			case "MOVE":
-				if (GameInfo.getLifeState() == false) {
-					move(brokenCommand[1]);
-				} else {
-					System.out.println("You can't, you are dead...");
-				}
-				break;
-			case "STOP":
-				stopServer();
-				break;
-			case "REQUESTSTART":
-				_com.sendMessage("150");
 				break;
 			case "PRINTTREASURES":
 				System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
@@ -142,32 +125,8 @@ public class Console implements Runnable {
 		return args;
 	}
 
-	public static void setHoles(int h) {
-		GameInfo.setHoles(h);	
-	}
-
-	public static void setTreasures(int t) {
-		GameInfo.setTreasures(t);
-	}
-
-	public static void setWalls(int w) {
-		GameInfo.setWalls(w);
-	}
-
 	public void sendName() {		//This method sends the player's name to the server when the connection occurs
 		_com.sendMessage("100 HELLO PLAYER "+ Player.getName());
-	}
-
-	public void createGame(int gamemode, int sizeX, int sizeY, int holeNumber, int treasureNumber) {
-		_com.sendMessage("110 CREATE "+gamemode+" SIZE "+sizeX+" "+sizeY+" HOLE "+holeNumber+" TRES "+treasureNumber);
-	}
-
-	public void listGames() {
-		_com.sendMessage("120 GETLIST");
-	}
-
-	public void joinGame(int id) {
-		_com.sendMessage("130 JOIN "+id+" "+_com.getPlayer().getName());
 	}
 
 	public void getHoles() {
@@ -182,42 +141,15 @@ public class Console implements Runnable {
 		_com.sendMessage("410 GETTREASURES");
 	}
 
-	public void broadcast(String[] s) {
-		String s2 = "";
-		for(int i=1;i<s.length;i++)
-			s2 += " "+s[i];
-		_com.sendMessage("BROADCAST"+s2);
-	}
-
-	public void move(String direction) {
-		switch(direction) {
-			case "UP":
-				lastMoveRequested = 1;
-				_com.sendMessage("200 GOUP");
-				break;
-			case "DOWN":
-				lastMoveRequested = 2;
-				_com.sendMessage("200 GODOWN");
-				break;
-			case "LEFT":
-				lastMoveRequested = 4;
-				_com.sendMessage("200 GOLEFT");
-				break;
-			case "RIGHT":
-				lastMoveRequested = 3;
-				_com.sendMessage("200 GORIGHT");
-				break;
-			default:
-				System.out.println("No valid direction was recognized");
-				break;
-		}
-	}
-
 	public static int getLastMove() {
 		return lastMoveRequested;
 	}
 
-	public void stopServer() {
-		_com.sendMessage("0");
+	public static void setLastMoveRequested(int i) {
+		lastMoveRequested = i;
+	}
+
+	public static void setStartRequested(boolean b) {
+		startRequested = b;
 	}
 }

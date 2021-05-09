@@ -10,7 +10,7 @@ import client.commands.Command;
 
 public class DirectionalCrosses {
 
-    public DirectionalCrosses(ControlDisplay view, Command com) {		//pas clair cette histoire
+    public DirectionalCrosses(ControlDisplay view, Command com) {
         view.getUp().addActionListener((event) -> com.sendMessage("200 GOUP"));
         view.getDown().addActionListener((event) -> com.sendMessage("200 GODOWN"));
         view.getLeft().addActionListener((event) -> com.sendMessage("200 GOLEFT"));

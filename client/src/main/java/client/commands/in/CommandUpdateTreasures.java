@@ -1,9 +1,10 @@
-package client.commands;
+package client.commands.in;
 
 import java.io.PrintWriter;
 
 import client.GameInfo;
 import client.Player;
+import client.commands.Command;
 
 public class CommandUpdateTreasures extends Command{
 	
