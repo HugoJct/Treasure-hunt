@@ -30,12 +30,13 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	JPanel Background = new JPanel();
 	static Modele m = new Modele();
 	public static SceneSwing scene;
-	public static int ID = 0;
+	public static int ID = m.getID();
+	public static String name = m.getName();
 
 
 	public VueSwing() {
 		ID += 1;
-		this.setTitle("Chasse au Trésor "+ID); 
+		this.setTitle("Chasse au Trésor - "+name+" ("+ID+")"); 
 		this.setSize(m.getColumns()*30+20, m.getLines()*28+50);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
@@ -55,8 +56,15 @@ public class VueSwing extends JFrame implements MouseInputListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		//this.GridGeneration();
-		System.out.println("Mouse clicked");
+		int screenX = e.getXOnScreen();
+	    int screenY = e.getYOnScreen();
+		System.out.println("Mouse clicked on ("+screenX+","+screenY+")");
+		
+		int x = screenX/(30) - 2;
+		int y = screenY/(28) - 4;
+		System.out.println("Position in tab = ("+x+","+y+")");
+		
+		//Request to move with x and y attributes
 	}
 
 
@@ -104,7 +112,7 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(
 	      new Runnable() {
 	        public void run() { 
@@ -115,7 +123,7 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	         }
 	      }
 	    );		
-	}
+	}*/
 	
 	
 	
