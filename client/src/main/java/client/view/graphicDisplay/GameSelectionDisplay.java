@@ -71,10 +71,10 @@ public class GameSelectionDisplay extends JFrame {
         return this.confirm;
     }
 
-    public JTextField getX() {
+    public JTextField getCoX() {
         return this.dimensionX;
     }
-    public JTextField getY() {
+    public JTextField getCoY() {
         return this.dimensionY;
     }
     public JTextField getHoles() {
