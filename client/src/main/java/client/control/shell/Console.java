@@ -1,10 +1,15 @@
 package client.control.shell;
 
 // import java Classes
+import client.control.UI.application.Main;
+import client.control.UI.application.Main.PrimeThread;
+import javafx.application.Application;
+import javafx.concurrent.Task;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.awt.*;
 
 // import our Classes
 import client.Player;
@@ -12,6 +17,9 @@ import client.connex.Communication;
 import client.GameInfo;
 import client.commands.Command;
 import client.commands.userIn.*;
+import client.VueSwing;
+import client.SceneSwing;
+
 
 public class Console implements Runnable {
 
@@ -53,6 +61,40 @@ public class Console implements Runnable {
 		}	
 	}
 
+
+	/*public void useMessage(String command) {
+		String[] brokenCommand = breakCommand(command);
+		if(startRequested) {
+			switch(brokenCommand[0]) {
+				case "y":
+					_com.sendMessage("152 START YES");
+					startRequested = false;
+					
+
+
+					
+					
+					javax.swing.SwingUtilities.invokeLater(
+						      new Runnable() {
+						        public void run() { 
+						        	VueSwing v = new VueSwing();
+						        }
+						      }
+					);
+					
+					
+					break;
+				case "n":
+					_com.sendMessage("152 START NO");
+					startRequested = false;
+					break;
+				default:
+					System.out.println("Unrecognized answer");
+			}
+		}
+	}*/
+
+					
 	private void useMessageBetter(String command) {
 		String[] args = breakCommand(command);
 		for(String s : commandList.keySet()) {
