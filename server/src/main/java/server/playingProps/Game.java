@@ -1,21 +1,21 @@
 package server.playingProps;
 
+// import java Classes
 import java.util.Vector;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 
+// import our Classes
 import server.elements.*;
-
 import server.playingProps.Player;
-
 import server.ServerMain;
+
 
 public class Game implements Runnable{
 
@@ -26,11 +26,22 @@ public class Game implements Runnable{
 	private String name;
 	private int capacity;
 	private int gamemode = 0;
+	private int playerRoundID = -1;
+
+	private boolean[] confirmations;
 
 	private int ownerID = -1;
 
 	private static int id = 0;
 	private int gameId;
+
+	/*
+	 *	The following constructor is obsolete and has to be adapted or removed before handing in the project
+	 * (preferably adapted if you ask me, I had a hard time writing it
+	 *  + I think it is very to be able to create a game exactly how we want it) 
+	 */
+
+	/*
 	public Game(String name, int ownerID) {
 
 		this.isRunning = false;
@@ -91,11 +102,12 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 		System.out.println(this.b);
-	}
+	}*/
 
+	//CONSTRUCTOR
 	public Game(int m, int dimX, int dimY, int h, int t, int gameOwnerID){
 		this.isRunning = false;
-		this.gamemode = gamemode;
+		this.gamemode = m;
 		this.name = "default";
 		this.capacity = 4;
 		this.b = new Board();
@@ -110,6 +122,7 @@ public class Game implements Runnable{
 			b.setBorder(); //Generation of borders
 			b.fillWalls(); // Generation of Walls adapting to the size of the board
 			b.fillElements(h,t); // Generation of Holes and Treasures
+			b.antiSoftLockPlugIn(); 
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -117,25 +130,7 @@ public class Game implements Runnable{
 		System.out.println(this.b);
 	}
 
-	/*
-
-	public Game(String name) {
-		this.isRunning = false;
-		this.name = name;
-		this.capacity = 4;
-		b = new Board();
-		this.gameId = id;
-		this.id++;
-	}*/
-
-	public String getName(){
-		return this.name;
-	}
-
-	public void stop() {
-		this.isRunning = false;
-	}
-
+	//RUN METHOD
 	@Override
 	public void run() {
 
@@ -164,6 +159,15 @@ public class Game implements Runnable{
 		System.out.println(this.gameRank());
 	}
 
+	//CONTROL METHODS
+	public void start() {
+		this.isRunning = true;
+	}
+	public void stop() {
+		this.isRunning = false;
+	}
+
+	//METHODS
 	public boolean addPlayer(Player p) {		//this method tests if a player doesn't have the same name as another one in the game
 		for(Player p2 : players) {
 			if(p.getName() == p2.getName()) {
@@ -175,7 +179,6 @@ public class Game implements Runnable{
 		p.setGame(this);
 		return true;
 	}
-
 	public boolean removePlayer(Player p) {
 		for(Player p2 : players) {
 			if(p == p2) {
@@ -185,7 +188,6 @@ public class Game implements Runnable{
 		}
 		return false;
 	}
-
 	public Player leadingPlayer(Vector<Player> p){ // returns the leading player in p
 		if(p.size() > 0){
 			Player leading = p.get(0);
@@ -199,7 +201,6 @@ public class Game implements Runnable{
 		System.out.println("No players in game");
 		return null;
 	}
-
 	public int leadingPlayerIndex(Vector<Player> p){  // returns the index of the leading player(that has the most money) in p
 		int ret = -1;
 		if(p.size() > 0){
@@ -212,15 +213,11 @@ public class Game implements Runnable{
 				}
 			}
 		}
-		
 		return ret;
 	}
-
-
 	public Player leadingPlayer(){ // returns the leading player in the players Vector attribute of the class
 		return leadingPlayer(this.players);
 	}
-
 	public String gameRank(){ // prints the rank of each player along with the amount of money collected by each one. Takes only still connected players into account
 		int rank = 0;
 		Vector<Player> p = (Vector<Player>)this.players.clone();
@@ -231,29 +228,41 @@ public class Game implements Runnable{
 		}
 		return ret;
 	}
-	/*
-	public void endGameRequest(){ 
-		ArrayList<Player> playerList = new ArrayList<Player>(players); //shallow copy of players
-		for(int i = 0 ; i<playerList.size();i++){
-			boolean decision = playerList.get(i).endGameRequest();
-			if(!decision){
-				playerList.get(i).leaveGame();
-				playerList.remove(i);
-			}
-		}
-		Vector<Player> playersToRedirect = new Vector<Player>();
-		for(int i = 0; i<playerList.size();i++){
-			if(playerList.get(i) != null){
-				playersToRedirect.addElement(playerList.get(i));
-			}
-		}
-		ServerMain.redirectPlayers(playersToRedirect);
-	}*/
-
-	public void start() {
-		this.isRunning = true;
+	
+	//GETTERS
+	public int getGameId() {
+		return this.gameId;
 	}
-
+	public int getGameMod() {
+		return this.gamemode;
+	}
+	public int getCapacity(){
+		return this.capacity;
+	}
+	public Vector<Player> getPlayers() {
+		return players;
+	}
+	public int getID() {
+		return this.id;
+	}
+	public Board getBoard(){
+		return this.b;
+	}
+	public int getOwnerID() {
+		return this.ownerID;
+	}
+	public boolean isRunning(){
+		return this.isRunning;
+	}
+	public int getPlayerRound() {
+		return this.playerRoundID;
+	}
+	public boolean[] getConfirmations() {
+		return this.confirmations;
+	}
+	public String getName(){
+		return this.name;
+	}
 	public boolean areAllPlayersDead() {
 		boolean b = true;
 		for(Player p : players) {
@@ -263,36 +272,23 @@ public class Game implements Runnable{
 			}
 		}
 		return b;
+	} 
+
+	//SETTERS
+	public void setPlayerRound(int id) {
+		this.playerRoundID = id;
+	}
+	public void setConfirmations(boolean[] b) {
+		this.confirmations = b;
+	}
+	public void setConfirmations(int pos) {
+		this.confirmations[pos] = true;
+	}
+	public void setGameMod(int m) {
+		this.gamemode = m;
 	}
 
-	public int getID() {
-		return this.id;
-	}
-
-	public Board getBoard(){
-		return this.b;
-	}
-
-	public int getOwnerID() {
-		return this.ownerID;
-	}
-
-	public boolean isRunning(){
-		return this.isRunning;
-	}
-
-	public int getCapacity(){
-		return this.capacity;
-	}
-
-	public Vector<Player> getPlayers() {
-		return players;
-	}
-
-	public int getGameId() {
-		return this.gameId;
-	}
-
+	//TOSTRING
 	public String toString() {
 		String s = this.gameId + " " + this.name;
 		for(Player p : players)

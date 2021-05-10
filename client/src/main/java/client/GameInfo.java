@@ -1,6 +1,8 @@
 package client;
 
+// import java Classes
 import java.util.Arrays;
+
 
 public class GameInfo {
 
@@ -31,6 +33,7 @@ public class GameInfo {
     private static boolean canPlay = false;
 
     private static int money = 0;
+    private static int gameMod = -1;
 
     // to get various elements
     public static int getHoles() {
@@ -58,6 +61,10 @@ public class GameInfo {
 
     public static boolean getPlayable() {
         return canPlay;
+    }
+
+    public static int getGameMod() {
+        return gameMod;
     }
 
     // to get the map size
@@ -125,6 +132,10 @@ public class GameInfo {
             return availableGameInfos;
     }
 
+    public static void setGameMod(int g) {
+        gameMod = g;
+    }
+
     // to set each element number 
     public static void setHoles(int h) {
         nbrOfHoles = h;
@@ -183,20 +194,25 @@ public class GameInfo {
 
     public static void removePlayer(String name) {    
         String[] playerNameBis = new String[playerName.length-1];
+        int j = 0;
         for (int i = 0 ; i<playerName.length ; i++) {
             if (playerName[i].contentEquals(name)) {
                 removePlayerPos(i*2);
             } else {
-                playerNameBis[i] = playerName[i];
+                playerNameBis[j] = playerName[i];
+                j+=1;
             }
         }
         playerName = playerNameBis;
     }
     public static void removePlayerPos(int pos) {
         int[] playerPosBis = new int[playerPos.length-2];
+        int j = 0;
         for (int i = 0 ; i<playerPos.length ; i+=2) {
             if (i != pos) {
-                playerPosBis[i] = playerPos[i];
+                playerPosBis[j] = playerPos[i];
+                playerPosBis[j+1] = playerPos[i+1];
+                j+=2;
             }
         }
         playerPos = playerPosBis;
