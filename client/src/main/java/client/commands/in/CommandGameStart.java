@@ -23,8 +23,9 @@ public class CommandGameStart extends Command {
 		sendMessage("410 GETTREASURES");
         sendMessage("420 GETWALLS");
         GameInfo.setStarted(true);
-<<<<<<< client/src/main/java/client/commands/in/CommandGameStart.java
-		new DirectionalCrosses(new ControlDisplay(p), this);
+
+
+		new DirectionalCrosses(new ControlDisplay(p), this.out);
 		javax.swing.SwingUtilities.invokeLater(
 			      new Runnable() {
 			        public void run() { 
@@ -32,8 +33,5 @@ public class CommandGameStart extends Command {
 			        }
 			      }
 		);
-=======
-		//new DirectionalCrosses(new ControlDisplay(p), this.out);
->>>>>>> client/src/main/java/client/commands/in/CommandGameStart.java
-	}
+  	}
 }
