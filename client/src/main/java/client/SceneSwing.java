@@ -96,7 +96,7 @@ public class SceneSwing extends JPanel{
 		
 		//Display players (Black square for tests)
 		for(int i = 0; i<m.getPlayerPos().length-1; i++) {
-			g2.drawImage(this.Player, m.getPlayerPos()[i+1]*30, m.getPlayerPos()[i]*28, null);
+			g2.drawImage(this.Player, m.getPlayerPos()[i]*30, m.getPlayerPos()[i+1]*28, null);
 			i++; // i used for x and i+1 for y.
 		}
 		

@@ -26,10 +26,13 @@ public class Modele {
 	private int[] WallPos;
 	private int[] HolePos;
 	private int[] PlayerPos;
+	
+	private String name;
  	
 	
 	//Constructor
 	public Modele() {
+		name = GameInfo.getPlayersNames()[0];
 		this.Lines = GameInfo.getMap()[1];
 		this.Columns = GameInfo.getMap()[0];
 		this.TreasurePos = GameInfo.getTreasuresPos();
@@ -63,6 +66,10 @@ public class Modele {
 	
 	public int[] getPlayerPos() {
 		return PlayerPos;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	
