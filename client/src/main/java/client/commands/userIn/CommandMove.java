@@ -21,7 +21,7 @@ public class CommandMove extends Command {
 				}
 	}
 
-	public void move(String direction) {
+	private void move(String direction) {
 		switch(direction) {
 			case "UP":
 				Console.setLastMoveRequested(1);
