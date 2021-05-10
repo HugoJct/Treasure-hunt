@@ -142,6 +142,6 @@ public class Player {
             e.printStackTrace();
         }
 
-        new GameSelectionDisplay();
+        //new GameSelectionDisplay();
 	}
 }
