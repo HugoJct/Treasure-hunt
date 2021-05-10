@@ -10,9 +10,11 @@ import client.view.graphicDisplay.ControlDisplay;
 import client.control.UIBis.DirectionalCrosses;
 
 public class CommandGameStart extends Command {
-	
+	private PrintWriter out;
+
 	public CommandGameStart(PrintWriter out) {
 		super("153",out);
+		this.out = out;
 	}
 
 	public void execute(Player p, String[] args) {
@@ -20,6 +22,6 @@ public class CommandGameStart extends Command {
 		sendMessage("410 GETTREASURES");
         sendMessage("420 GETWALLS");
         GameInfo.setStarted(true);
-		new DirectionalCrosses(new ControlDisplay(p), this);
+		new DirectionalCrosses(new ControlDisplay(p), this.out);
 	}
 }
