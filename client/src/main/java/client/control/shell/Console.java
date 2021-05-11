@@ -19,6 +19,7 @@ import client.commands.Command;
 import client.commands.userIn.*;
 import client.VueSwing;
 import client.SceneSwing;
+import server.elements.*;
 
 
 public class Console implements Runnable {
@@ -54,46 +55,13 @@ public class Console implements Runnable {
 				Thread.sleep(1);
 				String input = sc.nextLine();
 				useMessageBetter(input);
+				useMessage(input);
 			}
 			catch(InterruptedException e) {
 
 			}	
 		}	
 	}
-
-
-	/*public void useMessage(String command) {
-		String[] brokenCommand = breakCommand(command);
-		if(startRequested) {
-			switch(brokenCommand[0]) {
-				case "y":
-					_com.sendMessage("152 START YES");
-					startRequested = false;
-					
-
-
-					
-					
-					javax.swing.SwingUtilities.invokeLater(
-						      new Runnable() {
-						        public void run() { 
-						        	VueSwing v = new VueSwing();
-						        }
-						      }
-					);
-					
-					
-					break;
-				case "n":
-					_com.sendMessage("152 START NO");
-					startRequested = false;
-					break;
-				default:
-					System.out.println("Unrecognized answer");
-			}
-		}
-	}*/
-
 					
 	private void useMessageBetter(String command) {
 		String[] args = breakCommand(command);
@@ -127,13 +95,19 @@ public class Console implements Runnable {
 				getTreasures();
 				break;
 			case "PRINTTREASURES":
-				System.out.println(Arrays.toString(GameInfo.getTreasuresPos()));
+				for(Treasure t : GameInfo.getTreasures()) {
+					System.out.println(t);
+				}
 				break;
 			case "PRINTWALLS":
-				System.out.println(Arrays.toString(GameInfo.getWallsPos()));
+				for(Wall w : GameInfo.getWalls()) {
+					System.out.println(w);
+				}
 				break;
 			case "PRINTHOLES":
-				System.out.println(Arrays.toString(GameInfo.getHolesPos()));
+				for(Hole h : GameInfo.getHoles()) {
+					System.out.println(h);
+				}
 				break;
 			case "PRINTBOARD":
 				if(!GameInfo.isStarted()) {
@@ -154,9 +128,6 @@ public class Console implements Runnable {
 				break;
 			case "EXIT":
 				System.exit(0);
-			default:
-				System.out.println("Unknown command");
-				break; 
 		}
 	}
 
