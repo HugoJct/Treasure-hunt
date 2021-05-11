@@ -8,12 +8,15 @@ import client.view.graphicDisplay.GameSelectionDisplay;
 import client.connex.Communication;
 import client.Player;
 import client.commands.userIn.CommandCreateGame;
+import client.commands.userIn.CommandGetList;
 
 public class GameManager {
     
     public GameManager(GameSelectionDisplay view, PrintWriter out, Player p) {
         CommandCreateGame create = new CommandCreateGame(out);
+        CommandGetList getList = new CommandGetList(out);
         view.getConfirm().addActionListener((event) -> build(create, view, p));
+        view.getRefresh().addActionListener((event) -> getList.execute(p, null));
     }
 
     public void build(CommandCreateGame create, GameSelectionDisplay view, Player p) {

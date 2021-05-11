@@ -13,7 +13,9 @@ public class GameSelectionDisplay extends JFrame {
 
     private JCheckBox gamemodOne = new JCheckBox("Speeding contest");
     private JCheckBox gamemodTwo = new JCheckBox("Round by round");
+
     private JButton confirm = new JButton("Send");
+    private JButton refresh = new JButton("Refresh");
 
     private JMenuBar head = new JMenuBar();
 
@@ -58,7 +60,16 @@ public class GameSelectionDisplay extends JFrame {
         createGameInputs.add(new JLabel("Number of treasures : "));
         createGameInputs.add(nbrOfTreasures);
         createGameInputs.add(confirm);
+
+        joinGame.add(refresh, BorderLayout.EAST);
+        listGames();
     }
+
+
+    private void listGames() {
+
+    }
+
 
     public JCheckBox getGamemodOne() {
         return this.gamemodOne;
@@ -83,5 +94,7 @@ public class GameSelectionDisplay extends JFrame {
     public JTextField getTreasures() {
         return this.nbrOfTreasures;
     }
-
+    public JButton getRefresh() {
+        return this.refresh;
+    }
 }
