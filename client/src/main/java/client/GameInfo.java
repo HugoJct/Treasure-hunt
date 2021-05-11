@@ -72,9 +72,15 @@ public class GameInfo {
         isStarted = b;
     }
 
+    private static int nbrOfHoles = 0;
+    private static int nbrOfWalls = 0;
+    private static int nbrOfTreasures = 0;
     private static int nbrOfPlayers = 0;
 
-    private static int[] map = new int[2];
+    private static int[] map = new int[2];  
+    private static int[] holesPos;
+    private static int[] wallsPos;
+    private static int[] treasuresPos;   
     private static int[] playerPos = new int[0];
     private static String[] playerName = new String[0];
 
@@ -111,6 +117,15 @@ public class GameInfo {
     // to get the map size
     public static int[] getMap() {
         return map;
+    }
+    public static int[] getHolesPos() {
+        return holesPos;
+    }
+    public static int[] getWallsPos() {
+        return wallsPos;
+    }
+    public static int[] getTreasuresPos() {
+        return treasuresPos;
     }
     public static int[] getPlayerPos() {
         if (playerPos != null) {
