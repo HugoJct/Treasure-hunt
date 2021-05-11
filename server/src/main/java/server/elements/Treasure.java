@@ -21,8 +21,4 @@ public class Treasure extends Element {
 	public int getTreasureValue() {
 		return this.value;
 	}
-
-	public String toString() {
-		return label+" "+x+" "+y+" "+value;
-	}
 }
