@@ -26,8 +26,6 @@ public class GameManager {
             return "0";
         } else {
             return "1";
-        }
-            
-        }
+        }    
     }
 }

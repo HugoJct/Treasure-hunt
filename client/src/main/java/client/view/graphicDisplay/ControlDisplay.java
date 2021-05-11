@@ -26,7 +26,6 @@ public class ControlDisplay extends JFrame {
     public ControlDisplay(Player p) {
         
         frame.setTitle("control");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         playerName = new JMenuItem(p.getName());
         head.add(playerName, BorderLayout.CENTER);
