@@ -16,6 +16,7 @@ import org.json.simple.parser.JSONParser;
 import client.connex.Communication;
 import client.control.shell.Console;
 import client.view.graphicDisplay.GameSelectionDisplay;
+import client.control.UIBis.GameManager;
 
 
 public class Player {
@@ -138,10 +139,10 @@ public class Player {
             communication.start();
             console.start();
 
+            new GameManager(new GameSelectionDisplay(), com.getOutput(), p);
+            
         } catch(IOException e) {
             e.printStackTrace();
         }
-
-        //new GameSelectionDisplay();
 	}
 }

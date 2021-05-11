@@ -17,17 +17,17 @@ public class GameSelectionDisplay extends JFrame {
 
     private JMenuBar head = new JMenuBar();
 
-    private JTextField dimensionX = new JTextField("Length");
-    private JTextField dimensionY = new JTextField("Width");
-    private JTextField nbrOfHoles = new JTextField("Holes");
-    private JTextField nbrOfTreasures = new JTextField("Treasures");
+    private JTextField dimensionX = new JTextField("20");
+    private JTextField dimensionY = new JTextField("20");
+    private JTextField nbrOfHoles = new JTextField("20");
+    private JTextField nbrOfTreasures = new JTextField("10");
 
     public GameSelectionDisplay() {
 
         frame.setTitle("Game Selection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setSize(1600, 600);
+        frame.setSize(1625, 700);
         frame.setVisible(true);
 
         frame.setLayout(new GridLayout(1, 2));
