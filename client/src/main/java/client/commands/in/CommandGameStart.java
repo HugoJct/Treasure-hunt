@@ -1,6 +1,7 @@
 package client.commands.in;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import client.Player;
 import client.VueSwing;
@@ -9,6 +10,10 @@ import client.commands.Command;
 
 import client.view.graphicDisplay.ControlDisplay;
 import client.control.UIBis.DirectionalCrosses;
+
+import server.elements.*;
+
+import java.util.LinkedList;
 
 public class CommandGameStart extends Command {
 	private PrintWriter out;
@@ -25,13 +30,13 @@ public class CommandGameStart extends Command {
         GameInfo.setStarted(true);
 
 
-		new DirectionalCrosses(new ControlDisplay(p), this.out);
+		new DirectionalCrosses(new ControlDisplay(p), this.out);/*
 		javax.swing.SwingUtilities.invokeLater(
 			      new Runnable() {
 			        public void run() { 
 			        	VueSwing v = new VueSwing();
 			        }
 			      }
-		);
+		);*/
   	}
 }

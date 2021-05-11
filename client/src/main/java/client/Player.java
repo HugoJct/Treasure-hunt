@@ -17,6 +17,8 @@ import client.connex.Communication;
 import client.control.shell.Console;
 import client.view.graphicDisplay.GameSelectionDisplay;
 import client.control.UIBis.GameManager;
+import server.elements.*;
+
 
 
 public class Player {
@@ -74,24 +76,20 @@ public class Player {
             for(int j=0;j<board[i].length;j++)
                 board[i][j] = '.';
 
-        for(int i=0;i<GameInfo.getHolesPos().length;i++) {
-            int x = GameInfo.getHolesPos()[i];
-            int y = GameInfo.getHolesPos()[i+1];
-            board[x][y] = 'H';
-            i++;
-        }
-        for(int i=0;i<GameInfo.getWallsPos().length;i++) {
-            int x = GameInfo.getWallsPos()[i];
-            int y = GameInfo.getWallsPos()[i+1];
+        for(Wall w : GameInfo.getWalls()) {
+            int x = w.getX();
+            int y = w.getY();
             board[x][y] = 'W';
-            i++;
         }
-
-        for(int i=0;i<GameInfo.getTreasuresPos().length;i++) {
-            int x = GameInfo.getTreasuresPos()[i];
-            int y = GameInfo.getTreasuresPos()[i+1];
+        for(Treasure t : GameInfo.getTreasures()) {
+            int x = t.getX();
+            int y = t.getY();
             board[x][y] = 'T';
-            i+=2;
+        }
+        for(Hole h : GameInfo.getHoles()) {
+            int x = h.getX();
+            int y = h.getY();
+            board[x][y] = 'H';
         }
 
         for(int i=0;i<GameInfo.getPlayersNames().length;i++) {
