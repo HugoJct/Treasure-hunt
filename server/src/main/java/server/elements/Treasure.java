@@ -4,9 +4,14 @@ public class Treasure extends Element {
 
 	private int value;
 
+	public Treasure(int x, int y, int value) {
+		super(x,y,'T');
+	    this.value = value;
+	}
+
 	public Treasure(int value) {
 		super('T');
-	    this.value = value;
+		this.value = value;
 	}
     
     public void setTreasureValue(int v){
@@ -15,5 +20,9 @@ public class Treasure extends Element {
 
 	public int getTreasureValue() {
 		return this.value;
+	}
+
+	public String toString() {
+		return label+" "+x+" "+y+" "+value;
 	}
 }

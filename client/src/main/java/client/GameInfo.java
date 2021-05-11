@@ -18,42 +18,45 @@ public class GameInfo {
     private static LinkedList<Treasure> treasures = new LinkedList<Treasure>();
 
     //get numbber of element functionss
-    public int getWallsNumber() {
+    public static int getWallsNumber() {
         return walls.size();
     }
-    public int getHolesNumber() {
+    public static int getHolesNumber() {
         return holes.size();
     }
-    public int getTreasureNumber() {
+    public static int getTreasuresNumber() {
         return treasures.size();
     }
 
     //get linkedlist of element
-    public LinkedList getWalls() {
+    public static LinkedList<Wall> getWalls() {
         return walls;
     }
-    public LinkedList getHoles() {
+    public static LinkedList<Hole> getHoles() {
         return holes;
     }
-    public LinkedList getTreasures() {
+    public static LinkedList<Treasure> getTreasures() {
         return treasures;
     }
 
     //add element to linkedlist 
-    public void addWall(Wall w) {
+    public static void addWall(Wall w) {
         walls.add(w);
     }
-    public void addHoles(Hole h) {
+    public static void addHole(Hole h) {
         holes.add(h);
     }
-    public void addTreasures(Treasure t) {
+    public static void addTreasure(Treasure t) {
         treasures.add(t);
     }
 
     //remove element from linkedlist
-    public void removeTreasure(Treasure t) {
-        treasures.remove(t);
+    public static boolean removeTreasure(Treasure t) {
+        return treasures.remove(t);
     }
+
+
+
 
 
     //previous implementation
@@ -69,15 +72,9 @@ public class GameInfo {
         isStarted = b;
     }
 
-    private static int nbrOfHoles = 0;
-    private static int nbrOfWalls = 0;
-    private static int nbrOfTreasures = 0;
     private static int nbrOfPlayers = 0;
 
-    private static int[] map = new int[2];  
-    private static int[] holesPos;
-    private static int[] wallsPos;
-    private static int[] treasuresPos;   
+    private static int[] map = new int[2];
     private static int[] playerPos = new int[0];
     private static String[] playerName = new String[0];
 
@@ -88,15 +85,7 @@ public class GameInfo {
     private static int gameMod = -1;
 
     // to get various elements
-    public static int getHoles() {
-        return nbrOfHoles;
-    }
-    public static int getWalls() {
-        return nbrOfWalls;
-    }
-    public static int getTreasures() {
-        return nbrOfTreasures;
-    }
+    
     public static int getPlayers() {
         return nbrOfPlayers;
     }
@@ -122,15 +111,6 @@ public class GameInfo {
     // to get the map size
     public static int[] getMap() {
         return map;
-    }
-    public static int[] getHolesPos() {
-        return holesPos;
-    }
-    public static int[] getWallsPos() {
-        return wallsPos;
-    }
-    public static int[] getTreasuresPos() {
-        return treasuresPos;
     }
     public static int[] getPlayerPos() {
         if (playerPos != null) {
@@ -188,17 +168,6 @@ public class GameInfo {
         gameMod = g;
     }
 
-    // to set each element number 
-    public static void setHoles(int h) {
-        nbrOfHoles = h;
-    }
-    public static void setWalls(int w) {
-        nbrOfWalls = w;
-    }
-    public static void setTreasures(int t) {
-        nbrOfTreasures = t;
-    }
-
     public static void setGameNumber(int i) {
         availableGameInfos = new int[i][6];
     }
@@ -210,34 +179,6 @@ public class GameInfo {
     public static void setMap(int x, int y) {
         map[0] = x;
         map[1] = y;
-    }
-
-    // to define each element position
-    public static void setHolesPos(int pos, int x, int y) {
-        holesPos[pos] = x;
-        holesPos[pos+1] = y;
-    }
-    public static void setWallsPos(int pos, int x, int y) {
-        wallsPos[pos] = x;
-        wallsPos[pos+1] = y;
-    }
-    public static void removeTreasure(int x, int y) {
-        int treasuresPosBis[] = new int[treasuresPos.length-3];
-        int j = 0;
-        for (int i = 0 ; i<treasuresPos.length ; i+=3) {
-            if (treasuresPos[i] != y && treasuresPos[i+1] != x) {
-                treasuresPosBis[j] = treasuresPos[i];
-                treasuresPosBis[j+1] = treasuresPos[i+1];
-                treasuresPosBis[j+2] = treasuresPos[i+2];
-                j+=3;
-            }
-        }
-        treasuresPos = treasuresPosBis;
-    }
-    public static void setTreasuresPos(int pos, int x, int y, int v) {
-        treasuresPos[pos] = x;
-        treasuresPos[pos+1] = y;
-        treasuresPos[pos+2] = v;        
     }
 
     public static void setPlayable(boolean b) {
@@ -326,17 +267,6 @@ public class GameInfo {
             playerName[0] = name;
         }*/
 
-    }
-
-    // to init various position
-    public static void initHolesPos() {
-        holesPos = new int[nbrOfHoles*2];
-    }
-    public static void initWallsPos() {
-        wallsPos = new int[nbrOfWalls*2];
-    }
-    public static void initTreasuresPos() {
-        treasuresPos = new int[nbrOfTreasures*3];
     }
     
 }
