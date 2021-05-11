@@ -2,9 +2,61 @@ package client;
 
 // import java Classes
 import java.util.Arrays;
+import java.util.LinkedList;
+
+//import our classes
+
+import server.elements.*;
 
 
 public class GameInfo {
+
+    //POO implementation
+
+    private static LinkedList<Wall> walls = new LinkedList<Wall>();
+    private static LinkedList<Hole> holes = new LinkedList<Hole>();
+    private static LinkedList<Treasure> treasures = new LinkedList<Treasure>();
+
+    //get numbber of element functionss
+    public int getWallsNumber() {
+        return walls.size();
+    }
+    public int getHolesNumber() {
+        return holes.size();
+    }
+    public int getTreasureNumber() {
+        return treasures.size();
+    }
+
+    //get linkedlist of element
+    public LinkedList getWalls() {
+        return walls;
+    }
+    public LinkedList getHoles() {
+        return holes;
+    }
+    public LinkedList getTreasures() {
+        return treasures;
+    }
+
+    //add element to linkedlist 
+    public void addWall(Wall w) {
+        walls.add(w);
+    }
+    public void addHoles(Hole h) {
+        holes.add(h);
+    }
+    public void addTreasures(Treasure t) {
+        treasures.add(t);
+    }
+
+    //remove element from linkedlist
+    public void removeTreasure(Treasure t) {
+        treasures.remove(t);
+    }
+
+
+    //previous implementation
 
     private static int[][] availableGameInfos = null;
     private static boolean isStarted = false;

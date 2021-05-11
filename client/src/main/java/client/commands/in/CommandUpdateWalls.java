@@ -3,7 +3,8 @@ package client.commands.in;
 import java.io.PrintWriter;
 
 import client.GameInfo;
-import client.Player;import client.commands.Command;
+import client.Player;
+import client.commands.Command;
 
 public class CommandUpdateWalls extends Command{
 
