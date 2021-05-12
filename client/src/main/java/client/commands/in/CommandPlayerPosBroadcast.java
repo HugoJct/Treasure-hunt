@@ -13,7 +13,8 @@ public class CommandPlayerPosBroadcast extends Command {
 	}
 
 	public void execute(Player p, String[] args) {
-		GameInfo.setPlayers(args[1], Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+		//GameInfo.setPlayers(args[1], Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+		GameInfo.setPlayerCoordinates(args[1],Integer.parseInt(args[3]),Integer.parseInt(args[4]));
 		sendMessage("512 " + args[1] + " UPDATED");
 		Player.printGameBoard();
 	}

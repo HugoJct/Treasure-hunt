@@ -16,7 +16,7 @@ public class CommandMoveOk extends Command {
 
 	public void execute(Player p, String[] args) {
 		int last = Console.getLastMove();
-		int[] pos = GameInfo.getPlayerPos(p.getName());
+		int[] pos = GameInfo.getPlayerCoordinates(p.getName());
 		int j=0;
 		if (last == 1) {
 			System.out.println("MOVE OK : UP");
@@ -37,6 +37,7 @@ public class CommandMoveOk extends Command {
 		else {
 			System.out.println("Error : no move engaged");
 		}
-		GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
+		GameInfo.setPlayerCoordinates(p.getName(),pos[0],pos[1]);
+		//GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
 	}
 }

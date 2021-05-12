@@ -3,6 +3,7 @@ package client;
 // import java Classes
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.HashMap;
 
 //import our classes
 
@@ -16,17 +17,7 @@ public class GameInfo {
     private static LinkedList<Wall> walls = new LinkedList<Wall>();
     private static LinkedList<Hole> holes = new LinkedList<Hole>();
     private static LinkedList<Treasure> treasures = new LinkedList<Treasure>();
-
-    //get numbber of element functionss
-    public static int getWallsNumber() {
-        return walls.size();
-    }
-    public static int getHolesNumber() {
-        return holes.size();
-    }
-    public static int getTreasuresNumber() {
-        return treasures.size();
-    }
+    private static HashMap<String,Integer[]> players = new HashMap<String,Integer[]>();
 
     //get linkedlist of element
     public static LinkedList<Wall> getWalls() {
@@ -37,6 +28,9 @@ public class GameInfo {
     }
     public static LinkedList<Treasure> getTreasures() {
         return treasures;
+    }
+    public static HashMap<String, Integer[]> getPlayerCoordinates() {
+        return players;
     }
 
     //add element to linkedlist 
@@ -55,6 +49,41 @@ public class GameInfo {
         return treasures.remove(t);
     }
 
+    //Player coordinates management
+    public static void addPlayer(String name, int[] coordinate) {
+        Integer[] tab = {new Integer(coordinate[0]), new Integer(coordinate[1])};
+        players.put(name,tab);
+    }
+
+    public static int[] getPlayerCoordinates(String name) {
+        Integer tab[] = players.get(name);
+        int[] coordinates = {tab[0].intValue(),tab[1].intValue()};
+        return coordinates;
+    }
+
+    public static void setPlayerCoordinates(String name, int x, int y) {
+        if(players.containsKey(name)) {
+            players.get(name)[0] = x;
+            players.get(name)[1] = y;
+        } else {
+            int[] tab = {x,y};
+            addPlayer(name,tab);
+            players.get(name)[0] = x;
+            players.get(name)[1] = y;
+        }
+    }
+
+    public static void removePlayerCoordinates(String name) {
+        players.remove(name);
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -72,17 +101,7 @@ public class GameInfo {
         isStarted = b;
     }
 
-    private static int nbrOfHoles = 0;
-    private static int nbrOfWalls = 0;
-    private static int nbrOfTreasures = 0;
-    private static int nbrOfPlayers = 0;
-
-    private static int[] map = new int[2];  
-    private static int[] holesPos;
-    private static int[] wallsPos;
-    private static int[] treasuresPos;   
-    private static int[] playerPos = new int[0];
-    private static String[] playerName = new String[0];
+    private static int[] map = new int[2];
 
     private static boolean isDead = false;
     private static boolean canPlay = false;
@@ -91,10 +110,6 @@ public class GameInfo {
     private static int gameMod = -1;
 
     // to get various elements
-    
-    public static int getPlayers() {
-        return nbrOfPlayers;
-    }
     public static int getGameNumber() {
         if(availableGameInfos == null)
             return 0;
@@ -117,43 +132,6 @@ public class GameInfo {
     // to get the map size
     public static int[] getMap() {
         return map;
-    }
-    public static int[] getHolesPos() {
-        return holesPos;
-    }
-    public static int[] getWallsPos() {
-        return wallsPos;
-    }
-    public static int[] getTreasuresPos() {
-        return treasuresPos;
-    }
-    public static int[] getPlayerPos() {
-        if (playerPos != null) {
-            return playerPos;
-        }
-        return null;
-    }
-    public static int[] getPlayerPos(String plName) {
-        int j = 0;
-        for(int i=0;i<playerPos.length;i+=2) {
-            if(playerName[j].equals(plName)) {
-                int[] tab = new int[3];
-                tab[0] = playerPos[i];
-                tab[1] = playerPos[i+1];
-                tab[2] = i;
-                return tab;
-            }
-            j++;
-        }
-        return null;
-    }
-
-    public static void setPlayerPos(int pos, int x, int y) {
-        playerPos[pos] = x;
-        playerPos[pos+1] = y;
-    }
-    public static String[] getPlayersNames() {
-        return playerName;
     }
 
     //money functions
@@ -200,88 +178,9 @@ public class GameInfo {
         canPlay = b;
     }
 
-    public static void removePlayer(String name) {    
-        String[] playerNameBis = new String[playerName.length-1];
-        int j = 0;
-        for (int i = 0 ; i<playerName.length ; i++) {
-            if (playerName[i].contentEquals(name)) {
-                removePlayerPos(i*2);
-            } else {
-                playerNameBis[j] = playerName[i];
-                j+=1;
-            }
-        }
-        playerName = playerNameBis;
-    }
-    public static void removePlayerPos(int pos) {
-        int[] playerPosBis = new int[playerPos.length-2];
-        int j = 0;
-        for (int i = 0 ; i<playerPos.length ; i+=2) {
-            if (i != pos) {
-                playerPosBis[j] = playerPos[i];
-                playerPosBis[j+1] = playerPos[i+1];
-                j+=2;
-            }
-        }
-        playerPos = playerPosBis;
-    }
-
 
     public static void setGamePos(int pos, int[] tab) {
         availableGameInfos[pos] = tab;
-    }
-
-    public static void setPlayers(String name, int x, int y) {
-        int pos = 0;
-        if (!checkPlayerName(name)) {
-            addPlayerName(name);
-            addPlayersPos(x, y);
-        } else {
-            pos = findPos(name)*2;
-            playerPos[pos] = x;
-            playerPos[pos+1] = y;
-        }
-    }
-    public static int findPos(String name) {
-        int i = 0;
-        while (!playerName[i].equals(name)) {
-            i++;
-        } return i;
-    }
-    public static boolean checkPlayerName(String name) {
-        for (int i = 0 ; i<playerName.length ; i++) {
-            if (playerName[i].equals(name)) {
-                return true;
-            }
-        } return false;
-    }
-    public static void addPlayersPos(int x, int y) {
-        //if (playerPos.length != 2) {
-            int[] tBis = new int[playerPos.length + 2];
-            for(int i=0;i<playerPos.length;i++)
-                tBis[i] = playerPos[i];
-            tBis[playerPos.length] = x;
-            tBis[playerPos.length + 1] = y;
-            playerPos = tBis;/*
-        } else {
-            playerPos[0] = x;
-            playerPos[1] = y;
-        }*/
-        nbrOfPlayers++;
-
-    }
-    public static void addPlayerName(String name) {
-        
-        //if (playerName.length != 1) {
-            String[] tBis = new String[playerName.length + 1];
-            for(int i=0;i<playerName.length;i++)
-                tBis[i] = playerName[i];
-            tBis[playerName.length] = name;
-            playerName = tBis;/*
-        } else {
-            playerName[0] = name;
-        }*/
-
     }
     
 }

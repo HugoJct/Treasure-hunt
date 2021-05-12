@@ -1,10 +1,6 @@
 package client.control.shell;
 
 // import java Classes
-import client.control.UI.application.Main;
-import client.control.UI.application.Main.PrimeThread;
-import javafx.application.Application;
-import javafx.concurrent.Task;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -17,8 +13,6 @@ import client.connex.Communication;
 import client.GameInfo;
 import client.commands.Command;
 import client.commands.userIn.*;
-import client.VueSwing;
-import client.SceneSwing;
 import server.elements.*;
 
 
@@ -85,7 +79,7 @@ public class Console implements Runnable {
 				 *	All the foollowing commands serve a debug purpose only
 				 */
 
-			case "GETHOLES":
+			/*case "GETHOLES":
 				getHoles();
 				break;
 			case "GETWALLS":
@@ -121,11 +115,7 @@ public class Console implements Runnable {
 				break;
 			case "PRINTGAMES":
 				System.out.println(Arrays.deepToString(GameInfo.getJoinableGames()));
-				break;
-			case "PRINTPLAYERS":
-				System.out.println(Arrays.toString(GameInfo.getPlayersNames()));
-				System.out.println(Arrays.toString(GameInfo.getPlayerPos()));
-				break;
+				break;*/
 			case "EXIT":
 				System.exit(0);
 		}
