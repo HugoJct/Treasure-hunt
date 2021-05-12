@@ -93,16 +93,6 @@ public class GameInfo {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     //previous implementation
 
     private static int[][] availableGameInfos = null;
@@ -131,10 +121,6 @@ public class GameInfo {
         return nbrOfGames;
     }
 
-    public static int getPlayers() {
-        return nbrOfPlayers;
-    }
-
     public static int getGameNumber() {
         if(availableGameInfos == null)
             return 0;
@@ -159,46 +145,8 @@ public class GameInfo {
         return map;
     }
 
-    public static int[] getHolesPos() {
-        return holesPos;
-    }
-    public static int[] getWallsPos() {
-        return wallsPos;
-    }
-    public static int[] getTreasuresPos() {
-        return treasuresPos;
-    }
-    public static int[] getPlayerPos() {
-        if (playerPos != null) {
-            return playerPos;
-        }
-        return null;
-    }
-    public static int[] getPlayerPos(String plName) {
-        int j = 0;
-        for(int i=0;i<playerPos.length;i+=2) {
-            if(playerName[j].equals(plName)) {
-                int[] tab = new int[3];
-                tab[0] = playerPos[i];
-                tab[1] = playerPos[i+1];
-                tab[2] = i;
-                return tab;
-            }
-            j++;
-        }
-        return null;
-    }
-
     public static void setNumberOfGames(int nbr) {
         nbrOfGames = nbr;
-    }
-
-    public static void setPlayerPos(int pos, int x, int y) {
-        playerPos[pos] = x;
-        playerPos[pos+1] = y;
-    }
-    public static String[] getPlayersNames() {
-        return playerName;
     }
 
     //money functions
