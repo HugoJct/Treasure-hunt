@@ -17,7 +17,22 @@ public class GameInfo {
     private static LinkedList<Wall> walls = new LinkedList<Wall>();
     private static LinkedList<Hole> holes = new LinkedList<Hole>();
     private static LinkedList<Treasure> treasures = new LinkedList<Treasure>();
+
+    private static int nbrOfGames = 0;;
+
+
+    public static int getWallsNumber() {
+        return walls.size();
+    }
+    public static int getHolesNumber() {
+        return holes.size();
+    }
+    public static int getTreasuresNumber() {
+        return treasures.size();
+    }
+
     private static HashMap<String,Integer[]> players = new HashMap<String,Integer[]>();
+
 
     //get linkedlist of element
     public static LinkedList<Wall> getWalls() {
@@ -110,6 +125,16 @@ public class GameInfo {
     private static int gameMod = -1;
 
     // to get various elements
+
+    
+    public static int getNumberOfGames() {
+        return nbrOfGames;
+    }
+
+    public static int getPlayers() {
+        return nbrOfPlayers;
+    }
+
     public static int getGameNumber() {
         if(availableGameInfos == null)
             return 0;
@@ -132,6 +157,48 @@ public class GameInfo {
     // to get the map size
     public static int[] getMap() {
         return map;
+    }
+
+    public static int[] getHolesPos() {
+        return holesPos;
+    }
+    public static int[] getWallsPos() {
+        return wallsPos;
+    }
+    public static int[] getTreasuresPos() {
+        return treasuresPos;
+    }
+    public static int[] getPlayerPos() {
+        if (playerPos != null) {
+            return playerPos;
+        }
+        return null;
+    }
+    public static int[] getPlayerPos(String plName) {
+        int j = 0;
+        for(int i=0;i<playerPos.length;i+=2) {
+            if(playerName[j].equals(plName)) {
+                int[] tab = new int[3];
+                tab[0] = playerPos[i];
+                tab[1] = playerPos[i+1];
+                tab[2] = i;
+                return tab;
+            }
+            j++;
+        }
+        return null;
+    }
+
+    public static void setNumberOfGames(int nbr) {
+        nbrOfGames = nbr;
+    }
+
+    public static void setPlayerPos(int pos, int x, int y) {
+        playerPos[pos] = x;
+        playerPos[pos+1] = y;
+    }
+    public static String[] getPlayersNames() {
+        return playerName;
     }
 
     //money functions

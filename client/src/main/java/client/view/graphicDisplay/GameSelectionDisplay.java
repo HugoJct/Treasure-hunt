@@ -9,7 +9,10 @@ public class GameSelectionDisplay extends JFrame {
     private JPanel createGame = new JPanel();
     private JPanel createGameInputs = new JPanel();
     private JPanel joinGame = new JPanel();
+    private JPanel joinGameInputs = new JPanel();
     private JPanel gamemod = new JPanel();
+
+    private JLabel nbrOfGames = new JLabel("Number of games found : ");
 
     private JCheckBox gamemodOne = new JCheckBox("Speeding contest");
     private JCheckBox gamemodTwo = new JCheckBox("Round by round");
@@ -61,7 +64,10 @@ public class GameSelectionDisplay extends JFrame {
         createGameInputs.add(nbrOfTreasures);
         createGameInputs.add(confirm);
 
-        joinGame.add(refresh, BorderLayout.EAST);
+        joinGame.add(joinGameInputs);
+        joinGameInputs.setLayout(new GridLayout(2, 1));
+        joinGameInputs.add(refresh);
+        joinGameInputs.add(nbrOfGames);
         listGames();
     }
 
@@ -70,6 +76,10 @@ public class GameSelectionDisplay extends JFrame {
 
     }
 
+
+    public void setNbrOfGames(int nbr) {
+        this.nbrOfGames.setText("Number of games found : " + nbr);
+    }
 
     public JCheckBox getGamemodOne() {
         return this.gamemodOne;

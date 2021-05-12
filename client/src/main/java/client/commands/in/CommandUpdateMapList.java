@@ -28,6 +28,7 @@ public class CommandUpdateMapList extends Command {
 	private void updateGameList(String args[]) {
 		if(args[1].equals("NUMBER")) {
 			GameInfo.setGameNumber(Integer.parseInt(args[2]));
+			GameInfo.setNumberOfGames(Integer.parseInt(args[2]));
 		} else if(args[1].equals("MESS") && args[3].equals("ID")) {
 			int[] tab = new int[6];
 			for(int i=0;i<6;i++)
