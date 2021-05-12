@@ -11,6 +11,7 @@ import client.commands.userIn.CommandCreateGame;
 import client.commands.userIn.CommandGetList;
 import client.GameInfo;
 import client.commands.userIn.CommandJoinGame;
+import client.commands.userIn.CommandRequestStart;
 
 public class GameManager {
     
@@ -18,9 +19,11 @@ public class GameManager {
         CommandCreateGame create = new CommandCreateGame(out);
         CommandGetList getList = new CommandGetList(out);
         CommandJoinGame joinGame = new CommandJoinGame(out);
+        CommandRequestStart requestStart = new CommandRequestStart(out);
         view.getConfirm().addActionListener((event) -> build(create, view, p));
         view.getRefresh().addActionListener((event) -> refresh(getList, p, view));
         view.joinGame().addActionListener((event) -> join(view, joinGame, p));
+        view.getRequestStart().addActionListener((event) -> startGame(view, requestStart, p));
 
     }
 
@@ -28,6 +31,10 @@ public class GameManager {
         String[] command = {"110", evalGameMod(view), view.getCoX().getText(), view.getCoY().getText(), view.getHoles().getText(), view.getTreasures().getText()};
         create.execute(p, command);
         view.listGames();
+    }
+
+    public void startGame(GameSelectionDisplay view, CommandRequestStart requestStart, Player p) {
+        requestStart.execute(p, null);
     }
 
     public void join(GameSelectionDisplay view, CommandJoinGame joinGame, Player p) {
@@ -50,6 +57,7 @@ public class GameManager {
 
     public void refresh(CommandGetList getList, Player p, GameSelectionDisplay view) {
         getList.execute(p, null) ; view.setNbrOfGames(GameInfo.getNumberOfGames());
+        view.listGames();
     }
 
 }

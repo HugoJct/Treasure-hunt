@@ -25,6 +25,7 @@ public class GameSelectionDisplay extends JFrame {
     private JButton confirm = new JButton("Send");
     private JButton refresh = new JButton("Refresh");
     private JButton join = new JButton("join");
+    private JButton requestStart = new JButton("request start");
 
     private JMenuBar head = new JMenuBar();
 
@@ -74,10 +75,11 @@ public class GameSelectionDisplay extends JFrame {
         createGameInputs.add(confirm);
 
         joinGame.add(joinGameInputs);
-        joinGameInputs.setLayout(new GridLayout(3, 1));
+        joinGameInputs.setLayout(new GridLayout(4, 1));
         joinGameInputs.add(refresh);
         joinGameInputs.add(nbrOfGames);
         joinGameInputs.add(gameListPan);
+        joinGameInputs.add(requestStart);
         listGames();
     }
 
@@ -90,6 +92,7 @@ public class GameSelectionDisplay extends JFrame {
             alreadyAdded+=1;
             if (GameInfo.getNumberOfGames() > 0 && !joinAdded) {
                 joinGame.add(join);
+                joinAdded = true;
             }
         }
     }
@@ -106,16 +109,8 @@ public class GameSelectionDisplay extends JFrame {
         return this.gamemodTwo;
     }
 
-    public JButton getConfirm() {
-        return this.confirm;
-    }
-
     public JCheckBox[] getGames() {
         return gamesToJoin;
-    }
-
-    public JButton joinGame() {
-        return join;
     }
 
     public JTextField getCoX() {
@@ -132,5 +127,14 @@ public class GameSelectionDisplay extends JFrame {
     }
     public JButton getRefresh() {
         return this.refresh;
+    }
+    public JButton getConfirm() {
+        return this.confirm;
+    }
+    public JButton joinGame() {
+        return join;
+    }
+    public JButton getRequestStart() {
+        return this.requestStart;
     }
 }
