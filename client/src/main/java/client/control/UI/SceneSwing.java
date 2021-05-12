@@ -1,4 +1,4 @@
-package client;
+package client.control.UI;
 
 
 import java.awt.image.BufferedImage;
@@ -12,13 +12,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import client.control.UI.application.Modele;
-import client.VueSwing;
+import java.util.LinkedList;
+import java.util.HashMap;
+
+import client.control.UI.VueSwing;
+import client.GameInfo;
+
+import server.elements.*;
 
 @SuppressWarnings("serial")
 public class SceneSwing extends JPanel{
-	public Modele m = new Modele();
-	
 
 	private Image Back;
 	
@@ -27,6 +30,10 @@ public class SceneSwing extends JPanel{
 	private Image Hole;
 	private Image Player;
 
+	private LinkedList<Wall> walls;
+	private LinkedList<Hole> holes;
+	private LinkedList<Treasure> treasures;
+	private HashMap<String,Integer[]> players;
 	
 	
 	//Constructor
@@ -35,9 +42,6 @@ public class SceneSwing extends JPanel{
 
 
 		try {
-			if(this.m == null) {
-				System.out.println("modele null");
-			}
 			
 			
 			// ------- Fonctionnel avec un lancement windows ------- 
@@ -72,15 +76,45 @@ public class SceneSwing extends JPanel{
 		
 		
 		g2.drawImage(this.Back, 0, 0, null);
+
+		walls = GameInfo.getWalls();
+		holes = GameInfo.getHoles();
+		treasures = GameInfo.getTreasures();
+		players = GameInfo.getPlayerCoordinates();
+
+		//Display walls with new GameInfo structure
+		for(Wall w : walls) {
+			g2.drawImage(this.Wall,w.getY()*30,w.getX()*28,null);
+		}
 		
-		
+		//Display holes with new GameInfo structure
+		for(Hole h : holes) {
+			g2.drawImage(this.Hole,h.getY()*30,h.getX()*28,null);
+		}
+
+		//Display Treasures with new GameInfo structure
+		for(Treasure t : treasures) {
+			g2.drawImage(this.Treasure,t.getY()*30,t.getX()*28,null);
+		}
+ 
+		for(String s : players.keySet()) {
+			int[] co = GameInfo.getPlayerCoordinates(s);
+			g2.drawImage(this.Player,co[0]*30,co[1]*28,null);
+		}
+
+		/*		Previous components painting using old GameInfo Structure
+		//Display players (Black square for tests)
+		for(int i = 0; i<GameInfo.getPlayerPos().length-1; i++) {
+			g2.drawImage(this.Player, GameInfo.getPlayerPos()[i]*30, GameInfo.getPlayerPos()[i+1]*28, null);
+			i++; // i used for x and i+1 for y.
+		}
+
 		//Display Walls
 		for(int i = 0; i<m.getWallPos().length-1; i++) {
 			g2.drawImage(this.Wall, m.getWallPos()[i+1]*30, m.getWallPos()[i]*28, null);
 			i++; // i used for x and i+1 for y.
 		}
 		
-			
 		//Display treasures
 		for(int i = 0; i<m.getTreasurePos().length-1; i++) {
 			g2.drawImage(this.Treasure, m.getTreasurePos()[i+1]*30, m.getTreasurePos()[i]*28, null);
@@ -92,28 +126,6 @@ public class SceneSwing extends JPanel{
 			g2.drawImage(this.Hole, m.getHolePos()[i+1]*30, m.getHolePos()[i]*28, null);
 			i++; // i used for x and i+1 for y.
 		}
-		
-		
-		//Display players (Black square for tests)
-		for(int i = 0; i<m.getPlayerPos().length-1; i++) {
-			g2.drawImage(this.Player, m.getPlayerPos()[i]*30, m.getPlayerPos()[i+1]*28, null);
-			i++; // i used for x and i+1 for y.
-		}
-		
+		*/
 	}
-	
-	
-	/*public static void main(String[] args) {
-		JFrame fen = new JFrame();
-		SceneSwing scene = new SceneSwing();
-		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fen.setSize(scene.m.getColumns()*30, scene.m.getLines()*28);
-		fen.setLocationRelativeTo(null);
-		fen.setResizable(false);
-		fen.setAlwaysOnTop(true);
-		
-		
-		fen.setContentPane(scene);
-		fen.setVisible(true);
-	}*/
 }
