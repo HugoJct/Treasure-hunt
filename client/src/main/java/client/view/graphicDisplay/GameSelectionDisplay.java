@@ -64,7 +64,6 @@ public class GameSelectionDisplay extends JFrame {
         createGameInputs.add(nbrOfTreasures);
         createGameInputs.add(confirm);
 
-        j
         joinGame.add(joinGameInputs);
         joinGameInputs.setLayout(new GridLayout(2, 1));
         joinGameInputs.add(refresh);

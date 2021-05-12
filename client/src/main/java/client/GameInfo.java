@@ -16,6 +16,7 @@ public class GameInfo {
     private static LinkedList<Wall> walls = new LinkedList<Wall>();
     private static LinkedList<Hole> holes = new LinkedList<Hole>();
     private static LinkedList<Treasure> treasures = new LinkedList<Treasure>();
+    private static int nbrOfGames = 0;;
 
     //get numbber of element functionss
     public static int getWallsNumber() {
@@ -92,6 +93,10 @@ public class GameInfo {
 
     // to get various elements
     
+    public static int getNumberOfGames() {
+        return nbrOfGames;
+    }
+
     public static int getPlayers() {
         return nbrOfPlayers;
     }
@@ -146,6 +151,10 @@ public class GameInfo {
             j++;
         }
         return null;
+    }
+
+    public static void setNumberOfGames(int nbr) {
+        nbrOfGames = nbr;
     }
 
     public static void setPlayerPos(int pos, int x, int y) {

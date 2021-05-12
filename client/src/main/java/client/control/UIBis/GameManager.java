@@ -9,6 +9,7 @@ import client.connex.Communication;
 import client.Player;
 import client.commands.userIn.CommandCreateGame;
 import client.commands.userIn.CommandGetList;
+import client.GameInfo;
 
 public class GameManager {
     
@@ -16,7 +17,7 @@ public class GameManager {
         CommandCreateGame create = new CommandCreateGame(out);
         CommandGetList getList = new CommandGetList(out);
         view.getConfirm().addActionListener((event) -> build(create, view, p));
-        view.getRefresh().addActionListener((event) -> getList.execute(p, null) ; view.setNbrOfGames());
+        view.getRefresh().addActionListener((event) -> refresh(getList, p, view));
     }
 
     public void build(CommandCreateGame create, GameSelectionDisplay view, Player p) {
@@ -30,5 +31,9 @@ public class GameManager {
         } else {
             return "1";
         }    
+    }
+
+    public void refresh(CommandGetList getList, Player p, GameSelectionDisplay view) {
+        getList.execute(p, null) ; view.setNbrOfGames(GameInfo.getNumberOfGames());
     }
 }
