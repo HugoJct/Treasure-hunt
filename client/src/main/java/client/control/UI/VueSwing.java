@@ -1,4 +1,4 @@
-package client;
+package client.control.UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,26 +22,29 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 
-import client.control.UI.application.Modele;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import client.SceneSwing;
+import client.control.UI.SceneSwing;
 import client.commands.Command;
+import client.GameInfo;
 
 
 @SuppressWarnings("serial")
 public class VueSwing extends JFrame implements MouseInputListener{
 	JPanel Background = new JPanel();
-	static Modele m = new Modele();
 	public static SceneSwing scene;
 	public static int ID = 0;
-	public static String name = m.getName();
 
 
 	public VueSwing() {
 		ID += 1;
-		this.setTitle("Chasse au Trésor - "+name+" ("+ID+")"); 
-		this.setSize(m.getColumns()*30+20, m.getLines()*28+50);
+		this.setTitle("Chasse au Trésor - ("+ID+")"); 
+
+
+		int lines = GameInfo.getMap()[1];
+		int columns = GameInfo.getMap()[0];
+
+		this.setSize(columns*30+20, lines*28+50);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 
@@ -53,12 +56,6 @@ public class VueSwing extends JFrame implements MouseInputListener{
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	
-	
-	
-	
-
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int screenX = e.getXOnScreen();
@@ -69,59 +66,43 @@ public class VueSwing extends JFrame implements MouseInputListener{
 		int y = screenY/(28) - 4;
 		System.out.println("Position in tab = ("+x+","+y+")");
 		
-		m = new Modele();
 		this.setVisible(false);
 		this.setVisible(true);
 		//Request to move with x and y attributes
 	}
 
-
-
 	@Override
 	public void mousePressed(MouseEvent e) {
+
 	}
-
-
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+
 	}
-
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
-
-
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
-
-
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
-
-
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 
 	}
 	
-	
 	Timer timer;
 	public void refreshScreen() {
-		m = new Modele();
 	    timer = new Timer(0, new ActionListener() {
 	      @Override
 	      public void actionPerformed(ActionEvent e) {
@@ -132,22 +113,4 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	    timer.setDelay(17);
 	    timer.start();
 	  }
-	
-	
-	
-	/*public static void main(String[] args) {
-		javax.swing.SwingUtilities.invokeLater(
-	      new Runnable() {
-	        public void run() { 
-	          VueSwing v = new VueSwing();
-	          v.setVisible(true);
-	          VueSwing v2 = new VueSwing();
-	          v2.setVisible(true);
-	         }
-	      }
-	    );		
-	}*/
-	
-	
-	
 }

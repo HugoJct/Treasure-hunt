@@ -92,11 +92,18 @@ public class Player {
             board[x][y] = 'H';
         }
 
+        for(String s : GameInfo.getPlayerCoordinates().keySet()) {
+            int x = GameInfo.getPlayerCoordinates().get(s)[0];
+            int y = GameInfo.getPlayerCoordinates().get(s)[1];
+            board[y][x] = s.toLowerCase().charAt(0);
+        }
+
+        /*
         for(int i=0;i<GameInfo.getPlayersNames().length;i++) {
             int x = GameInfo.getPlayerPos(GameInfo.getPlayersNames()[i])[1];
             int y = GameInfo.getPlayerPos(GameInfo.getPlayersNames()[i])[0];
             board[x][y] = GameInfo.getPlayersNames()[i].toLowerCase().charAt(0);
-        }
+        }*/
 
         for(int i=0;i<board.length;i++){
             System.out.print("W ");
