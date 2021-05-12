@@ -20,9 +20,11 @@ public class GameSelectionDisplay extends JFrame {
     private JCheckBox gamemodOne = new JCheckBox("Speeding contest");
     private JCheckBox gamemodTwo = new JCheckBox("Round by round");
 
+    private JCheckBox[] gamesToJoin;
+    
     private JButton confirm = new JButton("Send");
     private JButton refresh = new JButton("Refresh");
-    private JButton[] gamesToJoin;
+    private JButton join = new JButton("join");
 
     private JMenuBar head = new JMenuBar();
 
@@ -32,6 +34,7 @@ public class GameSelectionDisplay extends JFrame {
     private JTextField nbrOfTreasures = new JTextField("10");
 
     private static int alreadyAdded = 0;
+    private static boolean joinAdded = false;
 
     public GameSelectionDisplay() {
 
@@ -80,11 +83,14 @@ public class GameSelectionDisplay extends JFrame {
 
 
     public void listGames() {
-        gamesToJoin = new JButton[GameInfo.getNumberOfGames()];
+        gamesToJoin = new JCheckBox[GameInfo.getNumberOfGames()];
         for (int i = alreadyAdded ; i<GameInfo.getNumberOfGames() ; i++) {
-            gamesToJoin[i] = new JButton("" + i);
+            gamesToJoin[i] = new JCheckBox("" + i);
             gameListPan.add(gamesToJoin[i]);
             alreadyAdded+=1;
+            if (GameInfo.getNumberOfGames() > 0 && !joinAdded) {
+                joinGame.add(join);
+            }
         }
     }
 
@@ -104,8 +110,12 @@ public class GameSelectionDisplay extends JFrame {
         return this.confirm;
     }
 
-    public JButton[] getGames() {
+    public JCheckBox[] getGames() {
         return gamesToJoin;
+    }
+
+    public JButton joinGame() {
+        return join;
     }
 
     public JTextField getCoX() {
