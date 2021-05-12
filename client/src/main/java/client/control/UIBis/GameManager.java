@@ -16,7 +16,7 @@ public class GameManager {
         CommandCreateGame create = new CommandCreateGame(out);
         CommandGetList getList = new CommandGetList(out);
         view.getConfirm().addActionListener((event) -> build(create, view, p));
-        view.getRefresh().addActionListener((event) -> getList.execute(p, null));
+        view.getRefresh().addActionListener((event) -> getList.execute(p, null) ; view.setNbrOfGames());
     }
 
     public void build(CommandCreateGame create, GameSelectionDisplay view, Player p) {
