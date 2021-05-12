@@ -3,6 +3,8 @@ package client.view.graphicDisplay;
 import javax.swing.*;
 import java.awt.*;
 
+import client.GameInfo;
+
 
 public class GameSelectionDisplay extends JFrame {
     private JFrame frame = new JFrame();
@@ -11,6 +13,7 @@ public class GameSelectionDisplay extends JFrame {
     private JPanel joinGame = new JPanel();
     private JPanel joinGameInputs = new JPanel();
     private JPanel gamemod = new JPanel();
+    private JPanel gameListPan = new JPanel();
 
     private JLabel nbrOfGames = new JLabel("Number of games found : ");
 
@@ -19,6 +22,7 @@ public class GameSelectionDisplay extends JFrame {
 
     private JButton confirm = new JButton("Send");
     private JButton refresh = new JButton("Refresh");
+    private JButton[] gamesToJoin;
 
     private JMenuBar head = new JMenuBar();
 
@@ -26,6 +30,8 @@ public class GameSelectionDisplay extends JFrame {
     private JTextField dimensionY = new JTextField("20");
     private JTextField nbrOfHoles = new JTextField("20");
     private JTextField nbrOfTreasures = new JTextField("10");
+
+    private static int alreadyAdded = 0;
 
     public GameSelectionDisplay() {
 
@@ -65,15 +71,21 @@ public class GameSelectionDisplay extends JFrame {
         createGameInputs.add(confirm);
 
         joinGame.add(joinGameInputs);
-        joinGameInputs.setLayout(new GridLayout(2, 1));
+        joinGameInputs.setLayout(new GridLayout(3, 1));
         joinGameInputs.add(refresh);
         joinGameInputs.add(nbrOfGames);
+        joinGameInputs.add(gameListPan);
         listGames();
     }
 
 
-    private void listGames() {
-
+    public void listGames() {
+        gamesToJoin = new JButton[GameInfo.getNumberOfGames()];
+        for (int i = alreadyAdded ; i<GameInfo.getNumberOfGames() ; i++) {
+            gamesToJoin[i] = new JButton("" + i);
+            gameListPan.add(gamesToJoin[i]);
+            alreadyAdded+=1;
+        }
     }
 
 
@@ -90,6 +102,10 @@ public class GameSelectionDisplay extends JFrame {
 
     public JButton getConfirm() {
         return this.confirm;
+    }
+
+    public JButton[] getGames() {
+        return gamesToJoin;
     }
 
     public JTextField getCoX() {

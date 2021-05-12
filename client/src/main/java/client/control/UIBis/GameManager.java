@@ -23,6 +23,7 @@ public class GameManager {
     public void build(CommandCreateGame create, GameSelectionDisplay view, Player p) {
         String[] command = {"110", evalGameMod(view), view.getCoX().getText(), view.getCoY().getText(), view.getHoles().getText(), view.getTreasures().getText()};
         create.execute(p, command);
+        view.listGames();
     }
 
     public String evalGameMod(GameSelectionDisplay view) {
