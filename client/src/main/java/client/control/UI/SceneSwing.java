@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Color;
 import java.io.File;
 
 import javax.swing.ImageIcon;
@@ -100,32 +101,8 @@ public class SceneSwing extends JPanel{
 		for(String s : players.keySet()) {
 			int[] co = GameInfo.getPlayerCoordinates(s);
 			g2.drawImage(this.Player,co[0]*30,co[1]*28,null);
+			g2.setColor(Color.GREEN);
+			g2.drawString(s,co[0]*30,co[1]*28);
 		}
-
-		/*		Previous components painting using old GameInfo Structure
-		//Display players (Black square for tests)
-		for(int i = 0; i<GameInfo.getPlayerPos().length-1; i++) {
-			g2.drawImage(this.Player, GameInfo.getPlayerPos()[i]*30, GameInfo.getPlayerPos()[i+1]*28, null);
-			i++; // i used for x and i+1 for y.
-		}
-
-		//Display Walls
-		for(int i = 0; i<m.getWallPos().length-1; i++) {
-			g2.drawImage(this.Wall, m.getWallPos()[i+1]*30, m.getWallPos()[i]*28, null);
-			i++; // i used for x and i+1 for y.
-		}
-		
-		//Display treasures
-		for(int i = 0; i<m.getTreasurePos().length-1; i++) {
-			g2.drawImage(this.Treasure, m.getTreasurePos()[i+1]*30, m.getTreasurePos()[i]*28, null);
-			i+=2; // i used for x and i+1 for y.
-		}
-		
-		//Display Holes
-		for(int i = 0; i<m.getHolePos().length-1; i++) {
-			g2.drawImage(this.Hole, m.getHolePos()[i+1]*30, m.getHolePos()[i]*28, null);
-			i++; // i used for x and i+1 for y.
-		}
-		*/
 	}
 }
