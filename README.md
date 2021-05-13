@@ -63,6 +63,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 ##Commandes:
 
 Les commandes utilisables par le client en mode console sont les suivantes:
-*  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```
-*  ```GETLIST```
-*  ```JOIN <gameID>```
+*  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```: crée une partie en fonction des sspécifications passées en argument.
+*  ```GETLIST```: permet de récupérer la liste des parties joignables.
+*  ```JOIN <gameID>```: permet de rejoind la partie spécifiée.
+*  ```REQUESTSTART```: permet de demander le lancement de la partie, aux autres joueurs (seul le créateur de la partie peut éxécuter cette commande).
