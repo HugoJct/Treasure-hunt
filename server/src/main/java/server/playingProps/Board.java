@@ -133,6 +133,10 @@ public class Board {
   public boolean fillElements(int hole, int tres){ // function that's used for the constructor we call upon for "110 CREATE", Only works with a board that has no holes or Treasures yet
     int nbrTres = 0;
     int nbrHole = 0;
+    int holeMax = ((this.sizeX * this.sizeY) * 2)/100; //if the number of holes is superior than 2% of the surface of the board than the number of holes is downgraded to the maximum
+    if (hole > holeMax){
+    	hole = holeMax;
+    }
     while(nbrTres != tres || nbrHole != hole){
       if(nbrTres < tres){
         placeElementRandomly(new Treasure(100));
@@ -238,6 +242,20 @@ public class Board {
       return true;
     }
     return false;
+  }
+
+  public boolean fillWalls2(){
+  	Random rand = new Random();
+  	int wallMax = ((this.sizeX * this.sizeY)*15)/100;
+    for(int i = 0;i<wallMax;i++){
+	    int pos[]={-1,-1};
+	    do{
+	      pos[0] = rand.nextInt(this.getSizeY()-2);
+	      pos[1] = rand.nextInt(this.getSizeX()-2);
+	    }while(this.getElementAt(pos[1],pos[0])!=null);
+	    this.setElementAt(new Wall(),pos[1],pos[0]);
+	}
+    return true;
   }
 
   public static int[][] copyTab(int[][] source){ //function made for antiSoftLockPlugIn
