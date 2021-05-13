@@ -144,6 +144,10 @@ public class Console implements Runnable {
 		_com.sendMessage("410 GETTREASURES");
 	}
 
+	public boolean getStartRequested() {
+		return startRequested;
+	}
+
 	public static int getLastMove() {
 		return lastMoveRequested;
 	}
