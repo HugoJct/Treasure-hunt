@@ -22,7 +22,7 @@ Les joueurs ne peuvent se déplacer que verticalement ou horizontalement.
 
 La partie se termine lorsque tous les trésors ont été récupérés ou lorsque tous les joueurs sont morts.
 
-    ![alt text](ReadMeAttachments/ "Plateau de jeu et contrôleur de jeu")
+    ![alt text](ReadMeAttachments/InGameScreenshot.PNG "Plateau de jeu et contrôleur de jeu")
 
 ## Modes de jeu:
 
