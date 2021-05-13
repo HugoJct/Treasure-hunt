@@ -95,6 +95,7 @@ public class GameSelectionDisplay extends JFrame {
         buttonGroup.add(yes);
         buttonsToPlay.add(no);
         buttonGroup.add(no);
+        buttonsToPlay.add(new JLabel());
         buttonsToPlay.add(sendResponse);
         buttonGroup.add(sendResponse);
 
