@@ -14,8 +14,14 @@ public class GameSelectionDisplay extends JFrame {
     private JPanel joinGameInputs = new JPanel();
     private JPanel gamemod = new JPanel();
     private JPanel gameListPan = new JPanel();
+    private JPanel buttonsToPlay = new JPanel();
 
     private JLabel nbrOfGames = new JLabel("Number of games found : ");
+    private JLabel startQuestion = new JLabel("The owner ask if you are ready to play");
+
+    ButtonGroup buttonGroup = new ButtonGroup();
+    JRadioButton yes = new JRadioButton("Yes");
+    JRadioButton no = new JRadioButton("No");
 
     private JCheckBox gamemodOne = new JCheckBox("Speeding contest");
     private JCheckBox gamemodTwo = new JCheckBox("Round by round");
@@ -26,6 +32,7 @@ public class GameSelectionDisplay extends JFrame {
     private JButton refresh = new JButton("Refresh");
     private JButton join = new JButton("join");
     private JButton requestStart = new JButton("request start");
+    private JButton sendResponse = new JButton("confirm");
 
     private JMenuBar head = new JMenuBar();
 
@@ -37,6 +44,7 @@ public class GameSelectionDisplay extends JFrame {
     private static int alreadyAdded = 0;
     private static boolean joinAdded = false;
 
+    
     public GameSelectionDisplay() {
 
         frame.setTitle("Game Selection");
@@ -75,14 +83,44 @@ public class GameSelectionDisplay extends JFrame {
         createGameInputs.add(confirm);
 
         joinGame.add(joinGameInputs);
-        joinGameInputs.setLayout(new GridLayout(4, 1));
+        joinGameInputs.setLayout(new GridLayout(5, 1));
         joinGameInputs.add(refresh);
         joinGameInputs.add(nbrOfGames);
         joinGameInputs.add(gameListPan);
         joinGameInputs.add(requestStart);
+        buttonsToPlay.setLayout(new GridLayout(2, 3));
+        joinGameInputs.add(buttonsToPlay);
+        buttonsToPlay.add(startQuestion);
+        buttonsToPlay.add(yes);
+        buttonGroup.add(yes);
+        buttonsToPlay.add(no);
+        buttonGroup.add(no);
+        buttonsToPlay.add(new JLabel());
+        buttonsToPlay.add(sendResponse);
+        buttonGroup.add(sendResponse);
+
+        buttonsToPlay.setVisible(false);
         listGames();
     }
 
+    public void setJoinable() {
+        join.setVisible(false);
+    }
+
+    public JRadioButton getYes() {
+        return yes;
+    }
+    public JRadioButton getNo() {
+        return no;
+    }
+
+    public JButton getReadyConfirm() {
+        return sendResponse;
+    }
+
+    public void readyToPlay() {
+        buttonsToPlay.setVisible(true);
+    }
 
     public void listGames() {
         gamesToJoin = new JCheckBox[GameInfo.getNumberOfGames()];

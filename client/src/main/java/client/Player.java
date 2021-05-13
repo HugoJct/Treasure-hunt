@@ -144,7 +144,7 @@ public class Player {
             communication.start();
             console.start();
 
-            new GameManager(new GameSelectionDisplay(), com.getOutput(), p);
+            new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
             
         } catch(IOException e) {
             e.printStackTrace();
