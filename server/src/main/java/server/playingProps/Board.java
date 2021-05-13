@@ -291,16 +291,16 @@ public class Board {
 
   public int adjacentWalls(int x, int y){
   	int adjacentCount = 0;
-  	if(this.getElementAt(x,y-1)){ //upper case
+  	if(this.getElementAt(x,y-1) instanceof Wall){ //upper case
   		adjacentCount++;
   	}
-  	if(this.getElementAt(x,y+1)){ //bottom
+  	if(this.getElementAt(x,y+1) instanceof Wall){ //bottom
   		adjacentCount++;
   	}
-  	if(this.getElementAt(x+1,y)){ //right
+  	if(this.getElementAt(x+1,y) instanceof Wall){ //right
   		adjacentCount++;
   	}
-  	if(this.getElementAt(x-1,y)){ //left
+  	if(this.getElementAt(x-1,y) instanceof Wall){ //left
   		adjacentCount++;
   	}
   	return adjacentCount;
@@ -350,12 +350,8 @@ public class Board {
   	int[] obstaclePos = {-1,-1};
   	pointerPos[0] = y;
   	pointerPos[1] = x;
-  	while(!(this.isInAnIntersection(pointerPos[1],pointerPos[0])) && this.withinBorders(this.getElementAt(pointerPos[1],pointerPos[0]))){
-  		if(this.getElementAt(pointerPos[1],pointerPos[0]) instanceof Hole){
-  			obstaclePos[0] = pointerPos[0];
-  			obstaclePos[1] = pointerPos[1];
-  			break;
-  		}
+  	while(!(this.isInAnIntersection(pointerPos[1],pointerPos[0])) && this.withinBorders(pointerPos[1],pointerPos[0])){
+  		
   		if(direction.equals("right")){
   			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerNordEst")){
   				return this.pathIsClear(pointerPos[1],pointerPos[0],"down");
