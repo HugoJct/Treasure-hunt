@@ -29,7 +29,7 @@ Le serveur propose de créer des parties avec des modes de jeu différents:
 *  Le mode **Speeding-Contest**: chaque joueur se déplace quand il veut, il suffit d'être le plus rapide pour gagner
 *  Le mode **Tour-par-tour**: Les joueurs jouent chacun leur tour et un joueur ne peut se déplacer que lors de son tour.
 
-##Interface graphique:
+## Interface graphique:
 
 Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle.
 
@@ -61,3 +61,8 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 ```
 
 ##Commandes:
+
+Les commandes utilisables par le client en mode console sont les suivantes:
+*  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```
+*  ```GETLIST```
+*  ```JOIN <gameID>```
