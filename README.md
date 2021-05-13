@@ -2,71 +2,39 @@
 
 **Ce dépôt Gitlab est dédié au développement du projet de programmation du semestre 4 (PI4).**
 
-"[Chasse au trésor en réseau](https://moodle.u-paris.fr/mod/resource/view.php?id=243541)" by Vincent Cheval:
-    Jeu de chasse au trésor sur une carte 2D, en réseau.
-    ![alt text](dev_resources/template.png "Video screenshot")
-
 ## Présentation
 
-**Objectif :** 
-    L’objectif de ce projet est de créer un logiciel permettant de jouer à une chasse au trésor en réseau. 
-    Le logiciel inclura:
- - une partie serveur qui génère les parties, accepte les connexions de
-   client "humain" et peut aussi générer des joueurs "Ordinateurs".
- - une partie client permettant de se connecter à un serveur et de participer à la chasse au trésor.
+L'objectif de ce projet était de réaliser un logiciel composé de deux parties permettant de jouer à un jeu de chasse au trésor en réseau. Les deux parties du logiciel sont les suivantes: 
+*  Une partie serveur chargée de gérer les connexions des clients, de générer les cartes et partie de jeu.
+*  Une partie client pouvant se connecter au serveur afin de participer à la chasse au trésor.
 
-**Réalisation technique** : 
-    Le projet doit normalement être réalisé en Java.
-    Cela peut être discuté.
+Ce projet a été réalisé entièrement en JAVA avec Gradle comme outil de développement.
 
-**Principe** : 
-    La chasse au trésor est modélisé par un plateau de jeu rectangulaire avec un nombre prédéfini de cases. Une case peut soit être vide, soit contenir un trésor, soit correspondre à un mur ou enfin correspondre à un
-    trou. Les trésors ont plusieurs valeurs possibles (5, 10, 15 et 20).
-    Au lancement de la partie, le serveur place aléatoirement sur des cases vides les joueurs. Les joueurs doivent alors se déplacer sur le plateau de jeu pour aller récupérer le plus de trésors avec les conditions suivantes :
- - Les déplacements ne peuvent être que verticaux ou horizontaux
- - Les joueurs ne peuvent traverser un mur
- - Deux joueurs ne peuvent se trouver sur la même case
- - Si un joueur tombe dans un trou, il est éliminé
- - Lorsque tous les trésors ont été récupérés, la partie est terminée ;
-   le joueur ayant le plus de point gagne.
+## Principe: 
+La chasse au trésor est modélisée par un plateau de jeu rectangulaire composé de cases sur lesquelles sont placées trois types de tuiles. Les différents types de tuiles sont les suivants:
+*  Les murs: le joueur ne peut pas marcher sur ces tuiles. Elles ont pour but de définir le labyrinthe dans lequel évoluent les joueurs.
+*  Les trous: le joueur meurt lorsqu'il marche sur ces tuiles.
+*  Les trésors: le joueur récupère la valeur du trésor en marchant dessus, ce après quoi le trésor disparaît.
 
-## Modes de jeu
+Chaque case peut également être vide pour permettre au joueur d'évoluer sur la carte.
 
-**On considérera plusieurs modes de jeu :**
+Les joueurs ne peuvent se déplacer que verticalement ou horizontalement.
 
- -   **Le speeding contest :** Dans ce mode de jeu, tout le monde a la vision complète du plateau avec les trous, murs et trésors. Il faut juste être le plus rapide pour gagner. On interdira le mix entre joueurs "Humain" et "Ordinateur" pour ce mode.
- -   **Le tour par tour :** A nouveau, tout le monde a la vision complète du plateau mais on doit attendre son tour pour jouer.
- -  **Le brouillard de guerre :** Dans ce mode de jeu, les joueurs connaissent uniquement la position et la valeur des trésors. Chaque joueur peut voir les murs et joueurs dans un rayon de deux cases autour de lui. En revanche, il ne connait que le nombre de trous autour de lui (dans un rayon d’une case). Pour aider, les joueurs peuvent dépenser des points de trésors pour révéler :     
-   - les pièges autour de lui pendant 5 tours
-   - une partie de la carte pendant 3 tours. Pendant ces trois 3 tours, le
-   joueur peut voir la position des joueurs, les tours et les trésors
-   encore présents. 
+La partie se termine lorsque tous les trésors ont été récupérés ou lorsque tous les joueurs sont morts.
 
-Le prix des deux commandes pourra être modifié à la génération de la    carte.
+    ![alt text](ReadMeAttachments/ "Plateau de jeu et contrôleur de jeu")
 
-## Considérations techniques
+## Modes de jeu:
 
-**Méthodologie** :  
-    On commencera par l’élaboration des modes de jeu speeding contest et tour par tour.
-    On donnera une spécification pour les communications entre clients et serveurs qu’il faudra suivre scrupuleusement. Cela permettra en l’occurrence de pouvoir utiliser des clients et serveurs implémentés par différentes personnes de participer au même jeu. Par example, la spécification inclue les points suivants :
- - la communication entre clients et serveurs se fera **via socket** ;
- - il n’y aura pas de communication directement **entre clients**,
-   uniquement client-serveur ;
- - un serveur devra être capable d’accepter **un nombre arbitraire** de
-   client avant de **démarrer la partie** ;
- - les clients et serveurs ne communiqueront que **via une liste
-   prédéfinie de commandes** qui sera donnée au **début du projet**.
- - ...
+Le serveur propose de créer des parties avec des modes de jeu différents:
+*  Le mode **Speeding-Contest**: chaque joueur se déplace quand il veut, il suffit d'être le plus rapide pour gagner
+*  Le mode **Tour-par-tour**: Les joueurs jouent chacun leur tour et un joueur ne peut se déplacer que lors de son tour.
 
-Vous serez libre de programmer comme vous le souhaitez la structure interne du client et du serveur, DU MOMENT QUE le client et le serveur satisfont la spécification. Néanmoins, certaines librairies, structures de données et algorithmes seront proposés/conseillés pour vous faciliter la tâche.
-    Une représentation graphique du jeu ne sera pas obligatoire (visualisation en texte conviendra) mais elle sera la bienvenue.
+##Interface graphique:
 
-**Objectifs minimaux** : 
--   Il sera donc demandé au minium d’implémenter un serveur et un client (pour humain) qui suivront la spécification qui auquel on pourra jouer. 
--   Il faudra implémenter le speeding contest et le tour par tour.
+Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle.
 
-**Objectifs supplémentaires** : 
-    Vous pourrez ensuite implémenter le mode de jeu brouillard de guerre, une représentation graphique et les joueurs "Ordinateur". Pour ces derniers, vous êtes libre de choisir comment implémenter l’intelligence artificielle des joueurs "Ordinateur". Si vous avez plusieurs idées, vous pouvez alors faire des compétitions entre joueurs "Ordinateur" et évaluer vos performances. Dans ce cas, il ne sera pas nécessaire d’implémenter tous les modes de jeu.
+    ![alt text](ReadMeAttachments/game_management_UI.PNG "Interface de gestion des parties")
 
 ## Instructions de compilation
 
@@ -81,7 +49,7 @@ Vous serez libre de programmer comme vous le souhaitez la structure interne du c
 }
 ```
 
-**Coompilation du client**:
+**Compilation du client**:
 *  `make client`: lance le client avec le fichier de configuration par défaut
 *  `./gradlew :client:run --console=plain --args="<lien vers le fichier>"`: lance le client avec le fichier de configuration spécifié
 *  Syntaxe du fichier de configuration du client:
@@ -92,3 +60,6 @@ Vous serez libre de programmer comme vous le souhaitez la structure interne du c
   "port": 12345
 }
 ```
+
+##Commandes: 
+

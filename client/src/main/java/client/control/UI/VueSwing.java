@@ -22,8 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 
-import javafx.scene.Group;
-import javafx.scene.image.ImageView;
 import client.control.UI.SceneSwing;
 import client.commands.Command;
 import client.GameInfo;
