@@ -90,12 +90,10 @@ public class GameInfo {
     }
 
 
-
-
-
     //previous implementation
 
     private static int nbrOfGames = 0;
+    private static int nbrOfGamesCreated = 0;
 
     private static int[][] availableGameInfos = null;
     private static boolean isStarted = false;
@@ -118,9 +116,15 @@ public class GameInfo {
 
     // to get various elements
 
-    
+    public static void setNumberOfGamesCreated() {
+        nbrOfGamesCreated+=1;
+    }
+
     public static int getNumberOfGames() {
         return nbrOfGames;
+    }
+    public static int getNumberOfGamesCreated() {
+        return nbrOfGamesCreated;
     }
 
     public static int getGameNumber() {

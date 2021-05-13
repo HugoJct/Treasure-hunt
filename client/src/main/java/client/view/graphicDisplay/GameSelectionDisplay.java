@@ -103,6 +103,9 @@ public class GameSelectionDisplay extends JFrame {
         listGames();
     }
 
+    public void setJoinable() {
+        join.setVisible(false);
+    }
 
     public JRadioButton getYes() {
         return yes;

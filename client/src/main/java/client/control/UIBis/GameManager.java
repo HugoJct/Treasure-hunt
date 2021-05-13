@@ -37,6 +37,7 @@ public class GameManager {
         String[] command = {"110", evalGameMod(view), view.getCoX().getText(), view.getCoY().getText(), view.getHoles().getText(), view.getTreasures().getText()};
         create.execute(p, command);
         view.listGames();
+        GameInfo.setNumberOfGamesCreated();
     }
 
     private void sendStartResponse(GameSelectionDisplay view, CommandRequestStartSayYes requestStartYes, CommandRequestStartSayNo requestStartNo, Player p) {
@@ -74,6 +75,9 @@ public class GameManager {
         view.listGames();
         if (cons.getStartRequested()) {
             view.readyToPlay();
+        }
+        if (GameInfo.getNumberOfGamesCreated() > 0) {
+            view.setJoinable();
         }
     }
 
