@@ -241,7 +241,7 @@ public class Board {
   }
 
   public static int[][] copyTab(int[][] source){ //function made for antiSoftLockPlugIn
-  	int[][] copy= new int[source.length][2];
+  	int[][] copy= new int[source.length][source[0].length];
   	for(int i=0;i<source.length;i++){
   		copy[i] = Arrays.copyOf(source[i],source[i].length);
   	}
@@ -284,6 +284,165 @@ public class Board {
   					this.addHoleAdjacent(holePos[i]);
   				}
   			}
+  		}
+  	}
+  	return true;
+  }
+
+  public int adjacentWalls(int x, int y){
+  	int adjacentCount = 0;
+  	if(this.getElementAt(x,y-1)){ //upper case
+  		adjacentCount++;
+  	}
+  	if(this.getElementAt(x,y+1)){ //bottom
+  		adjacentCount++;
+  	}
+  	if(this.getElementAt(x+1,y)){ //right
+  		adjacentCount++;
+  	}
+  	if(this.getElementAt(x-1,y)){ //left
+  		adjacentCount++;
+  	}
+  	return adjacentCount;
+  }
+
+  public boolean isInACorridor(int x,int y){
+  	if(this.adjacentWalls(x,y) == 2){
+  		return true;
+  	}
+  	return false;
+  }
+
+  public boolean isInAnIntersection(int x,int y){
+  	if(this.adjacentWalls(x,y) == 0){
+  		return true;
+  	}
+  	return false;
+  }
+
+  public String situation(int x,int y){
+  	String ret = "NonDefined";
+  	if(this.isInACorridor(x,y)){
+  		if(this.getElementAt(x+1,y) instanceof Wall && this.getElementAt(x,y-1) instanceof Wall){
+  			ret = "CornerNordEst";
+  		}
+  		if(this.getElementAt(x-1,y) instanceof Wall && this.getElementAt(x,y-1) instanceof Wall){
+  			ret = "CornerNordOuest";
+  		}
+  		if(this.getElementAt(x+1,y) instanceof Wall && this.getElementAt(x,y+1) instanceof Wall){
+  			ret = "CornerSudEst";
+  		}
+  		if(this.getElementAt(x-1,y) instanceof Wall && this.getElementAt(x,y+1) instanceof Wall){
+  			ret = "CornerSudOuest";
+  		}
+  		if(this.getElementAt(x,y-1) instanceof Wall && this.getElementAt(x,y+1) instanceof Wall){
+  			ret = "HorizontalCorridor";
+  		}
+  		if(this.getElementAt(x-1,y) instanceof Wall && this.getElementAt(x+1,y) instanceof Wall){
+  			ret = "VerticalCorridor";
+  		}
+  	}
+  	return ret;
+  }
+
+  public int[] pathIsClear(int x,int y,String direction){
+  	int[] pointerPos = new int[2];
+  	int[] obstaclePos = {-1,-1};
+  	pointerPos[0] = y;
+  	pointerPos[1] = x;
+  	while(!(this.isInAnIntersection(pointerPos[1],pointerPos[0])) && this.withinBorders(this.getElementAt(pointerPos[1],pointerPos[0]))){
+  		if(this.getElementAt(pointerPos[1],pointerPos[0]) instanceof Hole){
+  			obstaclePos[0] = pointerPos[0];
+  			obstaclePos[1] = pointerPos[1];
+  			break;
+  		}
+  		if(direction.equals("right")){
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerNordEst")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0],"down");
+  			}
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerSudEst")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0], "up");
+  			}
+  			pointerPos[1]++;
+  		}
+  		if(direction.equals("up")){
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerNordEst")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0],"left");
+  			}
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerNordOuest")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0],"right");
+  			}
+  			pointerPos[0]--;
+  		}
+  		if(direction.equals("left")){
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerNordOuest")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0],"down");
+  			}
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerSudOuest")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0],"up");
+  			}
+  			pointerPos[1]--;
+  		}
+  		if(direction.equals("down")){
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerSudOuest")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0],"right");
+  			}
+  			if(this.situation(pointerPos[1],pointerPos[0]).equals("CornerSudEst")){
+  				return this.pathIsClear(pointerPos[1],pointerPos[0],"left");
+  			}
+  			pointerPos[0]++;
+  		}
+  		if(this.getElementAt(pointerPos[1],pointerPos[0]) instanceof Hole){
+  			obstaclePos[0] = pointerPos[0];
+  			obstaclePos[1] = pointerPos[1];
+  			break;
+  		}
+  	}
+  	return obstaclePos;
+  }
+
+  public boolean clearPath(int[] obstacle1, int[] obstacle2){
+  	if(obstacle1[0] >=0 && obstacle2[0] >=0){
+  		this.setElementAt(null,obstacle1[1],obstacle1[0]);
+  		return true;
+  	}
+  	return false;
+  }
+
+  public boolean antiSoftLockTreasures(){
+  	int[][] treasurePos = copyTab(this.getTreasurePos());
+  	int[] path1Obstacle = {-1,-1};
+  	int[] path2Obstacle = {-1,-1};
+  	for(int i=0;i<treasurePos.length-1;i++){
+  		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("CornerNordEst")){
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"left");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"down");
+  			clearPath(path1Obstacle, path2Obstacle);
+  		}
+  		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("CornerSudEst")){
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"up");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"left");
+  			clearPath(path1Obstacle, path2Obstacle);
+  		}
+  		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("CornerNordOuest")){
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"right");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"down");
+  			clearPath(path1Obstacle, path2Obstacle);
+  		}
+  		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("CornerSudOuest")){
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"up");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"right");
+  			clearPath(path1Obstacle, path2Obstacle);
+  		}
+  		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("VerticalCorridor")){
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"left");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"right");
+  			clearPath(path1Obstacle, path2Obstacle);
+  		}
+  		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("HorizontalCorridor")){
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"up");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"down");
+  			clearPath(path1Obstacle, path2Obstacle);	
   		}
   	}
   	return true;
