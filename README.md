@@ -21,7 +21,7 @@ Chaque case peut également être vide pour permettre au joueur d'évoluer sur l
 Les joueurs ne peuvent se déplacer que verticalement ou horizontalement.
 
 La partie se termine lorsque tous les trésors ont été récupérés ou lorsque tous les joueurs sont morts.
-![alt text](ReadMeAttachments/InGameScreenshot.PNG "Video screenshot")
+![alt text](ReadMeAttachments/InGameScreenshot.PNG "Plateau de jeu et contrôleur")
 
 ## Modes de jeu:
 
@@ -31,7 +31,7 @@ Le serveur propose de créer des parties avec des modes de jeu différents:
 
 ## Interface graphique:
 
-Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle.
+Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle (voir ci-dessous).
 
 ![alt text](ReadMeAttachments/game_management_UI.PNG "Interface de gestion des parties")
 
@@ -60,10 +60,12 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 }
 ```
 
-##Commandes:
+## Commandes:
 
 Les commandes utilisables par le client en mode console sont les suivantes:
 *  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```: crée une partie en fonction des sspécifications passées en argument.
 *  ```GETLIST```: permet de récupérer la liste des parties joignables.
 *  ```JOIN <gameID>```: permet de rejoind la partie spécifiée.
 *  ```REQUESTSTART```: permet de demander le lancement de la partie, aux autres joueurs (seul le créateur de la partie peut éxécuter cette commande).
+*  ```MOVE <UP/DOWN/LEFT/RIGHT>```: déplace le joueur dans la direction demandée (si le joueur a le droit de se déplacer).
+*  ```STOP```: stoppe le serveur.
