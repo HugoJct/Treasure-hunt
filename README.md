@@ -21,8 +21,7 @@ Chaque case peut également être vide pour permettre au joueur d'évoluer sur l
 Les joueurs ne peuvent se déplacer que verticalement ou horizontalement.
 
 La partie se termine lorsque tous les trésors ont été récupérés ou lorsque tous les joueurs sont morts.
-
-    ![alt text](ReadMeAttachments/InGameScreenshot.PNG "Plateau de jeu et contrôleur de jeu")
+![alt text](ReadMeAttachments/InGameScreenshot.PNG "Video screenshot")
 
 ## Modes de jeu:
 
@@ -34,7 +33,7 @@ Le serveur propose de créer des parties avec des modes de jeu différents:
 
 Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle.
 
-    ![alt text](ReadMeAttachments/game_management_UI.PNG "Interface de gestion des parties")
+![alt text](ReadMeAttachments/game_management_UI.PNG "Interface de gestion des parties")
 
 ## Instructions de compilation
 
@@ -61,5 +60,4 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 }
 ```
 
-##Commandes: 
-
+##Commandes:
