@@ -122,7 +122,33 @@ public class Game implements Runnable{
 			b.setBorder(); //Generation of borders
 			b.fillWalls(); // Generation of Walls adapting to the size of the board
 			b.fillElements(h,t); // Generation of Holes and Treasures
-			b.antiSoftLockPlugIn(); 
+			/*b.antiSoftLockPlugIn(); */ //Obsolete
+			b.antiSoftLockTreasures();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		System.out.println(this.b);
+	}
+
+	public Game(int m, int dimX, int dimY, int h, int t, int gameOwnerID, String alternative){ //Alternative to the first constructor with randomized board 
+		this.isRunning = false;
+		this.gamemode = m;
+		this.name = "default";
+		this.capacity = 4;
+		this.b = new Board();
+		this.gameId = id;
+		this.ownerID = gameOwnerID;
+		id++;
+		try{
+			this.name = name;
+			this.capacity = 2;  //minimal capacity for all games
+			b = new Board(dimX,dimY);
+			//Board generation
+			b.setBorder(); //Generation of borders
+			b.fillWalls2(); 
+			b.fillElements(h,t); // Generation of Holes and Treasures
+			//Unfinished need to add a pathfinding algorithm that may correct the occasional blocked areas
 
 		}catch(Exception e){
 			e.printStackTrace();
