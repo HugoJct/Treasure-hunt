@@ -18,9 +18,6 @@ public class GameInfo {
     private static LinkedList<Hole> holes = new LinkedList<Hole>();
     private static LinkedList<Treasure> treasures = new LinkedList<Treasure>();
 
-    private static int nbrOfGames = 0;;
-
-
     public static int getWallsNumber() {
         return walls.size();
     }
@@ -93,7 +90,12 @@ public class GameInfo {
     }
 
 
+
+
+
     //previous implementation
+
+    private static int nbrOfGames = 0;
 
     private static int[][] availableGameInfos = null;
     private static boolean isStarted = false;

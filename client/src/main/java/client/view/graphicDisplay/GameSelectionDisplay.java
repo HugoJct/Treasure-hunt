@@ -3,6 +3,8 @@ package client.view.graphicDisplay;
 import javax.swing.*;
 import java.awt.*;
 
+import client.GameInfo;
+
 
 public class GameSelectionDisplay extends JFrame {
     private JFrame frame = new JFrame();
@@ -11,14 +13,19 @@ public class GameSelectionDisplay extends JFrame {
     private JPanel joinGame = new JPanel();
     private JPanel joinGameInputs = new JPanel();
     private JPanel gamemod = new JPanel();
+    private JPanel gameListPan = new JPanel();
 
     private JLabel nbrOfGames = new JLabel("Number of games found : ");
 
     private JCheckBox gamemodOne = new JCheckBox("Speeding contest");
     private JCheckBox gamemodTwo = new JCheckBox("Round by round");
 
+    private JCheckBox[] gamesToJoin;
+    
     private JButton confirm = new JButton("Send");
     private JButton refresh = new JButton("Refresh");
+    private JButton join = new JButton("join");
+    private JButton requestStart = new JButton("request start");
 
     private JMenuBar head = new JMenuBar();
 
@@ -26,6 +33,9 @@ public class GameSelectionDisplay extends JFrame {
     private JTextField dimensionY = new JTextField("20");
     private JTextField nbrOfHoles = new JTextField("20");
     private JTextField nbrOfTreasures = new JTextField("10");
+
+    private static int alreadyAdded = 0;
+    private static boolean joinAdded = false;
 
     public GameSelectionDisplay() {
 
@@ -65,15 +75,26 @@ public class GameSelectionDisplay extends JFrame {
         createGameInputs.add(confirm);
 
         joinGame.add(joinGameInputs);
-        joinGameInputs.setLayout(new GridLayout(2, 1));
+        joinGameInputs.setLayout(new GridLayout(4, 1));
         joinGameInputs.add(refresh);
         joinGameInputs.add(nbrOfGames);
+        joinGameInputs.add(gameListPan);
+        joinGameInputs.add(requestStart);
         listGames();
     }
 
 
-    private void listGames() {
-
+    public void listGames() {
+        gamesToJoin = new JCheckBox[GameInfo.getNumberOfGames()];
+        for (int i = alreadyAdded ; i<GameInfo.getNumberOfGames() ; i++) {
+            gamesToJoin[i] = new JCheckBox("" + i);
+            gameListPan.add(gamesToJoin[i]);
+            alreadyAdded+=1;
+            if (GameInfo.getNumberOfGames() > 0 && !joinAdded) {
+                joinGame.add(join);
+                joinAdded = true;
+            }
+        }
     }
 
 
@@ -88,8 +109,8 @@ public class GameSelectionDisplay extends JFrame {
         return this.gamemodTwo;
     }
 
-    public JButton getConfirm() {
-        return this.confirm;
+    public JCheckBox[] getGames() {
+        return gamesToJoin;
     }
 
     public JTextField getCoX() {
@@ -106,5 +127,14 @@ public class GameSelectionDisplay extends JFrame {
     }
     public JButton getRefresh() {
         return this.refresh;
+    }
+    public JButton getConfirm() {
+        return this.confirm;
+    }
+    public JButton joinGame() {
+        return join;
+    }
+    public JButton getRequestStart() {
+        return this.requestStart;
     }
 }
