@@ -12,6 +12,6 @@ public class CommandJoinGame extends Command {
 	}
 
 	public void execute(Player p, String[] args) {
-		sendMessage("130 JOIN "+args[1]+" "+p.getName());
+		sendMessage("130 JOIN "+args[1]);
 	}
 } 
