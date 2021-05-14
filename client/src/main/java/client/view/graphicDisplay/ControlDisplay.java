@@ -24,6 +24,11 @@ public class ControlDisplay extends JFrame {
     private JButton emptyFive = new JButton();
 
     public ControlDisplay(Player p) {
+    	up.setBackground(new Color(243, 231, 24));
+    	down.setBackground(new Color(116, 196, 89));
+    	left.setBackground(new Color(27, 150, 228));
+    	right.setBackground(new Color(252, 67, 55));
+    	
         
         frame.setTitle("control");
 
