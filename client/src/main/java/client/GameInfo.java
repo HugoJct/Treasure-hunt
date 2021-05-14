@@ -146,6 +146,10 @@ public class GameInfo {
         return gameMod;
     }
 
+    public static int[][] getGameInfo() {
+        return availableGameInfos;
+    }
+
     // to get the map size
     public static int[] getMap() {
         return map;
