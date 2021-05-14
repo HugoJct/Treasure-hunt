@@ -55,7 +55,7 @@ public class GameManager {
     public void join(GameSelectionDisplay view, CommandJoinGame joinGame, Player p) {
         for (int i = 0 ; i<GameInfo.getNumberOfGames() ; i++) {
             if (view.getGames()[i].isSelected()) {
-                String args[] = {"130", String.valueOf(i)};
+                String args[] = {"130", String.valueOf(GameInfo.getGameInfo()[i][0])};
                 joinGame.execute(p, args);
                 break;
             }
