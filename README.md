@@ -59,6 +59,20 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
     * ``Voir issues :`` #69
   * Interface pour la création des parties, leur listage, la possibilité de les rejoindres ainsi que de demander leur lancement. 
     * ``Voir issues :`` #70 
+* Plusieurs fonctions serveur permettant de traiter certaines commandes.
+
+**Nadim Hamimid :**
+  * Carte de jeu pseudo aléatoire et adaptative en fonction des paramètres donnés. Le serveur reçoit des dimentions, un nombre de trous et de trésors et génére ensuite un placement aléatoire de ces éléments ainsi que des joueurs en suivant un patern de murs. Il fait également attention à ce que les joueurs ainsi que les trésors ne soient pas bloqués entre des trous. 
+    * ``Voir issues :`` #54
+  * Traitement des données de la commande **110**
+    * ``Voir issues :`` #50
+  * Affichage du classement des joueurs par nombre de points à la fin d'une partie.
+
+**Rémi Lévy :**
+  * Implémentation de l'affichage graphique
+    * Initialement avec la librairie JavaFX
+      * ``Voir issues :`` #41
+    * Puis avec la librairie Swing qui affiche de manière fonctionnelle le plateau de jeu et l'actualise.
 
 ------------------
 
