@@ -43,7 +43,7 @@ public class VueSwing extends JFrame implements MouseInputListener{
 		int columns = GameInfo.getMap()[0];
 
 		this.setSize(columns*30+20, lines*28+50);
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setLocationRelativeTo(null);
 
 		scene = new SceneSwing();
@@ -111,4 +111,6 @@ public class VueSwing extends JFrame implements MouseInputListener{
 	    timer.setDelay(17);
 	    timer.start();
 	  }
+	
+	
 }
