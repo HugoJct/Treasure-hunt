@@ -31,7 +31,7 @@ public class CommandPlayerMovement extends Command {
          */
 
 		int[] pos = p.getPos();
-        if (p.getPlayerId() != g.getPlayerRound() && g.getGameMod() != 0) {
+        if (p.getPlayerId() != g.getPlayerRound() && g.getGameMod() == 2) {
             sendMessage("902 NOT YOUR TURN");
         } else {
             switch(args[1]) {

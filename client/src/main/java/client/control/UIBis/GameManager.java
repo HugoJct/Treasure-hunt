@@ -64,9 +64,9 @@ public class GameManager {
 
     public String evalGameMod(GameSelectionDisplay view) {
         if (view.getGamemodOne().isSelected()) {
-            return "0";
-        } else {
             return "1";
+        } else {
+            return "2";
         }    
     }
 
