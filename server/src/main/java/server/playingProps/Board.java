@@ -449,13 +449,13 @@ public class Board {
   			clearPath(path1Obstacle, path2Obstacle);
   		}
   		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("VerticalCorridor")){
-  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"left");
-  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"right");
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"up");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"down");
   			clearPath(path1Obstacle, path2Obstacle);
   		}
   		if(this.situation(treasurePos[i][1],treasurePos[i][0]).equals("HorizontalCorridor")){
-  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"up");
-  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"down");
+  			path1Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"left");
+  			path2Obstacle = pathIsClear(treasurePos[i][1],treasurePos[i][0],"right");
   			clearPath(path1Obstacle, path2Obstacle);	
   		}
   	}
