@@ -84,7 +84,7 @@ public class Communication implements Runnable {
                     break;
                 }
                 System.out.println(this.username+" wrote: "+ msg);
-                useMessage(msg);
+                useMessage(msg + " " + _player);
                 
             } catch(IOException e) {
                 System.out.println(this.username + (": socket closed by the server."));
