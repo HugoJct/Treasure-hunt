@@ -129,7 +129,7 @@ Le projet comporte deux principaux packages : **Server** & **Client** qui compor
 
 **Le Server**
 
-![alt text](ReadMeAttachments/Server_packages_diagrams/Package_server.PNG "packages serveur")
+![alt text](ReadMeAttachments/Server_packages_diagrams/Package_server.png "packages serveur")
   * **playingProps :** les classes traitant le déroulement d'une partie et l'environnement de jeu (gestion des joueurs, du plateau de jeu...).
   * **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçus par le serveur
   * **maps :** un fichier .json codant les paramètres d'une map par défaut (actuellement utilisé uniquement à l'initialisation d'une partie au cas où la génération aléatoire se déroulerait mal).
@@ -142,7 +142,7 @@ Le projet comporte deux principaux packages : **Server** & **Client** qui compor
 
 **Le Client**
 
-![alt text](ReadMeAttachments/Client_packages_diagrams/Package_client.PNG "packages serveur")
+![alt text](ReadMeAttachments/Client_packages_diagrams/Package_client.png "packages serveur")
 * **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçus par le client
 * **connex :** contient la class de communication permettant d'envoyer et de recevoir les messages
 * **control :** contient les systèmes permettant d'interragir avec le programme (via shell ou interface graphique)
