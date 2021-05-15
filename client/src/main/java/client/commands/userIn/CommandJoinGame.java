@@ -12,6 +12,9 @@ public class CommandJoinGame extends Command {
 	}
 
 	public void execute(Player p, String[] args) {
-		sendMessage("130 JOIN "+args[1]);
+		if(args.length != 2) {
+			System.out.println("Command syntax error");
+		} else 
+			sendMessage("130 JOIN "+args[1]);
 	}
 } 
