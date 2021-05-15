@@ -15,6 +15,10 @@ import org.json.simple.parser.JSONParser;
 // import our Classes
 import client.connex.Communication;
 import client.control.shell.Console;
+import client.view.graphicDisplay.GameSelectionDisplay;
+import client.control.UIBis.GameManager;
+import server.elements.*;
+
 
 
 public class Player {
@@ -72,31 +76,34 @@ public class Player {
             for(int j=0;j<board[i].length;j++)
                 board[i][j] = '.';
 
-        for(int i=0;i<GameInfo.getHolesPos().length;i++) {
-            int x = GameInfo.getHolesPos()[i];
-            int y = GameInfo.getHolesPos()[i+1];
-            board[x][y] = 'H';
-            i++;
-        }
-        for(int i=0;i<GameInfo.getWallsPos().length;i++) {
-            int x = GameInfo.getWallsPos()[i];
-            int y = GameInfo.getWallsPos()[i+1];
+        for(Wall w : GameInfo.getWalls()) {
+            int x = w.getX();
+            int y = w.getY();
             board[x][y] = 'W';
-            i++;
         }
-
-        for(int i=0;i<GameInfo.getTreasuresPos().length;i++) {
-            int x = GameInfo.getTreasuresPos()[i];
-            int y = GameInfo.getTreasuresPos()[i+1];
+        for(Treasure t : GameInfo.getTreasures()) {
+            int x = t.getX();
+            int y = t.getY();
             board[x][y] = 'T';
-            i+=2;
+        }
+        for(Hole h : GameInfo.getHoles()) {
+            int x = h.getX();
+            int y = h.getY();
+            board[x][y] = 'H';
         }
 
+        for(String s : GameInfo.getPlayerCoordinates().keySet()) {
+            int x = GameInfo.getPlayerCoordinates().get(s)[0];
+            int y = GameInfo.getPlayerCoordinates().get(s)[1];
+            board[y][x] = s.toLowerCase().charAt(0);
+        }
+
+        /*
         for(int i=0;i<GameInfo.getPlayersNames().length;i++) {
             int x = GameInfo.getPlayerPos(GameInfo.getPlayersNames()[i])[1];
             int y = GameInfo.getPlayerPos(GameInfo.getPlayersNames()[i])[0];
             board[x][y] = GameInfo.getPlayersNames()[i].toLowerCase().charAt(0);
-        }
+        }*/
 
         for(int i=0;i<board.length;i++){
             System.out.print("W ");
@@ -137,6 +144,8 @@ public class Player {
             communication.start();
             console.start();
 
+            new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
+            
         } catch(IOException e) {
             e.printStackTrace();
         }
