@@ -19,6 +19,7 @@ import client.commands.userIn.CommandRequestStartSayYes;
 import client.commands.userIn.CommandRequestStartSayNo;
 
 public class GameManager {
+	
     
     public GameManager(GameSelectionDisplay view, PrintWriter out, Player p, Console cons) {
         CommandCreateGame create = new CommandCreateGame(out);
@@ -28,7 +29,7 @@ public class GameManager {
         CommandRequestStartSayYes requestStartYes = new CommandRequestStartSayYes(out);
         CommandRequestStartSayNo requestStartNo = new CommandRequestStartSayNo(out);
         view.getConfirm().addActionListener((event) -> {build(create, view, p); refresh(getList,p,view,cons);});
-        view.getRefresh().addActionListener((event) -> {refresh(getList, p, view, cons); refresh(getList,p,view,cons);});
+        view.getRefresh().addActionListener((event) -> {refresh(getList, p, view, cons);});
         view.joinGame().addActionListener((event) -> {join(view, joinGame, p); refresh(getList,p,view,cons);});
         view.getRequestStart().addActionListener((event) ->{ startGame(view, requestStart, p); refresh(getList,p,view,cons);});
         view.getReadyConfirm().addActionListener((event) ->{ sendStartResponse(view, requestStartYes, requestStartNo, p); refresh(getList,p,view,cons);});
@@ -73,25 +74,18 @@ public class GameManager {
     }
 
     
-    Timer timer;
+    
     public void refresh(CommandGetList getList, Player p, GameSelectionDisplay view, Console cons) {
-    	timer = new Timer(0, new ActionListener() {
-  	      @Override
-  	      public void actionPerformed(ActionEvent e) {
-	    	getList.execute(p, null) ; view.setNbrOfGames(GameInfo.getNumberOfGames());
-	        view.listGames();
-	        if (cons.getStartRequested()) {
-	            view.readyToPlay();
-	        }
-	        if (GameInfo.getNumberOfGamesCreated() > 0) {
-	            view.setJoinable();
-	        }
-  	      }
-  	    });
-  	    timer.setRepeats(true);
-  	    timer.setDelay(17);
-  	    timer.start();
-        
+    	getList.execute(p, null) ; view.setNbrOfGames(GameInfo.getNumberOfGames());
+        view.listGames();
+        if (cons.getStartRequested()) {
+            view.readyToPlay();
+        }
+        if (GameInfo.getNumberOfGamesCreated() > 0) {
+            view.setJoinable();
+        }
     }
+    
+
 
 }
