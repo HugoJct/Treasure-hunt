@@ -33,6 +33,10 @@ Le serveur propose de créer des parties avec des modes de jeu différents:
 
 Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle (voir ci-dessous).
 
+**Notez que cette interface ne s'actualise malheureusement pas automatiquement** pensez donc bien à utiliser fréquemment le bouton **refresh** afin de mettre à jour les informations comme le nombre de parties, les parties disponibles à rejoindre ainsi que la proposition de lancement de la partie envoyée par le créateur. En effet, après que le créateur ait fait une **request start**, la demande est envoyée à tous les clients connectés à cette partie. Elle s'affiche dans la console et on peut y répondre directement ici (y/n) mais aussi via l'interface (d'où l'intérêt de rafraichir).  
+
+**N.B :** comme dit et expliqué plus bas, il est possible d'outrepasser cette interface via les commandes de la console !
+
 ![alt text](ReadMeAttachments/game_management_UI.PNG "Interface de gestion des parties")
 
 ## Répartition des taches :
@@ -59,7 +63,8 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
     * ``Voir issues :`` #69
   * Interface pour la création des parties, leur listage, la possibilité de les rejoindres ainsi que de demander leur lancement. 
     * ``Voir issues :`` #70 
-* Plusieurs fonctions serveur permettant de traiter certaines commandes.
+* **UML** création des fichiers .uml et leur affichage dans des fichiers .png afin de représenter le code du projet et son architecture sous forme de diagrammes.
+* Plusieurs autres fonctions subsidiaires du serveur permettant de traiter certaines commandes.
 
 **Hugo Jacotot :**
 *  Mise en place de Gradle et de son architecture au début du projet
@@ -144,6 +149,8 @@ Les commandes utilisables par le client en mode console sont les suivantes:
 *  ```MOVE <UP/DOWN/LEFT/RIGHT>```: déplace le joueur dans la direction demandée (si le joueur a le droit de se déplacer).
 *  ```STOP```: stoppe le serveur.
 *  ```EXIT```: stoppe le client.
+
+Toutes ces commandes permettent d'interagir sur le programme de son lancement, avec la création/sélection d'une partie, jusqu'à sa fin, avec le game over ou la victoire d'un joueur. Ces commandes permettent d'outrepasser **l'interface graphique** décrit plus haut en cas de besoin.   
 
 ---
 
