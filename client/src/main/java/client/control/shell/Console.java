@@ -48,7 +48,6 @@ public class Console implements Runnable {
 			try {
 				Thread.sleep(1);
 				String input = sc.nextLine();
-				useMessageBetter(input);
 				useMessage(input);
 			}
 			catch(InterruptedException e) {
@@ -57,7 +56,7 @@ public class Console implements Runnable {
 		}	
 	}
 					
-	private void useMessageBetter(String command) {
+	private void useMessage(String command) {
 		String[] args = breakCommand(command);
 		for(String s : commandList.keySet()) {
 			if(s.equals(args[0])) {
@@ -69,56 +68,6 @@ public class Console implements Runnable {
 			}
 		}
         System.out.println("Unknown Command");
-	}
-
-	public void useMessage(String command) {
-		String[] brokenCommand = breakCommand(command);
-		switch(brokenCommand[0]) {
-
-				/*
-				 *	All the foollowing commands serve a debug purpose only
-				 */
-
-			/*case "GETHOLES":
-				getHoles();
-				break;
-			case "GETWALLS":
-				getWalls();
-				break;
-			case "GETTREASURES":
-				getTreasures();
-				break;
-			case "PRINTTREASURES":
-				for(Treasure t : GameInfo.getTreasures()) {
-					System.out.println(t);
-				}
-				break;
-			case "PRINTWALLS":
-				for(Wall w : GameInfo.getWalls()) {
-					System.out.println(w);
-				}
-				break;
-			case "PRINTHOLES":
-				for(Hole h : GameInfo.getHoles()) {
-					System.out.println(h);
-				}
-				break;
-			case "PRINTBOARD":
-				if(!GameInfo.isStarted()) {
-		            System.out.println("La partie n'a pas encore commencé");
-		            break;
-		        }
-				Player.printGameBoard();
-				break;
-			case "PRINTDIMS":
-				System.out.println((GameInfo.getMap()[0]-2)+" "+(GameInfo.getMap()[1]-2));
-				break;
-			case "PRINTGAMES":
-				System.out.println(Arrays.deepToString(GameInfo.getJoinableGames()));
-				break;*/
-			case "EXIT":
-				System.exit(0);
-		}
 	}
 
 	private String[] breakCommand(String command) {			//This method breaks the command which arguments are separated by spaces
