@@ -61,6 +61,30 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
     * ``Voir issues :`` #70 
 * Plusieurs fonctions serveur permettant de traiter certaines commandes.
 
+**Hugo Jacotot :**
+*  Mise en place de Gradle et de son architecture au début du projet
+    * ``Voir issues :`` #12
+*  Documentation sur l'usage des sockets en java ainsi que de leur fonctionnement général
+    * Proposition d'un petit programme simple utilisant une architecture client/serveur basée ssur des sockets à des fins de documentation
+*  Documentation sur le concept des Threads en java ainsi que sur leur utilisation
+*  Gestion de l'ensemble des lancements/arrêts de threads sur le serveur
+    * ``Premier exemple dans :`` #15
+*  Mise en place globale du système de communication client/serveur avec l'architecture utilisant les classes Console/Communication (La console du serveur a ensuite été supprimée car inutile)
+*  Ajout du système de parties sur le serveur (création)
+    * ``Voir issues :`` #25
+*  Ajout du système de génération de plateau de jeu (après création de la partie) depuis un fichier de configuration json 
+    * ``Voir issues :`` #36
+*  Ajout du système de déplacement permettant aux joueurs d'évoluer sur le plateau de jeu
+    * ``Voir issues :`` #40
+*  Optimisation du système de communication susmentionné car celui-ci était peu fiable et certaines requêtes se perdaient lors de l'échange
+*  Ajout de la commande "150 REQUESTSTART"
+*  Optimisation générale du projet:
+    * Utilisation d'objets présents dans java pour remplacer un système de stockage auparavant maladroit et peu fiable:
+      * Optimisation de la classe GameInfo qui comprenait une implémentation manuelle d'une structure pouvant être remplacée par une HashMap
+      * Optimisation du système de reconnaissance des commandes tant du côté client que du côté serveur: migration d'une instruction switch a l'utilisation d'une HashMap
+      * Changement du stockage des coordonnées des joueurs par une LinkedList contenant des Objets.
+
+
 **Nadim Hamimid :**
   * Carte de jeu pseudo aléatoire et adaptative en fonction des paramètres donnés. Le serveur reçoit des dimensions, un nombre de trous et de trésors et génère ensuite un placement aléatoire de ces éléments ainsi que des joueurs en suivant un schéma de murs. Il fait également attention à ce que les joueurs ainsi que les trésors ne soient pas bloqués entre des trous. 
     * ``Voir issues :`` #54
