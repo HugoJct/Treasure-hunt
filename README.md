@@ -62,7 +62,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 * Plusieurs fonctions serveur permettant de traiter certaines commandes.
 
 **Nadim Hamimid :**
-  * Carte de jeu pseudo aléatoire et adaptative en fonction des paramètres donnés. Le serveur reçoit des dimentions, un nombre de trous et de trésors et génére ensuite un placement aléatoire de ces éléments ainsi que des joueurs en suivant un patern de murs. Il fait également attention à ce que les joueurs ainsi que les trésors ne soient pas bloqués entre des trous. 
+  * Carte de jeu pseudo aléatoire et adaptative en fonction des paramètres donnés. Le serveur reçoit des dimensions, un nombre de trous et de trésors et génère ensuite un placement aléatoire de ces éléments ainsi que des joueurs en suivant un schéma de murs. Il fait également attention à ce que les joueurs ainsi que les trésors ne soient pas bloqués entre des trous. 
     * ``Voir issues :`` #54
   * Traitement des données de la commande **110**
     * ``Voir issues :`` #50
@@ -84,7 +84,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
  **Compilation du serveur**:
 *  `make server` : lance le serveur sur le port par défaut (12345) en executant la suite d'instruction (via gradle) ci-dessous :
    *  `./gradlew :server:build` compile la partie serveur
-   *  `./gradlew :server:run --console=plain` execute la partie serveur 
+   *  `./gradlew :server:run --console=plain` exécute la partie serveur 
 *  Syntaxe du fichier de configuration du serveur: 
 
 ```
@@ -94,7 +94,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 ```
 
 **Compilation du client**:
-*  `make client` : lance le client avec le fichier de configuration par défaut en executant la suite d'instruction (via gradle) ci-dessous :
+*  `make client` : lance le client avec le fichier de configuration par défaut en exécutant la suite d'instruction (via gradle) ci-dessous :
     *  `./gradlew :client:run --console=plain`
 * `make clientCustom name` : lance le client avec le fichier de configuration mais en utilisant le name passé en argument pour nouveau name à la compilation (si pas d'arguments, le fichier de compilation par défaut <=> `make client`), voir instruction gradle engendrée :
     * `./gradlew :client:run --console=plain --args="$(MAKECMDGOALS)"`
@@ -116,7 +116,7 @@ Les commandes utilisables par le client en mode console sont les suivantes:
 *  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```: crée une partie en fonction des spécifications passées en argument.
 *  ```GETLIST```: permet de récupérer la liste des parties joignables.
 *  ```JOIN <gameID>```: permet de rejoind la partie spécifiée.
-*  ```REQUESTSTART```: permet de demander le lancement de la partie, aux autres joueurs (seul le créateur de la partie peut éxécuter cette commande).
+*  ```REQUESTSTART```: permet de demander le lancement de la partie, aux autres joueurs (seul le créateur de la partie peut exécuter cette commande).
 *  ```MOVE <UP/DOWN/LEFT/RIGHT>```: déplace le joueur dans la direction demandée (si le joueur a le droit de se déplacer).
 *  ```STOP```: stoppe le serveur.
 *  ```EXIT```: stoppe le client.
@@ -125,7 +125,7 @@ Les commandes utilisables par le client en mode console sont les suivantes:
 
 ## Héritage et architecture du projet (diagramme UML)
 
-Le projet comporte deux principaux packages : **Server** & **Client** qui comportent tout deux leur propre fonction main.
+Le projet comporte deux principaux packages : **Server** & **Client** qui comportent tous deux leur propre fonction main.
 
 **Le Server**
 
@@ -143,7 +143,7 @@ Le projet comporte deux principaux packages : **Server** & **Client** qui compor
 **Le Client**
 
 ![alt text](ReadMeAttachments/Client_packages_diagrams/Package_client.png "packages serveur")
-* **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçus par le client
+* **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçues par le client
 * **connex :** contient la class de communication permettant d'envoyer et de recevoir les messages
 * **control :** contient les systèmes permettant d'interragir avec le programme (via shell ou interface graphique)
 * **view :** contient les systèmes permettant d'afficher la partie (version shell) ou ses interfaces graphiques de control
