@@ -69,6 +69,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
   * Affichage du classement des joueurs par nombre de points à la fin d'une partie.
 
 **Rémi Lévy :**
+  * Récupération des évènements de l'utilisateur pour une interface Swing. Ce sont finalement les boutons de l'interface qui ont été gardés en guise de commande.
   * Implémentation de l'affichage graphique
     * Initialement avec la librairie JavaFX
       * ``Voir issues :`` #41
@@ -112,7 +113,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 ## Commandes :
 
 Les commandes utilisables par le client en mode console sont les suivantes:
-*  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```: crée une partie en fonction des sspécifications passées en argument.
+*  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```: crée une partie en fonction des spécifications passées en argument.
 *  ```GETLIST```: permet de récupérer la liste des parties joignables.
 *  ```JOIN <gameID>```: permet de rejoind la partie spécifiée.
 *  ```REQUESTSTART```: permet de demander le lancement de la partie, aux autres joueurs (seul le créateur de la partie peut éxécuter cette commande).
@@ -130,8 +131,8 @@ Le projet comporte deux principaux packages : **Server** & **Client** qui compor
 
 ![alt text](ReadMeAttachments/Server_packages_diagrams/Package_server.PNG "packages serveur")
   * **playingProps :** les classes traitant le déroulement d'une partie et l'environnement de jeu (gestion des joueurs, du plateau de jeu...).
-  * **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et ressus par le serveur
-  * **maps :** un fichier .json codant les paramètres d'une map par défaut (actuellement utilisé qu'à l'initialisation d'une partie au cas où la génération aléatoire se déroulerait mal).
+  * **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçus par le serveur
+  * **maps :** un fichier .json codant les paramètres d'une map par défaut (actuellement utilisé uniquement à l'initialisation d'une partie au cas où la génération aléatoire se déroulerait mal).
   * **io :**  toutes les classes permettant la communication avec le client (établissement de la connexion, réception et émission des messages).
   * **class ServerMain :** entrée du programme
 
@@ -142,7 +143,7 @@ Le projet comporte deux principaux packages : **Server** & **Client** qui compor
 **Le Client**
 
 ![alt text](ReadMeAttachments/Client_packages_diagrams/Package_client.PNG "packages serveur")
-* **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et ressus par le client
+* **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçus par le client
 * **connex :** contient la class de communication permettant d'envoyer et de recevoir les messages
 * **control :** contient les systèmes permettant d'interragir avec le programme (via shell ou interface graphique)
 * **view :** contient les systèmes permettant d'afficher la partie (version shell) ou ses interfaces graphiques de control
@@ -198,13 +199,13 @@ Implementation of the different **client / server** commands (given by **Vincent
 * **Initial datas : a player can ask game datas**
   * **C** -> **S** : **400** : *`GETHOLES`* 
   * **S** -> **C** : **401** : *`NUMBER k`* 
-  * **S** -> **C** : **401** : *`MESS k' POS x1 y1 ... x5 y5`* :white_check_mark: 
+  * **S** -> **C** : **401** : *`MESS k' POS x1 y1 ... x5 y5`*
   * **C** -> **S** : **410** : *`GETTREASURES`* 
   * **S** -> **C** : **411** : *`NUMBER k`*  
-  * **S** -> **C** : **411** : *`MESS k' POS x1 y1 v1 ... x5 y5 v5`* :white_check_mark: 
+  * **S** -> **C** : **411** : *`MESS k' POS x1 y1 v1 ... x5 y5 v5`*
   * **C** -> **S** : **420** : *`GETWALLS`* 
   * **S** -> **C** : **421** : *`NUMBER k`*  
-  * **S** -> **C** : **421** : *`MESS k' POS x1 y1 ... x5 y5`* :white_check_mark: 
+  * **S** -> **C** : **421** : *`MESS k' POS x1 y1 ... x5 y5`*
 
 * **Evolve on map : a player can ask to move on the map**
   * **C** -> **S** : **200** : *`GORIGHT`* 
