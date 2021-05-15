@@ -38,6 +38,5 @@ public class CommandMoveOk extends Command {
 			System.out.println("Error : no move engaged");
 		}
 		GameInfo.setPlayerCoordinates(p.getName(),pos[0],pos[1]);
-		//GameInfo.setPlayerPos(pos[2],pos[0],pos[1]);
 	}
 }

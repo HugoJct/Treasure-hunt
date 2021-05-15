@@ -33,6 +33,10 @@ Le serveur propose de créer des parties avec des modes de jeu différents:
 
 Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle (voir ci-dessous).
 
+**Notez que cette interface ne s'actualise malheureusement pas automatiquement** pensez donc bien à utiliser fréquemment le bouton **refresh** afin de mettre à jour les informations comme le nombre de parties, les parties disponibles à rejoindre ainsi que la proposition de lancement de la partie envoyée par le créateur. En effet, après que le créateur ait fait une **request start**, la demande est envoyée à tous les clients connectés à cette partie. Elle s'affiche dans la console et on peut y répondre directement ici (y/n) mais aussi via l'interface (d'où l'intérêt de rafraichir).  
+
+**N.B :** comme dit et expliqué plus bas, il est possible d'outrepasser cette interface via les commandes de la console !
+
 ![alt text](ReadMeAttachments/game_management_UI.PNG "Interface de gestion des parties")
 
 ## Répartition des taches :
@@ -59,16 +63,42 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
     * ``Voir issues :`` #69
   * Interface pour la création des parties, leur listage, la possibilité de les rejoindres ainsi que de demander leur lancement. 
     * ``Voir issues :`` #70 
-* Plusieurs fonctions serveur permettant de traiter certaines commandes.
+* **UML** création des fichiers .uml et leur affichage dans des fichiers .png afin de représenter le code du projet et son architecture sous forme de diagrammes.
+* Plusieurs autres fonctions subsidiaires du serveur permettant de traiter certaines commandes.
+
+**Hugo Jacotot :**
+*  Mise en place de Gradle et de son architecture au début du projet
+    * ``Voir issues :`` #12
+*  Documentation sur l'usage des sockets en java ainsi que de leur fonctionnement général
+    * Proposition d'un petit programme simple utilisant une architecture client/serveur basée ssur des sockets à des fins de documentation
+*  Documentation sur le concept des Threads en java ainsi que sur leur utilisation
+*  Gestion de l'ensemble des lancements/arrêts de threads sur le serveur
+    * ``Premier exemple dans :`` #15
+*  Mise en place globale du système de communication client/serveur avec l'architecture utilisant les classes Console/Communication (La console du serveur a ensuite été supprimée car inutile). Fait avec ``Matthieu Le Franc``.
+*  Ajout du système de parties sur le serveur (création). Avec ``Matthieu``
+    * ``Voir issues :`` #25
+*  Ajout du système de génération de plateau de jeu (après création de la partie) depuis un fichier de configuration json 
+    * ``Voir issues :`` #36
+*  Ajout du système de déplacement permettant aux joueurs d'évoluer sur le plateau de jeu
+    * ``Voir issues :`` #40
+*  Optimisation du système de communication susmentionné car celui-ci était peu fiable et certaines requêtes se perdaient lors de l'échange
+*  Ajout de la commande "150 REQUESTSTART"
+*  Optimisation générale du projet:
+    * Utilisation d'objets présents dans java pour remplacer un système de stockage auparavant maladroit et peu fiable:
+      * Optimisation de la classe GameInfo qui comprenait une implémentation manuelle d'une structure pouvant être remplacée par une HashMap
+      * Optimisation du système de reconnaissance des commandes tant du côté client que du côté serveur: migration d'une instruction switch a l'utilisation d'une HashMap
+      * Changement du stockage des coordonnées des joueurs par une LinkedList contenant des Objets.
+
 
 **Nadim Hamimid :**
-  * Carte de jeu pseudo aléatoire et adaptative en fonction des paramètres donnés. Le serveur reçoit des dimentions, un nombre de trous et de trésors et génére ensuite un placement aléatoire de ces éléments ainsi que des joueurs en suivant un patern de murs. Il fait également attention à ce que les joueurs ainsi que les trésors ne soient pas bloqués entre des trous. 
+  * Carte de jeu pseudo aléatoire et adaptative en fonction des paramètres donnés. Le serveur reçoit des dimensions, un nombre de trous et de trésors et génère ensuite un placement aléatoire de ces éléments ainsi que des joueurs en suivant un schéma de murs. Il fait également attention à ce que les joueurs ainsi que les trésors ne soient pas bloqués entre des trous. 
     * ``Voir issues :`` #54
   * Traitement des données de la commande **110**
     * ``Voir issues :`` #50
   * Affichage du classement des joueurs par nombre de points à la fin d'une partie.
 
 **Rémi Lévy :**
+  * Récupération des évènements de l'utilisateur pour une interface Swing. Ce sont finalement les boutons de l'interface qui ont été gardés en guise de commande.
   * Implémentation de l'affichage graphique
     * Initialement avec la librairie JavaFX
       * ``Voir issues :`` #41
@@ -83,7 +113,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
  **Compilation du serveur**:
 *  `make server` : lance le serveur sur le port par défaut (12345) en executant la suite d'instruction (via gradle) ci-dessous :
    *  `./gradlew :server:build` compile la partie serveur
-   *  `./gradlew :server:run --console=plain` execute la partie serveur 
+   *  `./gradlew :server:run --console=plain` exécute la partie serveur 
 *  Syntaxe du fichier de configuration du serveur: 
 
 ```
@@ -93,7 +123,7 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 ```
 
 **Compilation du client**:
-*  `make client` : lance le client avec le fichier de configuration par défaut en executant la suite d'instruction (via gradle) ci-dessous :
+*  `make client` : lance le client avec le fichier de configuration par défaut en exécutant la suite d'instruction (via gradle) ci-dessous :
     *  `./gradlew :client:run --console=plain`
 * `make clientCustom name` : lance le client avec le fichier de configuration mais en utilisant le name passé en argument pour nouveau name à la compilation (si pas d'arguments, le fichier de compilation par défaut <=> `make client`), voir instruction gradle engendrée :
     * `./gradlew :client:run --console=plain --args="$(MAKECMDGOALS)"`
@@ -112,26 +142,28 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 ## Commandes :
 
 Les commandes utilisables par le client en mode console sont les suivantes:
-*  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```: crée une partie en fonction des sspécifications passées en argument.
+*  ```CREATEGAME <gamemode> <sizeX> <sizeY> <holeCount> <treasureCount>```: crée une partie en fonction des spécifications passées en argument.
 *  ```GETLIST```: permet de récupérer la liste des parties joignables.
 *  ```JOIN <gameID>```: permet de rejoind la partie spécifiée.
-*  ```REQUESTSTART```: permet de demander le lancement de la partie, aux autres joueurs (seul le créateur de la partie peut éxécuter cette commande).
+*  ```REQUESTSTART```: permet de demander le lancement de la partie, aux autres joueurs (seul le créateur de la partie peut exécuter cette commande).
 *  ```MOVE <UP/DOWN/LEFT/RIGHT>```: déplace le joueur dans la direction demandée (si le joueur a le droit de se déplacer).
 *  ```STOP```: stoppe le serveur.
 *  ```EXIT```: stoppe le client.
+
+Toutes ces commandes permettent d'interagir sur le programme de son lancement, avec la création/sélection d'une partie, jusqu'à sa fin, avec le game over ou la victoire d'un joueur. Ces commandes permettent d'outrepasser **l'interface graphique** décrit plus haut en cas de besoin.   
 
 ---
 
 ## Héritage et architecture du projet (diagramme UML)
 
-Le projet comporte deux principaux packages : **Server** & **Client** qui comportent tout deux leur propre fonction main.
+Le projet comporte deux principaux packages : **Server** & **Client** qui comportent tous deux leur propre fonction main.
 
 **Le Server**
 
-![alt text](ReadMeAttachments/Server_packages_diagrams/Package_server.PNG "packages serveur")
+![alt text](ReadMeAttachments/Server_packages_diagrams/Package_server.png "packages serveur")
   * **playingProps :** les classes traitant le déroulement d'une partie et l'environnement de jeu (gestion des joueurs, du plateau de jeu...).
-  * **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et ressus par le serveur
-  * **maps :** un fichier .json codant les paramètres d'une map par défaut (actuellement utilisé qu'à l'initialisation d'une partie au cas où la génération aléatoire se déroulerait mal).
+  * **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçus par le serveur
+  * **maps :** un fichier .json codant les paramètres d'une map par défaut (actuellement utilisé uniquement à l'initialisation d'une partie au cas où la génération aléatoire se déroulerait mal).
   * **io :**  toutes les classes permettant la communication avec le client (établissement de la connexion, réception et émission des messages).
   * **class ServerMain :** entrée du programme
 
@@ -141,8 +173,8 @@ Le projet comporte deux principaux packages : **Server** & **Client** qui compor
 
 **Le Client**
 
-![alt text](ReadMeAttachments/Client_packages_diagrams/Package_client.PNG "packages serveur")
-* **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et ressus par le client
+![alt text](ReadMeAttachments/Client_packages_diagrams/Package_client.png "packages serveur")
+* **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et reçues par le client
 * **connex :** contient la class de communication permettant d'envoyer et de recevoir les messages
 * **control :** contient les systèmes permettant d'interragir avec le programme (via shell ou interface graphique)
 * **view :** contient les systèmes permettant d'afficher la partie (version shell) ou ses interfaces graphiques de control
@@ -198,13 +230,13 @@ Implementation of the different **client / server** commands (given by **Vincent
 * **Initial datas : a player can ask game datas**
   * **C** -> **S** : **400** : *`GETHOLES`* 
   * **S** -> **C** : **401** : *`NUMBER k`* 
-  * **S** -> **C** : **401** : *`MESS k' POS x1 y1 ... x5 y5`* :white_check_mark: 
+  * **S** -> **C** : **401** : *`MESS k' POS x1 y1 ... x5 y5`*
   * **C** -> **S** : **410** : *`GETTREASURES`* 
   * **S** -> **C** : **411** : *`NUMBER k`*  
-  * **S** -> **C** : **411** : *`MESS k' POS x1 y1 v1 ... x5 y5 v5`* :white_check_mark: 
+  * **S** -> **C** : **411** : *`MESS k' POS x1 y1 v1 ... x5 y5 v5`*
   * **C** -> **S** : **420** : *`GETWALLS`* 
   * **S** -> **C** : **421** : *`NUMBER k`*  
-  * **S** -> **C** : **421** : *`MESS k' POS x1 y1 ... x5 y5`* :white_check_mark: 
+  * **S** -> **C** : **421** : *`MESS k' POS x1 y1 ... x5 y5`*
 
 * **Evolve on map : a player can ask to move on the map**
   * **C** -> **S** : **200** : *`GORIGHT`* 
