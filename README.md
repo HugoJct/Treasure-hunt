@@ -33,7 +33,7 @@ Le serveur propose de créer des parties avec des modes de jeu différents:
 
 Le projet possède une interface graphique permettant de visualiser et de se repérer sur la carte le plus agréablement possible (voir plus haut), il possède également une interface permettant de contrôler les déplacements du personnage (voir plus haut) et une interface permettant de lister les parties existantes sur le serveur, les rejoindre ou bien en créer une toute nouvelle (voir ci-dessous).
 
-**Notez que cette interface ne s'actualise malheuresement pas automatiquement** pensez donc bien à utiliser fréquement le bouton **refresh** afin de mettre à jour les informations comme le nombre de parties, les parties disponible à rejoindre ainsi que la proposition de lancement de la partie envoyer par le créateur. En effet, après que le créateur ait fait une **request start**, la demande est envoyée à tous les clients connectée à cette partie. Elle s'affiche dans la console et on peut y répondre directement ici (y/n) mais aussi via l'interface (d'où l'intérêt de rafraichir).  
+**Notez que cette interface ne s'actualise malheuresement pas automatiquement** pensez donc bien à utiliser fréquement le bouton **refresh** afin de mettre à jour les informations comme le nombre de parties, les parties disponible à rejoindre ainsi que la proposition de lancement de la partie envoyée par le créateur. En effet, après que le créateur ait fait une **request start**, la demande est envoyée à tous les clients connectés à cette partie. Elle s'affiche dans la console et on peut y répondre directement ici (y/n) mais aussi via l'interface (d'où l'intérêt de rafraichir).  
 
 **N.B :** comme dit et expliqué plus bas, il est possible d'outre passer cette interface via les commandes de la console !
 
