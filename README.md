@@ -69,8 +69,8 @@ Le projet possède une interface graphique permettant de visualiser et de se rep
 *  Documentation sur le concept des Threads en java ainsi que sur leur utilisation
 *  Gestion de l'ensemble des lancements/arrêts de threads sur le serveur
     * ``Premier exemple dans :`` #15
-*  Mise en place globale du système de communication client/serveur avec l'architecture utilisant les classes Console/Communication (La console du serveur a ensuite été supprimée car inutile)
-*  Ajout du système de parties sur le serveur (création)
+*  Mise en place globale du système de communication client/serveur avec l'architecture utilisant les classes Console/Communication (La console du serveur a ensuite été supprimée car inutile). Fait avec ``Matthieu Le Franc``.
+*  Ajout du système de parties sur le serveur (création). Avec ``Matthieu``
     * ``Voir issues :`` #25
 *  Ajout du système de génération de plateau de jeu (après création de la partie) depuis un fichier de configuration json 
     * ``Voir issues :`` #36
