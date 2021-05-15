@@ -122,6 +122,38 @@ Les commandes utilisables par le client en mode console sont les suivantes:
 
 ---
 
+## Héritage et architecture du projet (diagramme UML)
+
+Le projet comporte deux principaux packages : **Server** & **Client** qui comportent tout deux leur propre fonction main.
+
+**Le Server**
+
+![alt text](ReadMeAttachments/Server_packages_diagrams/Package_server.PNG "packages serveur")
+  * **playingProps :** les classes traitant le déroulement d'une partie et l'environnement de jeu (gestion des joueurs, du plateau de jeu...).
+  * **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et ressus par le serveur
+  * **maps :** un fichier .json codant les paramètres d'une map par défaut (actuellement utilisé qu'à l'initialisation d'une partie au cas où la génération aléatoire se déroulerait mal).
+  * **io :**  toutes les classes permettant la communication avec le client (établissement de la connexion, réception et émission des messages).
+  * **class ServerMain :** entrée du programme
+
+*le détail de tous les sous packages du serveur ainsi que les class et leur héritage est disponible ici :*
+  * [``serveur : format .uml ``](UML_Diagrams/Server) **<- cliquable**
+  * [``serveur : format .png ``](ReadMeAttachments/Server_packages_diagrams) **<- cliquable**
+
+**Le Client**
+
+![alt text](ReadMeAttachments/Client_packages_diagrams/Package_client.PNG "packages serveur")
+* **commands :** englobe toutes les commandes (réparties dans des sous-classes) envoyées et ressus par le client
+* **connex :** contient la class de communication permettant d'envoyer et de recevoir les messages
+* **control :** contient les systèmes permettant d'interragir avec le programme (via shell ou interface graphique)
+* **view :** contient les systèmes permettant d'afficher la partie (version shell) ou ses interfaces graphiques de control
+* **class GameInfo :** on stoque ici dans la mémoire volatile toutes les informations reçues du serveur
+* **class Player :** entrée du programme client et initialisation des processus
+
+*comme pour le serveur, le détail de tous les sous packages du client ainsi que les class et leur héritage est disponible ici :*
+  * [``client : format .uml ``](UML_Diagrams/Client) **<- cliquable**
+  * [``client : format .png ``](ReadMeAttachments/Client_packages_diagrams) **<- cliquable**
+---
+
 ## Commandes internes pour communication **Server/Client :**
 
 *partie rédigée en anglais car tirée de l'issue* #17 
