@@ -23,7 +23,6 @@ public class CommandPlayerTreasurePosBroadcast extends Command {
 			}
 		}
 
-		//GameInfo.setPlayers(args[1], Integer.parseInt(args[3]), Integer.parseInt(args[4]));
 		GameInfo.setPlayerCoordinates(args[1],Integer.parseInt(args[3]),Integer.parseInt(args[4]));
 		sendMessage("512 " + args[1] + " UPDATED");
 		Player.printGameBoard();

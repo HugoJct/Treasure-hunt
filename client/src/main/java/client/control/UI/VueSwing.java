@@ -51,7 +51,6 @@ public class VueSwing extends JFrame implements MouseInputListener{
 		this.setContentPane(scene);
 		this.setVisible(true);
 		refreshScreen();
-		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	@Override

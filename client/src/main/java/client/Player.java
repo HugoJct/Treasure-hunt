@@ -98,13 +98,6 @@ public class Player {
             board[y][x] = s.toLowerCase().charAt(0);
         }
 
-        /*
-        for(int i=0;i<GameInfo.getPlayersNames().length;i++) {
-            int x = GameInfo.getPlayerPos(GameInfo.getPlayersNames()[i])[1];
-            int y = GameInfo.getPlayerPos(GameInfo.getPlayersNames()[i])[0];
-            board[x][y] = GameInfo.getPlayersNames()[i].toLowerCase().charAt(0);
-        }*/
-
         for(int i=0;i<board.length;i++){
             System.out.print("W ");
         }
