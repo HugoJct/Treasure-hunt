@@ -64,6 +64,8 @@ public class Communication implements Runnable {
         commandList.put("501",new Command501(out));
         commandList.put("512",new CommandUpdateRoundManager(out));
         commandList.put("521",new CommandUpdateRoundManager(out));
+
+        new Command101(out).execute(null,p,null);
     }
 
     @Override
