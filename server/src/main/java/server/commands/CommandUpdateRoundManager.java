@@ -20,7 +20,7 @@ public class CommandUpdateRoundManager extends Command {
 
 		Player[] playerList = g.getPlayers().toArray(new Player[g.getPlayers().size()]);
         int checkForRound = 0;
-        if (g.getGameMod() != 0) {
+        if (g.getGameMod() == 2) {
             if (g.getConfirmations() == null) {
                 g.setConfirmations(new boolean[playerList.length]);
             }

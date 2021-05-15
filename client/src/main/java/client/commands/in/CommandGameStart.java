@@ -24,9 +24,9 @@ public class CommandGameStart extends Command {
 	}
 
 	public void execute(Player p, String[] args) {
-		sendMessage("400 GETHOLES");
+		sendMessage("420 GETWALLS");
 		sendMessage("410 GETTREASURES");
-        sendMessage("420 GETWALLS");
+		sendMessage("400 GETHOLES");
         GameInfo.setStarted(true);
 
 
