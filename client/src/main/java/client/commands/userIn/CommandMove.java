@@ -15,10 +15,13 @@ public class CommandMove extends Command {
 
 	public void execute(Player p, String[] args) {
 		if (GameInfo.getLifeState() == false) {
-					move(args[1]);
-				} else {
-					System.out.println("You can't, you are dead...");
-				}
+			if(args.length != 2) {
+				System.out.println("Command syntax error");
+			} else 
+				move(args[1]);
+		} else {
+			System.out.println("You can't, you are dead...");
+		}
 	}
 
 	private void move(String direction) {
