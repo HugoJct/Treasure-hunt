@@ -40,8 +40,6 @@ public class CommandUpdateRoundManager extends Command {
                     checkForRound++;
                 }
             }
-            System.out.println(checkForRound);
-            System.out.println(playerList.length);
             if (checkForRound == playerList.length) {
                 Player playerToBroadcast = null;
                 for (int i = 0 ; i<playerList.length ; i++) {
