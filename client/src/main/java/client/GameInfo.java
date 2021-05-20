@@ -121,7 +121,11 @@ public class GameInfo {
     }
 
     public static int getNumberOfGames() {
-        return nbrOfGames;
+        if (availableGameInfos != null) {
+            return availableGameInfos.length;
+        } else {
+            return 0;
+        }
     }
     public static int getNumberOfGamesCreated() {
         return nbrOfGamesCreated;
