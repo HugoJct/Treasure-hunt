@@ -7,7 +7,6 @@ import java.lang.InterruptedException;
 import java.lang.Thread;
 import java.io.FileReader;
 import java.io.File;
-import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +17,7 @@ import client.control.shell.Console;
 import client.view.graphicDisplay.GameSelectionDisplay;
 import client.control.UIBis.GameManager;
 import server.elements.*;
-
+import client.GameInfo;
 
 
 public class Player {
@@ -35,19 +34,9 @@ public class Player {
     public static boolean isConnected = true;
     
     public Player(String name) {
-        try {
-            configFile = new File("src/main/java/client/config.json");
-            reader = new FileReader(configFile); 
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-            this.username = name;
-            this.serverIP = (String) jsonObject.get("ip");
-            this.serverPort = ((Long) jsonObject.get("port")).intValue();    
-        } catch(IOException e) {
-            e.printStackTrace();
-        } catch(ParseException e) {
-            e.printStackTrace();
-        }
+        this.username = name;
+        this.serverIP = GameInfo.getIp()[0] + "." + GameInfo.getIp()[1] + "." + GameInfo.getIp()[2] + "." + GameInfo.getIp()[3];
+        this.serverPort = GameInfo.getPort();    
     }
 
     public Socket getSocket() {

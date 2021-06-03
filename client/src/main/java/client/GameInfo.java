@@ -17,6 +17,8 @@ public class GameInfo {
     private static LinkedList<Wall> walls = new LinkedList<Wall>();
     private static LinkedList<Hole> holes = new LinkedList<Hole>();
     private static LinkedList<Treasure> treasures = new LinkedList<Treasure>();
+    private static String[] ip = new String[4]; 
+    private static int port = 0;
 
     public static int getWallsNumber() {
         return walls.size();
@@ -26,6 +28,41 @@ public class GameInfo {
     }
     public static int getTreasuresNumber() {
         return treasures.size();
+    }
+
+    public static String[] getIp() {
+        return ip;
+    }
+    public static int getPort() {
+        return port;
+    }
+    public static void setIp(String num) {
+        String tmp = "";
+        int del = 0;
+        for (int i = 0 ; i<num.length() ; i++) {
+            if (num.charAt(i) == '.') {
+                del += 1;
+                if (del > 3) {
+                    System.out.println("Wrong format for ip");
+                    return;
+                }
+                if (tmp.length() == 0) {
+                    System.out.println("Wrong format for ip");
+                    return;           
+                }
+                ip[del-1] = tmp;
+            }
+            if (Character.isDigit(num.charAt(i))) {
+                tmp += num.charAt(i);
+            }
+            if (!Character.isDigit(num.charAt(i)) && num.charAt(i) != '.') {
+                System.out.println("Wrong format for ip");
+                return;      
+            }
+        } 
+    }
+    public static void setPort(int p) {
+        port = p;
     }
 
     private static HashMap<String,Integer[]> players = new HashMap<String,Integer[]>();
