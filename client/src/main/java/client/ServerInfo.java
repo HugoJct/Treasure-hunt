@@ -2,12 +2,12 @@ package client;
 
 public class ServerInfo {
     private static String[] ip = new String[4]; 
-    private static int port = 0;
+    private static String port;
    
     public static String[] getIp() {
         return ip;
     }
-    public static int getPort() {
+    public static String getPort() {
         return port;
     }
 
@@ -37,7 +37,13 @@ public class ServerInfo {
         } 
     }
 
-    public static void setPort(int p) {
+    public static void setPort(String p) {
+        for (int i = 0 ; i<p.length() ; i++) {
+            if (!Character.isDigit(p.charAt(i))) {
+                System.out.println("wrong format for port");
+                return;
+            }
+        }
         port = p;
     }
 }

@@ -6,9 +6,11 @@ import java.awt.*;
 import client.ServerInfo;
 
 public class Menu extends JFrame {
-    private JLabel labelUsername = new JLabel("Enter server ip : ");
-    private JLabel labelPassword = new JLabel("Enter server port : ");
-    private JTextField textUsername = new JTextField(20);
+    private JLabel labelIp = new JLabel("Enter server ip : ");
+    private JLabel labelPort = new JLabel("Enter server port : ");
+    private JLabel labelPassword = new JLabel("Enter server pass (optional) : ");
+    private JTextField textIp = new JTextField(20);
+    private JTextField textPort = new JTextField(5);
     private JPasswordField fieldPassword = new JPasswordField(20);
     private JButton buttonLogin = new JButton("connect");
      
@@ -25,20 +27,27 @@ public class Menu extends JFrame {
         // add components to the panel
         constraints.gridx = 0;
         constraints.gridy = 0;     
-        newPanel.add(labelUsername, constraints);
+        newPanel.add(labelIp, constraints);
  
         constraints.gridx = 1;
-        newPanel.add(textUsername, constraints);
+        newPanel.add(textIp, constraints);
          
         constraints.gridx = 0;
         constraints.gridy = 1;     
+        newPanel.add(labelPort, constraints);
+         
+        constraints.gridx = 1;
+        newPanel.add(textPort, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 2;     
         newPanel.add(labelPassword, constraints);
          
         constraints.gridx = 1;
         newPanel.add(fieldPassword, constraints);
          
         constraints.gridx = 0;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         constraints.gridwidth = 2;
         constraints.anchor = GridBagConstraints.CENTER;
         newPanel.add(buttonLogin, constraints);
@@ -52,5 +61,15 @@ public class Menu extends JFrame {
          
         pack();
         setLocationRelativeTo(null);    
+    }
+
+    public JTextField getIp() {
+        return this.textIp;
+    }
+    public JTextField getPort() {
+        return this.textPort;
+    }
+    public JButton getConnect() {
+        return this.buttonLogin;
     }
 }

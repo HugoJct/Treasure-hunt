@@ -39,7 +39,7 @@ public class Player {
     public Player(String name) {
         this.username = name;
         this.serverIP = ServerInfo.getIp()[0] + "." + ServerInfo.getIp()[1] + "." + ServerInfo.getIp()[2] + "." + ServerInfo.getIp()[3];
-        this.serverPort = ServerInfo.getPort();    
+        this.serverPort = new Integer(ServerInfo.getPort());    
     }
 
     public Socket getSocket() {
@@ -122,8 +122,9 @@ public class Player {
                 new Menu().setVisible(true);
             }
         });
-        while (ServerInfo.getIp()[0] == null && ServerInfo.getPort() == 0) {
-            System.out.println("ok");
+        
+        while (ServerInfo.getIp()[0] == null && ServerInfo.getPort() == null) {
+            //System.out.println("ok");
         }
 
         try {
