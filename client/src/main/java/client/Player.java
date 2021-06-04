@@ -10,6 +10,8 @@ import java.io.File;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 // import our Classes
 import client.connex.Communication;
@@ -17,7 +19,8 @@ import client.control.shell.Console;
 import client.view.graphicDisplay.GameSelectionDisplay;
 import client.control.UIBis.GameManager;
 import server.elements.*;
-import client.GameInfo;
+import client.ServerInfo;
+import client.view.graphicDisplay.Menu;
 
 
 public class Player {
@@ -35,8 +38,8 @@ public class Player {
     
     public Player(String name) {
         this.username = name;
-        this.serverIP = GameInfo.getIp()[0] + "." + GameInfo.getIp()[1] + "." + GameInfo.getIp()[2] + "." + GameInfo.getIp()[3];
-        this.serverPort = GameInfo.getPort();    
+        this.serverIP = ServerInfo.getIp()[0] + "." + ServerInfo.getIp()[1] + "." + ServerInfo.getIp()[2] + "." + ServerInfo.getIp()[3];
+        this.serverPort = ServerInfo.getPort();    
     }
 
     public Socket getSocket() {
@@ -108,6 +111,20 @@ public class Player {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Menu().setVisible(true);
+            }
+        });
+        while (ServerInfo.getIp()[0] == null && ServerInfo.getPort() == 0) {
+            System.out.println("ok");
+        }
 
         try {
             if (args.length > 1) {
