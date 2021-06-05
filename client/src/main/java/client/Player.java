@@ -116,31 +116,29 @@ public class Player {
         Menu menu = new Menu();
         Thread t = new Thread(new Runnable() { 
             public void run() {
-                if (ServerInfo.getIpFormat() && ServerInfo.getPortFormat()) {
-                    try {
-                        if (args.length > 1) {
-                            p = new Player(args[1]);
-                        } else { 
-                            p = new Player("Unnamed_User");
-                        }
-                        s = new Socket(serverIP,serverPort);
-            
-                        Communication com = new Communication(p);
-                        Console cons = new Console(com);
-            
-                        Thread communication = new Thread(com);
-                        Thread console = new Thread(cons);
-            
-                        communication.start();
-                        console.start();
-                        
-                        menu.dispose();
-
-                        new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
-                        
-                    } catch(IOException e) {
-                        e.printStackTrace();
+                try {
+                    if (args.length > 1) {
+                        p = new Player(args[1]);
+                    } else { 
+                        p = new Player("Unnamed_User");
                     }
+                    s = new Socket(serverIP,serverPort);
+        
+                    Communication com = new Communication(p);
+                    Console cons = new Console(com);
+        
+                    Thread communication = new Thread(com);
+                    Thread console = new Thread(cons);
+        
+                    communication.start();
+                    console.start();
+                    
+                    menu.dispose();
+
+                    new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
+                    
+                } catch(IOException e) {
+                    e.printStackTrace();
                 }
             }
 	    });

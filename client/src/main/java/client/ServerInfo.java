@@ -25,15 +25,10 @@ public class ServerInfo {
         for (int i = 0 ; i<num.length() ; i++) {
             if (num.charAt(i) == '.') {
                 del += 1;
-                if (del > 3) {
+                if (del > 3 || tmp.length() == 0) {
                     System.out.println("Wrong format for ip");
                     ipFormat = false;   
                     return;
-                }
-                if (tmp.length() == 0) {
-                    System.out.println("Wrong format for ip");
-                    ipFormat = false;   
-                    return;         
                 }
                 ip[del-1] = tmp;
                 tmp = "";
@@ -50,7 +45,8 @@ public class ServerInfo {
         ip[3] = tmp;
         ipFormat = true;
         for (int i = 0 ; i<ip.length ; i++) {
-            if (ip[i] == null) {
+            if (ip[i] == null || ip[i].equals("")) {
+                System.out.println("Wrong format for ip");
                 ipFormat = false;
             }
         }

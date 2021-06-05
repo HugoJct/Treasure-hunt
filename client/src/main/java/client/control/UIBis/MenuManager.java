@@ -18,6 +18,8 @@ public class MenuManager {
         ServerInfo.setPort(view.getPort().getText());
         System.out.println(ServerInfo.getIp()[0]);
         System.out.println(ServerInfo.getPort());
-        t.start();
+        if (ServerInfo.getIpFormat() && ServerInfo.getPortFormat()) {
+            t.start();
+        }
     }
 }
