@@ -62,7 +62,6 @@ public class Menu extends JFrame {
         pack();
         setLocationRelativeTo(null);  
         
-        this.setVisible(true);
     }
 
     public JTextField getIp() {

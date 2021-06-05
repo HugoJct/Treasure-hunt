@@ -113,9 +113,10 @@ public class Player {
 
     public static void main(String[] args) {
         
+        Menu menu = new Menu();
         Thread t = new Thread(new Runnable() { 
             public void run() {
-                if (ServerInfo.getIp()[0] != null && ServerInfo.getPort() != null) {
+                if (ServerInfo.getIpFormat() && ServerInfo.getPortFormat()) {
                     try {
                         if (args.length > 1) {
                             p = new Player(args[1]);
@@ -132,7 +133,9 @@ public class Player {
             
                         communication.start();
                         console.start();
-            
+                        
+                        menu.dispose();
+
                         new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
                         
                     } catch(IOException e) {
@@ -150,7 +153,8 @@ public class Player {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MenuManager(new Menu(), t);   
+                new MenuManager(menu, t);   
+                menu.setVisible(true);
             } 
         }); 
     }
