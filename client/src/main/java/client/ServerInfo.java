@@ -26,6 +26,7 @@ public class ServerInfo {
                     return;           
                 }
                 ip[del-1] = tmp;
+                tmp = "";
             }
             if (Character.isDigit(num.charAt(i))) {
                 tmp += num.charAt(i);
@@ -35,6 +36,7 @@ public class ServerInfo {
                 return;      
             }
         } 
+        ip[3] = tmp;
     }
 
     public static void setPort(String p) {

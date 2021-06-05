@@ -21,6 +21,7 @@ import client.control.UIBis.GameManager;
 import server.elements.*;
 import client.ServerInfo;
 import client.view.graphicDisplay.Menu;
+import client.control.UIBis.MenuManager;
 
 
 public class Player {
@@ -111,6 +112,36 @@ public class Player {
     }
 
     public static void main(String[] args) {
+        
+        Thread t = new Thread(new Runnable() { 
+            public void run() {
+                if (ServerInfo.getIp()[0] != null && ServerInfo.getPort() != null) {
+                    try {
+                        if (args.length > 1) {
+                            p = new Player(args[1]);
+                        } else { 
+                            p = new Player("Unnamed_User");
+                        }
+                        s = new Socket(serverIP,serverPort);
+            
+                        Communication com = new Communication(p);
+                        Console cons = new Console(com);
+            
+                        Thread communication = new Thread(com);
+                        Thread console = new Thread(cons);
+            
+                        communication.start();
+                        console.start();
+            
+                        new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
+                        
+                    } catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+	    });
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
@@ -119,35 +150,9 @@ public class Player {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Menu().setVisible(true);
-            }
-        });
-        
-        while (ServerInfo.getIp()[0] == null && ServerInfo.getPort() == null) {
-            //System.out.println("ok");
-        }
+                new MenuManager(new Menu(), t);   
+            } 
+        }); 
+    }
 
-        try {
-            if (args.length > 1) {
-                p = new Player(args[1]);
-            } else { 
-                p = new Player("Unnamed_User");
-            }
-            s = new Socket(serverIP,serverPort);
-
-            Communication com = new Communication(p);
-            Console cons = new Console(com);
-
-            Thread communication = new Thread(com);
-            Thread console = new Thread(cons);
-
-            communication.start();
-            console.start();
-
-            new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
-            
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-	}
 }
