@@ -16,8 +16,11 @@ public class MenuManager {
     private void writeDatas(Menu view, Thread t) {
         ServerInfo.setIp(view.getIp().getText());
         ServerInfo.setPort(view.getPort().getText());
-        System.out.println(ServerInfo.getIp()[0]);
-        System.out.println(ServerInfo.getPort());
+        if (view.getTextName().getText().isEmpty()) {
+            ServerInfo.setName("Unnamed_User");
+        } else {
+            ServerInfo.setName(view.getTextName().getText());
+        }
         if (ServerInfo.getIpFormat() && ServerInfo.getPortFormat()) {
             t.start();
         }

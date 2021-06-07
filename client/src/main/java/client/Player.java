@@ -37,8 +37,8 @@ public class Player {
 
     public static boolean isConnected = true;
     
-    public Player(String name) {
-        this.username = name;
+    public Player() {
+        this.username = ServerInfo.getName();
         this.serverIP = ServerInfo.getIp()[0] + "." + ServerInfo.getIp()[1] + "." + ServerInfo.getIp()[2] + "." + ServerInfo.getIp()[3];
         this.serverPort = new Integer(ServerInfo.getPort());    
     }
@@ -117,11 +117,7 @@ public class Player {
         Thread t = new Thread(new Runnable() { 
             public void run() {
                 try {
-                    if (args.length > 1) {
-                        p = new Player(args[1]);
-                    } else { 
-                        p = new Player("Unnamed_User");
-                    }
+                    p = new Player();
                     s = new Socket(serverIP,serverPort);
         
                     Communication com = new Communication(p);
