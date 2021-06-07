@@ -7,10 +7,11 @@ import java.lang.InterruptedException;
 import java.lang.Thread;
 import java.io.FileReader;
 import java.io.File;
-import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 // import our Classes
 import client.connex.Communication;
@@ -18,7 +19,9 @@ import client.control.shell.Console;
 import client.view.graphicDisplay.GameSelectionDisplay;
 import client.control.UIBis.GameManager;
 import server.elements.*;
-
+import client.ServerInfo;
+import client.view.graphicDisplay.Menu;
+import client.control.UIBis.MenuManager;
 
 
 public class Player {
@@ -35,19 +38,9 @@ public class Player {
     public static boolean isConnected = true;
     
     public Player(String name) {
-        try {
-            configFile = new File("src/main/java/client/config.json");
-            reader = new FileReader(configFile); 
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-            this.username = name;
-            this.serverIP = (String) jsonObject.get("ip");
-            this.serverPort = ((Long) jsonObject.get("port")).intValue();    
-        } catch(IOException e) {
-            e.printStackTrace();
-        } catch(ParseException e) {
-            e.printStackTrace();
-        }
+        this.username = name;
+        this.serverIP = ServerInfo.getIp()[0] + "." + ServerInfo.getIp()[1] + "." + ServerInfo.getIp()[2] + "." + ServerInfo.getIp()[3];
+        this.serverPort = new Integer(ServerInfo.getPort());    
     }
 
     public Socket getSocket() {
@@ -119,28 +112,49 @@ public class Player {
     }
 
     public static void main(String[] args) {
+        
+        Menu menu = new Menu();
+        Thread t = new Thread(new Runnable() { 
+            public void run() {
+                try {
+                    if (args.length > 1) {
+                        p = new Player(args[1]);
+                    } else { 
+                        p = new Player("Unnamed_User");
+                    }
+                    s = new Socket(serverIP,serverPort);
+        
+                    Communication com = new Communication(p);
+                    Console cons = new Console(com);
+        
+                    Thread communication = new Thread(com);
+                    Thread console = new Thread(cons);
+        
+                    communication.start();
+                    console.start();
+                    
+                    menu.dispose();
+
+                    new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
+                    
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+	    });
 
         try {
-            if (args.length > 1) {
-                p = new Player(args[1]);
-            } else { 
-                p = new Player("Unnamed_User");
-            }
-            s = new Socket(serverIP,serverPort);
-
-            Communication com = new Communication(p);
-            Console cons = new Console(com);
-
-            Thread communication = new Thread(com);
-            Thread console = new Thread(cons);
-
-            communication.start();
-            console.start();
-
-            new GameManager(new GameSelectionDisplay(), com.getOutput(), p, cons);
-            
-        } catch(IOException e) {
-            e.printStackTrace();
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-	}
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new MenuManager(menu, t);   
+                menu.setVisible(true);
+            } 
+        }); 
+    }
+
 }
