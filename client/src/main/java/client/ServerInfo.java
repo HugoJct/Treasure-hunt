@@ -1,11 +1,16 @@
 package client;
 
 public class ServerInfo {
+    private static String name;
     private static String[] ip = new String[4]; 
     private static boolean ipFormat = false;
     private static String port;
     private static boolean portFormat = false;
    
+
+    public static String getName() {
+        return name;
+    }
     public static String[] getIp() {
         return ip;
     }
@@ -17,6 +22,10 @@ public class ServerInfo {
     }
     public static boolean getPortFormat() {
         return portFormat;
+    }
+
+    public static void setName(String n) {
+        name = n;
     }
 
     public static void setIp(String num) {
